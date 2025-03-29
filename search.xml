@@ -453,7 +453,7 @@
 
   <div class="note-large default">
     <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>方法的优缺点</p>
+      <i class="notel-icon fa-solid fa-info"></i><p>1R方法的优缺点</p>
 
     </div>
     <div class="notel-content">
@@ -466,7 +466,7 @@
 
   <div class="note-large default">
     <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>离散化？</p>
+      <i class="notel-icon fa-solid fa-info"></i><p>何时使用1R离散化？</p>
 
     </div>
     <div class="notel-content">
