@@ -36,7 +36,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
 <meta property="article:published_time" content="2025-03-28T03:45:14.000Z">
-<meta property="article:modified_time" content="2025-03-28T03:05:58.060Z">
+<meta property="article:modified_time" content="2025-03-29T11:40:55.450Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
@@ -609,8 +609,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-03-28 11:05:58</span>
-            <span class="mobile">2025-03-28 11:05:58</span>
+            <span class="desktop">2025-03-29 19:40:55</span>
+            <span class="mobile">2025-03-29 19:40:55</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -685,7 +685,7 @@
 <p>输出结果为<br><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/zhihaojiang.github.io/images/articles/2025/03/28/001.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/001.png"
                       alt="photo"
                 ><br>通过该数据可知其数字应该是越小越好<br>因此相关性应该是负数 且越小越好</p>
 <p>之后我们查看文件的维度</p>
@@ -696,7 +696,7 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/zhihaojiang.github.io/images/articles/2025/03/28/002.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/002.png"
                       alt="photo"
                 ><br>从第一行(count)看到 broad_impact数据与其他数据不同<br>上述从head()函数我猜测broad_impact列全是NA<br>仔细查看文件后可知:2012年和2013年的broad_impact存在缺失<br>其他数据看起来没什么问题 数据质量基本完整</p>
 <p>先用相关性矩阵看看各个数据之间的关系</p>
@@ -704,28 +704,28 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/zhihaojiang.github.io/images/articles/2025/03/28/003.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/003.png"
                       alt="photo"
                 ><br>通过上图可以看到world_rank与publications、influence、citations有强相关性<br>我们用matplotlib.pyplot库做出这些图</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = university[<span class="string">&quot;publications&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;world_rank&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;world_rank&amp;publications&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/zhihaojiang.github.io/images/articles/2025/03/28/004.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/004.png"
                       alt="photo"
                 ></p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = university[<span class="string">&quot;influence&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;world_rank&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;world_rank&amp;influence&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/zhihaojiang.github.io/images/articles/2025/03/28/005.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/005.png"
                       alt="photo"
                 ></p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = university[<span class="string">&quot;citations&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;world_rank&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;world_rank&amp;citations&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/zhihaojiang.github.io/images/articles/2025/03/28/006.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/006.png"
                       alt="photo"
                 ></p>
 <p>从上述三幅图可以看到world_rank与publications、influence有强相关性<br>world_rank与citations也有一定的相关性 但不是很明显<br>再继续做几张图看看其他数据之间的关系怎么样</p>
@@ -733,14 +733,14 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/zhihaojiang.github.io/images/articles/2025/03/28/007.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/007.png"
                       alt="photo"
                 ><br>从图中可以看出点近似集中在一条直线上<br>说明出版物与影响力成正比</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x = university[<span class="string">&quot;broad_impact&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;score&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;score&amp;broad_impact&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/zhihaojiang.github.io/images/articles/2025/03/28/008.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/008.png"
                       alt="photo"
                 ><br>从图中可以看出broad_impact与score成非线性关系 broad_impact的大小与score无关<br><br>用相关性进行检测</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = university[<span class="string">&quot;broad_impact&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;score&quot;</span>]</span><br><span class="line">correlation = x.corr(y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;r:&quot;</span>, correlation)</span><br></pre></td></tr></table></figure></div>
@@ -785,7 +785,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-03-28 11:05:58
+                    :</strong> 2025-03-29 19:40:55
             </li>
         
         <li>
