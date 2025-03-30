@@ -182,6 +182,9 @@
 
 <h3 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h3><p>从文件恢复数据库。</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">mysql -u username -p db_name &lt; backup.sql</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
       <tags>
         <tag>mysql</tag>
       </tags>
@@ -238,6 +241,9 @@
                       alt="photo"
                 ></p>
 ]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
       <tags>
         <tag>摄影</tag>
       </tags>
@@ -361,6 +367,9 @@
 <p>输出结果为:<br>训练集上的均方根误差和决定系数分别为: 0.396126717281446 0.9974538720434839<br>测试集上的均方根误差和决定系数分别为: 1.0185613846393418 0.9808937922886296</p>
 <p>可以看到 决定系数为0.99 0.98以上 说明模型拟合得很好</p>
 ]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
       <tags>
         <tag>机器学习</tag>
       </tags>
@@ -417,6 +426,9 @@
                       alt="photo"
                 ></p>
 ]]></content>
+      <categories>
+        <category>旅游</category>
+      </categories>
       <tags>
         <tag>摄影</tag>
       </tags>
@@ -473,6 +485,9 @@
                       alt="photo"
                 ></p>
 ]]></content>
+      <categories>
+        <category>旅游</category>
+      </categories>
       <tags>
         <tag>摄影</tag>
       </tags>
@@ -612,6 +627,9 @@
 
     </div>
   </div>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
       <tags>
         <tag>机器学习</tag>
         <tag>python</tag>
@@ -634,5 +652,71 @@
 
 <p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>MCP介绍及其创建使用</title>
+    <url>/zhihaojiang.github.io/2025/03/29/MCP%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%85%B6%E5%88%9B%E5%BB%BA%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<p>##MCP是什么<br>MCP（Model Context Protocol，模型上下文协议）是由 Anthropic 于 2024 年 11 月推出的一种开放标准协议，旨在统一大型语言模型（LLM）与外部数据源和工具之间的通信方式。​<br><strong>Model Context Protocol (MCP)</strong><br>MCP 是一个标准协议，就像给 AI 大模型装了一个 “万能接口”，让 AI 模型能够与不同的数据源和工具进行无缝交互。它就像 USB-C 接口一样，提供了一种标准化的方法，将 AI 模型连接到各种数据源和工具。<br>MCP 旨在替换碎片化的 Agent 代码集成，从而使 AI 系统更可靠，更有效。通过建立通用标准，服务商可以基于协议来推出它们自己服务的 AI 能力，从而支持开发者更快的构建更强大的 AI 应用。开发者也不需要重复造轮子，通过开源项目可以建立强大的 AI Agent 生态。<br>MCP 的核心概念包括：</p>
+<ol>
+<li>上下文共享：​应用程序可以通过 MCP 向模型提供所需的上下文信息，如文件内容、数据库记录等，增强模型的理解和生成能力。</li>
+<li>工具暴露：​MCP 允许应用程序将功能（如文件读写、API 调用）暴露给模型，模型可以调用这些工具完成复杂任务。​</li>
+<li>可组合的工作流：​开发者可以利用 MCP 集成多个服务和组件，构建灵活、可扩展的 AI 工作流。​</li>
+<li>安全性：​通过本地服务器运行，MCP 避免将敏感数据上传至第三方平台，确保数据隐私。 ​</li>
+</ol>
+<p>MCP 的架构主要由以下组件组成：</p>
+<ol>
+<li>MCP 主机（Host）：​如 Claude Desktop、IDE 或其他 AI 工具，即大模型的应用。​</li>
+<li>MCP 客户端（Client）：​在主机应用内的连接器，负责与 MCP 服务器建立连接。​</li>
+<li>MCP 服务器（Server）：​实现 MCP 协议的程序，提供特定功能或数据资源，供客户端访问。​</li>
+<li>远程服务：​如 Slack、GitHub API 等，MCP 服务器可以连接的外部服务。 ​</li>
+</ol>
+<p>通过 MCP，AI 模型可以直接与数据源建立标准化的连接，避免了为每个新数据源定制对接方案的繁琐过程，从而实现真正的互联互通。</p>
+<p>MCP（Model Context Protocol）允许你定义和暴露自定义的函数（工具），让大模型调用这些工具来完成特定任务。例如，你可以构建一个函数，让模型查询数据库、读取文件、调用 API，甚至执行本地计算。</p>
+<h2 id="MCP-让模型调用工具的方式"><a href="#MCP-让模型调用工具的方式" class="headerlink" title="MCP 让模型调用工具的方式"></a>MCP 让模型调用工具的方式</h2><p><strong>定义一个工具（函数）</strong><br>在本地或远程服务器上编写一个 API 或函数，例如：</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">def get_weather(city):</span><br><span class="line">    <span class="comment"># 这里可以调用真实的天气 API</span></span><br><span class="line">    <span class="built_in">return</span> f<span class="string">&quot;&#123;city&#125; 当前气温 25°C，晴天&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p><strong>通过 MCP 暴露该工具</strong><br>通过 MCP 让大模型知道这个工具的存在，并允许它调用。例如，在 Claude 或其他支持 MCP 的环境中，模型可以动态调用你的 get_weather(city) 函数。<br><strong>模型调用工具</strong><br>当用户询问「北京的天气如何？」时，模型可以自动调用 get_weather(“北京”)，并将结果返回给用户，而不是依赖自身训练的数据。</p>
+<h2 id="创建并使用的流程"><a href="#创建并使用的流程" class="headerlink" title="创建并使用的流程"></a>创建并使用的流程</h2><p>以get_weather为例<br>我们首先创建一个.py文件叫weather<br>在文件中输入下述代码</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import requests</span><br><span class="line">from mcp import MCPServer, tool</span><br><span class="line"></span><br><span class="line">class WeatherServer(MCPServer):</span><br><span class="line">    @tool</span><br><span class="line">    def get_weather(self, city: str) -&gt; str:</span><br><span class="line">        <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">        获取指定城市的天气信息。</span></span><br><span class="line"><span class="string">        &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 调用天气 API 获取数据</span></span><br><span class="line">        api_key = <span class="string">&#x27;您的API密钥&#x27;</span></span><br><span class="line">        response = requests.get(f<span class="string">&#x27;http://api.weatherapi.com/v1/current.json?key=&#123;api_key&#125;&amp;q=&#123;city&#125;&amp;lang=zh&#x27;</span>)</span><br><span class="line">        data = response.json()</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;error&#x27;</span> <span class="keyword">in</span> data:</span><br><span class="line">            <span class="built_in">return</span> f<span class="string">&quot;无法获取&#123;city&#125;的天气信息。&quot;</span></span><br><span class="line">        weather = data[<span class="string">&#x27;current&#x27;</span>][<span class="string">&#x27;condition&#x27;</span>][<span class="string">&#x27;text&#x27;</span>]</span><br><span class="line">        temp_c = data[<span class="string">&#x27;current&#x27;</span>][<span class="string">&#x27;temp_c&#x27;</span>]</span><br><span class="line">        <span class="built_in">return</span> f<span class="string">&quot;&#123;city&#125;当前天气：&#123;weather&#125;，气温：&#123;temp_c&#125;°C。&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    server = WeatherServer()</span><br><span class="line">    server.run()</span><br></pre></td></tr></table></figure></div>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info"></i><p>记得安装必要的库</p>
+
+    </div>
+    <div class="notel-content">
+      <p>pip install mcp-server</p>
+
+    </div>
+  </div>
+<p>这样，MCP工具就做好了</p>
+<p>之后，我们要将这个工具告诉AI<br>打开一个支持MCP的AI软件或网站 这里我使用vs code中的cline插件<br>在插件设置中找到MCP Servers -&gt; installed -&gt; Configure MCP Server 点击<br>会进入到一个叫cline_mcp_settings.json的文档<br>里面应该是这样的</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;mcpServers&quot;</span>: &#123;</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>在mcpServers中插入你写的工具</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;mcpServers&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;weather&quot;</span>: &#123;</span><br><span class="line">      <span class="string">&quot;command&quot;</span>: <span class="string">&quot;python&quot;</span>,</span><br><span class="line">      <span class="string">&quot;args&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;--directory&quot;</span>,</span><br><span class="line">        <span class="string">&quot;/Volumes/HIKSEMI/mcp_server&quot;</span>,</span><br><span class="line">        <span class="string">&quot;run&quot;</span>,</span><br><span class="line">        <span class="string">&quot;weather.py&quot;</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info"></i><p>记得安装必要的库</p>
+
+    </div>
+    <div class="notel-content">
+      <p>“weather”: { -&gt; 这个是你的MCP工具的名字 可以自己随便取</p>
+<p>“command”: “python” -&gt;这个是告诉他使用 python 命令来运行 Python 解释器 启动服务器</p>
+<p>“args”: [<br>        “–directory”, -&gt;这个选项通常用来告诉服务器在哪个路径下查找需要的资源 或者在该目录下运行服务器<br>        “&#x2F;Volumes&#x2F;HIKSEMI&#x2F;mcp_server”, -&gt;这是指定你weather.py的路径<br>        “run”, -&gt; 这个是告诉程序去执行接下来的操作 即运行指定的Python脚本<br>        “weather.py” -&gt; 这是要执行的 Python 脚本的名称</p>
+
+    </div>
+  </div>
+
+<p>保存好后会在下面看见你的MCP工具已经启用了 在向大模型询问天气时 他会优先查询是否有可用的MCP工具 并按照对应的格式给出答复</p>
+]]></content>
+      <categories>
+        <category>科技</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>MCP</tag>
+        <tag>AI</tag>
+      </tags>
   </entry>
 </search>
