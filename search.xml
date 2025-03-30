@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/zhihaojiang.github.io/2025/01/03/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>MySQL语句</title>
     <url>/zhihaojiang.github.io/2025/01/06/MySQL%E8%AF%AD%E5%8F%A5/</url>
     <content><![CDATA[<p>本位与2025-01-06在CSDN上发布 现将其转移至自己的博客</p>
@@ -261,59 +243,126 @@
       </tags>
   </entry>
   <entry>
-    <title>广州旅游</title>
-    <url>/zhihaojiang.github.io/2024/07/31/%E5%B9%BF%E5%B7%9E%E6%97%85%E6%B8%B8/</url>
-    <content><![CDATA[<p><img  
+    <title>机器学习作业笔记</title>
+    <url>/zhihaojiang.github.io/2025/03/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>我们需要利用回归分析预测世界大学综合得分</p>
+<p>#Jupyter notebook代码<br>基本库导入</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line">from sklearn.metrics import mean_squared_error,r2_score</span><br><span class="line">from scipy import stats</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line">from sklearn.metrics import root_mean_squared_error</span><br><span class="line">from sklearn import linear_model</span><br><span class="line">from sklearn import metrics</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">university = pd.read_csv(<span class="string">&#x27;cwurData.csv&#x27;</span>)</span><br><span class="line">university.head()</span><br></pre></td></tr></table></figure></div>
+<p>此时可能会出现报错</p>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info"></i><p>报错信息</p>
+
+    </div>
+    <div class="notel-content">
+      <p>File parsers.pyx:574, in pandas._libs.parsers.TextReader.<strong>cinit</strong>()</p>
+<p>File parsers.pyx:663, in pandas._libs.parsers.TextReader._get_header()</p>
+<p>File parsers.pyx:874, in pandas._libs.parsers.TextReader._tokenize_rows()</p>
+<p>File parsers.pyx:891, in pandas._libs.parsers.TextReader._check_tokenize_status()</p>
+<p>File parsers.pyx:2053, in pandas._libs.parsers.raise_parser_error()</p>
+<p>File <frozen codecs>:322, in decode(self, input, final)</p>
+<p>UnicodeDecodeError: ‘utf-8’ codec can’t decode bytes in position 3864-3865: invalid continuation byte</p>
+
+    </div>
+  </div>
+<p>不用担心，这是因为pd.read_csv()在不指明encoding时默认使用utf-8编码<br>这段报错是因为该文件不是使用utf-8进行编码。<br>我们可以写一段代码判断文件的编码格式</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import chardet</span><br><span class="line"></span><br><span class="line">with open(<span class="string">&#x27;cwurData.csv&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) as f:</span><br><span class="line">    university = f.read()</span><br><span class="line">    encoding = chardet.detect(university)</span><br><span class="line">    <span class="built_in">print</span>(encoding)</span><br></pre></td></tr></table></figure></div>
+<p>之后将其输出的encoding写入pd.read_csv()即可</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">university = pd.read_csv(<span class="string">&#x27;cwurData.csv&#x27;</span>, encoding=<span class="string">&#x27;GBK&#x27;</span>)</span><br><span class="line">university.head()</span><br></pre></td></tr></table></figure></div>
+<p>输出结果为<br><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://github.com/super-213/hexo-images/blob/main/articles/2024/07/31/2024-05811.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/001.png"
                       alt="photo"
-                ></p>
+                ><br>通过该数据可知其数字应该是越小越好<br>因此相关性应该是负数 且越小越好</p>
+<p>之后我们查看文件的维度</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">university.shape</span><br></pre></td></tr></table></figure></div>
+<p>输出结果为:(2200, 14)<br>说明该文件总共有2200行数据，14个特征</p>
+<p>接下来我们分析下文件是否有异常</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">university.describe()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05829.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/002.png"
                       alt="photo"
-                ></p>
+                ><br>从第一行(count)看到 broad_impact数据与其他数据不同<br>上述从head()函数我猜测broad_impact列全是NA<br>仔细查看文件后可知:2012年和2013年的broad_impact存在缺失<br>其他数据看起来没什么问题 数据质量基本完整</p>
+<p>先用相关性矩阵看看各个数据之间的关系</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">y = university[<span class="string">&#x27;score&#x27;</span>]</span><br><span class="line">X = university.drop([<span class="string">&quot;score&quot;</span>,<span class="string">&quot;institution&quot;</span>,<span class="string">&quot;country&quot;</span>, <span class="string">&quot;year&quot;</span>,<span class="string">&quot;broad_impact&quot;</span>],axis=1)</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">correlation_matrix = pd.concat([X_train, y_train], axis=1).corr()</span><br><span class="line"></span><br><span class="line">sns.heatmap(correlation_matrix, annot=True, cmap=<span class="string">&#x27;coolwarm&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05837.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/003.png"
                       alt="photo"
-                ></p>
+                ><br>通过上图可以看到world_rank与publications、influence、citations有强相关性<br>我们用matplotlib.pyplot库做出这些图</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;publications&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;world_rank&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;world_rank&amp;publications&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05840.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/004.png"
                       alt="photo"
                 ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;influence&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;world_rank&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;world_rank&amp;influence&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05883.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/005.png"
                       alt="photo"
                 ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;citations&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;world_rank&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;world_rank&amp;citations&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05884.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/006.png"
                       alt="photo"
                 ></p>
+<p>从上述三幅图可以看到world_rank与publications、influence有强相关性<br>world_rank与citations也有一定的相关性 但不是很明显<br>再继续做几张图看看其他数据之间的关系怎么样</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;publications&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;influence&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;influence&amp;publications&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05904.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/007.png"
                       alt="photo"
-                ></p>
+                ><br>从图中可以看出点近似集中在一条直线上<br>说明出版物与影响力成正比</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;broad_impact&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;score&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;score&amp;broad_impact&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/001.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/008.png"
                       alt="photo"
-                ></p>
+                ><br>从图中可以看出broad_impact与score成非线性关系 broad_impact的大小与score无关<br><br>用相关性进行检测</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;broad_impact&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;score&quot;</span>]</span><br><span class="line">correlation = x.corr(y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;r:&quot;</span>, correlation)</span><br></pre></td></tr></table></figure></div>
+<p>输出结果为:r: -0.5315904271503679</p>
+<p>呈现负相关 因此确定 broad_impact的大小与score无关<br>并且broad_impact中存在缺失值<br>缺失值的处理一般会使用用众数填充、前或后一个数填充、删除缺失列来处理<br>这里broad_impact的大小与score无关<br>因此可以将此列删去<br>同时也可以降低维度</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">y = university[<span class="string">&#x27;score&#x27;</span>]</span><br><span class="line">X = university.drop([<span class="string">&quot;score&quot;</span>,<span class="string">&quot;institution&quot;</span>,<span class="string">&quot;country&quot;</span>, <span class="string">&quot;year&quot;</span>,<span class="string">&quot;broad_impact&quot;</span>],axis=1)</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">lr = LinearRegression()</span><br><span class="line">lr.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">lr.intercept_</span><br><span class="line"></span><br><span class="line">coefs_lr = pd.Series(lr.coef_).round()</span><br><span class="line">coefs_lr.index = X_train.columns</span><br><span class="line">coefs_lr</span><br></pre></td></tr></table></figure></div>
+
+<p>其结果为:<br>63.60601390140695</p>
+<p>world_rank              0.0<br>national_rank          -0.0<br>quality_of_education   -0.0<br>alumni_employment      -0.0<br>quality_of_faculty     -0.0<br>publications           -0.0<br>influence              -0.0<br>citations              -0.0<br>patents                -0.0<br>dtype: float64</p>
+<p>说明模型拟合得不好<br>查看其均方根误差和决定系数</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">lr_train_pred = lr.predict(X_train)</span><br><span class="line">lr_test_pred = lr.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;训练集上的均方根误差和决定系数分别为:&quot;</span>, root_mean_squared_error(lr_train_pred,y_train), r2_score(lr_train_pred,y_train))</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;测试集上的均方根误差和决定系数分别为:&quot;</span>, root_mean_squared_error(lr_test_pred,y_test), r2_score(lr_test_pred,y_test))</span><br></pre></td></tr></table></figure></div>
+<p>输出结果为:<br>训练集上的均方根误差和决定系数分别为: 5.441831802594455 0.079429595738992<br>测试集上的均方根误差和决定系数分别为: 5.369301125131177 0.06344204755145388</p>
+<p>上述系数过小可能是数值之间差别过大导致拟合得不好<br>将其进行标准化</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">scaler = StandardScaler()</span><br><span class="line">X_train_scaled = scaler.fit_transform(X_train)</span><br><span class="line"></span><br><span class="line">lr = LinearRegression()</span><br><span class="line">lr.fit(X_train_scaled, y_train)</span><br><span class="line">coefs_lr = pd.Series(lr.coef_).round()</span><br><span class="line">coefs_lr.index = X_train.columns</span><br><span class="line">coefs_lr</span><br><span class="line"></span><br><span class="line">lr.intercept_</span><br></pre></td></tr></table></figure></div>
+<p>输出结果为:<br>world_rank              0.0<br>national_rank          -0.0<br>quality_of_education   -0.0<br>alumni_employment      -1.0<br>quality_of_faculty     -4.0<br>publications           -0.0<br>influence              -0.0<br>citations              -0.0<br>patents                -0.0<br>dtype: float64</p>
+<p>47.83457386363636</p>
+<p>模型得到的结果很低 说明拟合得不好<br>更换其他线性回归模型试试</p>
+<div class="tabs" id="tab-线性回归模型"><ul class="nav-tabs"><li class="tab active"><a class="#线性回归模型-1">岭回归</a></li><li class="tab"><a class="#线性回归模型-2">lasso回归</a></li><li class="tab"><a class="#线性回归模型-3">弹性网回归</a></li></ul><div class="tab-content"><div class="tab-pane active" id="线性回归模型-1"><p><strong>岭回归</strong></p>
+ <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ridge= linear_model.Ridge(alpha=0.05)</span><br><span class="line">ridge.fit(X_train,y_train)</span><br><span class="line">Y_hat = ridge.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;截距为：&quot;</span>, ridge.intercept_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;回归系数为：&quot;</span>, ridge.coef_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;RMSE:&quot;</span>, np.sqrt(metrics.mean_squared_error(y_test, Y_hat)))</span><br></pre></td></tr></table></figure></div>
+<p> 输出结果为:<br> 截距为： 63.60601382257282<br>回归系数为： [ 0.00116895 -0.00608447 -0.00380894 -0.00592045 -0.06344228 -0.00045937<br> -0.0009899  -0.00046924 -0.00164281]<br> RMSE: 5.369301120766853</p></div><div class="tab-pane" id="线性回归模型-2"><p><strong>lasso回归</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">lasso= linear_model.Lasso(alpha=0.05)</span><br><span class="line">lasso.fit(X_train,y_train)</span><br><span class="line">Y_hat=lasso.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;截距为：&quot;</span>,lasso.intercept_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;回归系数为：&quot;</span>, lasso.coef_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;RMSE:&quot;</span>, np.sqrt(metrics.mean_squared_error(y_test, Y_hat)))</span><br></pre></td></tr></table></figure></div>
+<p>输出结果为:<br>截距为： 63.602800047243974<br>回归系数为： [ 0.00115484 -0.00606551 -0.00381082 -0.00591616 -0.06342471 -0.00045677<br> -0.00098495 -0.00046729 -0.00164163]<br> RMSE: 5.369181579518303</p></div><div class="tab-pane" id="线性回归模型-3"><p><strong>弹性网回归</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">elastic= linear_model.ElasticNet(alpha=0.1,l1_ratio=0.4)</span><br><span class="line">elastic.fit(X_train,y_train)</span><br><span class="line">y_hat = elastic.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;截距为：&quot;</span>,elastic.intercept_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;回归系数为：&quot;</span>, elastic.coef_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;RMSE:&quot;</span>, np.sqrt(metrics.mean_squared_error(y_test, Y_hat)))</span><br></pre></td></tr></table></figure></div>
+<p>输出结果为:<br>截距为： 63.60327653271375<br>回归系数为： [ 0.00115777 -0.0060693  -0.00381124 -0.00591707 -0.06342543 -0.00045734<br> -0.00098603 -0.00046779 -0.00164194]<br> RMSE: 5.369181579518303</p></div></div></div>
+
+<p>可以看到这些回归得到的结果都不好<br>说明这个不是呈线性关系</p>
+<p>我们使用随机森林进行尝试</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">rf = RandomForestRegressor()</span><br><span class="line">rf.fit(X_train, y_train)</span><br><span class="line">rf_train_pred = rf.predict(X_train)</span><br><span class="line">rf_test_pred = rf.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;训练集上的均方根误差和决定系数分别为:&quot;</span>, root_mean_squared_error(rf_train_pred,y_train), r2_score(rf_train_pred,y_train))</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;测试集上的均方根误差和决定系数分别为:&quot;</span>, root_mean_squared_error(rf_test_pred,y_test), r2_score(rf_test_pred,y_test))</span><br></pre></td></tr></table></figure></div>
+<p>输出结果为:<br>训练集上的均方根误差和决定系数分别为: 0.396126717281446 0.9974538720434839<br>测试集上的均方根误差和决定系数分别为: 1.0185613846393418 0.9808937922886296</p>
+<p>可以看到 决定系数为0.99 0.98以上 说明模型拟合得很好</p>
 ]]></content>
       <tags>
-        <tag>摄影</tag>
+        <tag>机器学习</tag>
       </tags>
   </entry>
   <entry>
@@ -365,6 +414,62 @@
                      lazyload
                      src="/images/loading.svg"
                      data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09967.jpg"
+                      alt="photo"
+                ></p>
+]]></content>
+      <tags>
+        <tag>摄影</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>广州旅游</title>
+    <url>/zhihaojiang.github.io/2024/07/31/%E5%B9%BF%E5%B7%9E%E6%97%85%E6%B8%B8/</url>
+    <content><![CDATA[<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://github.com/super-213/hexo-images/blob/main/articles/2024/07/31/2024-05811.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05829.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05837.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05840.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05883.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05884.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05904.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/001.jpg"
                       alt="photo"
                 ></p>
 ]]></content>
@@ -513,126 +618,21 @@
       </tags>
   </entry>
   <entry>
-    <title>机器学习作业笔记</title>
-    <url>/zhihaojiang.github.io/2025/03/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>我们需要利用回归分析预测世界大学综合得分</p>
-<p>#Jupyter notebook代码<br>基本库导入</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line">from sklearn.metrics import mean_squared_error,r2_score</span><br><span class="line">from scipy import stats</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line">from sklearn.metrics import root_mean_squared_error</span><br><span class="line">from sklearn import linear_model</span><br><span class="line">from sklearn import metrics</span><br></pre></td></tr></table></figure></div>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">university = pd.read_csv(<span class="string">&#x27;cwurData.csv&#x27;</span>)</span><br><span class="line">university.head()</span><br></pre></td></tr></table></figure></div>
-<p>此时可能会出现报错</p>
+    <title>Hello World</title>
+    <url>/zhihaojiang.github.io/2025/01/03/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
 
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>报错信息</p>
+<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
 
-    </div>
-    <div class="notel-content">
-      <p>File parsers.pyx:574, in pandas._libs.parsers.TextReader.<strong>cinit</strong>()</p>
-<p>File parsers.pyx:663, in pandas._libs.parsers.TextReader._get_header()</p>
-<p>File parsers.pyx:874, in pandas._libs.parsers.TextReader._tokenize_rows()</p>
-<p>File parsers.pyx:891, in pandas._libs.parsers.TextReader._check_tokenize_status()</p>
-<p>File parsers.pyx:2053, in pandas._libs.parsers.raise_parser_error()</p>
-<p>File <frozen codecs>:322, in decode(self, input, final)</p>
-<p>UnicodeDecodeError: ‘utf-8’ codec can’t decode bytes in position 3864-3865: invalid continuation byte</p>
+<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
 
-    </div>
-  </div>
-<p>不用担心，这是因为pd.read_csv()在不指明encoding时默认使用utf-8编码<br>这段报错是因为该文件不是使用utf-8进行编码。<br>我们可以写一段代码判断文件的编码格式</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import chardet</span><br><span class="line"></span><br><span class="line">with open(<span class="string">&#x27;cwurData.csv&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) as f:</span><br><span class="line">    university = f.read()</span><br><span class="line">    encoding = chardet.detect(university)</span><br><span class="line">    <span class="built_in">print</span>(encoding)</span><br></pre></td></tr></table></figure></div>
-<p>之后将其输出的encoding写入pd.read_csv()即可</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">university = pd.read_csv(<span class="string">&#x27;cwurData.csv&#x27;</span>, encoding=<span class="string">&#x27;GBK&#x27;</span>)</span><br><span class="line">university.head()</span><br></pre></td></tr></table></figure></div>
-<p>输出结果为<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/001.png"
-                      alt="photo"
-                ><br>通过该数据可知其数字应该是越小越好<br>因此相关性应该是负数 且越小越好</p>
-<p>之后我们查看文件的维度</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">university.shape</span><br></pre></td></tr></table></figure></div>
-<p>输出结果为:(2200, 14)<br>说明该文件总共有2200行数据，14个特征</p>
-<p>接下来我们分析下文件是否有异常</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">university.describe()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/002.png"
-                      alt="photo"
-                ><br>从第一行(count)看到 broad_impact数据与其他数据不同<br>上述从head()函数我猜测broad_impact列全是NA<br>仔细查看文件后可知:2012年和2013年的broad_impact存在缺失<br>其他数据看起来没什么问题 数据质量基本完整</p>
-<p>先用相关性矩阵看看各个数据之间的关系</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">y = university[<span class="string">&#x27;score&#x27;</span>]</span><br><span class="line">X = university.drop([<span class="string">&quot;score&quot;</span>,<span class="string">&quot;institution&quot;</span>,<span class="string">&quot;country&quot;</span>, <span class="string">&quot;year&quot;</span>,<span class="string">&quot;broad_impact&quot;</span>],axis=1)</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">correlation_matrix = pd.concat([X_train, y_train], axis=1).corr()</span><br><span class="line"></span><br><span class="line">sns.heatmap(correlation_matrix, annot=True, cmap=<span class="string">&#x27;coolwarm&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/003.png"
-                      alt="photo"
-                ><br>通过上图可以看到world_rank与publications、influence、citations有强相关性<br>我们用matplotlib.pyplot库做出这些图</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;publications&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;world_rank&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;world_rank&amp;publications&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/004.png"
-                      alt="photo"
-                ></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;influence&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;world_rank&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;world_rank&amp;influence&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/005.png"
-                      alt="photo"
-                ></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;citations&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;world_rank&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;world_rank&amp;citations&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/006.png"
-                      alt="photo"
-                ></p>
-<p>从上述三幅图可以看到world_rank与publications、influence有强相关性<br>world_rank与citations也有一定的相关性 但不是很明显<br>再继续做几张图看看其他数据之间的关系怎么样</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;publications&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;influence&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;influence&amp;publications&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/007.png"
-                      alt="photo"
-                ><br>从图中可以看出点近似集中在一条直线上<br>说明出版物与影响力成正比</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;broad_impact&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;score&quot;</span>]</span><br><span class="line">plt.scatter(x, y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;x&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;score&amp;broad_impact&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/03/28/008.png"
-                      alt="photo"
-                ><br>从图中可以看出broad_impact与score成非线性关系 broad_impact的大小与score无关<br><br>用相关性进行检测</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">x = university[<span class="string">&quot;broad_impact&quot;</span>]</span><br><span class="line">y = university[<span class="string">&quot;score&quot;</span>]</span><br><span class="line">correlation = x.corr(y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;r:&quot;</span>, correlation)</span><br></pre></td></tr></table></figure></div>
-<p>输出结果为:r: -0.5315904271503679</p>
-<p>呈现负相关 因此确定 broad_impact的大小与score无关<br>并且broad_impact中存在缺失值<br>缺失值的处理一般会使用用众数填充、前或后一个数填充、删除缺失列来处理<br>这里broad_impact的大小与score无关<br>因此可以将此列删去<br>同时也可以降低维度</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">y = university[<span class="string">&#x27;score&#x27;</span>]</span><br><span class="line">X = university.drop([<span class="string">&quot;score&quot;</span>,<span class="string">&quot;institution&quot;</span>,<span class="string">&quot;country&quot;</span>, <span class="string">&quot;year&quot;</span>,<span class="string">&quot;broad_impact&quot;</span>],axis=1)</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">lr = LinearRegression()</span><br><span class="line">lr.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">lr.intercept_</span><br><span class="line"></span><br><span class="line">coefs_lr = pd.Series(lr.coef_).round()</span><br><span class="line">coefs_lr.index = X_train.columns</span><br><span class="line">coefs_lr</span><br></pre></td></tr></table></figure></div>
+<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
 
-<p>其结果为:<br>63.60601390140695</p>
-<p>world_rank              0.0<br>national_rank          -0.0<br>quality_of_education   -0.0<br>alumni_employment      -0.0<br>quality_of_faculty     -0.0<br>publications           -0.0<br>influence              -0.0<br>citations              -0.0<br>patents                -0.0<br>dtype: float64</p>
-<p>说明模型拟合得不好<br>查看其均方根误差和决定系数</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">lr_train_pred = lr.predict(X_train)</span><br><span class="line">lr_test_pred = lr.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;训练集上的均方根误差和决定系数分别为:&quot;</span>, root_mean_squared_error(lr_train_pred,y_train), r2_score(lr_train_pred,y_train))</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;测试集上的均方根误差和决定系数分别为:&quot;</span>, root_mean_squared_error(lr_test_pred,y_test), r2_score(lr_test_pred,y_test))</span><br></pre></td></tr></table></figure></div>
-<p>输出结果为:<br>训练集上的均方根误差和决定系数分别为: 5.441831802594455 0.079429595738992<br>测试集上的均方根误差和决定系数分别为: 5.369301125131177 0.06344204755145388</p>
-<p>上述系数过小可能是数值之间差别过大导致拟合得不好<br>将其进行标准化</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">scaler = StandardScaler()</span><br><span class="line">X_train_scaled = scaler.fit_transform(X_train)</span><br><span class="line"></span><br><span class="line">lr = LinearRegression()</span><br><span class="line">lr.fit(X_train_scaled, y_train)</span><br><span class="line">coefs_lr = pd.Series(lr.coef_).round()</span><br><span class="line">coefs_lr.index = X_train.columns</span><br><span class="line">coefs_lr</span><br><span class="line"></span><br><span class="line">lr.intercept_</span><br></pre></td></tr></table></figure></div>
-<p>输出结果为:<br>world_rank              0.0<br>national_rank          -0.0<br>quality_of_education   -0.0<br>alumni_employment      -1.0<br>quality_of_faculty     -4.0<br>publications           -0.0<br>influence              -0.0<br>citations              -0.0<br>patents                -0.0<br>dtype: float64</p>
-<p>47.83457386363636</p>
-<p>模型得到的结果很低 说明拟合得不好<br>更换其他线性回归模型试试</p>
-<div class="tabs" id="tab-线性回归模型"><ul class="nav-tabs"><li class="tab active"><a class="#线性回归模型-1">岭回归</a></li><li class="tab"><a class="#线性回归模型-2">lasso回归</a></li><li class="tab"><a class="#线性回归模型-3">弹性网回归</a></li></ul><div class="tab-content"><div class="tab-pane active" id="线性回归模型-1"><p><strong>岭回归</strong></p>
- <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ridge= linear_model.Ridge(alpha=0.05)</span><br><span class="line">ridge.fit(X_train,y_train)</span><br><span class="line">Y_hat = ridge.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;截距为：&quot;</span>, ridge.intercept_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;回归系数为：&quot;</span>, ridge.coef_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;RMSE:&quot;</span>, np.sqrt(metrics.mean_squared_error(y_test, Y_hat)))</span><br></pre></td></tr></table></figure></div>
-<p> 输出结果为:<br> 截距为： 63.60601382257282<br>回归系数为： [ 0.00116895 -0.00608447 -0.00380894 -0.00592045 -0.06344228 -0.00045937<br> -0.0009899  -0.00046924 -0.00164281]<br> RMSE: 5.369301120766853</p></div><div class="tab-pane" id="线性回归模型-2"><p><strong>lasso回归</strong></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">lasso= linear_model.Lasso(alpha=0.05)</span><br><span class="line">lasso.fit(X_train,y_train)</span><br><span class="line">Y_hat=lasso.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;截距为：&quot;</span>,lasso.intercept_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;回归系数为：&quot;</span>, lasso.coef_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;RMSE:&quot;</span>, np.sqrt(metrics.mean_squared_error(y_test, Y_hat)))</span><br></pre></td></tr></table></figure></div>
-<p>输出结果为:<br>截距为： 63.602800047243974<br>回归系数为： [ 0.00115484 -0.00606551 -0.00381082 -0.00591616 -0.06342471 -0.00045677<br> -0.00098495 -0.00046729 -0.00164163]<br> RMSE: 5.369181579518303</p></div><div class="tab-pane" id="线性回归模型-3"><p><strong>弹性网回归</strong></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">elastic= linear_model.ElasticNet(alpha=0.1,l1_ratio=0.4)</span><br><span class="line">elastic.fit(X_train,y_train)</span><br><span class="line">y_hat = elastic.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;截距为：&quot;</span>,elastic.intercept_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;回归系数为：&quot;</span>, elastic.coef_)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;RMSE:&quot;</span>, np.sqrt(metrics.mean_squared_error(y_test, Y_hat)))</span><br></pre></td></tr></table></figure></div>
-<p>输出结果为:<br>截距为： 63.60327653271375<br>回归系数为： [ 0.00115777 -0.0060693  -0.00381124 -0.00591707 -0.06342543 -0.00045734<br> -0.00098603 -0.00046779 -0.00164194]<br> RMSE: 5.369181579518303</p></div></div></div>
-
-<p>可以看到这些回归得到的结果都不好<br>说明这个不是呈线性关系</p>
-<p>我们使用随机森林进行尝试</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">rf = RandomForestRegressor()</span><br><span class="line">rf.fit(X_train, y_train)</span><br><span class="line">rf_train_pred = rf.predict(X_train)</span><br><span class="line">rf_test_pred = rf.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;训练集上的均方根误差和决定系数分别为:&quot;</span>, root_mean_squared_error(rf_train_pred,y_train), r2_score(rf_train_pred,y_train))</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;测试集上的均方根误差和决定系数分别为:&quot;</span>, root_mean_squared_error(rf_test_pred,y_test), r2_score(rf_test_pred,y_test))</span><br></pre></td></tr></table></figure></div>
-<p>输出结果为:<br>训练集上的均方根误差和决定系数分别为: 0.396126717281446 0.9974538720434839<br>测试集上的均方根误差和决定系数分别为: 1.0185613846393418 0.9808937922886296</p>
-<p>可以看到 决定系数为0.99 0.98以上 说明模型拟合得很好</p>
+<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 ]]></content>
-      <tags>
-        <tag>机器学习</tag>
-      </tags>
   </entry>
 </search>
