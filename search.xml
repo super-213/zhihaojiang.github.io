@@ -1,8 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hello World</title>
+    <url>/zhihaojiang.github.io/2025/01/03/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>广州旅游</title>
+    <url>/zhihaojiang.github.io/2024/07/31/20240731%E5%B9%BF%E5%B7%9E%E6%97%85%E6%B8%B8/</url>
+    <content><![CDATA[<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://github.com/super-213/hexo-images/blob/main/articles/2024/07/31/2024-05811.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05829.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05837.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05840.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05883.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05884.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05904.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/001.jpg"
+                      alt="photo"
+                ></p>
+]]></content>
+      <categories>
+        <category>旅游</category>
+      </categories>
+      <tags>
+        <tag>摄影</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>嘉兴大学演出</title>
+    <url>/zhihaojiang.github.io/2024/10/17/20241017%E5%98%89%E5%85%B4%E5%A4%A7%E5%AD%A6%E6%BC%94%E5%87%BA/</url>
+    <content><![CDATA[<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07355.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07363.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07436.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07465.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07470.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07494.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07495.jpg"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07496.jpg"
+                      alt="photo"
+                ></p>
+]]></content>
+      <categories>
+        <category>日常</category>
+      </categories>
+      <tags>
+        <tag>摄影</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL语句</title>
-    <url>/zhihaojiang.github.io/2025/01/06/MySQL%E8%AF%AD%E5%8F%A5/</url>
+    <url>/zhihaojiang.github.io/2025/01/06/20250106MySQL%E8%AF%AD%E5%8F%A5/</url>
     <content><![CDATA[<p>本位与2025-01-06在CSDN上发布 现将其转移至自己的博客</p>
 <h2 id="引擎相关"><a href="#引擎相关" class="headerlink" title="引擎相关"></a>引擎相关</h2><h3 id="查看存储引擎："><a href="#查看存储引擎：" class="headerlink" title="查看存储引擎："></a>查看存储引擎：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">show engines;</span><br></pre></td></tr></table></figure></div>
 <h3 id="查看显示支持的存储引擎信息："><a href="#查看显示支持的存储引擎信息：" class="headerlink" title="查看显示支持的存储引擎信息："></a>查看显示支持的存储引擎信息：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">show variables like <span class="string">&#x27;have%&#x27;</span></span><br></pre></td></tr></table></figure></div>
@@ -190,59 +326,59 @@
       </tags>
   </entry>
   <entry>
-    <title>嘉兴大学演出</title>
-    <url>/zhihaojiang.github.io/2024/10/17/%E5%98%89%E5%85%B4%E5%A4%A7%E5%AD%A6%E6%BC%94%E5%87%BA/</url>
+    <title>澳洲旅游</title>
+    <url>/zhihaojiang.github.io/2025/01/25/20250125%E6%BE%B3%E6%B4%B2%E6%97%85%E6%B8%B8/</url>
     <content><![CDATA[<p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07355.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09682.jpg"
                       alt="photo"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07363.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09718.jpg"
                       alt="photo"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07436.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09763.jpg"
                       alt="photo"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07465.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09941.jpg"
                       alt="photo"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07470.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09945.jpg"
                       alt="photo"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07494.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09946.jpg"
                       alt="photo"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07495.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09958.jpg"
                       alt="photo"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/10/17/2024-07496.jpg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09967.jpg"
                       alt="photo"
                 ></p>
 ]]></content>
       <categories>
-        <category>日常</category>
+        <category>旅游</category>
       </categories>
       <tags>
         <tag>摄影</tag>
@@ -250,7 +386,7 @@
   </entry>
   <entry>
     <title>机器学习作业笔记</title>
-    <url>/zhihaojiang.github.io/2025/03/28/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <url>/zhihaojiang.github.io/2025/03/28/20250328%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>我们需要利用回归分析预测世界大学综合得分</p>
 <p>#Jupyter notebook代码<br>基本库导入</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line">from sklearn.metrics import mean_squared_error,r2_score</span><br><span class="line">from scipy import stats</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line">from sklearn.metrics import root_mean_squared_error</span><br><span class="line">from sklearn import linear_model</span><br><span class="line">from sklearn import metrics</span><br></pre></td></tr></table></figure></div>
@@ -375,126 +511,8 @@
       </tags>
   </entry>
   <entry>
-    <title>澳洲旅游</title>
-    <url>/zhihaojiang.github.io/2025/01/25/%E6%BE%B3%E6%B4%B2%E6%97%85%E6%B8%B8/</url>
-    <content><![CDATA[<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09682.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09718.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09763.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09941.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09945.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09946.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09958.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/01/25/2025-09967.jpg"
-                      alt="photo"
-                ></p>
-]]></content>
-      <categories>
-        <category>旅游</category>
-      </categories>
-      <tags>
-        <tag>摄影</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>广州旅游</title>
-    <url>/zhihaojiang.github.io/2024/07/31/%E5%B9%BF%E5%B7%9E%E6%97%85%E6%B8%B8/</url>
-    <content><![CDATA[<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://github.com/super-213/hexo-images/blob/main/articles/2024/07/31/2024-05811.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05829.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05837.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05840.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05883.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05884.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/2024-05904.jpg"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2024/07/31/001.jpg"
-                      alt="photo"
-                ></p>
-]]></content>
-      <categories>
-        <category>旅游</category>
-      </categories>
-      <tags>
-        <tag>摄影</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>连续特征离散化的处理方法及其python实现</title>
-    <url>/zhihaojiang.github.io/2025/03/29/%E8%BF%9E%E7%BB%AD%E7%89%B9%E5%BE%81%E7%A6%BB%E6%95%A3%E5%8C%96%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6python%E5%AE%9E%E7%8E%B0/</url>
+    <url>/zhihaojiang.github.io/2025/03/29/20250329%E8%BF%9E%E7%BB%AD%E7%89%B9%E5%BE%81%E7%A6%BB%E6%95%A3%E5%8C%96%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6python%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<h2 id="等距离散法"><a href="#等距离散法" class="headerlink" title="等距离散法"></a>等距离散法</h2><p>将连续数据的范围划分为几个宽度相等的区间。每个区间内的数值都有相同的范围。</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成连续数据</span></span><br><span class="line">data = np.random.randn(1000)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将数据分为 5 个等宽区间</span></span><br><span class="line">bins = pd.cut(data, bins=5)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看分箱结果</span></span><br><span class="line"><span class="built_in">print</span>(bins.value_counts())</span><br></pre></td></tr></table></figure></div>
 
@@ -636,27 +654,9 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/zhihaojiang.github.io/2025/01/03/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>MCP介绍及其创建使用</title>
-    <url>/zhihaojiang.github.io/2025/03/30/MCP%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%85%B6%E5%88%9B%E5%BB%BA%E4%BD%BF%E7%94%A8/</url>
-    <content><![CDATA[<p>##MCP是什么<br>MCP（Model Context Protocol，模型上下文协议）是由 Anthropic 于 2024 年 11 月推出的一种开放标准协议，旨在统一大型语言模型（LLM）与外部数据源和工具之间的通信方式。​<br><strong>Model Context Protocol (MCP)</strong><br>MCP 是一个标准协议，就像给 AI 大模型装了一个 “万能接口”，让 AI 模型能够与不同的数据源和工具进行无缝交互。它就像 USB-C 接口一样，提供了一种标准化的方法，将 AI 模型连接到各种数据源和工具。<br>MCP 旨在替换碎片化的 Agent 代码集成，从而使 AI 系统更可靠，更有效。通过建立通用标准，服务商可以基于协议来推出它们自己服务的 AI 能力，从而支持开发者更快的构建更强大的 AI 应用。开发者也不需要重复造轮子，通过开源项目可以建立强大的 AI Agent 生态。<br>MCP 的核心概念包括：</p>
+    <url>/zhihaojiang.github.io/2025/03/30/20250330MCP%E4%BB%8B%E7%BB%8D%E5%8F%8A%E5%85%B6%E5%88%9B%E5%BB%BA%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="MCP是什么"><a href="#MCP是什么" class="headerlink" title="MCP是什么"></a>MCP是什么</h2><p>MCP（Model Context Protocol，模型上下文协议）是由 Anthropic 于 2024 年 11 月推出的一种开放标准协议，旨在统一大型语言模型（LLM）与外部数据源和工具之间的通信方式。​<br><strong>Model Context Protocol (MCP)</strong><br>MCP 是一个标准协议，就像给 AI 大模型装了一个 “万能接口”，让 AI 模型能够与不同的数据源和工具进行无缝交互。它就像 USB-C 接口一样，提供了一种标准化的方法，将 AI 模型连接到各种数据源和工具。<br>MCP 旨在替换碎片化的 Agent 代码集成，从而使 AI 系统更可靠，更有效。通过建立通用标准，服务商可以基于协议来推出它们自己服务的 AI 能力，从而支持开发者更快的构建更强大的 AI 应用。开发者也不需要重复造轮子，通过开源项目可以建立强大的 AI Agent 生态。<br>MCP 的核心概念包括：</p>
 <ol>
 <li>上下文共享：​应用程序可以通过 MCP 向模型提供所需的上下文信息，如文件内容、数据库记录等，增强模型的理解和生成能力。</li>
 <li>工具暴露：​MCP 允许应用程序将功能（如文件读写、API 调用）暴露给模型，模型可以调用这些工具完成复杂任务。​</li>
@@ -717,6 +717,24 @@
         <tag>python</tag>
         <tag>MCP</tag>
         <tag>AI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>字母在字符串中的百分比</title>
+    <url>/zhihaojiang.github.io/2025/03/31/20250331%E5%AD%97%E6%AF%8D%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%99%BE%E5%88%86%E6%AF%94/</url>
+    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个字符串 s 和一个字符 letter ，返回在 s 中等于 letter 字符所占的 百分比 ，向下取整到最接近的百分比。</p>
+<p>示例 1：</p>
+<p>输入：s &#x3D; “foobar”, letter &#x3D; “o”<br>输出：33<br>解释：<br>等于字母 ‘o’ 的字符在 s 中占到的百分比是 2 &#x2F; 6 * 100% &#x3D; 33% ，向下取整，所以返回 33 。<br>示例 2：</p>
+<p>输入：s &#x3D; “jjjj”, letter &#x3D; “k”<br>输出：0<br>解释：<br>等于字母 ‘k’ 的字符在 s 中占到的百分比是 0% ，所以返回 0 。</p>
+<p>提示：</p>
+<p>1 &lt;&#x3D; s.length &lt;&#x3D; 100<br>s 由小写英文字母组成<br>letter 是一个小写英文字母</p>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"></ul><div class="tab-content"></div></div>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>力扣</tag>
       </tags>
   </entry>
 </search>
