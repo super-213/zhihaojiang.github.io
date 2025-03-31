@@ -36,7 +36,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
 <meta property="article:published_time" content="2025-03-31T03:45:14.000Z">
-<meta property="article:modified_time" content="2025-03-31T11:50:08.190Z">
+<meta property="article:modified_time" content="2025-03-31T12:00:16.820Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="力扣">
@@ -588,8 +588,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-03-31 19:50:08</span>
-            <span class="mobile">2025-03-31 19:50:08</span>
+            <span class="desktop">2025-03-31 20:16</span>
+            <span class="mobile">2025-03-31 20:16</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -631,7 +631,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>164 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>358 Words</span>
         </span>
     
     
@@ -661,7 +661,9 @@
 <p>输入：s &#x3D; “jjjj”, letter &#x3D; “k”<br>输出：0<br>解释：<br>等于字母 ‘k’ 的字符在 s 中占到的百分比是 0% ，所以返回 0 。</p>
 <p>提示：</p>
 <p>1 &lt;&#x3D; s.length &lt;&#x3D; 100<br>s 由小写英文字母组成<br>letter 是一个小写英文字母</p>
-<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"></ul><div class="tab-content"></div></div>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><div class="tabs" id="tab-first-unique-name"><ul class="nav-tabs"><li class="tab active"><a class="#first-unique-name-1">方法一</a></li><li class="tab"><a class="#first-unique-name-2">方法二</a></li></ul><div class="tab-content"><div class="tab-pane active" id="first-unique-name-1"><p><strong>正常思路</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def percentageLetter(self, s, letter):</span><br><span class="line">        n = len(s)  <span class="comment">#把长度赋值给n</span></span><br><span class="line">        count = 0   <span class="comment">#初始化统计个数变量</span></span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> s: <span class="comment">#从字符串第一个字符开始循环</span></span><br><span class="line">            <span class="keyword">if</span> index == letter: <span class="comment">#如果s的下标index和我们要找的字符letter相同</span></span><br><span class="line">                count += 1  <span class="comment">#+1</span></span><br><span class="line">        <span class="built_in">return</span> 100 * count // n <span class="comment">#个数比总数在乘以100%就得到了其百分比</span></span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="first-unique-name-2"><p><strong>python库实现</strong></p>
+ <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> class Solution:</span><br><span class="line">    def percentageLetter(self, s: str, letter: str) -&gt; int:</span><br><span class="line">        <span class="built_in">return</span> s.count(letter) * 100 // len(s)  <span class="comment">#主要用到了count()函数</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#作者：灵茶山艾府</span></span><br><span class="line"><span class="comment">#链接：https://leetcode.cn/problems/percentage-of-letter-in-string/solutions/#1510439/ku-han-shu-mo-ni-by-endlesscheng-fqad/</span></span><br><span class="line"><span class="comment">#来源：力扣（LeetCode）</span></span><br><span class="line"><span class="comment">#著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span></span><br></pre></td></tr></table></figure></div></div></div></div>
 		</div>
 
 		
@@ -675,7 +677,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-03-31 19:50:08
+                    :</strong> 2025-03-31 20:00:16
             </li>
         
         <li>
@@ -773,7 +775,7 @@
                     </span>
                     
                         <span>
-                            7.9k words in total
+                            8k words in total
                         </span>
                     
                 </p>
