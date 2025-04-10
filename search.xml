@@ -1075,7 +1075,7 @@
 <blockquote>
 <p>示例 ：<br>相关系数（Pearson、Spearman）<br>卡方检验<br>互信息</p>
 </blockquote>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.feature_selection import SelectKBest, chi2</span><br><span class="line">from sklearn.datasets import load_iris</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line">X, y = load_iris(return_X_y=True)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用卡方检验选择前 2 个最佳特征</span></span><br><span class="line">selector = SelectKBest(chi2, k=2)</span><br><span class="line">X_new = selector.fit_transform(X, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选择后的特征形状：&quot;</span>, X_new.shape)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="特征选择-2"><p>通过反复训练模型来评估特征子集的表现。<br>常用算法：递归特征消除（RFE）。<br>优点 ：考虑特征之间的交互关系。<br>缺点 ：计算成本高。</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.feature_selection import SelectKBest, chi2</span><br><span class="line">from sklearn.datasets import load_iris</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用卡方检验选择前 2 个最佳特征</span></span><br><span class="line">selector = SelectKBest(chi2, k=2)</span><br><span class="line">X_new = selector.fit_transform(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选择后的特征形状：&quot;</span>, X_new.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;每个特征的得分：&quot;</span>, selector.scores_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;是否被选择：&quot;</span>, selector.get_support())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出每个特征的得分</span></span><br><span class="line">scores = pd.Series(selector.scores_, index=X.columns)</span><br><span class="line">scores = scores.sort_values(ascending=False)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;卡方检验得分最高的特征：\n&quot;</span>, scores.head(10))</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="特征选择-2"><p>通过反复训练模型来评估特征子集的表现。<br>常用算法：递归特征消除（RFE）。<br>优点 ：考虑特征之间的交互关系。<br>缺点 ：计算成本高。</p>
 <blockquote>
 <p>示例 ：<br>RFE（Recursive Feature Elimination）</p>
  <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"> from sklearn.feature_selection import RFE</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line">model = LogisticRegression()</span><br><span class="line">rfe = RFE(model, n_features_to_select=2)</span><br><span class="line">X_new = rfe.fit_transform(X, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选择后的特征形状：&quot;</span>, X_new.shape)</span><br></pre></td></tr></table></figure></div></blockquote></div><div class="tab-pane" id="特征选择-3"><p>在模型训练过程中自动选择重要特征。<br>常用算法：Lasso 回归、树模型（如随机森林、XGBoost）。<br>优点 ：结合了模型训练和特征选择。<br>缺点 ：依赖于具体模型。</p>
@@ -1084,7 +1084,7 @@
 </blockquote>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import Lasso</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 Lasso 回归进行特征选择</span></span><br><span class="line">lasso = Lasso(alpha=0.1)</span><br><span class="line">lasso.fit(X, y)</span><br><span class="line">selected_features = [i <span class="keyword">for</span> i, coef <span class="keyword">in</span> enumerate(lasso.coef_) <span class="keyword">if</span> coef != 0]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选择的特征索引：&quot;</span>, selected_features)</span><br></pre></td></tr></table></figure></div></div></div></div>
 <h4 id="主成分分析（PCA）"><a href="#主成分分析（PCA）" class="headerlink" title="主成分分析（PCA）"></a>主成分分析（PCA）</h4><p>将数据投影到方差最大的方向上。<br>优点 ：线性变换，计算高效。<br>缺点 ：仅适用于线性可分的数据。</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.decomposition import PCA</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 PCA 降维到 2 维</span></span><br><span class="line">pca = PCA(n_components=2)</span><br><span class="line">X_pca = pca.fit_transform(X)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;降维后的数据形状：&quot;</span>, X_pca.shape)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.decomposition import PCA</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 PCA 降维到 2 维</span></span><br><span class="line">pca = PCA(n_components=2)</span><br><span class="line">X_pca = pca.fit_transform(X_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;降维后的数据形状：&quot;</span>, X_pca.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每个主成分的贡献率</span></span><br><span class="line">explained_variance = pd.Series(pca.explained_variance_ratio_, index=[f<span class="string">&#x27;PC&#123;i+1&#125;&#x27;</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(2)])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;主成分贡献率：\n&quot;</span>, explained_variance)</span><br></pre></td></tr></table></figure></div>
 
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h3 id="相关性分析"><a href="#相关性分析" class="headerlink" title="相关性分析"></a>相关性分析</h3><p>相关性矩阵</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">y = data[<span class="string">&#x27;target&#x27;</span>]  <span class="comment">#填入要进行分析的结果列 通常为最后一列</span></span><br><span class="line">X = diabetes.drop([<span class="string">&#x27;target&#x27;</span>, <span class="string">&#x27;others&#x27;</span>], axis=1) <span class="comment">#去除结果列和字符列（如果有）</span></span><br><span class="line"><span class="comment">#通常string类型的列（离散的特性）进行调整成int类型（连续化）即离散特征连续化</span></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">correlation_matrix = pd.concat([X_train, y_train], axis=1).corr()</span><br><span class="line"></span><br><span class="line">sns.heatmap(correlation_matrix, annot=True, cmap=<span class="string">&#x27;coolwarm&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
@@ -1163,6 +1163,75 @@
 </blockquote>
 <h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><p>采用倒序判断 arr为一个布尔数组 用于判断数字是否重复出现 是O(n)的时间复杂度</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def minimumOperations(self, nums):</span><br><span class="line">        n = len(nums)</span><br><span class="line">        arr = [False] * 128</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n - 1,-1 , -1):</span><br><span class="line">            <span class="keyword">if</span> arr[nums[i]]:</span><br><span class="line">                <span class="built_in">return</span> i // 3 + 1</span><br><span class="line">            arr[nums[i]] = True</span><br><span class="line">        <span class="built_in">return</span> 0</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>力扣</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使数组的值全部为 K 的最少操作次数</title>
+    <url>/zhihaojiang.github.io/2025/04/09/20250409%E4%BD%BF%E6%95%B0%E7%BB%84%E7%9A%84%E5%80%BC%E5%85%A8%E9%83%A8%E4%B8%BA%20K%20%E7%9A%84%E6%9C%80%E5%B0%91%E6%93%8D%E4%BD%9C%E6%AC%A1%E6%95%B0/</url>
+    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个整数数组 nums 和一个整数 k 。</p>
+<p>如果一个数组中所有 严格大于 h 的整数值都 相等 ，那么我们称整数 h 是 合法的 。</p>
+<p>比方说，如果 nums &#x3D; [10, 8, 10, 8] ，那么 h &#x3D; 9 是一个 合法 整数，因为所有满足 nums[i] &gt; 9 的数都等于 10 ，但是 5 不是 合法 整数。</p>
+<p>你可以对 nums 执行以下操作：</p>
+<p>选择一个整数 h ，它对于 当前 nums 中的值是合法的。<br>对于每个下标 i ，如果它满足 nums[i] &gt; h ，那么将 nums[i] 变为 h 。<br>你的目标是将 nums 中的所有元素都变为 k ，请你返回 最少 操作次数。如果无法将所有元素都变 k ，那么返回 -1 。</p>
+<blockquote>
+<p>示例 1：</p>
+<p>输入：nums &#x3D; [5,2,5,4,5], k &#x3D; 2</p>
+<p>输出：2</p>
+<p>解释：</p>
+<p>依次选择合法整数 4 和 2 ，将数组全部变为 2 。</p>
+<p>示例 2：</p>
+<p>输入：nums &#x3D; [2,1,2], k &#x3D; 2</p>
+<p>输出：-1</p>
+<p>解释：</p>
+<p>没法将所有值变为 2 。</p>
+<p>示例 3：</p>
+<p>输入：nums &#x3D; [9,7,5,3], k &#x3D; 1</p>
+<p>输出：4</p>
+<p>解释：</p>
+<p>依次选择合法整数 7 ，5 ，3 和 1 ，将数组全部变为 1 。</p>
+</blockquote>
+<h2 id="解释题目"><a href="#解释题目" class="headerlink" title="解释题目"></a>解释题目</h2><p>异常情况: nums[i]&lt;k, 直接返回 −1<br>需要进行转换的元素: nums[i]&gt;k<br>无需转换的元素: nums[i]&#x3D;&#x3D;k</p>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def minOperations(self, nums, k):</span><br><span class="line">        n = len(nums)</span><br><span class="line">        s = <span class="built_in">set</span>([])</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">if</span> nums[i] &lt; k:</span><br><span class="line">                <span class="built_in">return</span> -1</span><br><span class="line">            <span class="keyword">if</span> nums[i] != k:</span><br><span class="line">                s.add(nums[i])</span><br><span class="line">        <span class="built_in">return</span> len(s)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><p><strong>set()</strong><br>set顾名思义是集合 里面不能包含重复的元素 接收一个list作为参数<br>set() 函数创建一个无序不重复元素集 可进行关系测试 删除重复数据 还可以计算交集、差集、并集等</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">list = [2,3,5,7]</span><br><span class="line">s = <span class="built_in">set</span>(list)</span><br><span class="line"><span class="built_in">print</span>(s) <span class="comment">#输出set([2,3,5,7])</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#添加</span></span><br><span class="line">s.add(9)</span><br><span class="line">s.add(7)</span><br><span class="line"><span class="built_in">print</span>(s) <span class="comment">#输出set([2,3,5,7,9])</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#删除</span></span><br><span class="line">s.remove(9)</span><br><span class="line"><span class="built_in">print</span>(s) <span class="comment">#输出set([2,3,5,7])</span></span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>力扣</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>向字符串添加空格</title>
+    <url>/zhihaojiang.github.io/2025/04/10/20250410%E5%90%91%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B7%BB%E5%8A%A0%E7%A9%BA%E6%A0%BC/</url>
+    <content><![CDATA[<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个下标从 0 开始的字符串 s ，以及一个下标从 0 开始的整数数组 spaces 。</p>
+<p>数组 spaces 描述原字符串中需要添加空格的下标。每个空格都应该插入到给定索引处的字符值 之前 。</p>
+<p>例如，s &#x3D; “EnjoyYourCoffee” 且 spaces &#x3D; [5, 9] ，那么我们需要在 ‘Y’ 和 ‘C’ 之前添加空格，这两个字符分别位于下标 5 和下标 9 。因此，最终得到 “Enjoy Your Coffee” 。<br>请你添加空格，并返回修改后的字符串。</p>
+<blockquote>
+<p>示例 1：</p>
+<p>输入：s &#x3D; “LeetcodeHelpsMeLearn”, spaces &#x3D; [8,13,15]<br>输出：”Leetcode Helps Me Learn”<br>解释：<br>下标 8、13 和 15 对应 “LeetcodeHelpsMeLearn” 中加粗斜体字符。<br>接着在这些字符前添加空格。<br>示例 2：</p>
+<p>输入：s &#x3D; “icodeinpython”, spaces &#x3D; [1,5,7,9]<br>输出：”i code in py thon”<br>解释：<br>下标 1、5、7 和 9 对应 “icodeinpython” 中加粗斜体字符。<br>接着在这些字符前添加空格。<br>示例 3：</p>
+<p>输入：s &#x3D; “spacing”, spaces &#x3D; [0,1,2,3,4,5,6]<br>输出：” s p a c i n g”<br>解释：<br>字符串的第一个字符前可以添加空格。</p>
+</blockquote>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def addSpaces(self, s, spaces):</span><br><span class="line">        s = list(s) <span class="comment">#字符串字符串在 Python 中是不可变的 而列表是可变的</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> spaces:    <span class="comment">#遍历 spaces 中的每个元素 即i = spaces[i]</span></span><br><span class="line">            s[i] = <span class="string">&#x27; &#x27;</span> + s[i]</span><br><span class="line">        <span class="built_in">return</span> <span class="string">&#x27;&#x27;</span>.<span class="built_in">join</span>(s)   <span class="comment">#将修改后的字符列表重新组合成一个字符串。</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><p><strong>‘’.join(s)</strong><br>join函数是一个字符串操作函数 这个函数展开来写应该是str.join(item) str表示字符串（字符），item表示一个成员</p>
+<blockquote>
+<p>例子：<br>‘,’.join(‘abc’)<br>输出：<br>‘a,b,c’</p>
+</blockquote>
+<p>join里也可以放列表、元组、字典</p>
+<blockquote>
+<p>例子：<br>‘ ‘.join([a,b,c])<br>输出：<br>a b c</p>
+</blockquote>
 ]]></content>
       <categories>
         <category>学习笔记</category>

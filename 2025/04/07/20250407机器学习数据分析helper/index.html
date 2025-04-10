@@ -36,7 +36,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
 <meta property="article:published_time" content="2025-04-07T03:45:14.000Z">
-<meta property="article:modified_time" content="2025-04-08T07:37:08.910Z">
+<meta property="article:modified_time" content="2025-04-08T08:16:54.450Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="计算机科学">
 <meta property="article:tag" content="数学">
@@ -537,7 +537,7 @@
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">14</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">16</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -574,7 +574,7 @@
 				<div class="author flex items-center">
 					<span class="name text-default-text-color text-lg font-semibold">姜智浩</span>
 					
-					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv3</span>
 					
 				</div>
 				<div class="meta-info">
@@ -588,8 +588,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-04-08 15:37:08</span>
-            <span class="mobile">2025-04-08 15:37:08</span>
+            <span class="desktop">2025-04-08 16:16:54</span>
+            <span class="mobile">2025-04-08 16:16:54</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -726,7 +726,7 @@
 <blockquote>
 <p>示例 ：<br>相关系数（Pearson、Spearman）<br>卡方检验<br>互信息</p>
 </blockquote>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.feature_selection import SelectKBest, chi2</span><br><span class="line">from sklearn.datasets import load_iris</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line">X, y = load_iris(return_X_y=True)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用卡方检验选择前 2 个最佳特征</span></span><br><span class="line">selector = SelectKBest(chi2, k=2)</span><br><span class="line">X_new = selector.fit_transform(X, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选择后的特征形状：&quot;</span>, X_new.shape)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="特征选择-2"><p>通过反复训练模型来评估特征子集的表现。<br>常用算法：递归特征消除（RFE）。<br>优点 ：考虑特征之间的交互关系。<br>缺点 ：计算成本高。</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.feature_selection import SelectKBest, chi2</span><br><span class="line">from sklearn.datasets import load_iris</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用卡方检验选择前 2 个最佳特征</span></span><br><span class="line">selector = SelectKBest(chi2, k=2)</span><br><span class="line">X_new = selector.fit_transform(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选择后的特征形状：&quot;</span>, X_new.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;每个特征的得分：&quot;</span>, selector.scores_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;是否被选择：&quot;</span>, selector.get_support())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出每个特征的得分</span></span><br><span class="line">scores = pd.Series(selector.scores_, index=X.columns)</span><br><span class="line">scores = scores.sort_values(ascending=False)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;卡方检验得分最高的特征：\n&quot;</span>, scores.head(10))</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="特征选择-2"><p>通过反复训练模型来评估特征子集的表现。<br>常用算法：递归特征消除（RFE）。<br>优点 ：考虑特征之间的交互关系。<br>缺点 ：计算成本高。</p>
 <blockquote>
 <p>示例 ：<br>RFE（Recursive Feature Elimination）</p>
  <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> from sklearn.feature_selection import RFE</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line">model = LogisticRegression()</span><br><span class="line">rfe = RFE(model, n_features_to_select=2)</span><br><span class="line">X_new = rfe.fit_transform(X, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选择后的特征形状：&quot;</span>, X_new.shape)</span><br></pre></td></tr></table></figure></div></blockquote></div><div class="tab-pane" id="特征选择-3"><p>在模型训练过程中自动选择重要特征。<br>常用算法：Lasso 回归、树模型（如随机森林、XGBoost）。<br>优点 ：结合了模型训练和特征选择。<br>缺点 ：依赖于具体模型。</p>
@@ -735,7 +735,7 @@
 </blockquote>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import Lasso</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 Lasso 回归进行特征选择</span></span><br><span class="line">lasso = Lasso(alpha=0.1)</span><br><span class="line">lasso.fit(X, y)</span><br><span class="line">selected_features = [i <span class="keyword">for</span> i, coef <span class="keyword">in</span> enumerate(lasso.coef_) <span class="keyword">if</span> coef != 0]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选择的特征索引：&quot;</span>, selected_features)</span><br></pre></td></tr></table></figure></div></div></div></div>
 <h4 id="主成分分析（PCA）"><a href="#主成分分析（PCA）" class="headerlink" title="主成分分析（PCA）"></a>主成分分析（PCA）</h4><p>将数据投影到方差最大的方向上。<br>优点 ：线性变换，计算高效。<br>缺点 ：仅适用于线性可分的数据。</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.decomposition import PCA</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 PCA 降维到 2 维</span></span><br><span class="line">pca = PCA(n_components=2)</span><br><span class="line">X_pca = pca.fit_transform(X)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;降维后的数据形状：&quot;</span>, X_pca.shape)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.decomposition import PCA</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 PCA 降维到 2 维</span></span><br><span class="line">pca = PCA(n_components=2)</span><br><span class="line">X_pca = pca.fit_transform(X_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;降维后的数据形状：&quot;</span>, X_pca.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看每个主成分的贡献率</span></span><br><span class="line">explained_variance = pd.Series(pca.explained_variance_ratio_, index=[f<span class="string">&#x27;PC&#123;i+1&#125;&#x27;</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(2)])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;主成分贡献率：\n&quot;</span>, explained_variance)</span><br></pre></td></tr></table></figure></div>
 
 <h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h3 id="相关性分析"><a href="#相关性分析" class="headerlink" title="相关性分析"></a>相关性分析</h3><p>相关性矩阵</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">y = data[<span class="string">&#x27;target&#x27;</span>]  <span class="comment">#填入要进行分析的结果列 通常为最后一列</span></span><br><span class="line">X = diabetes.drop([<span class="string">&#x27;target&#x27;</span>, <span class="string">&#x27;others&#x27;</span>], axis=1) <span class="comment">#去除结果列和字符列（如果有）</span></span><br><span class="line"><span class="comment">#通常string类型的列（离散的特性）进行调整成int类型（连续化）即离散特征连续化</span></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">correlation_matrix = pd.concat([X_train, y_train], axis=1).corr()</span><br><span class="line"></span><br><span class="line">sns.heatmap(correlation_matrix, annot=True, cmap=<span class="string">&#x27;coolwarm&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
@@ -795,7 +795,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-04-08 15:37:08
+                    :</strong> 2025-04-08 16:16:54
             </li>
         
         <li>
@@ -901,11 +901,11 @@
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        14 posts in total
+                        16 posts in total
                     </span>
                     
                         <span>
-                            16.6k words in total
+                            17.6k words in total
                         </span>
                     
                 </p>
