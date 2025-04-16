@@ -1428,4 +1428,195 @@
         <tag>数学</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Predict Podcast Listening Time</title>
+    <url>/zhihaojiang.github.io/2025/04/16/20250416Predict%20Podcast%20Listening%20Time/</url>
+    <content><![CDATA[<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a class="link"   href="https://www.kaggle.com/competitions/playground-series-s5e4/data" >https://www.kaggle.com/competitions/playground-series-s5e4/data<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h2 id="数据描述"><a href="#数据描述" class="headerlink" title="数据描述"></a>数据描述</h2><p>Dataset Description<br>The dataset for this competition (both train and test) was generated from a deep learning model trained on the Podcast Listening Time Prediction dataset. Feature distributions are close to, but not exactly the same, as the original. Feel free to use the original dataset as part of this competition, both to explore differences as well as to see whether incorporating the original in training improves model performance.</p>
+<p>Files<br>train.csv - the training dataset; Listening_Time_minutes is the target<br>test.csv - the test dataset; your objective is to predict the Listening_Time_minutes for each row<br>sample_submission.csv - a sample submission file in the correct format.</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><p>导入库</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.metrics import mean_squared_error,r2_score</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&#x27;/kaggle/input/playground-series-s5e4/train.csv&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/001.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.describe()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/002.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.info()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/003.png"
+                      alt="photo"
+                ></p>
+<p>现在分析一下这些字段是什么意思：</p>
+<ul>
+<li><code>id</code>：播客名称</li>
+<li><code>podcast_Name</code>：播客名称</li>
+<li><code>Episode_Title</code>：章节标题</li>
+<li><code>Episode_Length_minutes</code>：章节时长</li>
+<li><code>Genre</code>：播客类别</li>
+<li><code>Host_Popularity_percentage</code>：主持人人气百分比</li>
+<li><code>Publication_Day</code>：播放日期</li>
+<li><code>Publication_Time</code>：播放时间</li>
+<li><code>Guest_Popularity_percentage</code>：嘉宾人人气百分比</li>
+<li><code>Number_of_Ads</code>：广告数量</li>
+<li><code>Episode_Sentiment</code>：剧集氛围</li>
+<li><code>Listening_Time_minutes</code>：收听时长 – target</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/004.png"
+                      alt="photo"
+                ></p>
+<h3 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.histplot(<span class="built_in">df</span>[<span class="string">&#x27;Episode_Length_minutes&#x27;</span>], kde=True, bins=30)</span><br><span class="line">plt.title(<span class="string">&#x27;Episode_Length_minutes&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/005.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.histplot(<span class="built_in">df</span>[<span class="string">&#x27;Guest_Popularity_percentage&#x27;</span>], kde=True, bins=30)</span><br><span class="line">plt.title(<span class="string">&#x27;Guest_Popularity_percentage&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/006.png"
+                      alt="photo"
+                ></p>
+<p>可以看到 这两个字段的分布情况比较均匀 并且他们都是连续数值型数据 利用均值填充</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">missing_features = [<span class="string">&#x27;Episode_Length_minutes&#x27;</span>, <span class="string">&#x27;Guest_Popularity_percentage&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> feature <span class="keyword">in</span> missing_features:</span><br><span class="line">    <span class="built_in">df</span>[feature].fillna(<span class="built_in">df</span>[feature].mean(), inplace=True)</span><br><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/007.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.dropna(inplace=True)</span><br><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/008.png"
+                      alt="photo"
+                ><br>接下来我们查看是否存在异常值<br>利用箱线图来查看是否存在异常值</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">features = [<span class="string">&#x27;Episode_Length_minutes&#x27;</span>, </span><br><span class="line">            <span class="string">&#x27;Host_Popularity_percentage&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Guest_Popularity_percentage&#x27;</span>, <span class="string">&#x27;Number_of_Ads&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Listening_Time_minutes&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> features:</span><br><span class="line">    sns.boxplot(x=<span class="built_in">df</span>[col])</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/009.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/010.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/011.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/012.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/013.png"
+                      alt="photo"
+                ></p>
+<h3 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h3><p>从上述图中可以看到 Episode_Length_minutes和Number_of_Ads存在异常值</p>
+<p>Host_Popularity_percentage和Guest_Popularity_percentage存在超过100的值</p>
+<p>从常理来看 百分比不可能大于100</p>
+<p>因此 将Episode_Length_minutes和Number_of_Ads的异常值删除</p>
+<p>将Host_Popularity_percentage和Guest_Popularity_percentage的异常值进行胜率变换</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">deleted_features = [<span class="string">&#x27;Episode_Length_minutes&#x27;</span>, <span class="string">&#x27;Number_of_Ads&#x27;</span>]</span><br><span class="line">df_cleaned = df.copy()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> deleted_features:</span><br><span class="line">    Q1 = df_cleaned[col].quantile(0.25)</span><br><span class="line">    Q3 = df_cleaned[col].quantile(0.75)</span><br><span class="line">    IQR = Q3 - Q1</span><br><span class="line"></span><br><span class="line">    lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">    upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 只保留当前列在正常范围内的数据（逐步过滤）</span></span><br><span class="line">    df_cleaned = df_cleaned[(df_cleaned[col] &gt;= lower_bound) &amp; (df_cleaned[col] &lt;= upper_bound)]</span><br></pre></td></tr></table></figure></div>
+
+<p>检查一遍</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">features = [<span class="string">&#x27;Episode_Length_minutes&#x27;</span>, </span><br><span class="line">            <span class="string">&#x27;Host_Popularity_percentage&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Guest_Popularity_percentage&#x27;</span>, <span class="string">&#x27;Number_of_Ads&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Listening_Time_minutes&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> features:</span><br><span class="line">    sns.boxplot(x=df_cleaned[col])</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/014.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/015.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/016.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/017.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/018.png"
+                      alt="photo"
+                ></p>
+<p>接下来 我们对字符数据进行处理</p>
+<p>值得被编码的特征有：</p>
+<ul>
+<li>Genre</li>
+<li>Publication_Day</li>
+<li>Publication_Time</li>
+<li>Episode_Sentiment</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df_cleaned[<span class="string">&#x27;Genre&#x27;</span>].describe()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/16/019.png"
+                      alt="photo"
+                ></p>
+<p>发现他们的类别都较少 使用独热编码</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line"></span><br><span class="line">one_hot_features = [<span class="string">&#x27;Genre&#x27;</span>, <span class="string">&#x27;Publication_Day&#x27;</span>, <span class="string">&#x27;Publication_Time&#x27;</span>, <span class="string">&#x27;Episode_Sentiment&#x27;</span>]</span><br><span class="line"></span><br><span class="line">ohe = OneHotEncoder(sparse_output=False, handle_unknown=<span class="string">&#x27;ignore&#x27;</span>)</span><br><span class="line"></span><br><span class="line">encoded_array = ohe.fit_transform(df_cleaned[one_hot_features])</span><br><span class="line">encoded_cols = ohe.get_feature_names_out(one_hot_features)</span><br><span class="line"></span><br><span class="line">encoded_df = pd.DataFrame(encoded_array, columns=encoded_cols, index=df_cleaned.index)</span><br><span class="line"></span><br><span class="line">df_cleaned_encoded = pd.concat([df_cleaned.drop(columns=one_hot_features), encoded_df], axis=1)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df_cleaned_encoded.drop(columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;Podcast_Name&#x27;</span>, <span class="string">&#x27;Episode_Title&#x27;</span>], inplace=True)</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="模型选择-模型评估"><a href="#模型选择-模型评估" class="headerlink" title="模型选择&amp;模型评估"></a>模型选择&amp;模型评估</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line"></span><br><span class="line">X = df_cleaned_encoded.drop(columns=[<span class="string">&#x27;Listening_Time_minutes&#x27;</span>])</span><br><span class="line">y = df_cleaned_encoded[<span class="string">&#x27;Listening_Time_minutes&#x27;</span>]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">scaler = StandardScaler()</span><br><span class="line"></span><br><span class="line">X_train_scaled = scaler.fit_transform(X_train)</span><br><span class="line">X_test_scaled = scaler.transform(X_test)</span><br><span class="line"></span><br><span class="line">rf = RandomForestRegressor(n_estimators=100, random_state=42)</span><br><span class="line">rf.fit(X_train_scaled, y_train)</span><br><span class="line"></span><br><span class="line">y_pred = rf.predict(X_test_scaled)</span><br><span class="line"></span><br><span class="line">mse = mean_squared_error(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Mean Squared Error:&quot;</span>, mse)</span><br><span class="line">r2 = r2_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;R^2 Score:&quot;</span>, r2)</span><br></pre></td></tr></table></figure></div>
+
+<p>在我的MacBook AirM2上 该模型用时约4‘47秒</p>
+<p>Mean Squared Error: 161.35316711251312</p>
+<p>R^2 Score: 0.7801317443922687</p>
+<p>未进行特征工程</p>
+<p>我的此项目的kaggle网址：<br><a class="link"   href="https://www.kaggle.com/code/super213/randomforest-r-2-0-78" >https://www.kaggle.com/code/super213/randomforest-r-2-0-78<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数学</tag>
+      </tags>
+  </entry>
 </search>
