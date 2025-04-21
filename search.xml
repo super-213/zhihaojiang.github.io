@@ -1925,4 +1925,56 @@
         <tag>数据分析</tag>
       </tags>
   </entry>
+  <entry>
+    <title>环境检测</title>
+    <url>/zhihaojiang.github.io/2025/04/21/20250421%E7%8E%AF%E5%A2%83%E6%A3%80%E6%B5%8B/</url>
+    <content><![CDATA[<h2 id="开发板"><a href="#开发板" class="headerlink" title="开发板"></a>开发板</h2><p>Arduino UNO R3</p>
+<h2 id="接线"><a href="#接线" class="headerlink" title="接线"></a>接线</h2><p><strong>BMP180</strong></p>
+<blockquote>
+<p>VCC → 3.3V 或 5V<br>GND → GND<br>SCL → A5<br>SDA → A4</p>
+</blockquote>
+<p><strong>OLED (SSD1306 I2C)</strong></p>
+<blockquote>
+<p>VCC → 3.3V 或 5V<br>GND → GND<br>SCL → A5<br>SDA → A4</p>
+</blockquote>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info"></i><p>报错信息</p>
+
+    </div>
+    <div class="notel-content">
+      <p>这两个的SDA和SCL都接A4和A5 可以共用的</p>
+
+    </div>
+  </div>
+
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;Wire.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_Sensor.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_BMP085_U.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_GFX.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_SSD1306.h&gt;</span></span><br><span class="line"></span><br><span class="line">// OLED 设置</span><br><span class="line"><span class="comment">#define SCREEN_WIDTH 128</span></span><br><span class="line"><span class="comment">#define SCREEN_HEIGHT 64</span></span><br><span class="line"><span class="comment">#define OLED_RESET    -1</span></span><br><span class="line">Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, OLED_RESET);</span><br><span class="line"></span><br><span class="line">// BMP180 传感器对象</span><br><span class="line">Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">setup</span></span>() &#123;</span><br><span class="line">  Serial.begin(9600);</span><br><span class="line"></span><br><span class="line">  // 初始化 OLED</span><br><span class="line">  <span class="keyword">if</span> (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) &#123;</span><br><span class="line">    Serial.println(<span class="string">&quot;OLED ERROR&quot;</span>);</span><br><span class="line">    <span class="keyword">while</span> (1);</span><br><span class="line">  &#125;</span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.setTextSize(1);</span><br><span class="line">  display.setTextColor(WHITE);</span><br><span class="line"></span><br><span class="line">  // 初始化 BMP180</span><br><span class="line">  <span class="keyword">if</span> (!bmp.begin()) &#123;</span><br><span class="line">    Serial.println(<span class="string">&quot;can&#x27;t find BMP180&quot;</span>);</span><br><span class="line">    <span class="keyword">while</span> (1);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">loop</span></span>() &#123;</span><br><span class="line">  sensors_event_t event;</span><br><span class="line">  bmp.getEvent(&amp;event);</span><br><span class="line"></span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.setCursor(0, 0);</span><br><span class="line">  display.println(<span class="string">&quot;Environment&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (event.pressure) &#123;</span><br><span class="line">    display.setCursor(0, 20);</span><br><span class="line">    display.print(<span class="string">&quot;ATM: &quot;</span>);</span><br><span class="line">    display.print(event.pressure);</span><br><span class="line">    display.println(<span class="string">&quot; hPa&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">float</span> temperature;</span><br><span class="line">    bmp.getTemperature(&amp;temperature);</span><br><span class="line"></span><br><span class="line">    display.setCursor(0, 40);</span><br><span class="line">    display.print(<span class="string">&quot;temperature: &quot;</span>);</span><br><span class="line">    display.print(temperature);</span><br><span class="line">    display.println(<span class="string">&quot; C&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    display.setCursor(0, 20);</span><br><span class="line">    display.println(<span class="string">&quot;ERROR&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  display.display();</span><br><span class="line">  delay(1000);  // 每秒刷新一次</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Arduino</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>超声波雷达测距</title>
+    <url>/zhihaojiang.github.io/2025/04/21/20250421%E8%B6%85%E5%A3%B0%E6%B3%A2%E9%9B%B7%E8%BE%BE%E6%B5%8B%E8%B7%9D/</url>
+    <content><![CDATA[<h2 id="开发板"><a href="#开发板" class="headerlink" title="开发板"></a>开发板</h2><p>Arduino UNO R3</p>
+<h2 id="接线"><a href="#接线" class="headerlink" title="接线"></a>接线</h2><p><strong>HC-SR04</strong></p>
+<blockquote>
+<p>VCC → 3.3V 或 5V<br>GND → GND<br>Trig → Arduino D9<br>Echo → Arduino D10</p>
+</blockquote>
+<p><strong>OLED (SSD1306 I2C)</strong></p>
+<blockquote>
+<p>VCC → 3.3V 或 5V<br>GND → GND<br>SCL → A5<br>SDA → A4</p>
+</blockquote>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;Adafruit_GFX.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_SSD1306.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define TRIG_PIN 9</span></span><br><span class="line"><span class="comment">#define ECHO_PIN 10</span></span><br><span class="line"><span class="comment">#define SCREEN_WIDTH 128</span></span><br><span class="line"><span class="comment">#define SCREEN_HEIGHT 64</span></span><br><span class="line"><span class="comment">#define OLED_RESET     -1</span></span><br><span class="line">Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, OLED_RESET);</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">setup</span></span>() &#123;</span><br><span class="line">  pinMode(TRIG_PIN, OUTPUT);</span><br><span class="line">  pinMode(ECHO_PIN, INPUT);</span><br><span class="line"></span><br><span class="line">  Serial.begin(9600);</span><br><span class="line">  <span class="keyword">if</span>(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) &#123;</span><br><span class="line">    Serial.println(F(<span class="string">&quot;OLED init failed&quot;</span>));</span><br><span class="line">    <span class="keyword">for</span>(;;);</span><br><span class="line">  &#125;</span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.display();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">float</span> <span class="function"><span class="title">getDistance</span></span>() &#123;</span><br><span class="line">  digitalWrite(TRIG_PIN, LOW);</span><br><span class="line">  delayMicroseconds(2);</span><br><span class="line">  digitalWrite(TRIG_PIN, HIGH);</span><br><span class="line">  delayMicroseconds(10);</span><br><span class="line">  digitalWrite(TRIG_PIN, LOW);</span><br><span class="line">  long duration = pulseIn(ECHO_PIN, HIGH);</span><br><span class="line">  <span class="built_in">return</span> duration * 0.034 / 2;  // 距离（厘米）</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int posX = 0; // 用来在横向慢慢移动</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">loop</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">      // 绘制两边的参考线</span><br><span class="line">  display.drawLine(0, 0, 0, SCREEN_HEIGHT, WHITE);  // 左边的距离线</span><br><span class="line">  display.drawLine(SCREEN_WIDTH - 1, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT, WHITE);  // 右边的距离线</span><br><span class="line">  display.display();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">float</span> distance = getDistance();  // 单位 cm</span><br><span class="line">  Serial.<span class="built_in">print</span>(<span class="string">&quot;Distance: &quot;</span>);</span><br><span class="line">  Serial.println(distance);</span><br><span class="line"></span><br><span class="line">  // 归一化距离（最多显示到60cm）</span><br><span class="line">  int r = map(min(distance, 60.0), 0, 60, SCREEN_HEIGHT - 1, 0); // 越远越上</span><br><span class="line"></span><br><span class="line">  display.drawPixel(posX, r, WHITE);</span><br><span class="line">  posX++;</span><br><span class="line">  <span class="keyword">if</span> (posX &gt;= SCREEN_WIDTH) &#123;</span><br><span class="line">    posX = 0;</span><br><span class="line">    display.clearDisplay(); // 清除屏幕从头来</span><br><span class="line">  &#125;</span><br><span class="line">  display.display();</span><br><span class="line">  delay(100); // 每秒10个点</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Arduino</tag>
+      </tags>
+  </entry>
 </search>
