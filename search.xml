@@ -2031,7 +2031,9 @@
                      data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/26/006.png"
                       alt="photo"
                 ></p>
-<p>可以看到 bmi有异常值 这里为了后续进行优化 暂不处理</p>
+<p>可以看到 bmi有异常值</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from scipy.stats import mstats</span><br><span class="line"></span><br><span class="line"><span class="comment"># 胜率变换：将异常值限制在 5% 和 95% 分位数之间</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;bmi&#x27;</span>] = mstats.winsorize(<span class="built_in">df</span>[<span class="string">&#x27;bmi&#x27;</span>], limits=[0.05, 0.05])</span><br></pre></td></tr></table></figure></div>
+
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">object_cols = df.select_dtypes(include=[<span class="string">&#x27;object&#x27;</span>]).columns.tolist()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> object_cols:</span><br><span class="line">    sns.countplot(x=col, data=<span class="built_in">df</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
@@ -2178,6 +2180,9 @@
 </blockquote>
 <h4 id="网格优化"><a href="#网格优化" class="headerlink" title="网格优化"></a>网格优化</h4><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import GridSearchCV</span><br><span class="line"></span><br><span class="line">param_grid = &#123;</span><br><span class="line">    <span class="string">&#x27;n_estimators&#x27;</span>: [100, 200, 300],</span><br><span class="line">    <span class="string">&#x27;max_depth&#x27;</span>: [10, 20, None],</span><br><span class="line">    <span class="string">&#x27;min_samples_split&#x27;</span>: [2, 5, 10],</span><br><span class="line">    <span class="string">&#x27;min_samples_leaf&#x27;</span>: [1, 2, 4],</span><br><span class="line">    <span class="string">&#x27;max_features&#x27;</span>: [<span class="string">&#x27;sqrt&#x27;</span>, <span class="string">&#x27;log2&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># GridSearchCV</span></span><br><span class="line">grid_search = GridSearchCV(</span><br><span class="line">    estimator=rf_model,</span><br><span class="line">    param_grid=param_grid,</span><br><span class="line">    cv=5,             <span class="comment"># 5折交叉验证</span></span><br><span class="line">    n_jobs=-1,        <span class="comment"># 用所有CPU核加速</span></span><br><span class="line">    verbose=2         <span class="comment"># 输出搜索过程</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">grid_search.fit(X_train_processed, y_train)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;最优参数：&quot;</span>, grid_search.best_params_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;最优得分：&quot;</span>, grid_search.best_score_)</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
 
+<blockquote>
+<p>最优参数： {‘max_depth’: 10, ‘max_features’: ‘sqrt’, ‘min_samples_leaf’: 2, ‘min_samples_split’: 2, ‘n_estimators’: 300}<br>最优得分： 0.8405858915839397</p>
+</blockquote>
 <p>综上 无论是线性回归还是随机森林 在进行优化后 他们的分数都至少上升了1% 说明使用优化器进行优化是有效果的</p>
 ]]></content>
       <categories>
