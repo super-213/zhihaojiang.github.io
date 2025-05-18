@@ -2193,4 +2193,519 @@
         <tag>数学</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Predict Calorie Expenditure</title>
+    <url>/zhihaojiang.github.io/2025/05/09/20250509Predict%20Calorie%20Expenditure/</url>
+    <content><![CDATA[<h1 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h1><p><a class="link"   href="https://www.kaggle.com/competitions/playground-series-s5e5/data" >https://www.kaggle.com/competitions/playground-series-s5e5/data<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h1 id="数据描述"><a href="#数据描述" class="headerlink" title="数据描述"></a>数据描述</h1><p>The dataset for this competition (both train and test) was generated from a deep learning model trained on the Calories Burnt Prediction dataset. Feature distributions are close to, but not exactly the same, as the original. Feel free to use the original dataset as part of this competition, both to explore differences as well as to see whether incorporating the original in training improves model performance.</p>
+<p>Files<br>train.csv - the training dataset; Calories is the continuous target<br>test.csv - the test dataset; your objective is to predict the Calories for each row<br>sample_submission.csv - a sample submission file in the correct format.</p>
+<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>导入库</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&#x27;train.csv&#x27;</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/001.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.info()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/002.png"
+                      alt="photo"
+                ></p>
+<p>通过翻译得到每个特征的意思：</p>
+<ul>
+<li>Sex: 性别，1表示男性，0表示女性</li>
+<li>Age: 年龄</li>
+<li>Height: 身高，单位为厘米</li>
+<li>Weight: 体重，单位为千克</li>
+<li>Duration: 活动持续时间，单位为分钟</li>
+<li>Heart_Rate: 心率，每分钟的心跳次数</li>
+<li>Body_Temp: 体温，单位为摄氏度</li>
+<li>Calories: 卡路里，这是我们要预测的目标变量</li>
+</ul>
+<p>我们首先检查数据集中是否存在缺失值</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.drop(columns=[<span class="string">&#x27;id&#x27;</span>], inplace=True)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/003.png"
+                      alt="photo"
+                ></p>
+<p>可以看到 没有缺失值</p>
+<p>由于我们要预测卡路里的消耗量 因此我们自然想到BMI这个指标与人体有关 因此添加BMI这个特征</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;BMI&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;Weight&#x27;</span>] / (<span class="built_in">df</span>[<span class="string">&#x27;Height&#x27;</span>] / 100) ** 2</span><br></pre></td></tr></table></figure></div>
+<h2 id="特征编码"><a href="#特征编码" class="headerlink" title="特征编码"></a>特征编码</h2><p>将性别转换为数值型</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;Sex&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;Sex&#x27;</span>].replace(&#123;<span class="string">&#x27;male&#x27;</span>: 1, <span class="string">&#x27;female&#x27;</span>: 0&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.scatter(<span class="built_in">df</span>[col], <span class="built_in">df</span>[<span class="string">&#x27;Calories&#x27;</span>])</span><br><span class="line">    plt.xlabel(col)</span><br><span class="line">    plt.ylabel(<span class="string">&#x27;Calories&#x27;</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/004.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/005.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/006.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/007.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/008.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/009.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/010.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/011.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/012.png"
+                      alt="photo"
+                ></p>
+<p>可以看到 duration、Heart_Rate、Body_Temp与Calories呈线性关系<br>接下来我们查看特征与特征之间的相关性。</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.countplot(x=pd.cut(<span class="built_in">df</span>[<span class="string">&#x27;Weight&#x27;</span>], bins=20, labels=False), data=<span class="built_in">df</span>,hue=<span class="string">&#x27;Sex&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/013.png"
+                      alt="photo"
+                ></p>
+<p>可以看到 男性的体重分布是偏右的，而女性的体重分布是偏左的</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">&#x27;Height&#x27;</span>,y=<span class="string">&#x27;Weight&#x27;</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/014.png"
+                      alt="photo"
+                ></p>
+<p>可以看到 Weight与Height存在正相关</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">&#x27;Duration&#x27;</span>,y=<span class="string">&#x27;Heart_Rate&#x27;</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/015.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">&#x27;Duration&#x27;</span>,y=<span class="string">&#x27;Body_Temp&#x27;</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/016.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">&#x27;Heart_Rate&#x27;</span>,y=<span class="string">&#x27;Body_Temp&#x27;</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/017.png"
+                      alt="photo"
+                ></p>
+<h2 id="异常值可视化检测"><a href="#异常值可视化检测" class="headerlink" title="异常值可视化检测"></a>异常值可视化检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    sns.boxplot(x=<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/018.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/019.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/020.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/021.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/022.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/023.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/024.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/025.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/026.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from scipy.stats import mstats</span><br><span class="line"></span><br><span class="line">features = [<span class="string">&#x27;Height&#x27;</span>, <span class="string">&#x27;Weight&#x27;</span>, <span class="string">&#x27;Heart_Rate&#x27;</span>, <span class="string">&#x27;Body_Temp&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> features:</span><br><span class="line">    <span class="built_in">df</span>[col] = mstats.winsorize(<span class="built_in">df</span>[col], limits=[0.05, 0.05])</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.corr()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/027.png"
+                      alt="photo"
+                ></p>
+<p>可以看到在相关性分析中</p>
+<p><code>Calories</code>与<code>Duration</code>、<code>Heart_Rate</code>、<code>Body_Temp</code>的相关性最高<br>为0.959908、0.908748、0.828671，因此选择这三个特征作为模型的输入特征<br>接下来 我们通过卡方检验来选择特征</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Calories&#x27;</span>]</span><br><span class="line">X = df.drop([<span class="string">&#x27;Calories&#x27;</span>], axis=1)</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.feature_selection import SelectKBest, chi2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用卡方检验选择前 2 个最佳特征</span></span><br><span class="line">selector = SelectKBest(chi2, k=3)</span><br><span class="line">X_new = selector.fit_transform(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选择后的特征形状：&quot;</span>, X_new.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;每个特征的得分：&quot;</span>, selector.scores_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;是否被选择：&quot;</span>, selector.get_support())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出每个特征的得分</span></span><br><span class="line">scores = pd.Series(selector.scores_, index=X.columns)</span><br><span class="line">scores = scores.sort_values(ascending=False)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;卡方检验得分最高的特征：\n&quot;</span>, scores.head(10))</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>选择后的特征形状： (600000, 3)<br>每个特征的得分： [8.72102007e+03 2.13858892e+05 1.32375353e+04 4.71694088e+04<br> 2.61568982e+06 4.35154289e+05 6.94410801e+03 1.65968833e+03]<br>是否被选择： [False  True False False  True  True False False]<br>卡方检验得分最高的特征：<br> Duration      2.615690e+06<br>Heart_Rate    4.351543e+05<br>Age           2.138589e+05<br>Weight        4.716941e+04<br>Height        1.323754e+04<br>Sex           8.721020e+03<br>Body_Temp     6.944108e+03<br>BMI           1.659688e+03<br>dtype: float64</p>
+</blockquote>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.drop(columns=[<span class="string">&#x27;BMI&#x27;</span>, <span class="string">&#x27;Sex&#x27;</span>, <span class="string">&#x27;Weight&#x27;</span>, <span class="string">&#x27;Height&#x27;</span>], inplace=True)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Calories&#x27;</span>]</span><br><span class="line">X = df.drop([<span class="string">&#x27;Calories&#x27;</span>], axis=1)</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">X_train_scaled = scaler.fit_transform(X_train)</span><br><span class="line">X_test_scaled = scaler.transform(X_test)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line">import xgboost as xgb</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor</span><br><span class="line">from sklearn.metrics import root_mean_squared_error, root_mean_squared_log_error, r2_score</span><br><span class="line"></span><br><span class="line">models = &#123;</span><br><span class="line">    <span class="string">&#x27;Linear Regression&#x27;</span>: LinearRegression(),</span><br><span class="line">    <span class="string">&#x27;Random Forest&#x27;</span>: RandomForestRegressor(),</span><br><span class="line">    <span class="string">&#x27;XGBoost&#x27;</span>: xgb.XGBRegressor(),</span><br><span class="line">    <span class="string">&#x27;Gradient Boosting&#x27;</span>: GradientBoostingRegressor()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">results = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, model <span class="keyword">in</span> models.items():</span><br><span class="line">    y_train_log = np.log1p(y_train)</span><br><span class="line">    model.fit(X_train_scaled, y_train_log)</span><br><span class="line">    y_pred_log = model.predict(X_test_scaled)</span><br><span class="line">    y_pred = np.expm1(y_pred_log)</span><br><span class="line"></span><br><span class="line">    rmse = root_mean_squared_error(y_test, y_pred)</span><br><span class="line">    rmsle = root_mean_squared_log_error(y_test, y_pred)</span><br><span class="line">    r2 = r2_score(y_test, y_pred)</span><br><span class="line">    </span><br><span class="line">    results.append(&#123;</span><br><span class="line">        <span class="string">&#x27;Model&#x27;</span>: name,</span><br><span class="line">        <span class="string">&#x27;RMSE&#x27;</span>: rmse,</span><br><span class="line">        <span class="string">&#x27;RMSLE&#x27;</span>: rmsle,</span><br><span class="line">        <span class="string">&#x27;R²&#x27;</span>: r2</span><br><span class="line">    &#125;)</span><br><span class="line">results_df = pd.DataFrame(results)</span><br><span class="line"><span class="built_in">print</span>(results_df)</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<pre><code>           Model       RMSE     RMSLE        R²
+</code></pre>
+<p>0  Linear Regression  16.044743  0.212877  0.933576<br>1      Random Forest   7.287551  0.102109  0.986297<br>2            XGBoost   6.839083  0.096267  0.987931<br>3  Gradient Boosting   7.001537  0.097709  0.987351</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>糖尿病预测分析</title>
+    <url>/zhihaojiang.github.io/2025/05/18/20250518%E7%B3%96%E5%B0%BF%E7%97%85%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h1 id="数据描述"><a href="#数据描述" class="headerlink" title="数据描述"></a>数据描述</h1><p>心血管病、糖尿病等慢性疾病，每年导致的死亡人数占总死亡人数的80%，每年用于慢病医疗费用占中国公共医疗卫生支出的比例超过13%。作为一种常见慢性疾病，糖尿病目前无法根治，但通过科学有效的干预、预防和治疗，能降低发病率和提高患者的生活质量。本课题拟对UCI的糖尿病诊断数据集进行机器学习建模分析，在此基础上探讨诱发糖尿病的重要病因</p>
+<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>导入库</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">from scipy.stats import mstats</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line"></span><br><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line">from sklearn.neighbors import KNeighborsClassifier</span><br><span class="line">from xgboost import XGBClassifier</span><br><span class="line"></span><br><span class="line">from skopt import BayesSearchCV</span><br><span class="line">from skopt.space import Integer, Real</span><br><span class="line">from sklearn.model_selection import StratifiedKFold</span><br><span class="line">from sklearn.metrics import recall_score</span><br><span class="line">from skopt.space import Real, Categorical</span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix, accuracy_score</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>=pd.read_csv(<span class="string">&#x27;pima-indians-diabetes.data.csv&#x27;</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/001.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.tail()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/002.png"
+                      alt="photo"
+                ></p>
+<p>通过上述查看，我们得知此数据集的特征描述在文件的右下角，我们将字段名称补充进去</p>
+<p>我们首先得到列名</p>
+<p>df.columns.tolist()</p>
+<blockquote>
+<p>[‘6’,<br> ‘148’,<br> ‘72’,<br> ‘35’,<br> ‘0’,<br> ‘33.6’,<br> ‘0.627’,<br> ‘50’,<br> ‘1’,<br> ‘Unnamed: 9’,<br> ‘Unnamed: 10’,<br> ‘Unnamed: 11’,<br> ‘Unnamed: 12’]</p>
+</blockquote>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.drop([ <span class="string">&#x27;Unnamed: 9&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Unnamed: 10&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Unnamed: 11&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Unnamed: 12&#x27;</span>], axis=1, inplace=True)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/003.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.info()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/004.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">columns = [</span><br><span class="line">    <span class="string">&quot;Number of times pregnant&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Plasma glucose concentration&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Diastolic blood pressure (mm Hg)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Triceps skin fold thickness (mm)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;2-Hour serum insulin (mu U/ml)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Body mass index (kg/m^2)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Diabetes pedigree function&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Age (years)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Class variable&quot;</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加字段名称</span></span><br><span class="line">df.columns = columns</span><br><span class="line"></span><br><span class="line">new_row = pd.Series([6, 148, 72, 35, 0, 33.6, 0.627, 50, 1], index=df.columns)</span><br><span class="line"><span class="built_in">df</span> =pd.concat([<span class="built_in">df</span>, new_row.to_frame().T], ignore_index=True)</span><br><span class="line"></span><br><span class="line">df.tail()</span><br><span class="line"></span><br><span class="line">df.to_csv(<span class="string">&#x27;new_pima-indians-diabetes.data.csv&#x27;</span>, index=False)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>=pd.read_csv(<span class="string">&#x27;new_pima-indians-diabetes.data.csv&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p>从之前的输出中我们可以看到有空白行 将其删除</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = df.dropna(how=<span class="string">&#x27;all&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>Number of times pregnant            0<br>Plasma glucose concentration        0<br>Diastolic blood pressure (mm Hg)    0<br>Triceps skin fold thickness (mm)    0<br>2-Hour serum insulin (mu U&#x2F;ml)      0<br>Body mass index (kg&#x2F;m^2)            0<br>Diabetes pedigree function          0<br>Age (years)                         0<br>Class variable                      0<br>dtype: int64</p>
+</blockquote>
+<ul>
+<li>Number of times pregnant</li>
+<li>怀孕次数</li>
+<li>Plasma glucose concentration a 2 hours in an oral glucose tolerance test</li>
+<li>口服葡萄糖耐量试验中 2 小时的血浆葡萄糖浓度</li>
+<li>Diastolic blood pressure (mm Hg)</li>
+<li>舒张压（毫米汞柱）</li>
+<li>Triceps skin fold thickness (mm)</li>
+<li>三头肌皮褶厚度（毫米）</li>
+<li>2-Hour serum insulin (mu U&#x2F;ml)</li>
+<li>2 小时血清胰岛素（微单位&#x2F;毫升）</li>
+<li>Body mass index (weight in kg&#x2F;(height in m)^2)</li>
+<li>体重指数（体重以千克除以身高以米的平方）</li>
+<li>Diabetes pedigree function</li>
+<li>糖尿病家族史功能</li>
+<li>Age (years)</li>
+<li>年龄（年）</li>
+<li>Class variable (0 or 1)</li>
+<li>类别变量（0 或 1）</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.describe()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/005.png"
+                      alt="photo"
+                ></p>
+<p>从min中看到，有0元素，像是Diastolic blood pressure (mm Hg)之类的特征不应该存在0</p>
+<p>说明这是缺失值，用均值填充</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">columns = [<span class="string">&#x27;Plasma glucose concentration&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Diastolic blood pressure (mm Hg)&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Triceps skin fold thickness (mm)&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;2-Hour serum insulin (mu U/ml)&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Body mass index (kg/m^2)&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Diabetes pedigree function&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;Age (years)&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> columns:</span><br><span class="line">    mean_value = df.loc[<span class="built_in">df</span>[col] != 0, col].mean()</span><br><span class="line">    <span class="built_in">df</span>[col] = <span class="built_in">df</span>[col].replace(0, mean_value)</span><br></pre></td></tr></table></figure></div>
+
+<p>接下来我们查看是否存在异常值 通过查询相关信息，得到了以下结果</p>
+<ol>
+<li>Number of times pregnant (怀孕次数)<br>正常范围 ：0 到任意正整数。<br>解释 ：这是一个计数字段，表示一个人怀孕的次数。通常没有上限，但常见的范围是 0 到 15 次（极少数情况下可能更高）。</li>
+<li>Plasma glucose concentration a 2 hours in an oral glucose tolerance test (口服葡萄糖耐量试验中 2 小时的血浆葡萄糖浓度)<br>单位 ：mg&#x2F;dL 或 mmol&#x2F;L<br>正常范围 ：<br>正常：小于 140 mg&#x2F;dL（7.8 mmol&#x2F;L）<br>空腹血糖受损（IFG）或糖耐量受损（IGT）：140-199 mg&#x2F;dL（7.8-11.1 mmol&#x2F;L）<br>糖尿病：大于等于 200 mg&#x2F;dL（11.1 mmol&#x2F;L）<br>解释 ：这是诊断糖尿病的重要指标之一。通过口服葡萄糖耐量试验（OGTT），可以评估身体对葡萄糖的代谢能力。</li>
+<li>Diastolic blood pressure (mm Hg) (舒张压，毫米汞柱)<br>正常范围 ：60-80 mm Hg<br>异常范围 ：<br>高血压前期：80-89 mm Hg<br>高血压：大于等于 90 mm Hg<br>低血压：小于 60 mm Hg<br>解释 ：舒张压是指心脏放松时血管内的压力。长期高血压可能导致心血管疾病。</li>
+<li>Triceps skin fold thickness (mm) (三头肌皮褶厚度，毫米)<br>正常范围 （因性别和年龄而异）：<br>男性：约 10-15 mm<br>女性：约 15-25 mm<br>解释 ：三头肌皮褶厚度用于估算体脂百分比。较高的值可能表明较高的体脂水平。</li>
+<li>2-Hour serum insulin (mu U&#x2F;ml) (2 小时血清胰岛素，微单位&#x2F;毫升)<br>正常范围 ：小于 30 mu U&#x2F;ml<br>解释 ：胰岛素是调节血糖的关键激素。高胰岛素水平可能表明胰岛素抵抗或糖尿病前期。</li>
+<li>Body mass index (BMI) (体重指数，kg&#x2F;m²)<br>正常范围 ：18.5-24.9<br>分类 ：<br>低于 18.5：体重过轻<br>18.5-24.9：正常体重<br>25-29.9：超重<br>大于等于 30：肥胖<br>解释 ：BMI 是衡量体重是否健康的常用指标，但它不考虑肌肉质量等因素。</li>
+<li>Diabetes pedigree function (糖尿病家族史功能)<br>单位 ：无单位（通常是概率值）<br>正常范围 ：0 到 1<br>解释 ：这是一个计算值，表示患糖尿病的概率。值越高，患糖尿病的风险越大。具体范围因模型而异，但通常在 0 到 1 之间。</li>
+</ol>
+<p>通过查看 没有存在那种明显超过人类水平的异常值</p>
+<h2 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">columns = df.columns.tolist()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> columns:</span><br><span class="line">    plt.figure(figsize=(10, 6))</span><br><span class="line">    sns.barplot(y=col, data=<span class="built_in">df</span>,hue=<span class="string">&#x27;Class variable&#x27;</span>)</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/006.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/007.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/008.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/009.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/010.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/011.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/012.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/013.png"
+                      alt="photo"
+                ></p>
+<p>可以看到 有糖尿病的患者各项指标均比非糖尿病的患者高</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.corr()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/014.png"
+                      alt="photo"
+                ></p>
+<p>我们重点关系class variable行 可以看到 Plasma glucose concentration的相关性最高，为0.492928 但仍然不能算作强相关<br>尽管数据中的值在真实世界中都是合理的 但一些特别大的值在进行机器学习时会影响模型的泛化能力，使用IQR方法将异常值替换成边界值</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> columns:</span><br><span class="line">    plt.figure(figsize=(10, 6))</span><br><span class="line">    sns.boxplot(x=col, data=<span class="built_in">df</span>)</span><br><span class="line">    plt.title(f<span class="string">&#x27;Boxplot of &#123;col&#125;&#x27;</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> columns:</span><br><span class="line">    <span class="comment"># 计算 IQR</span></span><br><span class="line">    Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">    Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">    IQR = Q3 - Q1</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义上下界</span></span><br><span class="line">    lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">    upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line">    <span class="built_in">df</span>[col] = np.where(</span><br><span class="line">    <span class="built_in">df</span>[col] &lt; lower_bound,  <span class="comment"># 条件：小于下界</span></span><br><span class="line">    lower_bound,            <span class="comment"># 替换为下界</span></span><br><span class="line">    np.where(</span><br><span class="line">        <span class="built_in">df</span>[col] &gt; upper_bound,  <span class="comment"># 条件：大于上界</span></span><br><span class="line">        upper_bound,           <span class="comment"># 替换为上界</span></span><br><span class="line">        <span class="built_in">df</span>[col]                <span class="comment"># 否则保持原值</span></span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> columns:</span><br><span class="line">    plt.figure(figsize=(10, 6))</span><br><span class="line">    sns.boxplot(x=col, data=<span class="built_in">df</span>)</span><br><span class="line">    plt.title(f<span class="string">&#x27;Boxplot of &#123;col&#125;&#x27;</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/015.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/016.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/017.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/018.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/019.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/020.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/021.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/022.png"
+                      alt="photo"
+                ></p>
+<h2 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">X = df.drop(<span class="string">&#x27;Class variable&#x27;</span>, axis=1)</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Class variable&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标准化</span></span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">X_scaled = scaler.fit_transform(X)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换回 DataFrames</span></span><br><span class="line">X_scaled_df = pd.DataFrame(X_scaled, columns=X.columns)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">X = df.drop(columns=[<span class="string">&#x27;Class variable&#x27;</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Class variable&#x27;</span>]  <span class="comment"># 目标变量</span></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X_scaled_df, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">models = &#123;</span><br><span class="line">    <span class="string">&quot;RandomForestClassifier&quot;</span>: RandomForestClassifier(n_estimators=100, random_state=42,class_weight=<span class="string">&#x27;balanced&#x27;</span>),</span><br><span class="line">    <span class="string">&quot;LogisticRegression&quot;</span>: LogisticRegression(max_iter=1000, random_state=42,class_weight=<span class="string">&#x27;balanced&#x27;</span>),</span><br><span class="line">    <span class="string">&quot;SVM&quot;</span>: SVC(probability=True, random_state=42,class_weight=<span class="string">&#x27;balanced&#x27;</span>),</span><br><span class="line">    <span class="string">&quot;KNN&quot;</span>: KNeighborsClassifier(),</span><br><span class="line">    <span class="string">&quot;XGBoost&quot;</span>: XGBClassifier(eval_metric=<span class="string">&#x27;logloss&#x27;</span>, random_state=42)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化结果字典</span></span><br><span class="line">results = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历每个模型</span></span><br><span class="line"><span class="keyword">for</span> name, model <span class="keyword">in</span> models.items():  <span class="comment"># 假设 models 是一个字典，键为模型名称，值为模型对象</span></span><br><span class="line">    <span class="comment"># 训练模型</span></span><br><span class="line">    model.fit(X_train, y_train)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 预测测试集</span></span><br><span class="line">    y_pred = model.predict(X_test)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算准确率</span></span><br><span class="line">    accuracy = accuracy_score(y_test, y_pred)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取分类报告</span></span><br><span class="line">    report = classification_report(y_test, y_pred, output_dict=True)  <span class="comment"># 返回字典格式</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 存储结果</span></span><br><span class="line">    results[name] = &#123;</span><br><span class="line">        <span class="string">&#x27;accuracy&#x27;</span>: accuracy,</span><br><span class="line">        <span class="string">&#x27;report&#x27;</span>: report</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出每个模型的结果</span></span><br><span class="line"><span class="keyword">for</span> name, result <span class="keyword">in</span> results.items():</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;模型: &#123;name&#125;&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;准确率: &#123;result[&#x27;accuracy&#x27;]:.4f&#125;&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;分类报告:&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(classification_report(y_test, models[name].predict(X_test)))  <span class="comment"># 打印格式化的分类报告</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;-&quot;</span> * 50)</span><br></pre></td></tr></table></figure></div>
+
+<p>模型: RandomForestClassifier<br>准确率: 0.7727<br>分类报告:<br>              precision    recall  f1-score   support</p>
+<pre><code>     0.0       0.81      0.84      0.82        97
+     1.0       0.70      0.67      0.68        57
+
+accuracy                           0.77       154
+</code></pre>
+<p>   macro avg       0.76      0.75      0.75       154<br>weighted avg       0.77      0.77      0.77       154</p>
+<hr>
+<p>模型: LogisticRegression<br>准确率: 0.7338<br>分类报告:<br>              precision    recall  f1-score   support</p>
+<pre><code>     0.0       0.81      0.75      0.78        97
+     1.0       0.62      0.70      0.66        57
+
+accuracy                           0.73       154
+</code></pre>
+<p>   macro avg       0.72      0.73      0.72       154<br>weighted avg       0.74      0.73      0.74       154</p>
+<hr>
+<p>模型: SVM<br>准确率: 0.7792<br>分类报告:<br>              precision    recall  f1-score   support</p>
+<pre><code>     0.0       0.89      0.74      0.81        97
+     1.0       0.66      0.84      0.74        57
+
+accuracy                           0.78       154
+</code></pre>
+<p>   macro avg       0.77      0.79      0.77       154<br>weighted avg       0.80      0.78      0.78       154</p>
+<hr>
+<p>模型: KNN<br>准确率: 0.7727<br>分类报告:<br>              precision    recall  f1-score   support</p>
+<pre><code>     0.0       0.80      0.85      0.82        97
+     1.0       0.71      0.65      0.68        57
+
+accuracy                           0.77       154
+</code></pre>
+<p>   macro avg       0.76      0.75      0.75       154<br>weighted avg       0.77      0.77      0.77       154</p>
+<hr>
+<p>模型: XGBoost<br>准确率: 0.7727<br>分类报告:<br>              precision    recall  f1-score   support</p>
+<pre><code>     0.0       0.82      0.81      0.82        97
+     1.0       0.69      0.70      0.70        57
+
+accuracy                           0.77       154
+</code></pre>
+<p>   macro avg       0.76      0.76      0.76       154<br>weighted avg       0.77      0.77      0.77       154</p>
+<hr>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>由于我们是要预测糖尿病，要做到减少漏诊，因此我们更关心召回率，提高召回率，精确率不必在意</p>
+<p><strong>随机森林的优化</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义参数搜索空间</span></span><br><span class="line">param_space = &#123;</span><br><span class="line">    <span class="string">&#x27;n_estimators&#x27;</span>: Integer(50, 300),</span><br><span class="line">    <span class="string">&#x27;max_depth&#x27;</span>: Integer(3, 30),</span><br><span class="line">    <span class="string">&#x27;min_samples_split&#x27;</span>: Integer(2, 20),</span><br><span class="line">    <span class="string">&#x27;min_samples_leaf&#x27;</span>: Integer(1, 10),</span><br><span class="line">    <span class="string">&#x27;max_features&#x27;</span>: Real(0.1, 1.0, prior=<span class="string">&#x27;uniform&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义模型</span></span><br><span class="line">rf = RandomForestClassifier(random_state=42, class_weight=<span class="string">&#x27;balanced&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 贝叶斯优化搜索</span></span><br><span class="line">opt = BayesSearchCV(</span><br><span class="line">    rf,</span><br><span class="line">    search_spaces=param_space,</span><br><span class="line">    scoring=<span class="string">&#x27;recall&#x27;</span>,</span><br><span class="line">    n_iter=30,  <span class="comment"># 搜索的步数（越大越好）</span></span><br><span class="line">    cv=StratifiedKFold(n_splits=5),</span><br><span class="line">    random_state=42,</span><br><span class="line">    n_jobs=-1,</span><br><span class="line">    verbose=2</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拟合模型</span></span><br><span class="line">opt.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best Recall Score:&quot;</span>, opt.best_score_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best Parameters:&quot;</span>, opt.best_params_)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>XGBoost的优化</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计算类别不平衡比例，用于 scale_pos_weight</span></span><br><span class="line">neg, pos = (y_train == 0).<span class="built_in">sum</span>(), (y_train == 1).<span class="built_in">sum</span>()</span><br><span class="line">scale_pos_weight = neg / pos</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索空间</span></span><br><span class="line">param_space = &#123;</span><br><span class="line">    <span class="string">&#x27;n_estimators&#x27;</span>: Integer(50, 300),</span><br><span class="line">    <span class="string">&#x27;max_depth&#x27;</span>: Integer(3, 15),</span><br><span class="line">    <span class="string">&#x27;learning_rate&#x27;</span>: Real(0.01, 0.3, prior=<span class="string">&#x27;log-uniform&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;subsample&#x27;</span>: Real(0.5, 1.0),</span><br><span class="line">    <span class="string">&#x27;colsample_bytree&#x27;</span>: Real(0.5, 1.0),</span><br><span class="line">    <span class="string">&#x27;gamma&#x27;</span>: Real(0, 5),</span><br><span class="line">    <span class="string">&#x27;min_child_weight&#x27;</span>: Integer(1, 10)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化模型</span></span><br><span class="line">xgb = XGBClassifier(</span><br><span class="line">    objective=<span class="string">&#x27;binary:logistic&#x27;</span>,</span><br><span class="line">    eval_metric=<span class="string">&#x27;logloss&#x27;</span>,</span><br><span class="line">    use_label_encoder=False,</span><br><span class="line">    random_state=42,</span><br><span class="line">    scale_pos_weight=scale_pos_weight  <span class="comment"># 处理类别不平衡</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 贝叶斯优化器</span></span><br><span class="line">opt = BayesSearchCV(</span><br><span class="line">    xgb,</span><br><span class="line">    search_spaces=param_space,</span><br><span class="line">    scoring=<span class="string">&#x27;recall&#x27;</span>,  <span class="comment"># 重点优化召回率</span></span><br><span class="line">    cv=StratifiedKFold(n_splits=5),</span><br><span class="line">    n_iter=30,  <span class="comment"># 迭代次数（越大越好）</span></span><br><span class="line">    n_jobs=-1,</span><br><span class="line">    verbose=2,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行搜索</span></span><br><span class="line">opt.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best Recall Score:&quot;</span>, opt.best_score_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best Parameters:&quot;</span>, opt.best_params_)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>SVM的优化</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">base_svm = SVC(probability=True,  <span class="comment"># 便于后续阈值调节</span></span><br><span class="line">               class_weight=<span class="string">&#x27;balanced&#x27;</span>,</span><br><span class="line">               random_state=42)</span><br><span class="line">               </span><br><span class="line">param_space = &#123;</span><br><span class="line">    <span class="string">&#x27;kernel&#x27;</span>: Categorical([<span class="string">&#x27;rbf&#x27;</span>, <span class="string">&#x27;linear&#x27;</span>]),</span><br><span class="line">    <span class="string">&#x27;C&#x27;</span>: Real(1e-3, 1e3, prior=<span class="string">&#x27;log-uniform&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;gamma&#x27;</span>: Real(1e-4, 1e1, prior=<span class="string">&#x27;log-uniform&#x27;</span>)  <span class="comment"># 仅在 RBF 时生效</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">opt = BayesSearchCV(</span><br><span class="line">    estimator=base_svm,</span><br><span class="line">    search_spaces=param_space,</span><br><span class="line">    scoring=<span class="string">&#x27;recall&#x27;</span>,                 <span class="comment"># 重点关注召回率</span></span><br><span class="line">    cv=StratifiedKFold(n_splits=5),   <span class="comment"># 分层交叉验证</span></span><br><span class="line">    n_iter=30,                        <span class="comment"># 迭代次数，可增加</span></span><br><span class="line">    n_jobs=-1,</span><br><span class="line">    verbose=2,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">opt.fit(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best CV recall:&quot;</span>, opt.best_score_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best params:&quot;</span>, opt.best_params_)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="打印最佳召回率"><a href="#打印最佳召回率" class="headerlink" title="打印最佳召回率"></a>打印最佳召回率</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">best_rf = opt.best_estimator_</span><br><span class="line">y_pred = best_rf.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Recall:&quot;</span>, recall_score(y_test, y_pred))</span><br><span class="line"></span><br><span class="line">best_xgb = opt.best_estimator_</span><br><span class="line">y_pred = best_xgb.predict(X_test)</span><br><span class="line">recall = recall_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Test Recall:&quot;</span>, recall)</span><br><span class="line"></span><br><span class="line">best_svm = opt.best_estimator_</span><br><span class="line"></span><br><span class="line">y_proba = best_svm.predict_proba(X_test)[:, 1]   <span class="comment"># 用 X_test</span></span><br><span class="line">thresh   = 0.35</span><br><span class="line">y_pred_thresh = (y_proba &gt;= thresh).astype(int)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import recall_score</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Recall (threshold 0.35):&quot;</span>, recall_score(y_test, y_pred_thresh))</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>Recall: 0.7894736842105263<br>Test Recall: 0.7894736842105263<br>Recall (threshold 0.35): 0.7894736842105263</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数学</tag>
+      </tags>
+  </entry>
 </search>
