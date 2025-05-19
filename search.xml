@@ -2711,7 +2711,24 @@ accuracy                           0.77       154
   <entry>
     <title>MathJax Test</title>
     <url>/zhihaojiang.github.io/2025/05/19/0/</url>
-    <content><![CDATA[<p>$$<br>i\hbar\frac{\partial}{\partial t}\psi&#x3D;-\frac{\hbar^2}{2m}\nabla^2\psi+V\psi<br>$$</p>
+    <content><![CDATA[
+<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="6576e829c8d367ee7f90bc44d626f18dac2460f1d2e356e4c75870af7d15899a">5844f566621fccb9c583f0174433e530a4cf84c3bda5494ad1025f5daf48068061aad5af9226c982f54bdeb0aa53d057ac9b1f2ab42c33477756a15aba3bff608ed28d09a68332ed7f902b1f5e393d8a20e6adef55eb43a2fa6c54552d37b11ec222b8a06c91f78368baecb6e3bc0f0713a4423f3e99b4bd4a1671b67e2cb9b893077fb6b87223e6b35c14e0e5816ff06a4f8bd06ad2f9a5adba951594b4ce76b5f00dacd07821fddcf772152acbb642144450e26792a3855a372a004d1bee28e7ffea7df68b0f0ac4812bd7fcd2ba3bc8dc963fe722be2b426504d87fc1d14e865a01307f64e414cbbd510954b42184ac23bd3bf19a013887fe75ea6789af46ee2f26dd59f8d3f4556e3b1dde8e8afe13ed999d2ec316474f79693b3ca4f2e55e30bba12a5f3ed7590b5a5b6e202c29991d9dfd81472d12b207e9b915f76ef90a0355dc86078b840669d8c3aafce0cddf8f0719c918b8f34772f8e45fca69b4e8da3e892152c1d0ff4aa8f02f9252660505b270aa8254a9b729b2dbab7a58bfac296b44f8a569204724257fe68b03138961f612881d2d0f01ab1c3c7c4b7ab5c04ea4ecf45d91bac9ee96aab4d9caac425cb78869fb09c724ea4b87a808f34e8054198f78a1e51cc3a1c57a8f2269f0338bab255b2e1e591eccc00ca5e6fc5ef0cea49fe5370f97c988ce5ff81e83a8fa55d06df4b6674a71736eea04f1f0ef</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<link href="/zhihaojiang.github.io/css/hbe.style.css" rel="stylesheet" type="text/css"><script data-swup-reload-script type="module" src="/zhihaojiang.github.io/js/plugins/hbe.js"></script>
+<script data-swup-reload-script type="module">
+import {initHBE} from "/zhihaojiang.github.io/js/plugins/hbe.js";
+  console.log("hexo-blog-encrypt: loaded.");
+    initHBE();
+</script>
 ]]></content>
       <categories>
         <category>MathJax</category>
