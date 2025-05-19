@@ -2708,4 +2708,16 @@ accuracy                           0.77       154
         <tag>数学</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MathJax Test</title>
+    <url>/zhihaojiang.github.io/2025/05/19/0/</url>
+    <content><![CDATA[<p>$$<br>i\hbar\frac{\partial}{\partial t}\psi&#x3D;-\frac{\hbar^2}{2m}\nabla^2\psi+V\psi<br>$$</p>
+]]></content>
+      <categories>
+        <category>MathJax</category>
+      </categories>
+      <tags>
+        <tag>MathJax</tag>
+      </tags>
+  </entry>
 </search>
