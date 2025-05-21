@@ -2437,20 +2437,25 @@
 <h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>导入库</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">from scipy.stats import mstats</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line"></span><br><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line">from sklearn.neighbors import KNeighborsClassifier</span><br><span class="line">from xgboost import XGBClassifier</span><br><span class="line"></span><br><span class="line">from skopt import BayesSearchCV</span><br><span class="line">from skopt.space import Integer, Real</span><br><span class="line">from sklearn.model_selection import StratifiedKFold</span><br><span class="line">from sklearn.metrics import recall_score</span><br><span class="line">from skopt.space import Real, Categorical</span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix, accuracy_score</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>=pd.read_csv(<span class="string">&#x27;pima-indians-diabetes.data.csv&#x27;</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/001.png"
-                      alt="photo"
-                ></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.tail()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/002.png"
-                      alt="photo"
-                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import data_analysis_tools as dat <span class="comment">#我自己创建的库</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>=pd.read_csv(<span class="string">&#x27;pima-indians-diabetes.data.csv&#x27;</span>)</span><br><span class="line">dat.summarize_df(<span class="built_in">df</span>)</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>{‘head’:      6    148    72    35      0  33.6  0.627    50    1  Unnamed: 9  <br> 0  1.0   85.0  66.0  29.0    0.0  26.6  0.351  31.0  0.0         NaN<br> 1  8.0  183.0  64.0   0.0    0.0  23.3  0.672  32.0  1.0         NaN<br> 2  1.0   89.0  66.0  23.0   94.0  28.1  0.167  21.0  0.0         NaN<br> 3  0.0  137.0  40.0  35.0  168.0  43.1  2.288  33.0  1.0         NaN<br> 4  5.0  116.0  74.0   0.0    0.0  25.6  0.201  30.0  0.0         NaN   </p>
+<pre><code>Unnamed: 10  Unnamed: 11 Unnamed: 12  
+</code></pre>
+<p> 0          NaN          NaN         NaN<br> 1          NaN          NaN         NaN<br> 2          NaN          NaN         NaN<br> 3          NaN          NaN         NaN<br> 4          NaN          NaN         NaN  ,<br> ‘tail’:       6  148  72  35   0  33.6  0.627  50   1  Unnamed: 9  Unnamed: 10  <br> 772 NaN  NaN NaN NaN NaN   NaN    NaN NaN NaN         NaN          NaN<br> 773 NaN  NaN NaN NaN NaN   NaN    NaN NaN NaN         NaN          NaN<br> 774 NaN  NaN NaN NaN NaN   NaN    NaN NaN NaN         NaN          NaN<br> 775 NaN  NaN NaN NaN NaN   NaN    NaN NaN NaN         NaN          NaN<br> 776 NaN  NaN NaN NaN NaN   NaN    NaN NaN NaN         NaN          NaN   </p>
+<pre><code>  Unnamed: 11                                        Unnamed: 12  
+</code></pre>
+<p> 772          NaN                # 5. 2-Hour serum insulin (mu U&#x2F;ml)<br> 773          NaN  # 6. Body mass index (weight in kg&#x2F;(height in …<br> 774          NaN                    # 7. Diabetes pedigree function<br> 775          NaN                                   # 8. Age (years)<br> 776          NaN                       # 9. Class variable (0 or 1)  ,<br> ‘describe’:                  6         148          72          35           0  <br> count   767.000000  767.000000  767.000000  767.000000  767.000000<br> unique         NaN         NaN         NaN         NaN         NaN<br> top            NaN         NaN         NaN         NaN         NaN<br> freq           NaN         NaN         NaN         NaN         NaN<br> mean      3.842243  120.859192   69.101695   20.517601   79.903520<br> std       3.370877   31.978468   19.368155   15.954059  115.283105<br> min       0.000000    0.000000    0.000000    0.000000    0.000000<br> 25%       1.000000   99.000000   62.000000    0.000000    0.000000<br> 50%       3.000000  117.000000   72.000000   23.000000   32.000000<br> 75%       6.000000  140.000000   80.000000   32.000000  127.500000<br> max      17.000000  199.000000  122.000000   99.000000  846.000000   </p>
+<pre><code>           33.6       0.627          50           1  Unnamed: 9  \
+</code></pre>
+<p> count   767.000000  767.000000  767.000000  767.000000         0.0<br> unique         NaN         NaN         NaN         NaN         NaN<br> top            NaN         NaN         NaN         NaN         NaN<br> freq           NaN         NaN         NaN         NaN         NaN<br> mean     31.990482    0.471674   33.219035    0.348110         NaN<br> std       7.889091    0.331497   11.752296    0.476682         NaN<br> min       0.000000    0.078000   21.000000    0.000000         NaN<br> 25%      27.300000    0.243500   24.000000    0.000000         NaN<br> 50%      32.000000    0.371000   29.000000    0.000000         NaN<br> 75%      36.600000    0.625000   41.000000    1.000000         NaN<br> max      67.100000    2.420000   81.000000    1.000000         NaN   </p>
+<pre><code>     Unnamed: 10  Unnamed: 11                    Unnamed: 12  
+</code></pre>
+<p> count           0.0          0.0                              9<br> unique          NaN          NaN                              9<br> top             NaN          NaN  # 1. Number of times pregnant<br> freq            NaN          NaN                              1<br> mean            NaN          NaN                            NaN<br> std             NaN          NaN                            NaN<br> min             NaN          NaN                            NaN<br> 25%             NaN          NaN                            NaN<br> 50%             NaN          NaN                            NaN<br> 75%             NaN          NaN                            NaN<br> max             NaN          NaN                            NaN  ,<br> ‘info’: “&lt;class ‘pandas.core.frame.DataFrame’&gt;\nRangeIndex: 777 entries, 0 to 776\nData columns (total 13 columns):\n #   Column       Non-Null Count  Dtype  \n—  ——       ————–  —–  \n 0   6            767 non-null    float64\n 1   148          767 non-null    float64\n 2   72           767 non-null    float64\n 3   35           767 non-null    float64\n 4   0            767 non-null    float64\n 5   33.6         767 non-null    float64\n 6   0.627        767 non-null    float64\n 7   50           767 non-null    float64\n 8   1            767 non-null    float64\n 9   Unnamed: 9   0 non-null      float64\n 10  Unnamed: 10  0 non-null      float64\n 11  Unnamed: 11  0 non-null      float64\n 12  Unnamed: 12  9 non-null      object \ndtypes: float64(12), object(1)\nmemory usage: 79.0+ KB\n”,<br> ‘dtypes’: 6              float64<br> 148            float64<br> 72             float64<br> 35             float64<br> 0              float64<br> 33.6           float64<br> 0.627          float64<br> 50             float64<br> 1              float64<br> Unnamed: 9     float64<br> Unnamed: 10    float64<br> Unnamed: 11    float64<br> Unnamed: 12     object<br> dtype: object,<br> ‘missing’: 6               10<br> 148             10<br> 72              10<br> 35              10<br> 0               10<br> 33.6            10<br> 0.627           10<br> 50              10<br> 1               10<br> Unnamed: 9     777<br> Unnamed: 10    777<br> Unnamed: 11    777<br> Unnamed: 12    768<br> dtype: int64}</p>
+</blockquote>
 <p>通过上述查看，我们得知此数据集的特征描述在文件的右下角，我们将字段名称补充进去</p>
 <p>我们首先得到列名</p>
 <p>df.columns.tolist()</p>
@@ -2528,53 +2533,11 @@
 <li>Diabetes pedigree function (糖尿病家族史功能)<br>单位 ：无单位（通常是概率值）<br>正常范围 ：0 到 1<br>解释 ：这是一个计算值，表示患糖尿病的概率。值越高，患糖尿病的风险越大。具体范围因模型而异，但通常在 0 到 1 之间。</li>
 </ol>
 <p>通过查看 没有存在那种明显超过人类水平的异常值</p>
-<h2 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">columns = df.columns.tolist()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> columns:</span><br><span class="line">    plt.figure(figsize=(10, 6))</span><br><span class="line">    sns.barplot(y=col, data=<span class="built_in">df</span>,hue=<span class="string">&#x27;Class variable&#x27;</span>)</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<h2 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">dat.plot_all_barplots(<span class="built_in">df</span>, hue=<span class="string">&#x27;Class variable&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/006.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/007.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/008.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/009.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/010.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/011.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/012.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/013.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/023.png"
                       alt="photo"
                 ></p>
 <p>可以看到 有糖尿病的患者各项指标均比非糖尿病的患者高</p>
@@ -2586,103 +2549,83 @@
                       alt="photo"
                 ></p>
 <p>我们重点关系class variable行 可以看到 Plasma glucose concentration的相关性最高，为0.492928 但仍然不能算作强相关<br>尽管数据中的值在真实世界中都是合理的 但一些特别大的值在进行机器学习时会影响模型的泛化能力，使用IQR方法将异常值替换成边界值</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> columns:</span><br><span class="line">    plt.figure(figsize=(10, 6))</span><br><span class="line">    sns.boxplot(x=col, data=<span class="built_in">df</span>)</span><br><span class="line">    plt.title(f<span class="string">&#x27;Boxplot of &#123;col&#125;&#x27;</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> columns:</span><br><span class="line">    <span class="comment"># 计算 IQR</span></span><br><span class="line">    Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">    Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">    IQR = Q3 - Q1</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义上下界</span></span><br><span class="line">    lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">    upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line">    <span class="built_in">df</span>[col] = np.where(</span><br><span class="line">    <span class="built_in">df</span>[col] &lt; lower_bound,  <span class="comment"># 条件：小于下界</span></span><br><span class="line">    lower_bound,            <span class="comment"># 替换为下界</span></span><br><span class="line">    np.where(</span><br><span class="line">        <span class="built_in">df</span>[col] &gt; upper_bound,  <span class="comment"># 条件：大于上界</span></span><br><span class="line">        upper_bound,           <span class="comment"># 替换为上界</span></span><br><span class="line">        <span class="built_in">df</span>[col]                <span class="comment"># 否则保持原值</span></span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> columns:</span><br><span class="line">    plt.figure(figsize=(10, 6))</span><br><span class="line">    sns.boxplot(x=col, data=<span class="built_in">df</span>)</span><br><span class="line">    plt.title(f<span class="string">&#x27;Boxplot of &#123;col&#125;&#x27;</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">dat.plot_all_boxplots(<span class="built_in">df</span>,exclude_columns=[<span class="string">&#x27;Class variable&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> columns:</span><br><span class="line">    <span class="comment"># 计算 IQR</span></span><br><span class="line">    Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">    Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">    IQR = Q3 - Q1</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义上下界</span></span><br><span class="line">    lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">    upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line">    <span class="built_in">df</span>[col] = np.where(</span><br><span class="line">    <span class="built_in">df</span>[col] &lt; lower_bound,  </span><br><span class="line">    lower_bound,            </span><br><span class="line">    np.where(</span><br><span class="line">        <span class="built_in">df</span>[col] &gt; upper_bound,  </span><br><span class="line">        upper_bound,           </span><br><span class="line">        <span class="built_in">df</span>[col]                </span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">dat.plot_all_boxplots(<span class="built_in">df</span>,exclude_columns=[<span class="string">&#x27;Class variable&#x27;</span>])</span><br></pre></td></tr></table></figure></div>
 
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/015.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/024.png"
                       alt="photo"
                 ></p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/016.png"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/025.png"
                       alt="photo"
                 ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/017.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/018.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/019.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/020.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/021.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/022.png"
-                      alt="photo"
-                ></p>
-<h2 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">X = df.drop(<span class="string">&#x27;Class variable&#x27;</span>, axis=1)</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Class variable&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 标准化</span></span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">X_scaled = scaler.fit_transform(X)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换回 DataFrames</span></span><br><span class="line">X_scaled_df = pd.DataFrame(X_scaled, columns=X.columns)</span><br></pre></td></tr></table></figure></div>
-
 <h2 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">X = df.drop(columns=[<span class="string">&#x27;Class variable&#x27;</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Class variable&#x27;</span>]  <span class="comment"># 目标变量</span></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X_scaled_df, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">dat.plot_feature_distributions(<span class="built_in">df</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/026.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">dat.detect_skewness(<span class="built_in">df</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/18/027.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">std = dat.DataStandardizer(method=<span class="string">&#x27;boxcox&#x27;</span>, cols=[<span class="string">&#x27;Number of times pregnant&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Plasma glucose concentration&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Triceps skin fold thickness (mm)&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;2-Hour serum insulin (mu U/ml)&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Body mass index (kg/m^2)&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Diabetes pedigree function&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Age (years)&#x27;</span>])</span><br><span class="line">std.fit(X_train,cols=[<span class="string">&#x27;Number of times pregnant&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Plasma glucose concentration&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Triceps skin fold thickness (mm)&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;2-Hour serum insulin (mu U/ml)&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Body mass index (kg/m^2)&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Diabetes pedigree function&#x27;</span>, </span><br><span class="line">                               <span class="string">&#x27;Age (years)&#x27;</span>])</span><br><span class="line">X_train = std.transform(X_train)</span><br><span class="line">X_test = std.transform(X_test)</span><br></pre></td></tr></table></figure></div>
 
 <h2 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">models = &#123;</span><br><span class="line">    <span class="string">&quot;RandomForestClassifier&quot;</span>: RandomForestClassifier(n_estimators=100, random_state=42,class_weight=<span class="string">&#x27;balanced&#x27;</span>),</span><br><span class="line">    <span class="string">&quot;LogisticRegression&quot;</span>: LogisticRegression(max_iter=1000, random_state=42,class_weight=<span class="string">&#x27;balanced&#x27;</span>),</span><br><span class="line">    <span class="string">&quot;SVM&quot;</span>: SVC(probability=True, random_state=42,class_weight=<span class="string">&#x27;balanced&#x27;</span>),</span><br><span class="line">    <span class="string">&quot;KNN&quot;</span>: KNeighborsClassifier(),</span><br><span class="line">    <span class="string">&quot;XGBoost&quot;</span>: XGBClassifier(eval_metric=<span class="string">&#x27;logloss&#x27;</span>, random_state=42)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 初始化结果字典</span></span><br><span class="line">results = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 遍历每个模型</span></span><br><span class="line"><span class="keyword">for</span> name, model <span class="keyword">in</span> models.items():  <span class="comment"># 假设 models 是一个字典，键为模型名称，值为模型对象</span></span><br><span class="line">    <span class="comment"># 训练模型</span></span><br><span class="line">    model.fit(X_train, y_train)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 预测测试集</span></span><br><span class="line">    y_pred = model.predict(X_test)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 计算准确率</span></span><br><span class="line">    accuracy = accuracy_score(y_test, y_pred)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 获取分类报告</span></span><br><span class="line">    report = classification_report(y_test, y_pred, output_dict=True)  <span class="comment"># 返回字典格式</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 存储结果</span></span><br><span class="line">    results[name] = &#123;</span><br><span class="line">        <span class="string">&#x27;accuracy&#x27;</span>: accuracy,</span><br><span class="line">        <span class="string">&#x27;report&#x27;</span>: report</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出每个模型的结果</span></span><br><span class="line"><span class="keyword">for</span> name, result <span class="keyword">in</span> results.items():</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;模型: &#123;name&#125;&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;准确率: &#123;result[&#x27;accuracy&#x27;]:.4f&#125;&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;分类报告:&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(classification_report(y_test, models[name].predict(X_test)))  <span class="comment"># 打印格式化的分类报告</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;-&quot;</span> * 50)</span><br></pre></td></tr></table></figure></div>
 
-<p>模型: RandomForestClassifier<br>准确率: 0.7727<br>分类报告:<br>              precision    recall  f1-score   support</p>
-<pre><code>     0.0       0.81      0.84      0.82        97
-     1.0       0.70      0.67      0.68        57
+<p>模型: RandomForestClassifier<br>准确率: 0.7597<br>分类报告:<br>              precision    recall  f1-score   support</p>
+<pre><code>     0.0       0.79      0.84      0.81        97
+     1.0       0.69      0.63      0.66        57
 
-accuracy                           0.77       154
+accuracy                           0.76       154
 </code></pre>
-<p>   macro avg       0.76      0.75      0.75       154<br>weighted avg       0.77      0.77      0.77       154</p>
+<p>   macro avg       0.74      0.73      0.74       154<br>weighted avg       0.76      0.76      0.76       154</p>
 <hr>
-<p>模型: LogisticRegression<br>准确率: 0.7338<br>分类报告:<br>              precision    recall  f1-score   support</p>
-<pre><code>     0.0       0.81      0.75      0.78        97
-     1.0       0.62      0.70      0.66        57
+<p>模型: LogisticRegression<br>准确率: 0.7468<br>分类报告:<br>              precision    recall  f1-score   support</p>
+<pre><code>     0.0       0.83      0.75      0.79        97
+     1.0       0.64      0.74      0.68        57
 
-accuracy                           0.73       154
+accuracy                           0.75       154
 </code></pre>
-<p>   macro avg       0.72      0.73      0.72       154<br>weighted avg       0.74      0.73      0.74       154</p>
+<p>   macro avg       0.73      0.74      0.74       154<br>weighted avg       0.76      0.75      0.75       154</p>
 <hr>
-<p>模型: SVM<br>准确率: 0.7792<br>分类报告:<br>              precision    recall  f1-score   support</p>
-<pre><code>     0.0       0.89      0.74      0.81        97
-     1.0       0.66      0.84      0.74        57
+<p>模型: SVM<br>准确率: 0.5779<br>分类报告:<br>              precision    recall  f1-score   support</p>
+<pre><code>     0.0       0.68      0.62      0.65        97
+     1.0       0.44      0.51      0.47        57
 
-accuracy                           0.78       154
+accuracy                           0.58       154
 </code></pre>
-<p>   macro avg       0.77      0.79      0.77       154<br>weighted avg       0.80      0.78      0.78       154</p>
+<p>   macro avg       0.56      0.56      0.56       154<br>weighted avg       0.59      0.58      0.58       154</p>
 <hr>
-<p>模型: KNN<br>准确率: 0.7727<br>分类报告:<br>              precision    recall  f1-score   support</p>
-<pre><code>     0.0       0.80      0.85      0.82        97
-     1.0       0.71      0.65      0.68        57
+<p>模型: KNN<br>准确率: 0.6558<br>分类报告:<br>              precision    recall  f1-score   support</p>
+<pre><code>     0.0       0.71      0.77      0.74        97
+     1.0       0.54      0.46      0.50        57
 
-accuracy                           0.77       154
+accuracy                           0.66       154
 </code></pre>
-<p>   macro avg       0.76      0.75      0.75       154<br>weighted avg       0.77      0.77      0.77       154</p>
+<p>   macro avg       0.62      0.61      0.62       154<br>weighted avg       0.65      0.66      0.65       154</p>
 <hr>
-<p>模型: XGBoost<br>准确率: 0.7727<br>分类报告:<br>              precision    recall  f1-score   support</p>
-<pre><code>     0.0       0.82      0.81      0.82        97
-     1.0       0.69      0.70      0.70        57
+<p>模型: XGBoost<br>准确率: 0.7597<br>分类报告:<br>              precision    recall  f1-score   support</p>
+<pre><code>     0.0       0.82      0.79      0.81        97
+     1.0       0.67      0.70      0.68        57
 
-accuracy                           0.77       154
+accuracy                           0.76       154
 </code></pre>
-<p>   macro avg       0.76      0.76      0.76       154<br>weighted avg       0.77      0.77      0.77       154</p>
+<p>   macro avg       0.74      0.75      0.75       154<br>weighted avg       0.76      0.76      0.76       154</p>
 <hr>
 <h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><p>由于我们是要预测糖尿病，要做到减少漏诊，因此我们更关心召回率，提高召回率，精确率不必在意</p>
 <p><strong>随机森林的优化</strong></p>
@@ -2691,13 +2634,10 @@ accuracy                           0.77       154
 <p><strong>XGBoost的优化</strong></p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计算类别不平衡比例，用于 scale_pos_weight</span></span><br><span class="line">neg, pos = (y_train == 0).<span class="built_in">sum</span>(), (y_train == 1).<span class="built_in">sum</span>()</span><br><span class="line">scale_pos_weight = neg / pos</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搜索空间</span></span><br><span class="line">param_space = &#123;</span><br><span class="line">    <span class="string">&#x27;n_estimators&#x27;</span>: Integer(50, 300),</span><br><span class="line">    <span class="string">&#x27;max_depth&#x27;</span>: Integer(3, 15),</span><br><span class="line">    <span class="string">&#x27;learning_rate&#x27;</span>: Real(0.01, 0.3, prior=<span class="string">&#x27;log-uniform&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;subsample&#x27;</span>: Real(0.5, 1.0),</span><br><span class="line">    <span class="string">&#x27;colsample_bytree&#x27;</span>: Real(0.5, 1.0),</span><br><span class="line">    <span class="string">&#x27;gamma&#x27;</span>: Real(0, 5),</span><br><span class="line">    <span class="string">&#x27;min_child_weight&#x27;</span>: Integer(1, 10)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化模型</span></span><br><span class="line">xgb = XGBClassifier(</span><br><span class="line">    objective=<span class="string">&#x27;binary:logistic&#x27;</span>,</span><br><span class="line">    eval_metric=<span class="string">&#x27;logloss&#x27;</span>,</span><br><span class="line">    use_label_encoder=False,</span><br><span class="line">    random_state=42,</span><br><span class="line">    scale_pos_weight=scale_pos_weight  <span class="comment"># 处理类别不平衡</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 贝叶斯优化器</span></span><br><span class="line">opt = BayesSearchCV(</span><br><span class="line">    xgb,</span><br><span class="line">    search_spaces=param_space,</span><br><span class="line">    scoring=<span class="string">&#x27;recall&#x27;</span>,  <span class="comment"># 重点优化召回率</span></span><br><span class="line">    cv=StratifiedKFold(n_splits=5),</span><br><span class="line">    n_iter=30,  <span class="comment"># 迭代次数（越大越好）</span></span><br><span class="line">    n_jobs=-1,</span><br><span class="line">    verbose=2,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 执行搜索</span></span><br><span class="line">opt.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best Recall Score:&quot;</span>, opt.best_score_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best Parameters:&quot;</span>, opt.best_params_)</span><br></pre></td></tr></table></figure></div>
 
-<p><strong>SVM的优化</strong></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">base_svm = SVC(probability=True,  <span class="comment"># 便于后续阈值调节</span></span><br><span class="line">               class_weight=<span class="string">&#x27;balanced&#x27;</span>,</span><br><span class="line">               random_state=42)</span><br><span class="line">               </span><br><span class="line">param_space = &#123;</span><br><span class="line">    <span class="string">&#x27;kernel&#x27;</span>: Categorical([<span class="string">&#x27;rbf&#x27;</span>, <span class="string">&#x27;linear&#x27;</span>]),</span><br><span class="line">    <span class="string">&#x27;C&#x27;</span>: Real(1e-3, 1e3, prior=<span class="string">&#x27;log-uniform&#x27;</span>),</span><br><span class="line">    <span class="string">&#x27;gamma&#x27;</span>: Real(1e-4, 1e1, prior=<span class="string">&#x27;log-uniform&#x27;</span>)  <span class="comment"># 仅在 RBF 时生效</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">opt = BayesSearchCV(</span><br><span class="line">    estimator=base_svm,</span><br><span class="line">    search_spaces=param_space,</span><br><span class="line">    scoring=<span class="string">&#x27;recall&#x27;</span>,                 <span class="comment"># 重点关注召回率</span></span><br><span class="line">    cv=StratifiedKFold(n_splits=5),   <span class="comment"># 分层交叉验证</span></span><br><span class="line">    n_iter=30,                        <span class="comment"># 迭代次数，可增加</span></span><br><span class="line">    n_jobs=-1,</span><br><span class="line">    verbose=2,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">opt.fit(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best CV recall:&quot;</span>, opt.best_score_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best params:&quot;</span>, opt.best_params_)</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="打印最佳召回率"><a href="#打印最佳召回率" class="headerlink" title="打印最佳召回率"></a>打印最佳召回率</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">best_rf = opt.best_estimator_</span><br><span class="line">y_pred = best_rf.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Recall:&quot;</span>, recall_score(y_test, y_pred))</span><br><span class="line"></span><br><span class="line">best_xgb = opt.best_estimator_</span><br><span class="line">y_pred = best_xgb.predict(X_test)</span><br><span class="line">recall = recall_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Test Recall:&quot;</span>, recall)</span><br><span class="line"></span><br><span class="line">best_svm = opt.best_estimator_</span><br><span class="line"></span><br><span class="line">y_proba = best_svm.predict_proba(X_test)[:, 1]   <span class="comment"># 用 X_test</span></span><br><span class="line">thresh   = 0.35</span><br><span class="line">y_pred_thresh = (y_proba &gt;= thresh).astype(int)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import recall_score</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Recall (threshold 0.35):&quot;</span>, recall_score(y_test, y_pred_thresh))</span><br></pre></td></tr></table></figure></div>
+<h2 id="打印最佳召回率"><a href="#打印最佳召回率" class="headerlink" title="打印最佳召回率"></a>打印最佳召回率</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">best_rf = opt.best_estimator_</span><br><span class="line">y_pred = best_rf.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Recall:&quot;</span>, recall_score(y_test, y_pred))</span><br><span class="line"></span><br><span class="line">best_xgb = opt.best_estimator_</span><br><span class="line">y_pred = best_xgb.predict(X_test)</span><br><span class="line">recall = recall_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Test Recall:&quot;</span>, recall)</span><br></pre></td></tr></table></figure></div>
 
 <blockquote>
-<p>Recall: 0.7894736842105263<br>Test Recall: 0.7894736842105263<br>Recall (threshold 0.35): 0.7894736842105263</p>
+<p>Recall: 0.7719298245614035<br>Test Recall: 0.7719298245614035</p>
 </blockquote>
 ]]></content>
       <categories>
