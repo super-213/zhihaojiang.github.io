@@ -19,7 +19,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/2025/01/06/20250106mysql语句/"/>
+    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/2025/05/21/20250521data_analysis_tools介绍/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -29,16 +29,17 @@
         
         <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL语句">
-<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/2025/01/06/20250106MySQL%E8%AF%AD%E5%8F%A5/index.html">
+<meta property="og:title" content="data_analysis_tools介绍">
+<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/2025/05/21/20250521data_analysis_tools%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
-<meta property="article:published_time" content="2025-01-06T03:45:14.000Z">
-<meta property="article:modified_time" content="2025-03-30T06:44:32.950Z">
+<meta property="article:published_time" content="2025-05-21T03:45:14.000Z">
+<meta property="article:modified_time" content="2025-05-21T12:49:10.150Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="mysql">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="数学">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://super-213.github.io/images/redefine-og.webp">
     
@@ -52,7 +53,7 @@
     
     <title>
         
-            MySQL语句 | 智浩的Blog
+            data_analysis_tools介绍 | 智浩的Blog
         
     </title>
 
@@ -559,7 +560,7 @@
 		<div class="article-title relative w-full">
 			
 			<div class="w-full flex items-center pt-6 justify-start">
-				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">MySQL语句</h1>
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">data_analysis_tools介绍</h1>
 			</div>
 			
 		</div>
@@ -580,15 +581,15 @@
 					<div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2025-01-06 11:45:14</span>
-        <span class="mobile">2025-01-06 11:45:14</span>
+        <span class="desktop">2025-05-21 11:45:14</span>
+        <span class="mobile">2025-05-21 11:45:14</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-03-30 14:44:32</span>
-            <span class="mobile">2025-03-30 14:44:32</span>
+            <span class="desktop">2025-05-21 20:49:10</span>
+            <span class="mobile">2025-05-21 20:49:10</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -616,7 +617,11 @@
             <ul>
                 
                     <li>
-                        <a href="/zhihaojiang.github.io/tags/mysql/">mysql</a>&nbsp;
+                        <a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E6%95%B0%E5%AD%A6/">数学</a>&nbsp;
                     </li>
                 
             </ul>
@@ -626,12 +631,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.5k Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.2k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>6 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>4 Mins</span>
         </span>
     
     
@@ -650,203 +655,56 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<p>本位与2025-01-06在CSDN上发布 现将其转移至自己的博客</p>
-<h2 id="引擎相关"><a href="#引擎相关" class="headerlink" title="引擎相关"></a>引擎相关</h2><h3 id="查看存储引擎："><a href="#查看存储引擎：" class="headerlink" title="查看存储引擎："></a>查看存储引擎：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show engines;</span><br></pre></td></tr></table></figure></div>
-<h3 id="查看显示支持的存储引擎信息："><a href="#查看显示支持的存储引擎信息：" class="headerlink" title="查看显示支持的存储引擎信息："></a>查看显示支持的存储引擎信息：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like <span class="string">&#x27;have%&#x27;</span></span><br></pre></td></tr></table></figure></div>
+			<p>GitHub地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/super-213/dataanalysistools" >https://github.com/super-213/dataanalysistools<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h1 id="information"><a href="#information" class="headerlink" title="information"></a>information</h1><h2 id="summarize-df"><a href="#summarize-df" class="headerlink" title="summarize_df()"></a>summarize_df()</h2><p>汇总 DataFrame 的基本信息，包括 head, describe, info 等内容。</p>
+<p><strong>参数:</strong><br>        df (pd.DataFrame): 需要汇总的 DataFrame<br>        head_rows (int): 显示前几行数据,默认5行</p>
+<p><strong>返回:</strong><br>        dict: 包含 head, tail, describe, info, dtypes, missing 的字典结果</p>
+<h1 id="clean"><a href="#clean" class="headerlink" title="clean"></a>clean</h1><h2 id="drop-columns"><a href="#drop-columns" class="headerlink" title="drop_columns()"></a>drop_columns()</h2><p>删除 DataFrame 中的指定列或指定类型的列。</p>
+<p><strong>参数</strong><br>    df : pd.DataFrame<br>        要处理的数据框<br>    cols_to_drop : 可迭代[str], optional<br>        要删除的列名列表（如 [‘id’, ‘name’]）<br>    dtypes_to_drop : 可迭代[str], optional<br>        要删除的数据类型（如 [‘object’, ‘datetime64[ns]’]）<br>    verbose : bool, default False<br>        是否打印删除的列名</p>
+<p><strong>返回</strong><br>    pd.DataFrame<br>        删除列后的副本</p>
+<h2 id="impute"><a href="#impute" class="headerlink" title="impute()"></a>impute()</h2><p>通用缺失值填补函数。</p>
+<p><strong>参数</strong><br>    df : DataFrame<br>        原始数据<br>    strategy : {“mean”, “median”, “mode”, “constant”}<br>        填补策略<br>    constant_value : 任意<br>        strategy&#x3D;”constant” 时使用</p>
+<p><strong>返回:</strong><br>    DataFrame<br>        填补后的副本</p>
+<h2 id="detect-outliers-zscore"><a href="#detect-outliers-zscore" class="headerlink" title="detect_outliers_zscore()"></a>detect_outliers_zscore()</h2><p>使用 Z-Score 方法检测并可剔除异常值。</p>
+<p><strong>参数</strong><br>    df : pd.DataFrame<br>        原始数据<br>    cols : list[str], optional<br>        要检测的列（默认全部数值列）<br>    threshold : float<br>        Z 分数阈值，超过即视为异常<br>    method : {‘both’, ‘high’, ‘low’}<br>        检测异常值方向：<br>            - ‘both’: 正负两侧都检测（默认）<br>            - ‘high’: 仅检测高值异常（z &gt; threshold）<br>            - ‘low’:  仅检测低值异常（z &lt; -threshold）<br>    return_zscore : bool<br>        是否返回异常值的 Z 分数（附加在结果中）<br>    drop : bool<br>        是否直接剔除异常值行（返回清洗后的 DataFrame）<br>    verbose : bool<br>        是否输出每列异常值数量<br><strong>返回</strong><br>    如果 drop&#x3D;False 且 return_zscore&#x3D;False:<br>        返回异常值的行（pd.DataFrame）<br>    如果 drop&#x3D;False 且 return_zscore&#x3D;True:<br>        返回包含 Z 分数的异常值 DataFrame<br>    如果 drop&#x3D;True:<br>        返回剔除后的 DataFrame（无异常值）</p>
+<h2 id="detect-outliers-iqr"><a href="#detect-outliers-iqr" class="headerlink" title="detect_outliers_iqr()"></a>detect_outliers_iqr()</h2><p>使用 IQR（四分位数）方法检测异常值，并可选择剔除。</p>
+<p><strong>参数</strong><br>    df : pd.DataFrame<br>        原始数据<br>    cols : list[str], optional<br>        要检测的列（默认全部数值列）<br>    multiplier : float<br>        IQR 倍数阈值（默认 1.5）<br>    method : {“both”, “high”, “low”}<br>        异常方向控制：<br>            - “both”: 上下两端都检测<br>            - “high”: 仅检测上异常（值 &gt; Q3 + 1.5×IQR）<br>            - “low” : 仅检测下异常（值 &lt; Q1 - 1.5×IQR）<br>    return_bounds : bool<br>        是否返回每列的上下界（Q1 和 Q3 基础上的判断线）<br>    drop : bool<br>        是否直接剔除异常值行（返回清洗后的 df）<br>    verbose : bool<br>        是否打印每列异常数量<br><strong>返回</strong><br>    如果 drop&#x3D;False:<br>        返回异常值 DataFrame<br>    如果 drop&#x3D;True:<br>        返回剔除异常值后的 DataFrame<br>    如果 return_bounds&#x3D;True:<br>        返回 (异常值DataFrame或清洗后df, bounds字典)</p>
+<h2 id="detect-outliers-boxplot"><a href="#detect-outliers-boxplot" class="headerlink" title="detect_outliers_boxplot()"></a>detect_outliers_boxplot()</h2><p>用箱线图批量可视化异常值<br>    df: pandas DataFrame<br>    features: 要检查的特征列表（数值型）<br>    max_per_page: 每页最多显示的子图数<br>    figsize: 每页图像尺寸<br>    dpi: 图像清晰度</p>
+<h2 id="handle-outliers"><a href="#handle-outliers" class="headerlink" title="handle_outliers()"></a>handle_outliers()</h2><p>处理异常值：删除、替换或裁剪。<br><strong>参数：</strong><br>    - df : 原始 DataFrame<br>    - cols : 指定处理列（默认数值列）<br>    - method : 异常检测方法（zscore 或 iqr）<br>    - strategy : 处理策略（删除、替换、裁剪）<br>    - z_thresh : Z-Score 阈值<br>    - iqr_mult : IQR 倍数<br>    - direction : 异常检测方向（上下）<br>    - verbose : 是否打印信息</p>
+<h1 id="EAD"><a href="#EAD" class="headerlink" title="EAD"></a>EAD</h1><h2 id="pairwise-plot"><a href="#pairwise-plot" class="headerlink" title="pairwise_plot()"></a>pairwise_plot()</h2><p>批量绘制特征两两组合的图表，每张大图包含最多9张子图。</p>
+<p><strong>参数:</strong><br>    - df: DataFrame 数据<br>    - features: 要组合的特征列名列表<br>    - plot_type: 图表类型：’scatter’, ‘box’, ‘violin’, ‘hist’<br>    - hue: 分类变量（可选）<br>    - max_per_figure: 每页最多显示几个子图<br>    - figsize: 每张图的整体大小<br>    - save: 是否保存图像<br>    - save_prefix: 图像保存的前缀</p>
+<h2 id="plot-all-barplots"><a href="#plot-all-barplots" class="headerlink" title="plot_all_barplots()"></a>plot_all_barplots()</h2><p> 将 DataFrame 中所有列（除 except）按类别分组绘制为子图中的柱状图</p>
+<p><strong>参数:</strong><br>    - df: pandas DataFrame，包含数据和类别列<br>    - hue: str，表示分类的列名<br>    - n_cols: int，每行显示多少个图</p>
+<p><strong>返回:</strong><br>    - 无（直接显示整张图）</p>
+<h2 id="plot-feature-distributions"><a href="#plot-feature-distributions" class="headerlink" title="plot_feature_distributions()"></a>plot_feature_distributions()</h2><p>批量绘制特征分布图（直方图 + KDE）。</p>
+<p><strong>参数：</strong><br>    - df: pandas DataFrame<br>    - features: 要查看分布的列（默认选择数值型列）<br>    - hue: 分组变量（分类列名）<br>    - bins: 直方图的 bin 数量<br>    - kde: 是否绘制 KDE 曲线<br>    - max_per_figure: 每页显示的图表数<br>    - figsize: 每页图像大小<br>    - save: 是否保存图像<br>    - save_prefix: 保存图像的文件名前缀</p>
+<h2 id="plot-all-boxplots"><a href="#plot-all-boxplots" class="headerlink" title="plot_all_boxplots()"></a>plot_all_boxplots()</h2><p>将 DataFrame 中所有数值列绘制为子图中的箱线图</p>
+<p><strong>参数:</strong><br>    - df: pandas DataFrame<br>    - n_cols: 每行显示的图数量<br>    - exclude_columns: 要排除的列名列表，例如类别列</p>
+<p><strong>返回:</strong><br>    - 无（直接显示整张图）</p>
+<h1 id="features"><a href="#features" class="headerlink" title="features"></a>features</h1><h2 id="bin-continuous-variable"><a href="#bin-continuous-variable" class="headerlink" title="bin_continuous_variable()"></a>bin_continuous_variable()</h2><p>对连续变量进行分箱处理。</p>
+<p><strong>参数:</strong><br>        df (pd.DataFrame): 输入 DataFrame。<br>        column (str): 要分箱的列名。<br>        method (str): 分箱方法，’equal_width’（等宽）、’equal_freq’（等频）、’custom’（自定义）。<br>        bins (int or List[float]): 分箱数量或自定义边界。<br>        labels (List[str], optional): 分箱标签。如果不传将使用默认区间或数字编号。<br>        return_interval (bool): 是否显示区间（仅对默认 label 生效）。<br>        new_col_name (str): 分箱后新列的名称，默认为原列名+”_binned”。<br>        drop_original (bool): 是否删除原始列。<br>        inplace (bool): 是否在原df上修改。</p>
+<p><strong>返回:</strong><br>        pd.DataFrame: 处理后的 DataFrame。</p>
+<h1 id="使用案例："><a href="#使用案例：" class="headerlink" title="使用案例："></a>使用案例：</h1><p><a href="https://super-213.github.io/zhihaojiang.github.io/2025/05/18/20250518%E7%B3%96%E5%B0%BF%E7%97%85%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90/">https://super-213.github.io/zhihaojiang.github.io/2025/05/18/20250518%E7%B3%96%E5%B0%BF%E7%97%85%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90/</a></p>
+<p><strong>具体详见GitHub</strong></p>
 
-<h3 id="查看默认的存储引擎："><a href="#查看默认的存储引擎：" class="headerlink" title="查看默认的存储引擎："></a>查看默认的存储引擎：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like <span class="string">&#x27;storage_engine&#x27;</span></span><br></pre></td></tr></table></figure></div>
-
-<h2 id="数据库相关操作-增-删-改"><a href="#数据库相关操作-增-删-改" class="headerlink" title="数据库相关操作(增 删 改)"></a>数据库相关操作(增 删 改)</h2><h3 id="创建数据库："><a href="#创建数据库：" class="headerlink" title="创建数据库："></a>创建数据库：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create datbase [<span class="keyword">if</span> not exists] db_name</span><br><span class="line">[[DEFAULT] CHARACTER SET charset_name]</span><br><span class="line">[[DEFALUT] COLLATE collation_name]</span><br></pre></td></tr></table></figure></div>
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>PS</p>
-
-    </div>
-    <div class="notel-content">
-      <p>“[ ]”中的是可选项 可写可不写<br>将db_name替换成你想给数据库取的名字</p>
-
-    </div>
-  </div>
-
-<h3 id="查看所有数据库"><a href="#查看所有数据库" class="headerlink" title="查看所有数据库"></a>查看所有数据库</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show databases;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="查看数据库的详细信息"><a href="#查看数据库的详细信息" class="headerlink" title="查看数据库的详细信息"></a>查看数据库的详细信息</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show create database db_name;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="使用某个数据库"><a href="#使用某个数据库" class="headerlink" title="使用某个数据库"></a>使用某个数据库</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use db_name;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="修改数据库编码"><a href="#修改数据库编码" class="headerlink" title="修改数据库编码"></a>修改数据库编码</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter database [db_name]</span><br><span class="line">[DEFAULT CHARACTER SET charset_name]| [[DEFAULT]COLLATE collation_name]</span><br></pre></td></tr></table></figure></div>
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>PS</p>
-
-    </div>
-    <div class="notel-content">
-      <p>例1：将schoolDB的编码方式有GBK修改为UTF8。</p>
-<p>法1:ALTER DATABASE schoolDB CHARACTER SET UTF8;</p>
-<p>法2:ALTER DATABASE schoolDB collate utf8_general_ci;</p>
-
-    </div>
-  </div>
-
-<h3 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop database [<span class="keyword">if</span> exists] db_name;</span><br></pre></td></tr></table></figure></div>
-<h2 id="表的相关操作（增删改查）"><a href="#表的相关操作（增删改查）" class="headerlink" title="表的相关操作（增删改查）"></a>表的相关操作（增删改查）</h2><h3 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table [<span class="keyword">if</span> exists] t_name(</span><br><span class="line">    name_1 int [primary key],</span><br><span class="line">    name_2 varchar(10)[...],</span><br><span class="line">    name_3 <span class="built_in">float</span>(5, 3)[...]</span><br><span class="line">)[engine = INNODB charset = UTF-8];</span><br></pre></td></tr></table></figure></div>
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>PS</p>
-
-    </div>
-    <div class="notel-content">
-      <p>这里t_name是表名</p>
-<p>name_1 name_2 name_3 是字段名</p>
-<p>字段名后面[ ]中的是完整性约束(可选填)</p>
-<p> 完整性约束条件：<br> PRIMARY KEY主键（唯一来标识的，每一个表都一个，自动非空）<br> AUTO_INCREMENT自增长<br> FOREIGN KEY外键<br> NOT NULL非空<br> UNIQUE KEY唯一<br> DEFAULT默认值<br>最下面的[ ] 中的是引擎和编码方式的选择</p>
-
-    </div>
-  </div>
-
-<h3 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h3><h4 id="在name-3的（前面-后面）-增加新列name-4"><a href="#在name-3的（前面-后面）-增加新列name-4" class="headerlink" title="[在name_3的（前面|后面）] 增加新列name_4"></a>[在name_3的（前面|后面）] 增加新列name_4</h4><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name</span><br><span class="line">    add name_4 [first|after name_3];</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="修改列的数据类型"><a href="#修改列的数据类型" class="headerlink" title="修改列的数据类型"></a>修改列的数据类型</h4><p>将name_2的数据类型修改成float(4,3)</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name</span><br><span class="line">    modify name_2 <span class="built_in">float</span>(4,3)</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="修改列名"><a href="#修改列名" class="headerlink" title="修改列名"></a>修改列名</h4><p>将表t_name中的name_1列的名字修改成new_name_1</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name</span><br><span class="line">    change name_1 new_name_1;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="修改表名"><a href="#修改表名" class="headerlink" title="修改表名"></a>修改表名</h4><p>将表t_name的名字修改成new_t_name</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name</span><br><span class="line">    rename [to] new_t_name;</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="删除列"><a href="#删除列" class="headerlink" title="删除列"></a>删除列</h4><p>将表t_name中的name_1列删除</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name</span><br><span class="line">drop column name_1；</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="删除行"><a href="#删除行" class="headerlink" title="删除行"></a>删除行</h4><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete from t_name</span><br><span class="line"><span class="built_in">where</span> 条件表达式；</span><br></pre></td></tr></table></figure></div>
-
-<h4 id="修改存储引擎"><a href="#修改存储引擎" class="headerlink" title="修改存储引擎"></a>修改存储引擎</h4><p>将表t_name的存储引擎修改成INNODB</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alter table t_name</span><br><span class="line">    engine = INNODB;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="查看表"><a href="#查看表" class="headerlink" title="查看表"></a>查看表</h3><p>查看表名</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show tables;</span><br></pre></td></tr></table></figure></div>
-
-<p>查看表的结构</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#法1</span></span><br><span class="line">show create table t_name；</span><br><span class="line"> </span><br><span class="line"><span class="comment">#法2</span></span><br><span class="line">describe t_name;</span><br><span class="line"> </span><br><span class="line"><span class="comment">#法3</span></span><br><span class="line">desc t_name;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="复制表"><a href="#复制表" class="headerlink" title="复制表"></a>复制表</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">create table [<span class="keyword">if</span> not existe] t_name</span><br><span class="line">[like t_name_2]</span><br><span class="line">[as 表信息]</span><br><span class="line"> </span><br><span class="line"><span class="comment">#like可以复制表的结构 表中的信息不会被复制 复制出来的是个空表</span></span><br><span class="line"><span class="comment">#as 可以复制表中的信息 相当于CV大法</span></span><br></pre></td></tr></table></figure></div>
-
-<h3 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h3><p>将表t_name删除</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop table t_name；</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="数据相关操作"><a href="#数据相关操作" class="headerlink" title="数据相关操作"></a>数据相关操作</h2><h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">insert [into]</span><br><span class="line">    t_name(name_1, name_2, name_3)</span><br><span class="line">    values(12,<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;2025-01-04&#x27;</span>);</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="查看插入信息"><a href="#查看插入信息" class="headerlink" title="查看插入信息"></a>查看插入信息</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from t_name;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">update t_name</span><br><span class="line"><span class="built_in">set</span> name_1 = x,</span><br><span class="line">    name_2 = y,</span><br><span class="line">    name_3 = z</span><br><span class="line">[<span class="built_in">where</span> 条件表达式];</span><br></pre></td></tr></table></figure></div>
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>PS</p>
-
-    </div>
-    <div class="notel-content">
-      <p>若where不写<br>则更新全部记录</p>
-
-    </div>
-  </div>
-
-<h3 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delate from t_name</span><br><span class="line">[<span class="built_in">where</span> 条件表达式];</span><br></pre></td></tr></table></figure></div>
-
-<p>完全清除某个表<br>完全清除表t_name：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">truncate</span> [table] t_name;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="单表查询（重点）"><a href="#单表查询（重点）" class="headerlink" title="单表查询（重点）"></a>单表查询（重点）</h2><p>先给出语法：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> [distinct] name_1 [as new_name],</span><br><span class="line">       [distinct] name_2 [as new_name],</span><br><span class="line">from t_name</span><br><span class="line">[<span class="built_in">where</span> 条件表达式,]</span><br><span class="line">[group by name [ASC|DESC],]</span><br><span class="line">[order by name [ASC|DESC],]</span><br><span class="line">[<span class="built_in">limit</span> 条数]；</span><br></pre></td></tr></table></figure></div>
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>PS</p>
-
-    </div>
-    <div class="notel-content">
-      <p>SELECT子句：<br>指定要查询的列名称，列与列之间用逗号隔开。<br>还可以为列指定新的别名，显示在输出的结果中。<br>ALL关键字表示显示所有的行，包括重复行，是系统默认的<br>DISTINCT表示显示的结果要消除重复的行。<br>FROM子句：指定要查询的表，可以指定两个以上的表，表与表之间用逗号隔开。<br>WHERE子句：指定要查询的条件。<br>如果有WHERE子句，就按照“条件表达式”指定的条件进行查询；<br>如果没有WHERE子句，就查询所有记录。</p>
-<p>GROUP BY ：<br>子句用于对查询结构进行分组。<br>按照“列名1”指定的字段进行分组；<br>如果GROUP BY子句后带着HAVING关键字，那么只有满足“条件表达式2”中指定的条件的才能够输出。<br>GROUP BY子句通常和COUNT()、SUM()等聚合函数一起使用。</p>
-<p>HAVING子句：<br>指定分组的条件，通常放Group by字句之后</p>
-<p>ORDER BY子句：用于对查询结果的进行排序。<br>排序方式由ASC和DESC两个参数指出；<br>ASC参数表示按升序进行排序。默认情况下是ASC。<br>DESC参数表示按降序的顺序进行排序。升序表示值按从小到大的顺序排列。</p>
-<p>LIMIT 子句：限制查询的输出结果的行数。</p>
-
-    </div>
-  </div>
-
-<h2 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h2><h3 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h3><p>等值连接</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> x_name_1,</span><br><span class="line">       y_name_2</span><br><span class="line">from t_x </span><br><span class="line">inner <span class="built_in">join</span> t_y on t_x.id = t_y.id</span><br><span class="line"><span class="built_in">where</span>...;</span><br></pre></td></tr></table></figure></div>
-<p>左连接、右连接和联合查询不过多赘述</p>
-<h3 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h3><p>带in关键词的子查询</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">from t_name_1</span><br><span class="line"><span class="built_in">where</span> name_1 <span class="keyword">in</span>(</span><br><span class="line">    <span class="keyword">select</span> name_2 from t_name_2</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-
-<p>带比较运算符的子查询</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">from t_name_1</span><br><span class="line"><span class="built_in">where</span> name = (</span><br><span class="line">    <span class="keyword">select</span> <span class="built_in">id</span></span><br><span class="line">    from t_name_2</span><br><span class="line">    <span class="built_in">where</span> <span class="built_in">id</span> = 2</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>引:<br>    面试题：select id,name,age from sd where name&#x3D;’张飞’<br>    怎么优化？最佳方案是什么？<br>    答：在name上创建索引：<br>    create index in name on sd(name);</p>
-<h3 id="语法（已存在的表）："><a href="#语法（已存在的表）：" class="headerlink" title="语法（已存在的表）："></a>语法（已存在的表）：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create index in_id</span><br><span class="line">on t_name(<span class="built_in">id</span>);</span><br></pre></td></tr></table></figure></div>
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>PS</p>
-
-    </div>
-    <div class="notel-content">
-      <p>in_id:索引名 （自己取）<br>t_name:表名<br>id:列名</p>
-
-    </div>
-  </div>
-
-<h3 id="在创建表的时候创建索引"><a href="#在创建表的时候创建索引" class="headerlink" title="在创建表的时候创建索引"></a>在创建表的时候创建索引</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create table t_name(</span><br><span class="line">...</span><br><span class="line">[unique|fulltext|spatial] index|key [in_id](name[长度])[ASC|DESC]</span><br><span class="line">);</span><br></pre></td></tr></table></figure></div>
-<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><h3 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create view view_name as</span><br><span class="line"><span class="comment">#查询语句:</span></span><br><span class="line"><span class="keyword">select</span>...</span><br><span class="line">[with [cascaded|<span class="built_in">local</span>] check option];</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop view view_name;</span><br></pre></td></tr></table></figure></div>
-<h2 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h2><h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> identifiednby <span class="string">&#x27;密码&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="查询用户"><a href="#查询用户" class="headerlink" title="查询用户"></a>查询用户</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from mysql.user;</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="分配权限"><a href="#分配权限" class="headerlink" title="分配权限"></a>分配权限</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant 权限 on 库.表 to <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
-<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><h3 id="触发器设置"><a href="#触发器设置" class="headerlink" title="触发器设置"></a>触发器设置</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#触发器设置</span></span><br><span class="line">CREATE TRIGGER before_position_update</span><br><span class="line">BEFORE UPDATE ON staff</span><br><span class="line">FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">    IF OLD.position != NEW.position THEN</span><br><span class="line">        CASE NEW.position</span><br><span class="line">            WHEN <span class="string">&#x27;董事长&#x27;</span> THEN</span><br><span class="line">                SET NEW.role = 9;</span><br><span class="line">            WHEN <span class="string">&#x27;经理&#x27;</span> THEN</span><br><span class="line">                SET NEW.role = 6;</span><br><span class="line">            ELSE</span><br><span class="line">                SET NEW.role = 2;</span><br><span class="line">        END CASE;</span><br><span class="line">    END IF;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></div>
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>PS</p>
-
-    </div>
-    <div class="notel-content">
-      <p>这里是当position设置为经理或董事长时 自动更改权限等级</p>
-
-    </div>
-  </div>
-
-<h3 id="显示设置的触发器"><a href="#显示设置的触发器" class="headerlink" title="显示设置的触发器"></a>显示设置的触发器</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#显示设置的触发器</span></span><br><span class="line">SHOW TRIGGERS;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h2><h3 id="备份"><a href="#备份" class="headerlink" title="备份"></a>备份</h3><p>备份数据库到文件。</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -u username -p db_name &gt; backup.sql</span><br></pre></td></tr></table></figure></div>
-
-<h3 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h3><p>从文件恢复数据库。</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u username -p db_name &lt; backup.sql</span><br></pre></td></tr></table></figure></div>
 		</div>
 
 		
 		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
 			<div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> MySQL语句</li>
+        <li><strong>Title:</strong> data_analysis_tools介绍</li>
         <li><strong>Author:</strong> 姜智浩</li>
         <li><strong>Created at
-                :</strong> 2025-01-06 11:45:14</li>
+                :</strong> 2025-05-21 11:45:14</li>
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-03-30 14:44:32
+                    :</strong> 2025-05-21 20:49:10
             </li>
         
         <li>
-            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2025/01/06/20250106MySQL语句/
+            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2025/05/21/20250521data_analysis_tools介绍/
         </li>
         <li>
             <strong>
@@ -868,7 +726,11 @@
 		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
 			
 			<li class="tag-item mx-0.5">
-				<a href="/zhihaojiang.github.io/tags/mysql/">#mysql</a>&nbsp;
+				<a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">#计算机科学</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E6%95%B0%E5%AD%A6/">#数学</a>&nbsp;
 			</li>
 			
 		</ul>
@@ -879,23 +741,11 @@
 		
 		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
 			
-			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="prev" rel="prev" href="/zhihaojiang.github.io/2025/01/25/20250125%E6%BE%B3%E6%B4%B2%E6%97%85%E6%B8%B8/">
-					<span class="left arrow-icon flex justify-center items-center">
-						<i class="fa-solid fa-chevron-left"></i>
-					</span>
-					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">澳洲旅游</span>
-						<span class="post-nav-item">Prev posts</span>
-					</span>
-				</a>
-			</div>
-			
 			
 			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="next" rel="next" href="/zhihaojiang.github.io/2025/01/03/hello-world/">
+				<a class="next" rel="next" href="/zhihaojiang.github.io/2025/05/19/202505192025%20%E5%B9%B4%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E7%AB%9E%E8%B5%9B%E8%AE%BA%E6%96%87/">
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">Hello World</span>
+						<span class="post-nav-title-item">2025 年数学建模竞赛论文</span>
 						<span class="post-nav-item">Next posts</span>
 					</span>
 					<span class="right arrow-icon flex justify-center items-center">
@@ -916,8 +766,8 @@
 		<div class="post-toc-wrap">
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
-		<div class="page-title">MySQL语句</div>
-		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E6%93%8E%E7%9B%B8%E5%85%B3"><span class="nav-text">引擎相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%EF%BC%9A"><span class="nav-text">查看存储引擎：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%98%BE%E7%A4%BA%E6%94%AF%E6%8C%81%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-text">查看显示支持的存储引擎信息：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%BB%98%E8%AE%A4%E7%9A%84%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%EF%BC%9A"><span class="nav-text">查看默认的存储引擎：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C-%E5%A2%9E-%E5%88%A0-%E6%94%B9"><span class="nav-text">数据库相关操作(增 删 改)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%9A"><span class="nav-text">创建数据库：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">查看所有数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF"><span class="nav-text">查看数据库的详细信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%9F%90%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">使用某个数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E7%BC%96%E7%A0%81"><span class="nav-text">修改数据库编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">删除数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E7%9A%84%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%EF%BC%88%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%EF%BC%89"><span class="nav-text">表的相关操作（增删改查）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="nav-text">创建表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%A1%A8"><span class="nav-text">修改表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8"><span class="nav-text">查看表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E8%A1%A8"><span class="nav-text">复制表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="nav-text">删除表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C"><span class="nav-text">数据相关操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%8F%92%E5%85%A5%E4%BF%A1%E6%81%AF"><span class="nav-text">查看插入信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE"><span class="nav-text">修改数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="nav-text">删除数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="nav-text">单表查询（重点）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-text">多表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5"><span class="nav-text">连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-text">子查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95"><span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%EF%BC%88%E5%B7%B2%E5%AD%98%E5%9C%A8%E7%9A%84%E8%A1%A8%EF%BC%89%EF%BC%9A"><span class="nav-text">语法（已存在的表）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%9A%84%E6%97%B6%E5%80%99%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="nav-text">在创建表的时候创建索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E5%9B%BE"><span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A7%86%E5%9B%BE"><span class="nav-text">创建视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A7%86%E5%9B%BE"><span class="nav-text">删除视图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7"><span class="nav-text">用户</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="nav-text">创建用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E7%94%A8%E6%88%B7"><span class="nav-text">查询用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E9%85%8D%E6%9D%83%E9%99%90"><span class="nav-text">分配权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-text">触发器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A6%E5%8F%91%E5%99%A8%E8%AE%BE%E7%BD%AE"><span class="nav-text">触发器设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E8%AE%BE%E7%BD%AE%E7%9A%84%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-text">显示设置的触发器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="nav-text">备份与恢复</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%87%E4%BB%BD"><span class="nav-text">备份</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%81%A2%E5%A4%8D"><span class="nav-text">恢复</span></a></li></ol></li></ol>
+		<div class="page-title">data_analysis_tools介绍</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#information"><span class="nav-text">information</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#summarize-df"><span class="nav-text">summarize_df()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#clean"><span class="nav-text">clean</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#drop-columns"><span class="nav-text">drop_columns()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#impute"><span class="nav-text">impute()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#detect-outliers-zscore"><span class="nav-text">detect_outliers_zscore()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#detect-outliers-iqr"><span class="nav-text">detect_outliers_iqr()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#detect-outliers-boxplot"><span class="nav-text">detect_outliers_boxplot()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#handle-outliers"><span class="nav-text">handle_outliers()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EAD"><span class="nav-text">EAD</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pairwise-plot"><span class="nav-text">pairwise_plot()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plot-all-barplots"><span class="nav-text">plot_all_barplots()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plot-feature-distributions"><span class="nav-text">plot_feature_distributions()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plot-all-boxplots"><span class="nav-text">plot_all_boxplots()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#features"><span class="nav-text">features</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bin-continuous-variable"><span class="nav-text">bin_continuous_variable()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B%EF%BC%9A"><span class="nav-text">使用案例：</span></a></li></ol>
 
 	</div>
 </div>

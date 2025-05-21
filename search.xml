@@ -2678,4 +2678,47 @@ import {initHBE} from "/zhihaojiang.github.io/js/plugins/hbe.js";
         <tag>数学建模</tag>
       </tags>
   </entry>
+  <entry>
+    <title>data_analysis_tools介绍</title>
+    <url>/zhihaojiang.github.io/2025/05/21/20250521data_analysis_tools%E4%BB%8B%E7%BB%8D/</url>
+    <content><![CDATA[<p>GitHub地址：<a class="link"   href="https://github.com/super-213/dataanalysistools" >https://github.com/super-213/dataanalysistools<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h1 id="information"><a href="#information" class="headerlink" title="information"></a>information</h1><h2 id="summarize-df"><a href="#summarize-df" class="headerlink" title="summarize_df()"></a>summarize_df()</h2><p>汇总 DataFrame 的基本信息，包括 head, describe, info 等内容。</p>
+<p><strong>参数:</strong><br>        df (pd.DataFrame): 需要汇总的 DataFrame<br>        head_rows (int): 显示前几行数据,默认5行</p>
+<p><strong>返回:</strong><br>        dict: 包含 head, tail, describe, info, dtypes, missing 的字典结果</p>
+<h1 id="clean"><a href="#clean" class="headerlink" title="clean"></a>clean</h1><h2 id="drop-columns"><a href="#drop-columns" class="headerlink" title="drop_columns()"></a>drop_columns()</h2><p>删除 DataFrame 中的指定列或指定类型的列。</p>
+<p><strong>参数</strong><br>    df : pd.DataFrame<br>        要处理的数据框<br>    cols_to_drop : 可迭代[str], optional<br>        要删除的列名列表（如 [‘id’, ‘name’]）<br>    dtypes_to_drop : 可迭代[str], optional<br>        要删除的数据类型（如 [‘object’, ‘datetime64[ns]’]）<br>    verbose : bool, default False<br>        是否打印删除的列名</p>
+<p><strong>返回</strong><br>    pd.DataFrame<br>        删除列后的副本</p>
+<h2 id="impute"><a href="#impute" class="headerlink" title="impute()"></a>impute()</h2><p>通用缺失值填补函数。</p>
+<p><strong>参数</strong><br>    df : DataFrame<br>        原始数据<br>    strategy : {“mean”, “median”, “mode”, “constant”}<br>        填补策略<br>    constant_value : 任意<br>        strategy&#x3D;”constant” 时使用</p>
+<p><strong>返回:</strong><br>    DataFrame<br>        填补后的副本</p>
+<h2 id="detect-outliers-zscore"><a href="#detect-outliers-zscore" class="headerlink" title="detect_outliers_zscore()"></a>detect_outliers_zscore()</h2><p>使用 Z-Score 方法检测并可剔除异常值。</p>
+<p><strong>参数</strong><br>    df : pd.DataFrame<br>        原始数据<br>    cols : list[str], optional<br>        要检测的列（默认全部数值列）<br>    threshold : float<br>        Z 分数阈值，超过即视为异常<br>    method : {‘both’, ‘high’, ‘low’}<br>        检测异常值方向：<br>            - ‘both’: 正负两侧都检测（默认）<br>            - ‘high’: 仅检测高值异常（z &gt; threshold）<br>            - ‘low’:  仅检测低值异常（z &lt; -threshold）<br>    return_zscore : bool<br>        是否返回异常值的 Z 分数（附加在结果中）<br>    drop : bool<br>        是否直接剔除异常值行（返回清洗后的 DataFrame）<br>    verbose : bool<br>        是否输出每列异常值数量<br><strong>返回</strong><br>    如果 drop&#x3D;False 且 return_zscore&#x3D;False:<br>        返回异常值的行（pd.DataFrame）<br>    如果 drop&#x3D;False 且 return_zscore&#x3D;True:<br>        返回包含 Z 分数的异常值 DataFrame<br>    如果 drop&#x3D;True:<br>        返回剔除后的 DataFrame（无异常值）</p>
+<h2 id="detect-outliers-iqr"><a href="#detect-outliers-iqr" class="headerlink" title="detect_outliers_iqr()"></a>detect_outliers_iqr()</h2><p>使用 IQR（四分位数）方法检测异常值，并可选择剔除。</p>
+<p><strong>参数</strong><br>    df : pd.DataFrame<br>        原始数据<br>    cols : list[str], optional<br>        要检测的列（默认全部数值列）<br>    multiplier : float<br>        IQR 倍数阈值（默认 1.5）<br>    method : {“both”, “high”, “low”}<br>        异常方向控制：<br>            - “both”: 上下两端都检测<br>            - “high”: 仅检测上异常（值 &gt; Q3 + 1.5×IQR）<br>            - “low” : 仅检测下异常（值 &lt; Q1 - 1.5×IQR）<br>    return_bounds : bool<br>        是否返回每列的上下界（Q1 和 Q3 基础上的判断线）<br>    drop : bool<br>        是否直接剔除异常值行（返回清洗后的 df）<br>    verbose : bool<br>        是否打印每列异常数量<br><strong>返回</strong><br>    如果 drop&#x3D;False:<br>        返回异常值 DataFrame<br>    如果 drop&#x3D;True:<br>        返回剔除异常值后的 DataFrame<br>    如果 return_bounds&#x3D;True:<br>        返回 (异常值DataFrame或清洗后df, bounds字典)</p>
+<h2 id="detect-outliers-boxplot"><a href="#detect-outliers-boxplot" class="headerlink" title="detect_outliers_boxplot()"></a>detect_outliers_boxplot()</h2><p>用箱线图批量可视化异常值<br>    df: pandas DataFrame<br>    features: 要检查的特征列表（数值型）<br>    max_per_page: 每页最多显示的子图数<br>    figsize: 每页图像尺寸<br>    dpi: 图像清晰度</p>
+<h2 id="handle-outliers"><a href="#handle-outliers" class="headerlink" title="handle_outliers()"></a>handle_outliers()</h2><p>处理异常值：删除、替换或裁剪。<br><strong>参数：</strong><br>    - df : 原始 DataFrame<br>    - cols : 指定处理列（默认数值列）<br>    - method : 异常检测方法（zscore 或 iqr）<br>    - strategy : 处理策略（删除、替换、裁剪）<br>    - z_thresh : Z-Score 阈值<br>    - iqr_mult : IQR 倍数<br>    - direction : 异常检测方向（上下）<br>    - verbose : 是否打印信息</p>
+<h1 id="EAD"><a href="#EAD" class="headerlink" title="EAD"></a>EAD</h1><h2 id="pairwise-plot"><a href="#pairwise-plot" class="headerlink" title="pairwise_plot()"></a>pairwise_plot()</h2><p>批量绘制特征两两组合的图表，每张大图包含最多9张子图。</p>
+<p><strong>参数:</strong><br>    - df: DataFrame 数据<br>    - features: 要组合的特征列名列表<br>    - plot_type: 图表类型：’scatter’, ‘box’, ‘violin’, ‘hist’<br>    - hue: 分类变量（可选）<br>    - max_per_figure: 每页最多显示几个子图<br>    - figsize: 每张图的整体大小<br>    - save: 是否保存图像<br>    - save_prefix: 图像保存的前缀</p>
+<h2 id="plot-all-barplots"><a href="#plot-all-barplots" class="headerlink" title="plot_all_barplots()"></a>plot_all_barplots()</h2><p> 将 DataFrame 中所有列（除 except）按类别分组绘制为子图中的柱状图</p>
+<p><strong>参数:</strong><br>    - df: pandas DataFrame，包含数据和类别列<br>    - hue: str，表示分类的列名<br>    - n_cols: int，每行显示多少个图</p>
+<p><strong>返回:</strong><br>    - 无（直接显示整张图）</p>
+<h2 id="plot-feature-distributions"><a href="#plot-feature-distributions" class="headerlink" title="plot_feature_distributions()"></a>plot_feature_distributions()</h2><p>批量绘制特征分布图（直方图 + KDE）。</p>
+<p><strong>参数：</strong><br>    - df: pandas DataFrame<br>    - features: 要查看分布的列（默认选择数值型列）<br>    - hue: 分组变量（分类列名）<br>    - bins: 直方图的 bin 数量<br>    - kde: 是否绘制 KDE 曲线<br>    - max_per_figure: 每页显示的图表数<br>    - figsize: 每页图像大小<br>    - save: 是否保存图像<br>    - save_prefix: 保存图像的文件名前缀</p>
+<h2 id="plot-all-boxplots"><a href="#plot-all-boxplots" class="headerlink" title="plot_all_boxplots()"></a>plot_all_boxplots()</h2><p>将 DataFrame 中所有数值列绘制为子图中的箱线图</p>
+<p><strong>参数:</strong><br>    - df: pandas DataFrame<br>    - n_cols: 每行显示的图数量<br>    - exclude_columns: 要排除的列名列表，例如类别列</p>
+<p><strong>返回:</strong><br>    - 无（直接显示整张图）</p>
+<h1 id="features"><a href="#features" class="headerlink" title="features"></a>features</h1><h2 id="bin-continuous-variable"><a href="#bin-continuous-variable" class="headerlink" title="bin_continuous_variable()"></a>bin_continuous_variable()</h2><p>对连续变量进行分箱处理。</p>
+<p><strong>参数:</strong><br>        df (pd.DataFrame): 输入 DataFrame。<br>        column (str): 要分箱的列名。<br>        method (str): 分箱方法，’equal_width’（等宽）、’equal_freq’（等频）、’custom’（自定义）。<br>        bins (int or List[float]): 分箱数量或自定义边界。<br>        labels (List[str], optional): 分箱标签。如果不传将使用默认区间或数字编号。<br>        return_interval (bool): 是否显示区间（仅对默认 label 生效）。<br>        new_col_name (str): 分箱后新列的名称，默认为原列名+”_binned”。<br>        drop_original (bool): 是否删除原始列。<br>        inplace (bool): 是否在原df上修改。</p>
+<p><strong>返回:</strong><br>        pd.DataFrame: 处理后的 DataFrame。</p>
+<h1 id="使用案例："><a href="#使用案例：" class="headerlink" title="使用案例："></a>使用案例：</h1><p><a href="https://super-213.github.io/zhihaojiang.github.io/2025/05/18/20250518%E7%B3%96%E5%B0%BF%E7%97%85%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90/">https://super-213.github.io/zhihaojiang.github.io/2025/05/18/20250518%E7%B3%96%E5%B0%BF%E7%97%85%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90/</a></p>
+<p><strong>具体详见GitHub</strong></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数学</tag>
+      </tags>
+  </entry>
 </search>
