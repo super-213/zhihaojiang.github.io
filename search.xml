@@ -2721,4 +2721,212 @@ import {initHBE} from "/zhihaojiang.github.io/js/plugins/hbe.js";
         <tag>数学</tag>
       </tags>
   </entry>
+  <entry>
+    <title>survey lung cancer</title>
+    <url>/zhihaojiang.github.io/2025/05/26/20250526survey%20lung%20cancer/</url>
+    <content><![CDATA[<h1 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h1><p><a class="link"   href="https://www.kaggle.com/datasets/aagambshah/lung-cancer-dataset" >https://www.kaggle.com/datasets/aagambshah/lung-cancer-dataset<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h1 id="数据描述"><a href="#数据描述" class="headerlink" title="数据描述"></a>数据描述</h1><p>This dataset contains responses from individuals who participated in a survey to identify behavioral and demographic factors associated with lung cancer. The dataset can be used for exploratory data analysis, statistical modeling, and machine learning classification tasks to predict lung cancer risk.</p>
+<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><h2 id="导入库"><a href="#导入库" class="headerlink" title="导入库"></a>导入库</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import seaborn as sns</span><br><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import accuracy_score, roc_auc_score</span><br><span class="line"></span><br><span class="line">import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line">import torch.optim as optim</span><br><span class="line"></span><br><span class="line">import data_analysis_tools as dat</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&#x27;survey lung cancer.csv&#x27;</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+<p>我们查看数据特征的意思是什么:</p>
+<ul>
+<li>GENDER	受访者性别（男&#x2F;女）</li>
+<li>AGE	受访者年龄</li>
+<li>SMOKING	吸烟习惯（是&#x2F;否）</li>
+<li>YELLOW_FINGERS	手指是否变黄（是&#x2F;否）</li>
+<li>ANXIETY	存在焦虑（是&#x2F;否）</li>
+<li>PEER_PRESSURE	经历过同伴压力（是&#x2F;否）</li>
+<li>CHRONIC DISEASE	现有慢性疾病（是&#x2F;否）</li>
+<li>FATIGUE	是否疲劳（是&#x2F;否）</li>
+<li>ALLERGY	过敏情况（是&#x2F;否）</li>
+<li>WHEEZING	喘息症状（是&#x2F;否）</li>
+<li>ALCOHOL CONSUMING	饮酒习惯（是&#x2F;否）</li>
+<li>COUGHING	经常咳嗽（是&#x2F;否）</li>
+<li>SHORTNESS OF BREATH	呼吸困难症状（是&#x2F;否）</li>
+<li>SWALLOWING DIFFICULTY	吞咽困难（是&#x2F;否）</li>
+<li>CHEST PAIN	有无胸痛（是&#x2F;否）</li>
+<li>LUNG_CANCER	肺癌诊断（是&#x2F;否）</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.describe()</span><br></pre></td></tr></table></figure></div>
+
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>GENDER                   0<br>AGE                      0<br>SMOKING                  0<br>YELLOW_FINGERS           0<br>ANXIETY                  0<br>PEER_PRESSURE            0<br>CHRONIC DISEASE          0<br>FATIGUE                  0<br>ALLERGY                  0<br>WHEEZING                 0<br>ALCOHOL CONSUMING        0<br>COUGHING                 0<br>SHORTNESS OF BREATH      0<br>SWALLOWING DIFFICULTY    0<br>CHEST PAIN               0<br>LUNG_CANCER              0<br>dtype: int64</p>
+</blockquote>
+<p>由以上信息可知 该数据集的特征值有15个，target有1个，该数据集是一个二分类问题。<br>该数据集合没有缺失值 数据集用1、2表示是和否</p>
+<h2 id="特征编码"><a href="#特征编码" class="headerlink" title="特征编码"></a>特征编码</h2><p>我们将数据的二分类使用0，1表示</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.columns.to_list()</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>[‘GENDER’,<br> ‘AGE’,<br> ‘SMOKING’,<br> ‘YELLOW_FINGERS’,<br> ‘ANXIETY’,<br> ‘PEER_PRESSURE’,<br> ‘CHRONIC DISEASE’,<br> ‘FATIGUE ‘,<br> ‘ALLERGY ‘,<br> ‘WHEEZING’,<br> ‘ALCOHOL CONSUMING’,<br> ‘COUGHING’,<br> ‘SHORTNESS OF BREATH’,<br> ‘SWALLOWING DIFFICULTY’,<br> ‘CHEST PAIN’,<br> ‘LUNG_CANCER’]</p>
+</blockquote>
+ <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"> <span class="built_in">df</span>[<span class="string">&#x27;GENDER&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;GENDER&#x27;</span>].map(&#123;<span class="string">&#x27;M&#x27;</span>: 1, <span class="string">&#x27;F&#x27;</span>: 0&#125;)</span><br><span class="line"> </span><br><span class="line"> columns = [</span><br><span class="line"> <span class="string">&#x27;SMOKING&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;YELLOW_FINGERS&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;ANXIETY&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;PEER_PRESSURE&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;CHRONIC DISEASE&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;FATIGUE &#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;ALLERGY &#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;WHEEZING&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;ALCOHOL CONSUMING&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;COUGHING&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;SHORTNESS OF BREATH&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;SWALLOWING DIFFICULTY&#x27;</span>,</span><br><span class="line"> <span class="string">&#x27;CHEST PAIN&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> column <span class="keyword">in</span> columns:</span><br><span class="line">    <span class="built_in">df</span>[column] = <span class="built_in">df</span>[column].map(&#123;1: 0, 2: 1&#125;)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;LUNG_CANCER&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;LUNG_CANCER&#x27;</span>].map(&#123;<span class="string">&#x27;YES&#x27;</span>: 1, <span class="string">&#x27;NO&#x27;</span>: 0&#125;)</span><br></pre></td></tr></table></figure></div>
+<h2 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h2> <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">dat.plot_all_barplots(<span class="built_in">df</span>, hue=<span class="string">&#x27;LUNG_CANCER&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+<p> 可以看到 患有肺癌的人各项水平均比不患有肺癌的人要高</p>
+ <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.corr()</span><br></pre></td></tr></table></figure></div>
+<p> 从上述相关性矩阵中我们发现GENDER和ALCOHOL CONSUMING的相关性系数比较高 我们查看他们的关系</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.barplot(<span class="built_in">df</span>, x = <span class="string">&#x27;GENDER&#x27;</span>,y = <span class="string">&#x27;ALCOHOL CONSUMING&#x27;</span>, hue = <span class="string">&#x27;LUNG_CANCER&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p>可以看到 在男性中 不饮酒的男性患肺癌的概率比饮酒的男性要低<br>在女性中 </p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">feature_importance = df.corr()[<span class="string">&#x27;LUNG_CANCER&#x27;</span>].sort_values(ascending=False)</span><br><span class="line">feature_importance = feature_importance[1:]</span><br><span class="line">plt.figure(figsize=(10, 6))</span><br><span class="line">sns.barplot(x=feature_importance.values, y=feature_importance.index)</span><br><span class="line">plt.title(<span class="string">&#x27;Feature Importance&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Correlation with Lung Cancer&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Features&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">X = df.drop([<span class="string">&#x27;LUNG_CANCER&#x27;</span>], axis=1)</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;LUNG_CANCER&#x27;</span>]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="标准化"><a href="#标准化" class="headerlink" title="标准化"></a>标准化</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">scaler = StandardScaler()</span><br><span class="line">X_train = scaler.fit_transform(X_train)</span><br><span class="line">X_test = scaler.transform(X_test)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="模型建立"><a href="#模型建立" class="headerlink" title="模型建立"></a>模型建立</h2><h3 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">rf = RandomForestClassifier(n_estimators=100, random_state=42)</span><br><span class="line"></span><br><span class="line">rf.fit(X_train, y_train)</span><br><span class="line">y_pred = rf.predict(X_test)</span><br><span class="line"></span><br><span class="line">report = classification_report(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(report)</span><br></pre></td></tr></table></figure></div>
+<pre><code>            precision    recall  f1-score   support
+
+       0       0.50      0.50      0.50         2
+       1       0.98      0.98      0.98        60
+
+accuracy                           0.97        62
+macro avg       0.74      0.74      0.74        62
+weighted avg       0.97      0.97      0.97        62
+</code></pre>
+<h3 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 转换为 NumPy 数组</span></span><br><span class="line">X = df.drop(columns=[<span class="string">&#x27;LUNG_CANCER&#x27;</span>]).values.astype(np.float32)</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;LUNG_CANCER&#x27;</span>].values.astype(np.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 划分训练集和测试集</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 特征缩放</span></span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">X_train = scaler.fit_transform(X_train).astype(np.float32)</span><br><span class="line">X_test = scaler.transform(X_test).astype(np.float32)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 转换为 PyTorch 张量</span></span><br><span class="line">X_train_tensor = torch.tensor(X_train, dtype=torch.float32)</span><br><span class="line">y_train_tensor = torch.tensor(y_train, dtype=torch.float32).unsqueeze(1)  <span class="comment"># 增加一维</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 修正部分：确保 y_test 是 NumPy 数组</span></span><br><span class="line">X_test_tensor = torch.tensor(X_test, dtype=torch.float32)</span><br><span class="line">y_test_tensor = torch.tensor(y_test, dtype=torch.float32).unsqueeze(1)  <span class="comment"># 增加一维</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class BinaryClassifier(nn.Module):</span><br><span class="line">    def __init__(self, input_dim):</span><br><span class="line">        super(BinaryClassifier, self).__init__()</span><br><span class="line">        self.fc1 = nn.Linear(input_dim, 16)  <span class="comment"># 第一个隐藏层</span></span><br><span class="line">        self.fc2 = nn.Linear(16, 8)         <span class="comment"># 第二个隐藏层</span></span><br><span class="line">        self.fc3 = nn.Linear(8, 1)          <span class="comment"># 输出层</span></span><br><span class="line"></span><br><span class="line">    def forward(self, x):</span><br><span class="line">        x = torch.relu(self.fc1(x))  <span class="comment"># ReLU 激活函数</span></span><br><span class="line">        x = torch.relu(self.fc2(x))</span><br><span class="line">        x = torch.sigmoid(self.fc3(x))  <span class="comment"># Sigmoid 激活函数</span></span><br><span class="line">        <span class="built_in">return</span> x</span><br><span class="line">        </span><br><span class="line"><span class="comment"># 初始化模型</span></span><br><span class="line">input_dim = X_train.shape[1]</span><br><span class="line">model = BinaryClassifier(input_dim)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义损失函数和优化器</span></span><br><span class="line">criterion = nn.BCELoss()  <span class="comment"># 二分类交叉熵损失</span></span><br><span class="line">optimizer = optim.Adam(model.parameters(), lr=0.001)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练参数</span></span><br><span class="line">epochs = 50</span><br><span class="line">batch_size = 32</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练循环</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">    model.train()  <span class="comment"># 设置为训练模式</span></span><br><span class="line">    running_loss = 0.0</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 小批量训练</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(0, len(X_train_tensor), batch_size):</span><br><span class="line">        inputs = X_train_tensor[i:i+batch_size]</span><br><span class="line">        labels = y_train_tensor[i:i+batch_size]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 前向传播</span></span><br><span class="line">        outputs = model(inputs)</span><br><span class="line">        loss = criterion(outputs, labels)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 反向传播和优化</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        running_loss += loss.item()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;Epoch [&#123;epoch+1&#125;/&#123;epochs&#125;], Loss: &#123;running_loss:.4f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>Epoch [1&#x2F;50], Loss: 5.3979<br>Epoch [2&#x2F;50], Loss: 5.2241<br>Epoch [3&#x2F;50], Loss: 5.0661<br>Epoch [4&#x2F;50], Loss: 4.9229<br>Epoch [5&#x2F;50], Loss: 4.7911<br>Epoch [6&#x2F;50], Loss: 4.6619<br>Epoch [7&#x2F;50], Loss: 4.5310<br>Epoch [8&#x2F;50], Loss: 4.3962<br>Epoch [9&#x2F;50], Loss: 4.2550<br>Epoch [10&#x2F;50], Loss: 4.1069<br>Epoch [11&#x2F;50], Loss: 3.9532<br>Epoch [12&#x2F;50], Loss: 3.7950<br>Epoch [13&#x2F;50], Loss: 3.6341<br>Epoch [14&#x2F;50], Loss: 3.4730<br>Epoch [15&#x2F;50], Loss: 3.3150<br>Epoch [16&#x2F;50], Loss: 3.1634<br>Epoch [17&#x2F;50], Loss: 3.0199<br>Epoch [18&#x2F;50], Loss: 2.8862<br>Epoch [19&#x2F;50], Loss: 2.7630<br>Epoch [20&#x2F;50], Loss: 2.6512<br>Epoch [21&#x2F;50], Loss: 2.5504<br>Epoch [22&#x2F;50], Loss: 2.4604<br>Epoch [23&#x2F;50], Loss: 2.3804<br>Epoch [24&#x2F;50], Loss: 2.3079<br>Epoch [25&#x2F;50], Loss: 2.2413<br>…<br>Epoch [47&#x2F;50], Loss: 1.3242<br>Epoch [48&#x2F;50], Loss: 1.3006<br>Epoch [49&#x2F;50], Loss: 1.2785<br>Epoch [50&#x2F;50], Loss: 1.2578</p>
+</blockquote>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在测试集上评估模型</span></span><br><span class="line">model.eval()  <span class="comment"># 设置为评估模式</span></span><br><span class="line">with torch.no_grad():</span><br><span class="line">    y_pred_prob = model(X_test_tensor).numpy().flatten()  <span class="comment"># 预测概率</span></span><br><span class="line">    y_pred = (y_pred_prob &gt; 0.5).astype(int)              <span class="comment"># 转换为类别标签</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算准确率和 AUC-ROC</span></span><br><span class="line">accuracy = accuracy_score(y_test, y_pred)</span><br><span class="line">auc = roc_auc_score(y_test, y_pred_prob)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;分类报告:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(f<span class="string">&quot;测试集准确率: &#123;accuracy:.4f&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">&quot;测试集 AUC-ROC: &#123;auc:.4f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<p>分类报告:</p>
+<pre><code> precision    recall  f1-score   support
+
+     0.0       0.50      0.50      0.50         2
+     1.0       0.98      0.98      0.98        60
+
+accuracy                           0.97        62
+macro avg       0.74      0.74      0.74        62
+weighted avg       0.97      0.97      0.97        62
+</code></pre>
+<p>测试集准确率: 0.9677<br>测试集 AUC-ROC: 0.9500</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>机器学习--长尾分布</title>
+    <url>/zhihaojiang.github.io/2025/05/26/20250526%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0--%E9%95%BF%E5%B0%BE%E5%88%86%E5%B8%83/</url>
+    <content><![CDATA[<p><strong>长尾分布（Long-Tail Distribution）</strong> 是指数据集中少数类别（头部）占据大量样本，而多数类别（尾部）只有极少样本的现象。这种分布广泛存在于现实场景（如推荐系统、图像分类、自然语言处理等），对模型训练和评估带来显著挑战。</p>
+<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a><strong>特点</strong></h1><ol>
+<li><p><strong>头部类别（Head Classes）</strong>  </p>
+<ul>
+<li>数量少但样本占比极高（如20%的类别覆盖80%的数据）。</li>
+<li>模型容易过拟合这些类别，导致对尾部类别表现差。</li>
+</ul>
+</li>
+<li><p><strong>尾部类别（Tail Classes）</strong>  </p>
+<ul>
+<li>数量多但样本极少（如每个类别仅几个样本）。</li>
+<li>因数据不足，模型难以学习有效特征，导致欠拟合。</li>
+</ul>
+</li>
+</ol>
+<h1 id="常见场景"><a href="#常见场景" class="headerlink" title="常见场景"></a><strong>常见场景</strong></h1><ul>
+<li><strong>图像分类</strong>：大规模数据集（如ImageNet）中稀有物体类别。</li>
+<li><strong>推荐系统</strong>：热门商品点击量巨大，冷门商品极少被交互。</li>
+<li><strong>自然语言处理</strong>：高频词汇vs.低频长尾词汇。</li>
+<li><strong>异常检测</strong>：异常样本通常远少于正常样本。</li>
+</ul>
+<h1 id="解决长尾分布的方法"><a href="#解决长尾分布的方法" class="headerlink" title="解决长尾分布的方法"></a><strong>解决长尾分布的方法</strong></h1><h2 id="1-数据层面"><a href="#1-数据层面" class="headerlink" title="1. 数据层面"></a>1. <strong>数据层面</strong></h2><ul>
+<li><p><strong>重采样（Re-sampling）</strong>  </p>
+<ul>
+<li><strong>过采样（Oversampling）</strong>：对尾部类别重复样本或生成新样本（如SMOTE、GANs）。  </li>
+<li><strong>欠采样（Undersampling）</strong>：减少头部类别的样本，可能丢失信息。</li>
+<li><strong>混合采样</strong>：结合过采样和欠采样。</li>
+</ul>
+</li>
+<li><p><strong>数据增强（Data Augmentation）</strong>  </p>
+<ul>
+<li>对尾部类别使用增强技术（如旋转、裁剪、Mixup、CutMix）生成多样化样本。</li>
+</ul>
+</li>
+</ul>
+<p>代码:</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from torch.utils.data import WeightedRandomSampler, Dataset</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment"># `labels`是类别标签列表</span></span><br><span class="line">labels = [0, 0, 0, 1, 1, 2, 2, 2, 2, 3]  <span class="comment"># 类别0和2样本多，1和3样本少</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算每个类别的样本数</span></span><br><span class="line">class_counts = np.bincount(labels)</span><br><span class="line">num_samples = len(labels)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法1：过采样（对少数类样本增加权重）</span></span><br><span class="line">class_weights = 1. / class_counts  <span class="comment"># 逆频率权重</span></span><br><span class="line">sample_weights = class_weights[labels]  <span class="comment"># 每个样本的权重</span></span><br><span class="line">sampler = WeightedRandomSampler(sample_weights, num_samples, replacement=True)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法2：欠采样（对多数类样本降权）</span></span><br><span class="line"><span class="comment"># 设置每个类别的采样数量为最小类别的样本数</span></span><br><span class="line">min_samples = min(class_counts)</span><br><span class="line">sample_weights = np.array([1.0 / class_counts[label] <span class="keyword">for</span> label <span class="keyword">in</span> labels])</span><br><span class="line">sampler = WeightedRandomSampler(sample_weights, min_samples * len(class_counts), replacement=False)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在DataLoader中使用sampler</span></span><br><span class="line">from torch.utils.data import DataLoader</span><br><span class="line">dataloader = DataLoader(dataset, batch_size=32, sampler=sampler)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from imblearn.over_sampling import SMOTE</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设特征X和标签y</span></span><br><span class="line">X = np.random.rand(100, 10)  <span class="comment"># 100个样本，10维特征</span></span><br><span class="line">y = np.array([0]*80 + [1]*15 + [2]*5)  <span class="comment"># 长尾分布</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用SMOTE生成少数类样本</span></span><br><span class="line">smote = SMOTE(sampling_strategy=<span class="string">&#x27;auto&#x27;</span>)</span><br><span class="line">X_resampled, y_resampled = smote.fit_resample(X, y)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(f<span class="string">&quot;Original counts: &#123;np.bincount(y)&#125;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">&quot;Resampled counts: &#123;np.bincount(y_resampled)&#125;&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="2-损失函数设计"><a href="#2-损失函数设计" class="headerlink" title="2. 损失函数设计"></a>2. <strong>损失函数设计</strong></h2><ul>
+<li><strong>类别加权损失（Class-Weighted Loss）</strong>  <ul>
+<li>为不同类别分配权重（如逆类别频率），使模型更关注尾部类别。</li>
+<li>例如：<code>weight = 1 / sqrt(class_count)</code>。<br>代码：</li>
+</ul>
+</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">  import torch</span><br><span class="line">import torch.nn as nn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设类别数量为4，计算每个类别的权重（逆频率）</span></span><br><span class="line">class_counts = torch.tensor([1000, 100, 10, 1])  <span class="comment"># 长尾分布</span></span><br><span class="line">weights = 1.0 / class_counts</span><br><span class="line">weights = weights / weights.sum()  <span class="comment"># 归一化</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义加权交叉熵损失</span></span><br><span class="line">criterion = nn.CrossEntropyLoss(weight=weights)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例用法</span></span><br><span class="line">logits = torch.randn(4, 4)  <span class="comment"># 模型输出（batch_size=4, num_classes=4）</span></span><br><span class="line">targets = torch.tensor([0, 1, 2, 3])  <span class="comment"># 真实标签</span></span><br><span class="line">loss = criterion(logits, targets)</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><strong>焦点损失（Focal Loss）</strong>  <ul>
+<li>降低易分类样本（通常是头部类别）的损失权重，聚焦难样本（尾部）。  </li>
+<li>公式：<code>FL(p_t) = -α_t (1 - p_t)^γ log(p_t)</code>，其中γ调节难易样本权重。</li>
+</ul>
+</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">class FocalLoss(nn.Module):</span><br><span class="line">    def __init__(self, alpha=1.0, gamma=2.0):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.alpha = alpha  <span class="comment"># 类别平衡参数</span></span><br><span class="line">        self.gamma = gamma  <span class="comment"># 难易样本调节参数</span></span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets):</span><br><span class="line">        ce_loss = nn.functional.cross_entropy(inputs, targets, reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line">        pt = torch.exp(-ce_loss)  <span class="comment"># 模型对真实类别的预测概率</span></span><br><span class="line">        loss = self.alpha * (1 - pt) ** self.gamma * ce_loss</span><br><span class="line">        <span class="built_in">return</span> loss.mean()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例用法</span></span><br><span class="line">focal_loss = FocalLoss(alpha=[1.0, 2.0, 5.0, 10.0], gamma=2)  <span class="comment"># alpha可对不同类别加权</span></span><br><span class="line">loss = focal_loss(logits, targets)</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><strong>解耦训练（Decoupling）</strong>  <ul>
+<li>先学习特征表示（均匀采样），再调整分类器（重采样或重加权）。</li>
+</ul>
+</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 第一阶段：均匀采样学习特征</span></span><br><span class="line">uniform_sampler = WeightedRandomSampler(</span><br><span class="line">    weights=torch.ones(len(dataset)),  <span class="comment"># 均匀权重</span></span><br><span class="line">    num_samples=len(dataset),</span><br><span class="line">    replacement=True</span><br><span class="line">)</span><br><span class="line">dataloader_stage1 = DataLoader(dataset, batch_size=32, sampler=uniform_sampler)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二阶段：冻结特征层，调整分类器（使用类别加权损失）</span></span><br><span class="line"><span class="keyword">for</span> param <span class="keyword">in</span> model.feature_extractor.parameters():</span><br><span class="line">    param.requires_grad = False  <span class="comment"># 冻结特征层</span></span><br><span class="line"></span><br><span class="line">criterion = nn.CrossEntropyLoss(weight=class_weights)  <span class="comment"># 使用加权损失</span></span><br><span class="line">optimizer = torch.optim.Adam(model.classifier.parameters(), lr=0.001)</span><br></pre></td></tr></table></figure></div>
+<h2 id="3-模型结构改进"><a href="#3-模型结构改进" class="headerlink" title="3. 模型结构改进"></a>3. <strong>模型结构改进</strong></h2><ul>
+<li><strong>解耦框架（Decoupling Framework）</strong>  <ul>
+<li>如<strong>Decoupling</strong>（NeurIPS 2019）分离特征学习和分类器调整。</li>
+</ul>
+</li>
+<li><strong>两阶段训练</strong>  <ul>
+<li>第一阶段：正常训练；第二阶段：冻结骨干网络，微调分类器（使用重采样或加权）。</li>
+</ul>
+</li>
+<li><strong>专家混合（Mixture of Experts, MoE）</strong>  <ul>
+<li>为不同类别分配专用子模型（专家）。</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-迁移学习-自监督学习"><a href="#4-迁移学习-自监督学习" class="headerlink" title="4. 迁移学习 &amp; 自监督学习"></a>4. <strong>迁移学习 &amp; 自监督学习</strong></h2><ul>
+<li><strong>预训练 + 微调</strong>：在大规模平衡数据上预训练，再在长尾数据上微调。</li>
+<li><strong>自监督学习</strong>：通过对比学习（如SimCLR）学习通用特征，减少对标签的依赖。</li>
+</ul>
+<h2 id="5-评估指标优化"><a href="#5-评估指标优化" class="headerlink" title="5. 评估指标优化"></a>5. <strong>评估指标优化</strong></h2><ul>
+<li>避免单一准确率（Accuracy），采用更全面的指标：  <ul>
+<li><strong>宏平均（Macro-F1）</strong>：各类别F1的均值，平等对待所有类别。</li>
+</ul>
+</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.metrics import f1_score</span><br><span class="line"></span><br><span class="line">def macro_f1(y_true, y_pred):</span><br><span class="line">    <span class="built_in">return</span> f1_score(y_true, y_pred, average=<span class="string">&#x27;macro&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例</span></span><br><span class="line">y_true = [0, 1, 2, 0, 1, 2]</span><br><span class="line">y_pred = [0, 1, 1, 0, 0, 2]</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">&quot;Macro-F1: &#123;macro_f1(y_true, y_pred)&#125;&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li><strong>平衡准确率（Balanced Accuracy）</strong>：各类别召回率的均值。  </li>
+<li><strong>AUC-ROC</strong>：衡量模型在不同阈值下的整体性能。</li>
+</ul>
+<h1 id="经典论文与模型"><a href="#经典论文与模型" class="headerlink" title="经典论文与模型"></a><strong>经典论文与模型</strong></h1><ul>
+<li><strong>Decoupling</strong>（NeurIPS 2019）：解耦表示学习和分类器调整。  </li>
+<li><strong>BBN</strong>（CVPR 2020）：双分支网络平衡重采样和原始分布。  </li>
+<li><strong>Logit Adjustment</strong>（ICML 2020）：通过调整logit偏移解决类别不平衡。  </li>
+<li><strong>Balanced Softmax</strong>（NeurIPS 2020）：修改Softmax适应长尾分布。</li>
+</ul>
+<h1 id="方向"><a href="#方向" class="headerlink" title="方向"></a><strong>方向</strong></h1><ul>
+<li><strong>过拟合与泛化</strong>：尾部数据不足易导致过拟合，需更好的正则化或小样本学习技术。  </li>
+<li><strong>动态长尾分布</strong>：现实世界中类别分布可能随时间变化（如热门商品更替）。  </li>
+<li><strong>无监督长尾学习</strong>：探索自监督或半监督方法减少对标签的依赖。</li>
+</ul>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import torchvision</span><br><span class="line">import torchvision.transforms as transforms</span><br><span class="line">from torch.utils.data import Subset</span><br><span class="line">import torch</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载 CIFAR-10 原始训练集</span></span><br><span class="line">transform = transforms.Compose([transforms.ToTensor()])</span><br><span class="line">train_dataset = torchvision.datasets.CIFAR10(root=<span class="string">&#x27;./data&#x27;</span>, train=True, download=True, transform=transform)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 统计每类索引</span></span><br><span class="line">class_indices = [[] <span class="keyword">for</span> _ <span class="keyword">in</span> range(10)]</span><br><span class="line"><span class="keyword">for</span> idx, (_, label) <span class="keyword">in</span> enumerate(train_dataset):</span><br><span class="line">    class_indices[label].append(idx)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 人为制造长尾分布，例如类0有5000个样本，类9只有10个样本</span></span><br><span class="line">long_tail_counts = [5000, 2000, 1000, 500, 200, 100, 50, 30, 20, 10]</span><br><span class="line">selected_indices = []</span><br><span class="line"><span class="keyword">for</span> i, count <span class="keyword">in</span> enumerate(long_tail_counts):</span><br><span class="line">    selected_indices.extend(class_indices[i][:count])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建新的训练子集</span></span><br><span class="line">long_tail_dataset = Subset(train_dataset, selected_indices)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取子集标签</span></span><br><span class="line">labels = [train_dataset[i][1] <span class="keyword">for</span> i <span class="keyword">in</span> selected_indices]</span><br><span class="line">class_counts = np.bincount(labels, minlength=10)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;每类样本数量：&quot;</span>, class_counts)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算类别权重（样本越少权重越大）</span></span><br><span class="line">weights = 1.0 / (class_counts + 1e-6)</span><br><span class="line">weights = weights / weights.sum() * len(class_counts)</span><br><span class="line">class_weights = torch.FloatTensor(weights)</span><br><span class="line"></span><br><span class="line">import torch.nn as nn</span><br><span class="line">import torch.nn.functional as F</span><br><span class="line"></span><br><span class="line"><span class="comment"># 简单CNN模型</span></span><br><span class="line">class SimpleCNN(nn.Module):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.conv1 = nn.Conv2d(3, 32, 3)</span><br><span class="line">        self.conv2 = nn.Conv2d(32, 64, 3)</span><br><span class="line">        self.fc1 = nn.Linear(64 * 6 * 6, 128)</span><br><span class="line">        self.fc2 = nn.Linear(128, 10)</span><br><span class="line"></span><br><span class="line">    def forward(self, x):</span><br><span class="line">        x = F.relu(self.conv1(x))    <span class="comment"># [batch, 32, 30, 30]</span></span><br><span class="line">        x = F.max_pool2d(x, 2)       <span class="comment"># [batch, 32, 15, 15]</span></span><br><span class="line">        x = F.relu(self.conv2(x))    <span class="comment"># [batch, 64, 13, 13]</span></span><br><span class="line">        x = F.max_pool2d(x, 2)       <span class="comment"># [batch, 64, 6, 6]</span></span><br><span class="line">        x = x.view(-1, 64 * 6 * 6)</span><br><span class="line">        x = F.relu(self.fc1(x))</span><br><span class="line">        x = self.fc2(x)</span><br><span class="line">        <span class="built_in">return</span> x</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用权重定义加权损失函数</span></span><br><span class="line">criterion = nn.CrossEntropyLoss(weight=class_weights)</span><br><span class="line"></span><br><span class="line">from torch.utils.data import DataLoader</span><br><span class="line">from torch import optim</span><br><span class="line"></span><br><span class="line">model = SimpleCNN()</span><br><span class="line">optimizer = optim.Adam(model.parameters(), lr=0.001)</span><br><span class="line">loader = DataLoader(long_tail_dataset, batch_size=64, shuffle=True)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(10):</span><br><span class="line">    <span class="keyword">for</span> images, labels <span class="keyword">in</span> loader:</span><br><span class="line">        outputs = model(images)</span><br><span class="line">        loss = criterion(outputs, labels)</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;Epoch &#123;epoch&#125;: loss = &#123;loss.item():.4f&#125;&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>Epoch 0: loss &#x3D; 1.9016<br>Epoch 1: loss &#x3D; 1.7739<br>Epoch 2: loss &#x3D; 1.4057<br>Epoch 3: loss &#x3D; 1.8090<br>Epoch 4: loss &#x3D; 1.6333<br>Epoch 5: loss &#x3D; 1.5193<br>Epoch 6: loss &#x3D; 0.8202<br>Epoch 7: loss &#x3D; 0.5897<br>Epoch 8: loss &#x3D; 0.7408<br>Epoch 9: loss &#x3D; 1.2246</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+      </tags>
+  </entry>
 </search>
