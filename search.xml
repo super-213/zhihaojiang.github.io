@@ -2947,4 +2947,248 @@ weighted avg       0.97      0.97      0.97        62
         <tag>运筹学</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Extrovert vs. Introvert Behavior Data</title>
+    <url>/zhihaojiang.github.io/2025/06/04/20250604Extrovert%20vs.%20Introvert%20Behavior%20Data/</url>
+    <content><![CDATA[<h1 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h1><p><a class="link"   href="https://www.kaggle.com/datasets/rakeshkapilavai/extrovert-vs-introvert-behavior-data/data" >https://www.kaggle.com/datasets/rakeshkapilavai/extrovert-vs-introvert-behavior-data/data<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h1 id="数据描述"><a href="#数据描述" class="headerlink" title="数据描述"></a>数据描述</h1><p>关于数据集<br>概述</p>
+<p>深入研究“外向与内向性格特征数据集”，这是一个丰富的行为和社交数据集合，旨在探索人类性格谱系。该数据集涵盖了外向和内向的关键指标，是心理学家、数据科学家以及研究社会行为、性格预测或数据预处理技术的研究人员的宝贵资源。</p>
+<p>语境</p>
+<p>外向和内向等性格特征塑造了个体与社交环境的互动方式。该数据集提供了对个人行为的洞察，例如独处时间、社交活动参与度以及社交媒体参与度，从而为心理学、社会学、市场营销和机器学习等领域的应用提供支持。无论您是预测性格类型还是分析社交模式，该数据集都能助您发现引人入胜的洞见。</p>
+<p>数据集详细信息</p>
+<p>大小：数据集包含 2,900 行和 8 列。</p>
+<h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><h2 id="导入库"><a href="#导入库" class="headerlink" title="导入库"></a>导入库</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&#x27;personality_dataset.csv&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.columns</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>Index([‘Time_spent_Alone’, ‘Stage_fear’, ‘Social_event_attendance’,<br>       ‘Going_outside’, ‘Drained_after_socializing’, ‘Friends_circle_size’,<br>       ‘Post_frequency’, ‘Personality’],<br>      dtype&#x3D;’object’)</p>
+</blockquote>
+<ul>
+<li>Time_spent_Alone: 独处时间 – 一个人每天通常独自度过的小时数</li>
+<li>Stage_fear: 舞台恐惧 – 是否经历过舞台恐惧症</li>
+<li>Social_event_attendance: 社交活动出席率 – 参加社交活动的频率（0-10 级）</li>
+<li>Going_outside: 外出 – 个人外出的频率（0-10 级）</li>
+<li>Drained_after_socializing:社交后精疲力竭 – 社交后是否感觉精疲力尽</li>
+<li>Friends_circle_size:好友圈大小 – 亲密朋友数量</li>
+<li>Post_frequency:帖子频率 – 在社交媒体上发帖的频率</li>
+<li>Personality: 性格 – 目标变量：内向或外向</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.info()</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>&lt;class ‘pandas.core.frame.DataFrame’&gt;<br>RangeIndex: 2900 entries, 0 to 2899<br>Data columns (total 8 columns):</p>
+<h1 id="Column-Non-Null-Count-Dtype"><a href="#Column-Non-Null-Count-Dtype" class="headerlink" title="Column                     Non-Null Count  Dtype"></a>Column                     Non-Null Count  Dtype</h1><hr>
+<p> 0   Time_spent_Alone           2837 non-null   float64<br> 1   Stage_fear                 2827 non-null   object<br> 2   Social_event_attendance    2838 non-null   float64<br> 3   Going_outside              2834 non-null   float64<br> 4   Drained_after_socializing  2848 non-null   object<br> 5   Friends_circle_size        2823 non-null   float64<br> 6   Post_frequency             2835 non-null   float64<br> 7   Personality                2900 non-null   object<br>dtypes: float64(5), object(3)<br>memory usage: 181.4+ KB</p>
+</blockquote>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/001.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.describe()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/002.png"
+                      alt="photo"
+                ></p>
+<h2 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>Time_spent_Alone             63<br>Stage_fear                   73<br>Social_event_attendance      62<br>Going_outside                66<br>Drained_after_socializing    52<br>Friends_circle_size          77<br>Post_frequency               65<br>Personality                   0<br>dtype: int64</p>
+</blockquote>
+<p>数值型用均值填充<br>类别型用众数填充</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">df</span>[col].dtype == <span class="string">&#x27;object&#x27;</span>:</span><br><span class="line">        <span class="built_in">df</span>[col] = <span class="built_in">df</span>[col].fillna(<span class="built_in">df</span>[col].mode()[0])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">df</span>[col] = <span class="built_in">df</span>[col].fillna(<span class="built_in">df</span>[col].mean())</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="特征编码"><a href="#特征编码" class="headerlink" title="特征编码"></a>特征编码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;Stage_fear&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;Stage_fear&#x27;</span>].map(&#123;<span class="string">&#x27;Yes&#x27;</span>: 1, <span class="string">&#x27;No&#x27;</span>: 0&#125;)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;Drained_after_socializing&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;Drained_after_socializing&#x27;</span>].map(&#123;<span class="string">&#x27;Yes&#x27;</span>: 1, <span class="string">&#x27;No&#x27;</span>: 0&#125;)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;Personality&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;Personality&#x27;</span>].map(&#123;<span class="string">&#x27;Introvert&#x27;</span>: 0, <span class="string">&#x27;Extrovert&#x27;</span>: 1&#125;)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="异常值检测"><a href="#异常值检测" class="headerlink" title="异常值检测"></a>异常值检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">    Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">    IQR = Q3 - Q1</span><br><span class="line">    lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">    upper_bound = Q3 + 1.5 * IQR</span><br><span class="line">    outliers = <span class="built_in">df</span>[(<span class="built_in">df</span>[col] &gt;= lower_bound) &amp; (<span class="built_in">df</span>[col] &lt;= upper_bound)]</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;列&#123;col&#125;的异常值:&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>列Time_spent_Alone的异常值:<br>列Stage_fear的异常值:<br>列Social_event_attendance的异常值:<br>列Going_outside的异常值:<br>列Drained_after_socializing的异常值:<br>列Friends_circle_size的异常值:<br>列Post_frequency的异常值:<br>列Personality的异常值:</p>
+</blockquote>
+<p>说明没有异常值 我们通过箱线图也没发现异常值</p>
+<h2 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h2><h3 id="工具代码"><a href="#工具代码" class="headerlink" title="工具代码"></a>工具代码</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">def pairwise_plot(</span><br><span class="line">    <span class="built_in">df</span>: pd.DataFrame,</span><br><span class="line">    features: list,</span><br><span class="line">    plot_type: str = <span class="string">&#x27;scatter&#x27;</span>,  <span class="comment"># 可选: &#x27;scatter&#x27;, &#x27;box&#x27;, &#x27;bar&#x27;, &#x27;violin&#x27;, &#x27;hist&#x27;</span></span><br><span class="line">    hue: str = None,</span><br><span class="line">    max_per_figure: int = 9,</span><br><span class="line">    figsize: tuple = (15, 12),</span><br><span class="line">    fill: bool = None,</span><br><span class="line">    save: bool = False,</span><br><span class="line">    save_prefix: str = <span class="string">&quot;pairplot&quot;</span></span><br><span class="line">):</span><br><span class="line">    <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">    批量绘制特征两两组合的图表，每张大图包含最多9张子图。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    参数:</span></span><br><span class="line"><span class="string">    - df: DataFrame 数据</span></span><br><span class="line"><span class="string">    - features: 要组合的特征列名列表</span></span><br><span class="line"><span class="string">    - plot_type: 图表类型：&#x27;scatter&#x27;, &#x27;box&#x27;, &#x27;violin&#x27;, &#x27;hist&#x27;, &#x27;kde&#x27;, &#x27;bar&#x27;</span></span><br><span class="line"><span class="string">    - fill: 是否填充 KDE 图（仅适用于 &#x27;kde&#x27; 类型）</span></span><br><span class="line"><span class="string">    - hue: 分类变量（可选）</span></span><br><span class="line"><span class="string">    - max_per_figure: 每页最多显示几个子图</span></span><br><span class="line"><span class="string">    - figsize: 每张图的整体大小</span></span><br><span class="line"><span class="string">    - save: 是否保存图像</span></span><br><span class="line"><span class="string">    - save_prefix: 图像保存的前缀</span></span><br><span class="line"><span class="string">    &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">    import itertools</span><br><span class="line">    import math</span><br><span class="line">    import matplotlib.pyplot as plt</span><br><span class="line">    import seaborn as sns</span><br><span class="line">    combs = list(itertools.combinations(features, 2))</span><br><span class="line">    total_figures = math.ceil(len(combs) / max_per_figure)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> fig_idx <span class="keyword">in</span> range(total_figures):</span><br><span class="line">        fig, axs = plt.subplots(3, 3, figsize=figsize)</span><br><span class="line">        axs = axs.flatten()</span><br><span class="line">        start = fig_idx * max_per_figure</span><br><span class="line">        end = start + max_per_figure</span><br><span class="line">        current_combs = combs[start:end]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> ax_idx, (x, y) <span class="keyword">in</span> enumerate(current_combs):</span><br><span class="line">            ax = axs[ax_idx]</span><br><span class="line">            <span class="keyword">if</span> plot_type == <span class="string">&#x27;scatter&#x27;</span>:</span><br><span class="line">                sns.scatterplot(data=<span class="built_in">df</span>, x=x, y=y, hue=hue, ax=ax)</span><br><span class="line">            <span class="keyword">elif</span> plot_type == <span class="string">&#x27;box&#x27;</span>:</span><br><span class="line">                sns.boxplot(data=<span class="built_in">df</span>, x=x, y=y, hue=hue, ax=ax)</span><br><span class="line">            <span class="keyword">elif</span> plot_type == <span class="string">&#x27;violin&#x27;</span>:</span><br><span class="line">                sns.violinplot(data=<span class="built_in">df</span>, x=x, y=y, hue=hue, ax=ax)</span><br><span class="line">            <span class="keyword">elif</span> plot_type == <span class="string">&#x27;bar&#x27;</span>:</span><br><span class="line">                sns.barplot(data=<span class="built_in">df</span>, x=x, y=y, hue=hue, ax=ax)</span><br><span class="line">            <span class="keyword">elif</span> plot_type == <span class="string">&#x27;hist&#x27;</span>:</span><br><span class="line">                sns.histplot(data=<span class="built_in">df</span>, x=x, hue=hue, ax=ax, kde=True)</span><br><span class="line">            <span class="keyword">elif</span> plot_type == <span class="string">&#x27;kde&#x27;</span>:</span><br><span class="line">                <span class="keyword">if</span> hue :</span><br><span class="line">                    <span class="keyword">for</span> label <span class="keyword">in</span> <span class="built_in">df</span>[hue].dropna().unique():</span><br><span class="line">                            subset = <span class="built_in">df</span>[<span class="built_in">df</span>[hue] == label]</span><br><span class="line">                            sns.kdeplot(data=subset, x=x, y=y, ax=ax, fill=fill, label=str(label), alpha=0.5)</span><br><span class="line">                            ax.legend()</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    sns.kdeplot(data=<span class="built_in">df</span>, x=x, y=y, ax=ax, fill=fill)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                ax.set_title(f<span class="string">&quot;Unsupported plot type: &#123;plot_type&#125;&quot;</span>)</span><br><span class="line">            ax.set_title(f<span class="string">&quot;&#123;y&#125; vs &#123;x&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 隐藏多余的子图</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(current_combs), max_per_figure):</span><br><span class="line">            fig.delaxes(axs[j])</span><br><span class="line"></span><br><span class="line">        plt.tight_layout()</span><br><span class="line">        <span class="keyword">if</span> save:</span><br><span class="line">            plt.savefig(f<span class="string">&quot;&#123;save_prefix&#125;_&#123;fig_idx+1&#125;.png&quot;</span>, dpi=300)</span><br><span class="line">        plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.pairplot(<span class="built_in">df</span>, diag_kind=<span class="string">&#x27;hist&#x27;</span>, hue=<span class="string">&#x27;Personality&#x27;</span>)</span><br><span class="line">plt.suptitle(<span class="string">&#x27;Pair Plot of Numeric Features by Personality&#x27;</span>, y=1.02)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/003.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pairwise_plot(<span class="built_in">df</span>, df.columns, plot_type=<span class="string">&#x27;hist&#x27;</span>, hue=<span class="string">&#x27;Personality&#x27;</span>, max_per_figure=9)</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/004.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/005.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/006.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/007.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pairwise_plot(<span class="built_in">df</span>, df.columns, plot_type=<span class="string">&#x27;scatter&#x27;</span>, hue=<span class="string">&#x27;Personality&#x27;</span>, max_per_figure=9)</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/008.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/009.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/010.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/011.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pairwise_plot(<span class="built_in">df</span>, df.columns, plot_type=<span class="string">&#x27;kde&#x27;</span>, max_per_figure=9)</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/012.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/013.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/014.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/015.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.corr()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/04/016.png"
+                      alt="photo"
+                ></p>
+<p>我们发现这些变量与目标变量的相关性的绝对值均大于0.6 说明这些特征都很重要 从上面的可视化结果来看也是如此</p>
+<h2 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">X = df.drop(<span class="string">&#x27;Personality&#x27;</span>, axis=1)</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Personality&#x27;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="标准化-模型训练"><a href="#标准化-模型训练" class="headerlink" title="标准化+模型训练"></a>标准化+模型训练</h2><h3 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.pipeline import Pipeline</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line">from sklearn.metrics import accuracy_score, classification_report, confusion_matrix</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipeline = Pipeline([</span><br><span class="line">    (<span class="string">&#x27;scaler&#x27;</span>, StandardScaler()),</span><br><span class="line">    (<span class="string">&#x27;svm&#x27;</span>, SVC(kernel=<span class="string">&#x27;linear&#x27;</span>))</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">pipeline.fit(X_train, y_train)</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">y_pred = pipeline.predict(X_test)</span><br><span class="line">accuracy_score(y_test, y_pred)</span><br><span class="line">report = classification_report(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(report)</span><br><span class="line">conf_matrix = confusion_matrix(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(conf_matrix)</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>0.9293103448275862<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.92      0.94      0.93       278
+       1       0.94      0.92      0.93       302
+
+accuracy                           0.93       580
+</code></pre>
+<p>   macro avg       0.93      0.93      0.93       580<br>weighted avg       0.93      0.93      0.93       580<br>[[261  17]<br> [ 24 278]]</p>
+</blockquote>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.pipeline import Pipeline</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line">from sklearn.model_selection import GridSearchCV</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建Pipeline</span></span><br><span class="line">pipeline = Pipeline([</span><br><span class="line">    (<span class="string">&#x27;scaler&#x27;</span>, StandardScaler()),</span><br><span class="line">    (<span class="string">&#x27;svm&#x27;</span>, SVC())</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">param_grid = &#123;</span><br><span class="line">    <span class="string">&#x27;svm__C&#x27;</span>: [0.1, 1, 10],</span><br><span class="line">    <span class="string">&#x27;svm__kernel&#x27;</span>: [<span class="string">&#x27;linear&#x27;</span>, <span class="string">&#x27;rbf&#x27;</span>],</span><br><span class="line">    <span class="string">&#x27;svm__gamma&#x27;</span>: [<span class="string">&#x27;scale&#x27;</span>, <span class="string">&#x27;auto&#x27;</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">grid_search = GridSearchCV(pipeline, param_grid, cv=5)</span><br><span class="line">grid_search.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(grid_search.best_params_)</span><br><span class="line"><span class="built_in">print</span>(grid_search.best_score_)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">y_pred = grid_search.predict(X_test)</span><br><span class="line">report = classification_report(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(report)</span><br><span class="line">conf_matrix = confusion_matrix(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(conf_matrix)</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>{‘svm__C’: 0.1, ‘svm__gamma’: ‘scale’, ‘svm__kernel’: ‘rbf’}<br>0.9357758620689655<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.92      0.94      0.93       278
+       1       0.94      0.92      0.93       302
+
+accuracy                           0.93       580
+</code></pre>
+<p>   macro avg       0.93      0.93      0.93       580<br>weighted avg       0.93      0.93      0.93       580<br>[[261  17]<br> [ 24 278]]</p>
+</blockquote>
+<h3 id="XGboost"><a href="#XGboost" class="headerlink" title="XGboost"></a>XGboost</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from xgboost import XGBClassifier</span><br><span class="line">XGB = XGBClassifier()</span><br><span class="line">XGB.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">y_pred = XGB.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;XGBoost Accuracy:&quot;</span>, accuracy_score(y_test, y_pred))</span><br><span class="line">report = classification_report(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(report)</span><br><span class="line">conf_matrix = confusion_matrix(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(conf_matrix)</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>XGBoost Accuracy: 0.9172413793103448<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.90      0.93      0.91       278
+       1       0.93      0.91      0.92       302
+
+accuracy                           0.92       580
+</code></pre>
+<p>   macro avg       0.92      0.92      0.92       580<br>weighted avg       0.92      0.92      0.92       580</p>
+<p>[[258  20]<br> [ 28 274]]</p>
+</blockquote>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipeline = Pipeline([</span><br><span class="line">    (<span class="string">&#x27;XGB&#x27;</span>, XGBClassifier(use_label_encoder=False, eval_metric=<span class="string">&#x27;logloss&#x27;</span>)),</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">param_grid = &#123;</span><br><span class="line">    <span class="string">&#x27;XGB__max_depth&#x27;</span>: [3, 5, 7],</span><br><span class="line">    <span class="string">&#x27;XGB__learning_rate&#x27;</span>: [0.01, 0.1, 0.2],</span><br><span class="line">    <span class="string">&#x27;XGB__n_estimators&#x27;</span>: [50, 100, 200],</span><br><span class="line">    <span class="string">&#x27;XGB__subsample&#x27;</span>: [0.8, 1.0],</span><br><span class="line">    <span class="string">&#x27;XGB__colsample_bytree&#x27;</span>: [0.8, 1.0],</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring=<span class="string">&#x27;recall&#x27;</span>)</span><br><span class="line">grid_search.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(grid_search.best_params_)</span><br><span class="line"><span class="built_in">print</span>(grid_search.best_score_)</span><br><span class="line"></span><br><span class="line">y_pred = grid_search.predict(X_test)</span><br><span class="line">accuracy = accuracy_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">&quot;Accuracy: &#123;accuracy&#125;&quot;</span>)</span><br><span class="line">report = classification_report(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(report)</span><br><span class="line">conf_matrix = confusion_matrix(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(conf_matrix)</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>Accuracy: 0.9293103448275862<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.92      0.94      0.93       278
+       1       0.94      0.92      0.93       302
+
+accuracy                           0.93       580
+</code></pre>
+<p>   macro avg       0.93      0.93      0.93       580<br>weighted avg       0.93      0.93      0.93       580</p>
+<p>[[261  17]<br> [ 24 278]]</p>
+</blockquote>
+<h3 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line">rf = RandomForestClassifier(n_estimators=100, random_state=42)</span><br><span class="line">rf.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">y_pred = rf.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Random Forest Accuracy:&quot;</span>, accuracy_score(y_test, y_pred))</span><br><span class="line">report = classification_report(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(report)</span><br><span class="line">conf_matrix = confusion_matrix(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(conf_matrix)</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>Random Forest Accuracy: 0.9224137931034483<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.91      0.93      0.92       278
+       1       0.94      0.91      0.92       302
+
+accuracy                           0.92       580
+</code></pre>
+<p>   macro avg       0.92      0.92      0.92       580<br>weighted avg       0.92      0.92      0.92       580</p>
+<p>[[259  19]<br> [ 26 276]]</p>
+</blockquote>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">pipeline = Pipeline([</span><br><span class="line">    (<span class="string">&#x27;rf&#x27;</span>, RandomForestClassifier(random_state=42)),</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">param_grid = &#123;</span><br><span class="line">    <span class="string">&#x27;rf__n_estimators&#x27;</span>: [50, 100, 200],</span><br><span class="line">    <span class="string">&#x27;rf__max_depth&#x27;</span>: [None, 10, 20, 30],</span><br><span class="line">    <span class="string">&#x27;rf__min_samples_split&#x27;</span>: [2, 5, 10],</span><br><span class="line">    <span class="string">&#x27;rf__min_samples_leaf&#x27;</span>: [1, 2, 4],</span><br><span class="line">&#125;</span><br><span class="line">grid_search = GridSearchCV(pipeline, param_grid, cv=5, scoring=<span class="string">&#x27;accuracy&#x27;</span>, n_jobs=-1)</span><br><span class="line">grid_search.fit(X_train, y_train)</span><br><span class="line">best_model = grid_search.best_estimator_</span><br><span class="line"></span><br><span class="line">y_pred = best_model.predict(X_test)</span><br><span class="line">accuracy = accuracy_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">&quot;Best Random Forest Accuracy: &#123;accuracy&#125;&quot;</span>)</span><br><span class="line">report = classification_report(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(report)</span><br><span class="line">conf_matrix = confusion_matrix(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(conf_matrix)</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>Best Random Forest Accuracy: 0.9293103448275862<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.92      0.94      0.93       278
+       1       0.94      0.92      0.93       302
+
+accuracy                           0.93       580
+</code></pre>
+<p>   macro avg       0.93      0.93      0.93       580<br>weighted avg       0.93      0.93      0.93       580</p>
+<p>[[261  17]<br> [ 24 278]]</p>
+</blockquote>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>我们通过可视化图表可以看到 数据的分布呈现集中分布 说明特征与特征之间的关系较为紧密 说明内向与外向的人他们具有明显的区分度</p>
+<p>SVM的准确率为：0.9357758620689655<br>预测的召回率为：0.93</p>
+<p>其中预测内向的召回率为：0.94<br>其中预测外向的召回率为：0.92<br>说明其对内向的确诊率较高</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数学</tag>
+      </tags>
+  </entry>
 </search>
