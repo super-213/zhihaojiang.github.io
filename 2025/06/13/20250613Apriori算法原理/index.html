@@ -19,7 +19,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/categories/"/>
+    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/2025/06/13/20250613apriori算法原理/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -28,16 +28,18 @@
     
         
         <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/categories/index.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Apriori算法原理">
+<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/2025/06/13/20250613Apriori%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
-<meta property="article:published_time" content="2025-03-28T13:15:05.000Z">
-<meta property="article:modified_time" content="2025-03-28T13:15:30.060Z">
+<meta property="article:published_time" content="2025-06-13T03:45:14.000Z">
+<meta property="article:modified_time" content="2025-06-13T12:03:17.390Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="科技">
+<meta property="article:tag" content="算法原理">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://super-213.github.io/images/redefine-og.webp">
     
@@ -51,7 +53,7 @@
     
     <title>
         
-            Categories | 智浩的Blog
+            Apriori算法原理 | 智浩的Blog
         
     </title>
 
@@ -552,36 +554,293 @@
 			
 
 			<div class="main-content">
-				<div class="page-template-container">
-	
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
 
-	
-	<h1 class="page-title-header">
-	categories
-</h1>
-<div class="category-list-content">
-	<ul class="all-category-list"><li class="all-category-list-item"><a class="all-category-list-link" href="/zhihaojiang.github.io/categories/%E5%88%86%E4%BA%AB/">分享</a><span class="all-category-list-count">1</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/zhihaojiang.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><span class="all-category-list-count">29</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/zhihaojiang.github.io/categories/%E6%97%85%E6%B8%B8/">旅游</a><span class="all-category-list-count">2</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/zhihaojiang.github.io/categories/%E6%97%A5%E5%B8%B8/">日常</a><span class="all-category-list-count">1</span></li><li class="all-category-list-item"><a class="all-category-list-link" href="/zhihaojiang.github.io/categories/%E7%A7%91%E6%8A%80/">科技</a><span class="all-category-list-count">1</span></li></ul>
-</div>
-<div class="category-comments">
-	
-</div>
-	
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Apriori算法原理</h1>
+			</div>
+			
+		</div>
 
-	<div class="page-template-content markdown-body">
 		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/zhihaojiang.github.io/images/defaults/IMG_3744.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">姜智浩</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-06-13 11:45:14</span>
+        <span class="mobile">2025-06-13 11:45:14</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-06-13 20:03:17</span>
+            <span class="mobile">2025-06-13 20:03:17</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/zhihaojiang.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/zhihaojiang.github.io/tags/%E7%A7%91%E6%8A%80/">科技</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/">算法原理</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>951 Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>4 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="Apriori"><a href="#Apriori" class="headerlink" title="Apriori"></a>Apriori</h1><p>Apriori 算法是<strong>关联规则学习</strong>中最经典的算法之一，用于在大规模交易记录中发现<strong>频繁项集</strong>和<strong>关联规则</strong>。</p>
+<h1 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h1><p>这是 Apriori 原理（反单调性）<br><strong>“如果一个项集是频繁的，它的所有子集也一定是频繁的”</strong><br>→ 反过来说：<strong>如果某个项集不频繁，那它的所有超集一定也不频繁</strong>。</p>
+<h1 id="Apriori流程"><a href="#Apriori流程" class="headerlink" title="Apriori流程"></a>Apriori流程</h1><ol>
+<li>初始化：找出所有频繁的1项集。</li>
+</ol>
+<ul>
+<li>扫描数据，统计每个单品的支持度。</li>
+<li>只保留支持度 ≥ 最小阈值（min_sup）的项。</li>
+</ul>
+<ol start="2">
+<li>迭代生成 k 项集。</li>
+</ol>
+<ul>
+<li>用频繁的 (k−1) 项集 生成候选 k 项集（两两组合）。</li>
+<li>继续扫描数据集，统计每个候选项集的支持度。</li>
+<li>只保留支持度 ≥ min_sup 的项集。</li>
+</ul>
+<ol start="3">
+<li>重复直到无法产生更大的频繁项集。</li>
+</ol>
+<h1 id="找频繁项集后-→-生成关联规则"><a href="#找频繁项集后-→-生成关联规则" class="headerlink" title="找频繁项集后 → 生成关联规则"></a>找频繁项集后 → 生成关联规则</h1><p> 对每个频繁项集 L：</p>
+<ul>
+<li>枚举其所有非空子集 A，令 B &#x3D; L − A</li>
+<li>构造规则：A → B</li>
+<li>计算置信度 confidence &#x3D; support(L) &#x2F; support(A)</li>
+<li>若 confidence ≥ min_conf，则保留规则<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/13/001.jpg"
+                      alt="photo"
+                ></li>
+</ul>
+<h2 id="举例："><a href="#举例：" class="headerlink" title="举例："></a>举例：</h2><p>假设发现以下频繁项集：</p>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info"></i><p>info</p>
+
+    </div>
+    <div class="notel-content">
+      <p>{牛奶, 面包}，support &#x3D; 0.6<br>{牛奶}，support &#x3D; 0.8</p>
+
+    </div>
+  </div>
+
+<p>则可以生成规则：</p>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info"></i><p>info</p>
+
+    </div>
+    <div class="notel-content">
+      <p>牛奶 → 面包，confidence &#x3D; 0.6 &#x2F; 0.8 &#x3D; 0.75</p>
+
+    </div>
+  </div>
+<p>如果最小置信度设为 0.7，这条规则会被保留。</p>
+<h2 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h2><p>超市推荐系统<br>电商商品搭配<br>网页点击路径分析<br>疾病共现分析</p>
+<h1 id="关键概念"><a href="#关键概念" class="headerlink" title="关键概念"></a>关键概念</h1><h2 id="项（Item）"><a href="#项（Item）" class="headerlink" title="项（Item）"></a>项（Item）</h2><p>数据中的一个元素，比如：商品“牛奶”、“面包”。</p>
+<h2 id="事务（Transaction）"><a href="#事务（Transaction）" class="headerlink" title="事务（Transaction）"></a>事务（Transaction）</h2><p>一组一起出现的项。例如：某一次购物记录是[牛奶, 面包, 鸡蛋]。</p>
+<h2 id="项集（Itemset）"><a href="#项集（Itemset）" class="headerlink" title="项集（Itemset）"></a>项集（Itemset）</h2><p>一组项的组合。例如：{牛奶, 面包} 是一个 2-项集。</p>
+<h1 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h1><h2 id="支持度（Support）"><a href="#支持度（Support）" class="headerlink" title="支持度（Support）"></a>支持度（Support）</h2><p>一个规则在数据集中出现的频率 表示某项集在整个数据中出现的频率。<br><code>\text&#123;Support&#125;(X) = \frac&#123;\text&#123;包含 X 的事务数&#125;&#125;&#123;\text&#123;总事务数&#125;&#125;</code></p>
+<h2 id="置信度（Confidence）"><a href="#置信度（Confidence）" class="headerlink" title="置信度（Confidence）"></a>置信度（Confidence）</h2><p>规则的可靠性程度 表示在买了 X 的前提下买 Y 的概率。<br><code>\text&#123;Confidence&#125;(X \rightarrow Y) = \frac&#123;\text&#123;Support&#125;(X \cup Y)&#125;&#123;\text&#123;Support&#125;(X)&#125; </code></p>
+<h2 id="提升度（Lift）"><a href="#提升度（Lift）" class="headerlink" title="提升度（Lift）"></a>提升度（Lift）</h2><p>衡量 X 和 Y 是否真正有关联<br><code>\text&#123;Lift&#125;(X \rightarrow Y) = \frac&#123;\text&#123;Confidence&#125;(X \rightarrow Y)&#125;&#123;\text&#123;Support&#125;(Y)&#125;</code></p>
+<ul>
+<li>若 Lift &gt; 1：X 和 Y 正相关</li>
+<li>若 Lift &#x3D; 1：X 和 Y 独立</li>
+<li>若 Lift &lt; 1：X 和 Y 负相关</li>
+</ul>
+<h1 id="Apriori算法实现–mlxtend"><a href="#Apriori算法实现–mlxtend" class="headerlink" title="Apriori算法实现–mlxtend"></a>Apriori算法实现–mlxtend</h1><p>必要的库</p>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info"></i><p>info</p>
+
+    </div>
+    <div class="notel-content">
+      <p>pip install mlxtend pandas</p>
+
+    </div>
+  </div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">from mlxtend.preprocessing import TransactionEncoder</span><br><span class="line">from mlxtend.frequent_patterns import apriori, association_rules</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 模拟购物篮数据</span></span><br><span class="line">dataset = [</span><br><span class="line">    [<span class="string">&#x27;牛奶&#x27;</span>, <span class="string">&#x27;面包&#x27;</span>, <span class="string">&#x27;鸡蛋&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;牛奶&#x27;</span>, <span class="string">&#x27;面包&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;面包&#x27;</span>, <span class="string">&#x27;鸡蛋&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;牛奶&#x27;</span>, <span class="string">&#x27;鸡蛋&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;牛奶&#x27;</span>, <span class="string">&#x27;面包&#x27;</span>, <span class="string">&#x27;鸡蛋&#x27;</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 编码转换：把列表数据转为布尔型 DataFrame</span></span><br><span class="line">te = TransactionEncoder()</span><br><span class="line">te_ary = te.fit(dataset).transform(dataset)</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(te_ary, columns=te.columns_)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2. 使用 Apriori 找出频繁项集（设置最小支持度为0.5）</span></span><br><span class="line">frequent_itemsets = apriori(<span class="built_in">df</span>, min_support=0.5, use_colnames=True)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 3. 生成关联规则（设置最小置信度为0.6）</span></span><br><span class="line">rules = association_rules(frequent_itemsets, metric=<span class="string">&quot;confidence&quot;</span>, min_threshold=0.6)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 4. 输出结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;【频繁项集】&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(frequent_itemsets)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n【关联规则】&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(rules[[<span class="string">&#x27;antecedents&#x27;</span>, <span class="string">&#x27;consequents&#x27;</span>, <span class="string">&#x27;support&#x27;</span>, <span class="string">&#x27;confidence&#x27;</span>, <span class="string">&#x27;lift&#x27;</span>]])</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>【频繁项集】<br>   support  itemsets<br>0      0.8      (牛奶)<br>1      0.8      (面包)<br>2      0.8      (鸡蛋)<br>3      0.6  (牛奶, 面包)<br>4      0.6  (鸡蛋, 牛奶)<br>5      0.6  (鸡蛋, 面包)</p>
+<p>【关联规则】<br>  antecedents consequents  support  confidence    lift<br>0        (牛奶)        (面包)      0.6        0.75  0.9375<br>1        (面包)        (牛奶)      0.6        0.75  0.9375<br>2        (鸡蛋)        (牛奶)      0.6        0.75  0.9375<br>3        (牛奶)        (鸡蛋)      0.6        0.75  0.9375<br>4        (鸡蛋)        (面包)      0.6        0.75  0.9375<br>5        (面包)        (鸡蛋)      0.6        0.75  0.9375</p>
+</blockquote>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> Apriori算法原理</li>
+        <li><strong>Author:</strong> 姜智浩</li>
+        <li><strong>Created at
+                :</strong> 2025-06-13 11:45:14</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-06-13 20:03:17
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2025/06/13/20250613Apriori算法原理/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E7%A7%91%E6%8A%80/">#科技</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/">#算法原理</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/zhihaojiang.github.io/2025/06/06/20250606%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1%E8%AE%BA%E6%96%87/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">数学建模论文</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
 
 		
 	</div>
 
-	<div class="page-template-comments">
-		
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">Apriori算法原理</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Apriori"><span class="nav-text">Apriori</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-text">核心思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apriori%E6%B5%81%E7%A8%8B"><span class="nav-text">Apriori流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%BE%E9%A2%91%E7%B9%81%E9%A1%B9%E9%9B%86%E5%90%8E-%E2%86%92-%E7%94%9F%E6%88%90%E5%85%B3%E8%81%94%E8%A7%84%E5%88%99"><span class="nav-text">找频繁项集后 → 生成关联规则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BE%E4%BE%8B%EF%BC%9A"><span class="nav-text">举例：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="nav-text">典型应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5"><span class="nav-text">关键概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%EF%BC%88Item%EF%BC%89"><span class="nav-text">项（Item）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%EF%BC%88Transaction%EF%BC%89"><span class="nav-text">事务（Transaction）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E9%9B%86%EF%BC%88Itemset%EF%BC%89"><span class="nav-text">项集（Itemset）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E6%A0%87"><span class="nav-text">指标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%BA%A6%EF%BC%88Support%EF%BC%89"><span class="nav-text">支持度（Support）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%AE%E4%BF%A1%E5%BA%A6%EF%BC%88Confidence%EF%BC%89"><span class="nav-text">置信度（Confidence）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8D%87%E5%BA%A6%EF%BC%88Lift%EF%BC%89"><span class="nav-text">提升度（Lift）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apriori%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E2%80%93mlxtend"><span class="nav-text">Apriori算法实现–mlxtend</span></a></li></ol>
+
 	</div>
 </div>
-
-<div class="paginator">
+	</div>
 	
 </div>
-  
 			</div>
 
 			
@@ -663,6 +922,22 @@
 		</div>
 	</div>
 
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
 	
 
 	<div class="right-side-tools-container">
@@ -754,6 +1029,7 @@
         containers: ["#swup"],
     });
 </script>
+
 
 
 

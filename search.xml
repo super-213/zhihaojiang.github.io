@@ -3927,4 +3927,114 @@ weighted avg   0.96      0.96      0.96      1756
         <tag>数学</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Apriori算法原理</title>
+    <url>/zhihaojiang.github.io/2025/06/13/20250613Apriori%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/</url>
+    <content><![CDATA[<h1 id="Apriori"><a href="#Apriori" class="headerlink" title="Apriori"></a>Apriori</h1><p>Apriori 算法是<strong>关联规则学习</strong>中最经典的算法之一，用于在大规模交易记录中发现<strong>频繁项集</strong>和<strong>关联规则</strong>。</p>
+<h1 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h1><p>这是 Apriori 原理（反单调性）<br><strong>“如果一个项集是频繁的，它的所有子集也一定是频繁的”</strong><br>→ 反过来说：<strong>如果某个项集不频繁，那它的所有超集一定也不频繁</strong>。</p>
+<h1 id="Apriori流程"><a href="#Apriori流程" class="headerlink" title="Apriori流程"></a>Apriori流程</h1><ol>
+<li>初始化：找出所有频繁的1项集。</li>
+</ol>
+<ul>
+<li>扫描数据，统计每个单品的支持度。</li>
+<li>只保留支持度 ≥ 最小阈值（min_sup）的项。</li>
+</ul>
+<ol start="2">
+<li>迭代生成 k 项集。</li>
+</ol>
+<ul>
+<li>用频繁的 (k−1) 项集 生成候选 k 项集（两两组合）。</li>
+<li>继续扫描数据集，统计每个候选项集的支持度。</li>
+<li>只保留支持度 ≥ min_sup 的项集。</li>
+</ul>
+<ol start="3">
+<li>重复直到无法产生更大的频繁项集。</li>
+</ol>
+<h1 id="找频繁项集后-→-生成关联规则"><a href="#找频繁项集后-→-生成关联规则" class="headerlink" title="找频繁项集后 → 生成关联规则"></a>找频繁项集后 → 生成关联规则</h1><p> 对每个频繁项集 L：</p>
+<ul>
+<li>枚举其所有非空子集 A，令 B &#x3D; L − A</li>
+<li>构造规则：A → B</li>
+<li>计算置信度 confidence &#x3D; support(L) &#x2F; support(A)</li>
+<li>若 confidence ≥ min_conf，则保留规则<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/13/001.jpg"
+                      alt="photo"
+                ></li>
+</ul>
+<h2 id="举例："><a href="#举例：" class="headerlink" title="举例："></a>举例：</h2><p>假设发现以下频繁项集：</p>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info"></i><p>info</p>
+
+    </div>
+    <div class="notel-content">
+      <p>{牛奶, 面包}，support &#x3D; 0.6<br>{牛奶}，support &#x3D; 0.8</p>
+
+    </div>
+  </div>
+
+<p>则可以生成规则：</p>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info"></i><p>info</p>
+
+    </div>
+    <div class="notel-content">
+      <p>牛奶 → 面包，confidence &#x3D; 0.6 &#x2F; 0.8 &#x3D; 0.75</p>
+
+    </div>
+  </div>
+<p>如果最小置信度设为 0.7，这条规则会被保留。</p>
+<h2 id="典型应用"><a href="#典型应用" class="headerlink" title="典型应用"></a>典型应用</h2><p>超市推荐系统<br>电商商品搭配<br>网页点击路径分析<br>疾病共现分析</p>
+<h1 id="关键概念"><a href="#关键概念" class="headerlink" title="关键概念"></a>关键概念</h1><h2 id="项（Item）"><a href="#项（Item）" class="headerlink" title="项（Item）"></a>项（Item）</h2><p>数据中的一个元素，比如：商品“牛奶”、“面包”。</p>
+<h2 id="事务（Transaction）"><a href="#事务（Transaction）" class="headerlink" title="事务（Transaction）"></a>事务（Transaction）</h2><p>一组一起出现的项。例如：某一次购物记录是[牛奶, 面包, 鸡蛋]。</p>
+<h2 id="项集（Itemset）"><a href="#项集（Itemset）" class="headerlink" title="项集（Itemset）"></a>项集（Itemset）</h2><p>一组项的组合。例如：{牛奶, 面包} 是一个 2-项集。</p>
+<h1 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h1><h2 id="支持度（Support）"><a href="#支持度（Support）" class="headerlink" title="支持度（Support）"></a>支持度（Support）</h2><p>一个规则在数据集中出现的频率 表示某项集在整个数据中出现的频率。<br><code>\text&#123;Support&#125;(X) = \frac&#123;\text&#123;包含 X 的事务数&#125;&#125;&#123;\text&#123;总事务数&#125;&#125;</code></p>
+<h2 id="置信度（Confidence）"><a href="#置信度（Confidence）" class="headerlink" title="置信度（Confidence）"></a>置信度（Confidence）</h2><p>规则的可靠性程度 表示在买了 X 的前提下买 Y 的概率。<br><code>\text&#123;Confidence&#125;(X \rightarrow Y) = \frac&#123;\text&#123;Support&#125;(X \cup Y)&#125;&#123;\text&#123;Support&#125;(X)&#125; </code></p>
+<h2 id="提升度（Lift）"><a href="#提升度（Lift）" class="headerlink" title="提升度（Lift）"></a>提升度（Lift）</h2><p>衡量 X 和 Y 是否真正有关联<br><code>\text&#123;Lift&#125;(X \rightarrow Y) = \frac&#123;\text&#123;Confidence&#125;(X \rightarrow Y)&#125;&#123;\text&#123;Support&#125;(Y)&#125;</code></p>
+<ul>
+<li>若 Lift &gt; 1：X 和 Y 正相关</li>
+<li>若 Lift &#x3D; 1：X 和 Y 独立</li>
+<li>若 Lift &lt; 1：X 和 Y 负相关</li>
+</ul>
+<h1 id="Apriori算法实现–mlxtend"><a href="#Apriori算法实现–mlxtend" class="headerlink" title="Apriori算法实现–mlxtend"></a>Apriori算法实现–mlxtend</h1><p>必要的库</p>
+
+  <div class="note-large default">
+    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
+      <i class="notel-icon fa-solid fa-info"></i><p>info</p>
+
+    </div>
+    <div class="notel-content">
+      <p>pip install mlxtend pandas</p>
+
+    </div>
+  </div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">from mlxtend.preprocessing import TransactionEncoder</span><br><span class="line">from mlxtend.frequent_patterns import apriori, association_rules</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 模拟购物篮数据</span></span><br><span class="line">dataset = [</span><br><span class="line">    [<span class="string">&#x27;牛奶&#x27;</span>, <span class="string">&#x27;面包&#x27;</span>, <span class="string">&#x27;鸡蛋&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;牛奶&#x27;</span>, <span class="string">&#x27;面包&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;面包&#x27;</span>, <span class="string">&#x27;鸡蛋&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;牛奶&#x27;</span>, <span class="string">&#x27;鸡蛋&#x27;</span>],</span><br><span class="line">    [<span class="string">&#x27;牛奶&#x27;</span>, <span class="string">&#x27;面包&#x27;</span>, <span class="string">&#x27;鸡蛋&#x27;</span>]</span><br><span class="line">]</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 1. 编码转换：把列表数据转为布尔型 DataFrame</span></span><br><span class="line">te = TransactionEncoder()</span><br><span class="line">te_ary = te.fit(dataset).transform(dataset)</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(te_ary, columns=te.columns_)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 2. 使用 Apriori 找出频繁项集（设置最小支持度为0.5）</span></span><br><span class="line">frequent_itemsets = apriori(<span class="built_in">df</span>, min_support=0.5, use_colnames=True)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 3. 生成关联规则（设置最小置信度为0.6）</span></span><br><span class="line">rules = association_rules(frequent_itemsets, metric=<span class="string">&quot;confidence&quot;</span>, min_threshold=0.6)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 4. 输出结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;【频繁项集】&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(frequent_itemsets)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n【关联规则】&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(rules[[<span class="string">&#x27;antecedents&#x27;</span>, <span class="string">&#x27;consequents&#x27;</span>, <span class="string">&#x27;support&#x27;</span>, <span class="string">&#x27;confidence&#x27;</span>, <span class="string">&#x27;lift&#x27;</span>]])</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>【频繁项集】<br>   support  itemsets<br>0      0.8      (牛奶)<br>1      0.8      (面包)<br>2      0.8      (鸡蛋)<br>3      0.6  (牛奶, 面包)<br>4      0.6  (鸡蛋, 牛奶)<br>5      0.6  (鸡蛋, 面包)</p>
+<p>【关联规则】<br>  antecedents consequents  support  confidence    lift<br>0        (牛奶)        (面包)      0.6        0.75  0.9375<br>1        (面包)        (牛奶)      0.6        0.75  0.9375<br>2        (鸡蛋)        (牛奶)      0.6        0.75  0.9375<br>3        (牛奶)        (鸡蛋)      0.6        0.75  0.9375<br>4        (鸡蛋)        (面包)      0.6        0.75  0.9375<br>5        (面包)        (鸡蛋)      0.6        0.75  0.9375</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>科技</tag>
+        <tag>算法原理</tag>
+      </tags>
+  </entry>
 </search>
