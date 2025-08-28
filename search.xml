@@ -4777,4 +4777,550 @@ weighted avg   0.96      0.96      0.96      1756
         <tag>新闻</tag>
       </tags>
   </entry>
+  <entry>
+    <title>古塔的变形</title>
+    <url>/zhihaojiang.github.io/2025/08/28/20250828%E5%8F%A4%E5%A1%94%E7%9A%84%E5%8F%98%E5%BD%A2/</url>
+    <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本研究针对古塔的变形监测与预测问题展开分析，主要解决三个方面的问题：层中心定位、塔体形变特征量化及未来变形趋势预测。<br>对于问题一，考虑到古塔各层在长期自然环境作用下可能发生倾斜、弯曲等复杂变形，直接采用算术平均法计算层中心会引入较大误差。本研究采用圆拟合的方法，在各层的水平投影上进行圆拟合，稳健估计各层圆形中心坐标，从而获得精确的层心位置，为后续变形分析提供基础。<br>对于问题二，在获得层心坐标后，通过线性拟合塔轴坐标得到倾角和倾向，通过计算层心到塔轴的垂直距离刻画弯曲，通过层心相对于底层中心的水平旋转角度刻画扭曲，通过顶层偏心量分析塔尖局部形变。分析结果显示，古塔在过去几十年中整体倾斜程度逐渐增加，局部弯曲和扭曲特征变化较小，而塔尖偏心量呈现缓慢上升趋势。<br>对于问题三，为了预测古塔未来的变形趋势，本研究采用Theil–Sen 稳健趋势估计与 Mann–Kendall 趋势显著性检验相结合的方法。Theil–Sen 方法通过计算观测数据成对斜率的中位数获得稳健趋势，能有效抑制异常值影响；Mann–Kendall 检验则对趋势的统计显著性进行评估。将倾角、弯曲量及最大偏心量代入模型后得到未来五年预测结果：整体倾斜、塔尖偏心量呈缓慢增加趋势，局部弯曲略有下降，趋势总体显著，说明古塔未来仍存在缓慢加剧的变形风险。</p>
+<p><strong>关键词：</strong> 圆拟合；Theil–Sen 稳健趋势估计；Mann–Kendall 趋势显著性检验</p>
+<h1 id="一、-问题重述"><a href="#一、-问题重述" class="headerlink" title="一、 问题重述"></a>一、 问题重述</h1><p>由于长时间承受自重、气温、风力 等各种作用，偶然还要受地震、飓风的影响，古塔会产生各种变形，诸如倾斜、弯曲、扭曲等。为保护古塔，文物部门需适时对古塔进行观测，了解各种变形量，以制定必要的保护措施。某古塔已有上千年历史，是我国重点保护文物。管理部门委托测绘公司先后于1996年7月、2006年8月、2019年3月和2021年3月对该塔进行了4次观测。请你们根据附件1提供的4次观测数据，讨论以下问题：<br>1.	给出确定古塔各层中心位置的通用方法，并列表给出各次测量的古塔各层中心坐标。<br>2.	分析该塔倾斜、弯曲、扭曲等变形情况。<br>3.	分析该塔的变形趋势。</p>
+<h1 id="二、问题分析"><a href="#二、问题分析" class="headerlink" title="二、	问题分析"></a>二、	问题分析</h1><h2 id="2-1问题一的分析"><a href="#2-1问题一的分析" class="headerlink" title="2.1问题一的分析"></a>2.1问题一的分析</h2><p>古塔变形监测的首要任务是准确确定各层的中心位置，这是后续变形分析的基础。由于古塔各层在空间中大致呈圆形分布，但在长期自然环境作用下可能发生倾斜、弯曲等复杂变形，观测点不再保持理想的圆形分布，直接采用算术平均法计算中心坐标会引入较大误差。基于上述约束，确定层中心位置的关键在于在水平面上进行圆拟合，从而稳健估计圆形投影的中心，降低观测误差的干扰。</p>
+<h2 id="2-2问题二的分析"><a href="#2-2问题二的分析" class="headerlink" title="2.2问题二的分析"></a>2.2问题二的分析</h2><p>在获得各层中心坐标之后，需要进一步分析古塔的整体与局部变形特征。这一问题的核心在于如何将 几何直观的变形现象如倾斜、弯曲、扭曲转化为可量化的数学指标。为此，我们的主要思路是通过 塔轴拟合分析整体倾斜趋势；通过层心偏离量计算刻画塔体的弯曲变形；通过旋转角度分析反映扭曲特征；结合塔尖偏心量，考察局部敏感部位的变形情况。</p>
+<h2 id="2-3问题三的分析"><a href="#2-3问题三的分析" class="headerlink" title="2.3问题三的分析"></a>2.3问题三的分析</h2><p>问题三的重点在于：如何利用有限的监测数据，提取可靠的长期趋势；如何在存在测量误差和异常值的情况下，避免预测受到过度干扰。<br>传统的线性回归虽然简单，但对异常值敏感，且难以保证稳健性；灰色预测模型适用于小样本，但过于依只能给出拟合和预测结果，但不能统计地描述这个趋势是否显著。鉴于此，我们采用Theil–Sen稳健趋势估计与Mann–Kendall趋势检验相结合的方法。获得未来变形趋势的定量预测，对趋势的可靠性进行统计意义上的验证。</p>
+<h1 id="三、模型准备"><a href="#三、模型准备" class="headerlink" title="三、	模型准备"></a>三、	模型准备</h1><h2 id="3-1模型假设"><a href="#3-1模型假设" class="headerlink" title="3.1模型假设"></a>3.1模型假设</h2><ol>
+<li>   假设古塔形状对称</li>
+<li>   假设塔轴是一条直线</li>
+<li>   古塔变形过程在该时间尺度上可近似为线性变化</li>
+<li>   层心可代表整层的几何中心</li>
+<li>   测量的误差相互独立</li>
+<li>   塔体材料与结构不发生突变</li>
+</ol>
+<h2 id="3-2符号说明"><a href="#3-2符号说明" class="headerlink" title="3.2符号说明"></a>3.2符号说明</h2><table>
+<thead>
+<tr>
+<th>\theta</th>
+<th>倾角</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>\alpha</td>
+<td>倾向</td>
+</tr>
+<tr>
+<td>d_i</td>
+<td>弯曲量</td>
+</tr>
+<tr>
+<td>ecc</td>
+<td>层心偏心量</td>
+</tr>
+<tr>
+<td>\phi</td>
+<td>扭曲量</td>
+</tr>
+</tbody></table>
+<h2 id="3-3数据预处理"><a href="#3-3数据预处理" class="headerlink" title="3.3数据预处理"></a>3.3数据预处理</h2><p>在古塔变形分析的过程中，原始观测数据可能存在缺失或不一致的情况，直接影响模型建立的准确性，因此我们对1996年、2006年、2019年和2021年的四次观测数据进行了处理与填充。</p>
+<p>由于附件1的数据格式不便于后续处理，我们将其重组为“年份、层号、点号、X、Y、Z坐标”的表格形式保存为temp.csv文件，便于后续分析。</p>
+<p>我们发现附件1中在1996年和2006年的数据中，第13层第5个观测点的坐标值缺失。由于古塔的结构变形在垂直方向上通常具有连续性，我们采用层间差分法进行填充。该方法假设相邻层之间的变形趋势相似，通过计算下层点的坐标差分来估计缺失点的位置。填充过程如下：首先，找到缺失点所在层的前两层（即第11层和第12层）的对应点坐标；然后计算这两层之间在x、y、z方向上的差分值；最后，将这些差分值应用到第12层的点上，得到第13层缺失点的估计坐标。填充的数据为（567.984，519.5880，52.984）和（567.990，519.5816，52.983）。</p>
+<h1 id="四、模型建立与求解"><a href="#四、模型建立与求解" class="headerlink" title="四、	模型建立与求解"></a>四、	模型建立与求解</h1><h2 id="4-1问题一模型建立与求解"><a href="#4-1问题一模型建立与求解" class="headerlink" title="4.1问题一模型建立与求解"></a>4.1问题一模型建立与求解</h2><h3 id="4-1问题一模型建立"><a href="#4-1问题一模型建立" class="headerlink" title="4.1问题一模型建立"></a>4.1问题一模型建立</h3><p>基于古塔的结构特点和变形特征，我们采用圆拟合相结合的方法来确定各层中心坐标。考虑到古塔各层在理想状态下应呈圆形分布，但由于长期变形和测量误差，实际观测点往往会偏离理论圆形。我们采通过最小化观测点到拟合圆的代数距离平方和，来估计最可能的圆心位置和半径。这种方法相比简单的算术平均法，能够更好地抵抗异常点的干扰，提供更加稳定的中心坐标估计。<br>为了获得完整的中心坐标信息，我们将圆拟合得到的水平中心坐标与观测点z 方向的平均值相结合。对于如塔尖层，我们采用算数平均值作为补充，确保所有层都能得到合理的中心坐标估计。<br>具体步骤如下：<br>1.圆拟合：<br>古塔第t次测量第l层的第i个水平观测点</p>
+<p>$$<br>\left{ \left(x_{t,l,i}, y_{t,l,i}\right) ,\middle|, t &#x3D; 1,2,3,4 ;; l &#x3D; 1,\ldots,13 ;; i &#x3D; 1,2,\ldots,8 \right}<br>$$</p>
+<p>理论上应分布在同一圆上（对应古塔水平截面），但受测量误差和古塔变形影响，实际存在偏差。因此，我们需要找到一个圆，让这些点尽可能 “贴近” 拟合圆，圆的标准方程如下：</p>
+<p>$$<br>\left(x - a_{t,l}\right)^2 + \left(y - b_{t,l}\right)^2 &#x3D; r_{t,l}^2<br>$$<br>我们选择最小二乘法最小化观测点到圆的误差，对于每个点,它到圆心的理论距离是r_{t,l}，实际距离是</p>
+<p>$$<br>\sqrt{ \left(x_{t,l,i} - a_{t,l}\right)^2 + \left(y_{t,l,i} - b_{t,l}\right)^2 }<br>$$</p>
+<p>两者的偏差就是拟合误差，也就是建立关于误差平方和的目标函数：</p>
+<p>$$<br>\min_{a_{t,l},, b_{t,l},, r_{t,l}}<br>\sum_{i&#x3D;1}^{8} \left[ \left(x_{t,l,i} - a_{t,l}\right)^2 + \left(y_{t,l,i} - b_{t,l}\right)^2 - r_{t,l}^2 \right]<br>$$</p>
+<p>对于这个非线性问题，我们使用代数变换将其转化成一个线性问题求解，首先定义新变量：</p>
+<p>$$<br>u &#x3D; -2a_{t,l}, \quad<br>v &#x3D; -2b_{t,l}, \quad<br>w &#x3D; a_{t,l}^2 + b_{t,l}^2 - r_{t,l}^2<br>$$</p>
+<p>将圆的标准方程展开整理后代入新变量 u,v,w ,得到线性形式：</p>
+<p>$$<br>x_{t,l,i}^2 + y_{t,l,i}^2 + u x_{t,l,i} + v y_{t,l,i} + w &#x3D; 0<br>$$</p>
+<p>此时,圆拟合问题转化为：找到 u,v,w ,使得所有观测点 满足:</p>
+<p>$$<br>x_{t,l,i}^2 + y_{t,l,i}^2 + u,x_{t,l,i} + v,y_{t,l,i} + w \approx 0</p>
+<p>$$</p>
+<p>且误差平方和最小。新的目标函数变为：</p>
+<p>$$<br>\min_{u,v,w}; \sum_{i&#x3D;1}^{8} r_{t,l,i}^2<br>&#x3D; \min_{u,v,w}; \sum_{i&#x3D;1}^{8} \big( x_{t,l,i}^2 + y_{t,l,i}^2 + u,x_{t,l,i} + v,y_{t,l,i} + w \big)^2<br>$$</p>
+<p>利用这些统计量，线性最小二乘问题可表示成矩阵形式：</p>
+<p>$$<br>M \begin{bmatrix} u \ v \ w \end{bmatrix} &#x3D; b<br>$$</p>
+<p>其中:</p>
+<p>$$<br>M &#x3D;<br>\begin{bmatrix}<br>\sum x_i^2 &amp; \sum x_i y_i &amp; \sum x_i \<br>\sum x_i y_i &amp; \sum y_i^2 &amp; \sum y_i \<br>\sum x_i &amp; \sum y_i &amp; n_{t,l}<br>\end{bmatrix}, \quad<br>b &#x3D; -<br>\begin{bmatrix}<br>\sum x_i (x_i^2 + y_i^2) \<br>\sum y_i (x_i^2 + y_i^2) \<br>\sum (x_i^2 + y_i^2)<br>\end{bmatrix}<br>$$</p>
+<p>解出 u,v,w 后,恢复圆心和半径：</p>
+<p>$$<br>a_{t,l} &#x3D; -\frac{u}{2}, \quad<br>b_{t,l} &#x3D; -\frac{v}{2}, \quad<br>r_{t,l} &#x3D; \sqrt{a_{t,l}^2 + b_{t,l}^2 - w}<br>$$</p>
+<p>最终，各层的中心坐标由圆拟合得到的圆心坐标)和观测点z坐标的平均值组成,即为：</p>
+<p>$$<br>\left(a_{t,l}, b_{t,l}, c_{t,l}\right)<br>$$</p>
+<p>其中</p>
+<p>$$<br>c_{t,l} &#x3D; \frac{1}{8} \sum_{i&#x3D;1}^{8} z_{t,l,i}<br>$$</p>
+<p>选择观测点z坐标的平均值是因为它简单且能代表该层的平均高度。</p>
+<p>4.1.2模型的求解<br>利用python求解，求得各层中心点坐标，如表4.1.1所示，将其绘制成三维图如图4.1.1和4.1.2所示</p>
+<table>
+<thead>
+<tr>
+<th>层数</th>
+<th>1996年 (x,y,z)</th>
+<th>2006年 (x,y,z)</th>
+<th>2019年 (x,y,z)</th>
+<th>2021年 (x,y,z)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>566.664,522.709,1.787</td>
+<td>566.665,522.708,1.783</td>
+<td>566.744,522.700,1.764</td>
+<td>566.744,522.700,1.763</td>
+</tr>
+<tr>
+<td>2</td>
+<td>566.722,522.671,7.320</td>
+<td>566.723,522.670,7.314</td>
+<td>566.778,522.671,7.308</td>
+<td>566.779,522.671,7.290</td>
+</tr>
+<tr>
+<td>3</td>
+<td>566.778,522.634,12.755</td>
+<td>566.780,522.633,12.750</td>
+<td>566.811,522.645,12.732</td>
+<td>566.812,522.645,12.726</td>
+</tr>
+<tr>
+<td>4</td>
+<td>566.822,522.605,17.078</td>
+<td>566.824,522.603,17.075</td>
+<td>566.838,522.623,17.069</td>
+<td>566.838,522.622,17.052</td>
+</tr>
+<tr>
+<td>5</td>
+<td>566.869,522.574,21.720</td>
+<td>566.872,522.571,21.716</td>
+<td>566.866,522.600,21.709</td>
+<td>566.867,522.599,21.703</td>
+</tr>
+<tr>
+<td>6</td>
+<td>566.918,522.544,26.235</td>
+<td>566.922,522.540,26.229</td>
+<td>566.955,522.551,26.211</td>
+<td>566.956,522.550,26.204</td>
+</tr>
+<tr>
+<td>7</td>
+<td>566.952,522.527,19.836</td>
+<td>566.956,522.523,29.832</td>
+<td>566.989,522.529,29.824</td>
+<td>566.989,522.528,29.817</td>
+</tr>
+<tr>
+<td>8</td>
+<td>566.984,522.510,33.350</td>
+<td>566.988,522.506,33.345</td>
+<td>566.041,522.497,33.339</td>
+<td>566.042,522.496,33.336</td>
+</tr>
+<tr>
+<td>9</td>
+<td>567.017,522.493,36.854</td>
+<td>567.022,522.488,36.848</td>
+<td>567.094,522.464,36.843</td>
+<td>567.095,522.463,36.822</td>
+</tr>
+<tr>
+<td>10</td>
+<td>567.047,522.479,40.172</td>
+<td>567.052,522.473,40.167</td>
+<td>567.148,522.410,40.161</td>
+<td>567.149,522.409,40.144</td>
+</tr>
+<tr>
+<td>11</td>
+<td>567.101,522.438,44.440</td>
+<td>567.107,522.433,44.435</td>
+<td>567.190,522.370,44.432</td>
+<td>567.192,522.368,44.424</td>
+</tr>
+<tr>
+<td>12</td>
+<td>567.155,522.398,48.711</td>
+<td>567.161,522.392,48.707</td>
+<td>567.233,522.330,48.699</td>
+<td>567.234,522.328,48.683</td>
+</tr>
+<tr>
+<td>13</td>
+<td>567.207,522.360,52.853</td>
+<td>567.213,522.354,52.849</td>
+<td>567.281,522.284,52.818</td>
+<td>567.283,522.283,52.813</td>
+</tr>
+<tr>
+<td>塔尖</td>
+<td>567.264,522.254,55.108</td>
+<td>567.254,522.236,55.119</td>
+<td>567.336,522.214,55.091</td>
+<td>567.337,522.213,55.087</td>
+</tr>
+</tbody></table>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/08/28/001.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/08/28/002.png"
+                      alt="photo"
+                ></p>
+<h2 id="4-2问题二模型建立、求解与分析"><a href="#4-2问题二模型建立、求解与分析" class="headerlink" title="4.2问题二模型建立、求解与分析"></a>4.2问题二模型建立、求解与分析</h2><h3 id="4-2-1问题二模型的建立"><a href="#4-2-1问题二模型的建立" class="headerlink" title="4.2.1问题二模型的建立"></a>4.2.1问题二模型的建立</h3><p>问题二要求我们分析塔的倾斜、弯曲、扭曲等变形情况。<br>对于倾斜，我们主要分析塔轴倾角\theta和倾向\alpha来表示整个塔的倾斜方向和程度。塔体的整体倾斜可以用 塔轴方向 来描述。理想情况下，古塔应当是一条竖直线，但由于长期荷载与地基变形作用，塔体的轴线发生了偏移。我们可以假设塔轴近似为一条直线，我们将每层的层心坐标(x_i,y_i,z_i)计算出来，然后用线性回归分别拟合 x 和 y 关于 z 的关系。<br>在塔体层心坐标的测量过程中，由于不可避免的观测噪声以及各层施工误差，层心坐标往往存在一定波动。如果直接采用相邻两点连线来表示塔轴，将导致结果不稳定，难以反映塔体的整体趋势。为此，我们采用最小二乘法对塔体轴线进行拟合。具体而言，分别对x与y关于高度z的关系建立线性模型：</p>
+<p>$$<br>x_i &#x3D; a z_i + x_0<br>$$</p>
+<p>$$<br>y_i &#x3D; b z_i + y_0<br>$$</p>
+<p>其中，参数a,b分别表示塔在xz平面和yz平面上的倾斜率，参数x_0，y0在回归模型中为截距，同时在集合意义上对应塔底层心的投影坐标。为了求得最优的 a, b, x_0 y_0，我们采用最小二乘法，即通过最小化残差平方和来拟合模型。该方法能够在测量误差近似服从正态分布的假设下，保证所求解具有无偏性和最小方差，从而获得统计意义上的最优估计。</p>
+<p>$$<br>\min_{a, x_0} \sum_{i} \left( x_i - (a z_i + x_0) \right)^2<br>$$</p>
+<p>$$<br>\min_{b, y_0} \sum_{i} \left( y_i - (b z_i + y_0) \right)^2<br>$$</p>
+<p>在得到拟合参数 a,b 后，可以计算塔的倾角\theta和倾向角\alpha</p>
+<p>$$<br>\theta &#x3D; \arctan \frac{\sqrt{a^2 + b^2}}{1}<br>$$</p>
+<p>$$<br>\alpha &#x3D; \arctan2(b, a)<br>$$</p>
+<p>通过对不同年份的数据计算\theta和\alpha，可以分析塔体整体倾斜的程度和方向随时间的变化趋势。<br>塔体的弯曲是指塔在某一平面内的曲线形变。我们从相对塔轴的偏离和相对塔底中心的偏移两个角度进行度量。<br>考虑层心相对于塔轴的偏离，对于每一层i，层心坐标为(x_i,y_i,z_i),塔轴的方向向量为</p>
+<p>$$<br>\vec{v} &#x3D; (a, b, 1)<br>$$</p>
+<p>则层心到塔轴的垂直距离——弯曲量d_i可表示为：</p>
+<p>$$<br>d_i &#x3D; \frac{\left| (x_i - x_0)b - (y_i - y_0)a \right|}{\sqrt{a^2 + b^2}}<br>$$</p>
+<p>其中x_0，y_0为塔底中心坐标，该量为层心在水平方向上相对于拟合直线，即塔轴的最短距离。随着高度z_i的增加，弯曲量d_i的变化趋势反映了塔体在竖直方向上的局部弯曲情况。<br>我们又引入层心偏心量ecc来描述塔体整体弯曲特征。定义第 i 层相对塔底中心的水平偏心量为：</p>
+<p>$$<br>\text{ecc}_i &#x3D; \sqrt{(x_i - x_0)^2 + (y_i - y_0)^2}<br>$$</p>
+<p>该指标描述了各层层心相对塔底的水平位移幅度，能够直观反映塔体整体弯曲趋势。该量随着z_i单调增大并指向一致方向时，说明塔体存在逐层整体偏移的趋势。</p>
+<p>为进一步分析塔尖的局部形变，我们计算顶层偏心量</p>
+<p>$$<br>\text{ecc}<em>{\text{top}} &#x3D; \sqrt{(x</em>{\text{top}} - x_0)^2 + (y_{\text{top}} - y_0)^2}<br>$$</p>
+<p>通过对不同年份顶层偏心量的比较，可以观察塔尖随时间的形变趋势。</p>
+<p>塔的扭曲是指沿高度方向，层心在水平面上旋转或偏转角度的变化。扭曲角\phi_i可定义为：</p>
+<p>$$<br>\phi_i &#x3D; \arctan2(y_i - y_0,\ x_i - x_0)<br>$$</p>
+<p>该角度表示第 i 层的水平位移方向，随高度的变化反映塔体绕竖直轴的扭转特征。若\phi_i随高度单向递增或递减，表明塔存在明显的扭曲趋势。</p>
+<h3 id="4-2-2问题二模型的求解"><a href="#4-2-2问题二模型的求解" class="headerlink" title="4.2.2问题二模型的求解"></a>4.2.2问题二模型的求解</h3><p>在完成指标体系的构建后，我们基于 1996年、2006年、2019年和 2021年的测量数据，分别计算了各年份对应的倾角、倾向、平均偏心量、平均弯曲量、平均扭曲角以及顶层偏心量。结果见表 4.2.1—表 4.2.4。</p>
+<p><strong>表4.2.1倾角与倾向结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>年份</th>
+<th>倾角（度）</th>
+<th>倾向（度）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1996</td>
+<td>0.7427</td>
+<td>-34.81</td>
+</tr>
+<tr>
+<td>2006</td>
+<td>0.7526</td>
+<td>-34.95</td>
+</tr>
+<tr>
+<td>2019</td>
+<td>0.8434</td>
+<td>-37.65</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>0.8455</td>
+<td>-37.68</td>
+</tr>
+</tbody></table>
+<p><strong>表4.2.2偏心量与顶层偏心量结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>年份</th>
+<th>平均偏心量（米）</th>
+<th>顶层偏心量（米）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1996</td>
+<td>0.3629</td>
+<td>0.7464</td>
+</tr>
+<tr>
+<td>2006</td>
+<td>0.3680</td>
+<td>0.7561</td>
+</tr>
+<tr>
+<td>2019</td>
+<td>0.3605</td>
+<td>0.7797</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>0.3614</td>
+<td>0.7815</td>
+</tr>
+</tbody></table>
+<p><strong>表4.2.3弯曲量结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>年份</th>
+<th>平均弯曲量（米）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1996</td>
+<td>0.0117</td>
+</tr>
+<tr>
+<td>2006</td>
+<td>0.0117</td>
+</tr>
+<tr>
+<td>2019</td>
+<td>0.0063</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>0.0063</td>
+</tr>
+</tbody></table>
+<p><strong>表4.2.4扭曲角结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>年份</th>
+<th>平均扭曲角（度）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1996</td>
+<td>-33.0708</td>
+</tr>
+<tr>
+<td>2006</td>
+<td>-33.1866</td>
+</tr>
+<tr>
+<td>2019</td>
+<td>-35.5721</td>
+</tr>
+<tr>
+<td>2021</td>
+<td>-35.5790</td>
+</tr>
+</tbody></table>
+<h3 id="4-2-3问题二模型的分析"><a href="#4-2-3问题二模型的分析" class="headerlink" title="4.2.3问题二模型的分析"></a>4.2.3问题二模型的分析</h3><p>通过对各项指标的对比与分析，我们可以得到以下结论：<br><strong>（1）整体倾斜趋势：</strong><br>从表 4.2.1 可见，古塔的倾角从 1996 年的约 0.74° 增加到 2021 年的约 0.85°，说明整体倾斜程度有所加剧；同时倾向也由约 34.8° 增加至 37.7°，如图4.2.1也表明塔体倾斜方向随时间略有偏移。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/08/28/003.png"
+                      alt="photo"
+                ></p>
+<p><strong>（2）整体偏移与局部弯曲：</strong><br>表 4.2.2 显示平均偏心量在 0.36 米左右，波动较小，说明塔体整体重心偏移并不显著。表 4.2.3 显示平均弯曲量在 2006 年之后下降，在 2019 年与 2021年减小至约 0.006 米，如图 4.2.2所示，不同年份塔身剖面偏心量的分布情况基本保持一致，但 2019 年和 2021 年的偏移曲线整体较为平缓，表明塔体局部弯曲程度有所减轻。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/08/28/004.png"
+                      alt="photo"
+                ></p>
+<p><strong>（3）扭曲变化：</strong><br>从表 4.2.4 可见，平均扭曲角从 33.1° 增加到 35.6°，说明塔体在竖向高度方向上逐渐出现轻微的旋转或偏转，这种形变具有一定的累积效应。</p>
+<p><strong>（4）塔尖偏移情况：</strong><br>表 4.2.5 和图4.2.3表明顶层偏心量从 0.746 米增加到 0.782 米，整体呈上升趋势，意味着塔尖在过去二十余年中出现了逐渐的偏移。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/08/28/005.png"
+                      alt="photo"
+                ></p>
+<h2 id="4-3第三问模型的建立、求解与分析"><a href="#4-3第三问模型的建立、求解与分析" class="headerlink" title="4.3第三问模型的建立、求解与分析"></a>4.3第三问模型的建立、求解与分析</h2><h3 id="4-3-1模型的建立"><a href="#4-3-1模型的建立" class="headerlink" title="4.3.1模型的建立"></a>4.3.1模型的建立</h3><p>古塔 4 次观测数据1996-2021 年时间跨度大、仅 4 个时间点，样本量少，且观测过程中可能存在仪器误差、环境干扰，如强风、振动等导致的异常值，传统线性回归对异常值敏感，易偏离真实趋势。长期非线性模型难以建立。塔体倾斜和弯曲在短时间尺度上多表现为缓慢累积的单调趋势，我们假设其变形过程在该时间尺度上可近似为线性变化。为验证这一假设，我们绘制了残差散点图，</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/08/28/006.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/08/28/007.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/08/28/008.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/08/28/009.png"
+                      alt="photo"
+                ></p>
+<p>结果显示残差范围在各变量量级的 5%~10% 内，属于合理范围，残差在零附近随机波动、无系统性模式，说明线性近似是合理的。因此选择Theil-Sen 稳健线性趋势法，这是个非参数方法，抗异常值能力强，无需数据满足正态分布。量化变形速率，搭配Mann-Kendall 检验，其适用于小样本、非正态数据判断趋势是否显著，二者结合可兼顾稳健性与统计严谨性。<br><strong>1. Theil-Sen 稳健趋势斜率估计</strong><br>核心逻辑：通过计算所有“时间–指标”成对组合的斜率,取中位数作为最终趋势斜率，它能有效剔除异常值干扰，如某次观测的仪器误差,比传统线性回归更稳健。<br>我们设形变指标:倾角、偏心量、弯曲量、扭曲角的时间序列为</p>
+<p>$$<br>{ (t_i, y_i) }_{i&#x3D;1}^n<br>$$</p>
+<p>其中t_i表示年份，y_i, y_j表示对应的形变量</p>
+<p><strong>（1）计算所有成对斜率：</strong><br>Theil–Sen 方法首先计算所有年份对之间的斜率，对 4 次观测的“时间–指标”对</p>
+<p>$$<br>\left(t_1, Y_1\right),\ \left(t_2, Y_2\right),\ \left(t_3, Y_3\right),\ \left(t_4, Y_4\right)<br>$$</p>
+<p>取所有 i&lt;j(i,j&#x3D;1,2,3,4) 的组合，每组斜率计算公式为：</p>
+<p>$$<br>s_{ij} &#x3D; \frac{Y_j - Y_i}{t_j - t_i}, \quad (1 \le i &lt; j \le n)<br>$$</p>
+<p>s_{ij} 为第 i 次到第 j 次观测的 “指标变化斜率”， t_j-t_i 为两次观测的时<br>时间差(年), Y_j-Y_i 为两次观测的指标差值。</p>
+<p><strong>（2）取中位数作为趋势斜率 \hat{\mathbit{k}}：</strong><br>将6个斜率 s_{ij} 按从小到大排序</p>
+<p>$$<br>\hat{k} &#x3D; \mathrm{median}\left{ s_{(1)}, s_{(2)}, s_{(3)}, s_{(4)}, s_{(5)}, s_{(6)} \right} &#x3D; \frac{s_{(3)} + s_{(4)}}{2}<br>$$</p>
+<p>\hat{k}&gt;0 ：变形指标 Y_t 随时间增大,对应“倾角变大” “偏心量增加”,即变形加剧；<br>\hat{k}&lt;0 : 变形指标 Y_t 随时间减小,对应 “倾角变小” “偏心量减少”,即变形缓解；<br>\hat{k}\approx0 : 变形指标稳定,无明显时间趋势。<br>得到最终的趋势回归模型</p>
+<p>$$<br>y_t &#x3D; \hat{k} \cdot t + \hat{b}<br>$$</p>
+<p>其中截距\hat{b}由最小化绝对偏差原则估计。该方法在存在测量噪声和异常点时依然能给出稳定的趋势结果。</p>
+<p><strong>2.Mann-Kendall 趋势显著性检验</strong><br>核心逻辑：通过统计 “后一次观测指标&gt; 前一次观测指标” 的次数,判断这种“递增 &#x2F; 递减”是否为随机现象，若显著非随机，则认为趋势真实存在。<br><strong>(1)构造统计量\mathbit{S}：</strong></p>
+<p>$$<br>S &#x3D; \sum_{i&#x3D;1}^{3} \sum_{j&#x3D;i+1}^{4} \mathrm{sign}\left(Y_j - Y_i\right)<br>$$</p>
+<p>统计所有 i&lt;j 时 “ Y_j-Y_i “ 的符号,符号函数sign(x)定义为：</p>
+<p>$$<br>\mathrm{sign}(x) &#x3D;<br>\begin{cases}<br>1, &amp; x &gt; 0 \quad \text{（后项 &gt; 前项，记为“逆增”）} \<br>0, &amp; x &#x3D; 0 \quad \text{（后项 &#x3D; 前项，无变化）} \<br>-1, &amp; x &lt; 0 \quad \text{（后项 &lt; 前项，记为“递减”）}<br>\end{cases}<br>$$</p>
+<p>S&gt;0 表示整体呈递增趋势,<br>S&#x3D;0 表示无趋势，<br>S&lt;0 表示整体呈递减趋势。</p>
+<p><strong>（2）计算方差Var(S)：</strong><br>若存在多个 Y_t 取值相同,需修正方差以避免低估趋势显著性。设同一 Y 值出现的次数为t_g,方差公式为：</p>
+<p>$$<br>\mathrm{Var}(S) &#x3D; \frac{<br>    n(n-1)(2n+5) - \sum_{g&#x3D;1}^{G} t_g (t_g - 1)(2 t_g + 5)<br>}{18}<br>$$</p>
+<p><strong>（3）计算检验统计量 \mathbit{Z}</strong><br>在零假设（无趋势）下，S 的期望值为 0，S 近似服从正态分布，标准化为检验统计量 Z ：</p>
+<p>$$<br>Z &#x3D;<br>\begin{cases}<br>\dfrac{S - 1}{\sqrt{\mathrm{Var}(S)}}, &amp; S &gt; 0 \[2mm]<br>0, &amp; S &#x3D; 0 \[1mm]<br>\dfrac{S + 1}{\sqrt{\mathrm{Var}(S)}}, &amp; S &lt; 0<br>\end{cases}<br>$$</p>
+<p><strong>（4）\mathbit{\tau}的计算</strong><br>\tau是衡量趋势方向与强度，定义为：</p>
+<p>$$<br>\tau &#x3D; \frac{S}{\frac{n}{2}}<br>$$</p>
+<p>n 是指观测值的总数<br>\tau&gt;0 表示整体呈递增趋势,<br>\tau&lt;0 表示整体呈递减趋势，<br>\left|\tau\right|越接近1，趋势越明显。</p>
+<p><strong>（5）p值的计算</strong><br>p 值用于判断趋势显著性，表示在零假设（无趋势）下，观测到统计量 S 或更极端值的概率：</p>
+<p>$$<br>p &#x3D; 2 \left( 1 - \Phi\left( |Z| \right) \right)<br>$$</p>
+<p>其中\phi(\left|Z\right|)为标准正态分布函数。<br>	•	若 p &lt; 0.05，趋势显著<br>	•	若 p\geq0.05，趋势不显著</p>
+<h3 id="4-3-2模型的求解"><a href="#4-3-2模型的求解" class="headerlink" title="4.3.2模型的求解"></a>4.3.2模型的求解</h3><p><strong>表4.3.1趋势估计</strong></p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>倾角 θ</th>
+<th>偏心量 ecc</th>
+<th>弯曲量 d_i</th>
+<th>扭曲量 φ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>趋势斜率</td>
+<td>0.0046&#x2F;年</td>
+<td>0.0015&#x2F;年</td>
+<td>-0.0017&#x2F;年</td>
+<td>0.0045&#x2F;年</td>
+</tr>
+<tr>
+<td>τ</td>
+<td>1</td>
+<td>1</td>
+<td>-1</td>
+<td>0.3333</td>
+</tr>
+<tr>
+<td>p值</td>
+<td>0.0833</td>
+<td>0.0833</td>
+<td>0.0833</td>
+<td>0.7500</td>
+</tr>
+</tbody></table>
+<p><strong>表4.3.2趋势分析结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>年份</th>
+<th>倾角 θ</th>
+<th>偏心量 ecc</th>
+<th>弯曲量 d_i</th>
+<th>扭曲量 φ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2022</td>
+<td>0.8487</td>
+<td>0.7828</td>
+<td>0.0119</td>
+<td>38.6307</td>
+</tr>
+<tr>
+<td>2023</td>
+<td>0.8533</td>
+<td>0.7843</td>
+<td>0.0102</td>
+<td>38.6262</td>
+</tr>
+<tr>
+<td>2024</td>
+<td>0.8578</td>
+<td>0.7858</td>
+<td>0.0085</td>
+<td>38.6216</td>
+</tr>
+<tr>
+<td>2025</td>
+<td>0.8624</td>
+<td>0.7872</td>
+<td>0.0067</td>
+<td>38.6171</td>
+</tr>
+<tr>
+<td>2026</td>
+<td>0.8670</td>
+<td>0.7887</td>
+<td>0.0050</td>
+<td>38.6125</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-3模型的分析"><a href="#4-3-3模型的分析" class="headerlink" title="4.3.3模型的分析"></a>4.3.3模型的分析</h3><p>根据 Theil–Sen 趋势估计与 Mann–Kendall 检验结果，可以得到古塔在未来若干年内的形变演化趋势如下：<br><strong>在整体倾斜方面</strong>，倾角\theta的趋势斜率为 0.0046&#x2F;年，M–K 检验结果\tau &#x3D; 1.0，表明其具有稳定的单调上升趋势。虽然对应的 p 值为 0.0833，未在 95% 置信水平下达到显著性，但结合历年数据可见，塔体倾斜程度正逐步增强。<br><strong>在塔尖偏移方面</strong>，偏心量的趋势斜率为 0.0015 m&#x2F;年，同样表现为单调递增趋势（\tau &#x3D; 1.0，p&#x3D;0.0833）。预测结果显示，塔尖相对底心的水平偏移量将从 2021 年的约 0.7815 m 增至 2026 年的 0.789 m，说明塔尖在缓慢外移。<br><strong>在弯曲形变方面</strong>，平均弯曲量的趋势斜率为 -0.0017 m&#x2F;年，M–K 检验结果\tau &#x3D; -1.0，表明其呈现单调下降趋势。虽然 p&#x3D;0.0833 表明显著性不足，但整体结果仍显示塔身弯曲程度在逐步减小。预测结果显示，弯曲量将由 2021 年的 0.0063 m 降至 2026 年约 0.0050 m，说明随着时间推移，塔体在局部曲率上的形变趋缓。<br><strong>在扭曲变形方面</strong>，扭曲量\phi的趋势斜率为 0.0045&#x2F;年，但\tau值仅为 0.3333，且 p 值高达 0.75，表明其趋势不显著，数据中随机波动的成分较大。因此，目前无法得出塔体扭曲存在明显长期变化的结论，未来仍需进一步长期监测以提高可靠性。</p>
+<h1 id="五、模型的评价与改进"><a href="#五、模型的评价与改进" class="headerlink" title="五、	模型的评价与改进"></a>五、	模型的评价与改进</h1><p>本研究采用的 Theil–Sen 稳健趋势估计结合 Mann–Kendall 显著性检验具有几个优势。它对异常值和测量误差具有较强的抵抗力，比传统线性回归更稳健；Mann–Kendall 检验可以判断趋势是否显著，不依赖数据的分布类型；这套方法易于理解，斜率和 p 值可以直观反映变形随时间的变化；它适用于观测次数较少的情况，符合古塔监测数据量有限的实际情况。<br>该方法也存在一些局限。由于 Theil–Sen 取中位数斜率，短期或局部的非线性变化可能被忽略；趋势预测仅为线性，无法考虑突发性变形或环境因素的影响；观测年份过少或分布不均时，趋势估计可能有偏差；此外，重复观测值较多时，Mann–Kendall 的精度也会下降。另外，本研究未采用平面拟合处理各层倾斜，可能导致层心位置在水平投影上存在轻微偏差，从而影响部分局部弯曲和偏心量的计算精度。<br>为了进一步提升分析效果，可以考虑结合非线性拟合方法（如 LOESS 或多项式回归）捕捉局部波动；引入环境因素或施工信息进行多变量分析，提高预测可靠性；通过增加观测点或数据插值来改善趋势估计的精细度；并在预测结果中加入置信区间或蒙特卡洛模拟，量化不确定性，为修缮和维护提供更可靠的参考。</p>
+<h1 id="六、模型的推广与应用"><a href="#六、模型的推广与应用" class="headerlink" title="六、	模型的推广与应用"></a>六、	模型的推广与应用</h1><h2 id="6-1同类古建筑的变形监测"><a href="#6-1同类古建筑的变形监测" class="headerlink" title="6.1同类古建筑的变形监测"></a>6.1同类古建筑的变形监测</h2><p>本模型的核心方法可直接推广至砖石结构、木构结构等不同类型的古建筑，只需根据结构特性微调参数与假设即可适配。对于砖石结构类古塔，其层间变形规律与本次研究的古塔高度相似，仅需沿用 “圆拟合 + z 坐标平均” 的层心定位方法，若塔身截面因风化呈现非标准圆形，如椭圆形、多边形，可将圆拟合扩展为椭圆拟合或多边形拟合。</p>
+<h2 id="6-2-近现代竖向结构的健康评估"><a href="#6-2-近现代竖向结构的健康评估" class="headerlink" title="6.2 近现代竖向结构的健康评估"></a>6.2 近现代竖向结构的健康评估</h2><p>近现代高耸结构，如钢筋混凝土烟囱、输电塔、水塔，与古塔同属竖向受力结构，变形类型，如倾斜、弯曲、扭曲高度相似，本模型的变形量化与趋势分析方法可直接复用，仅需针对荷载特性调整数据预处理环节。</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>[1] 张立福, 刘经南, 陈军. 基于圆拟合的塔式建筑倾斜监测方法研究[J]. 武汉大学学报(信息科学版), 2004, 29(5): 395-398.<br>[2] 王海军, 郑兴伟, 张士斌. 古建筑结构健康监测与变形分析方法研究[J]. 测绘学报, 2012, 41(3): 431-438.<br>[3] 王锐, 韩璐, 刘庆. 基于最小二乘法的圆拟合算法研究[J]. 计算机工程与应用, 2016, 52(18): 176-180.<br>[4] 	Ahn S J, Rauh W, Warnecke H J. Least-squares orthogonal distances fitting of circle, sphere, ellipse, hyperbola, and parabola[J]. Pattern Recognition, 2001, 34(12): 2283-2303.<br>[5] Theil H. A rank-invariant method of linear and polynomial regression analysis, Part 3[J]. Nederl. Akad. Wetensch., Proc., 1950, 53: 1397–1412.<br>[6] Gilbert R. O. Statistical Methods for Environmental Pollution Monitoring[M]. New York: Wiley, 1987.<br>[7] 王玉宽, 张俊. 基于Theil–Sen估计和Mann–Kendall检验的气候趋势分析[J]. 气候与环境研究, 2011, 16(1): 90–96.</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="附录A支撑材料文件列表"><a href="#附录A支撑材料文件列表" class="headerlink" title="附录A支撑材料文件列表"></a>附录A支撑材料文件列表</h2><table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>文件内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>模拟实战2_古塔的变形.ipynb</td>
+<td>三个问题的求解</td>
+</tr>
+<tr>
+<td>temp.csv</td>
+<td>把 Excel 转换成 CSV 文件</td>
+</tr>
+<tr>
+<td>tower.csv</td>
+<td>预处理填充后的完整数据</td>
+</tr>
+<tr>
+<td>guta_centers_circle.csv</td>
+<td>第一问古塔中心坐标数据</td>
+</tr>
+<tr>
+<td>problem3.csv</td>
+<td>第二问求解得到的数据</td>
+</tr>
+<tr>
+<td>problem3_trend.csv</td>
+<td>第三问预测数据</td>
+</tr>
+</tbody></table>
+<h2 id="附录B程序代码"><a href="#附录B程序代码" class="headerlink" title="附录B程序代码"></a>附录B程序代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">def fill_missing_interlayer(<span class="built_in">df</span>, year, layer, point):</span><br><span class="line">    <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">    用层间差分法填充缺失点 (适用于行存在但 xyz 缺失的情况)</span></span><br><span class="line"><span class="string">    df: DataFrame，包含 [year, layer, point, x, y, z]</span></span><br><span class="line"><span class="string">    &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">    prev_layer = layer - 1</span><br><span class="line">    prev2_layer = layer - 2</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 相邻两层对应点</span></span><br><span class="line">    p1 = <span class="built_in">df</span>[(<span class="built_in">df</span>[<span class="string">&quot;year&quot;</span>] == year) &amp; (<span class="built_in">df</span>[<span class="string">&quot;layer&quot;</span>] == prev2_layer) &amp; (<span class="built_in">df</span>[<span class="string">&quot;point&quot;</span>] == point)]</span><br><span class="line">    p2 = <span class="built_in">df</span>[(<span class="built_in">df</span>[<span class="string">&quot;year&quot;</span>] == year) &amp; (<span class="built_in">df</span>[<span class="string">&quot;layer&quot;</span>] == prev_layer) &amp; (<span class="built_in">df</span>[<span class="string">&quot;point&quot;</span>] == point)]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> p1.empty or p2.empty:</span><br><span class="line">        raise ValueError(f<span class="string">&quot;&#123;year&#125; 年第 &#123;prev2_layer&#125;/&#123;prev_layer&#125; 层缺少第 &#123;point&#125; 点，无法补全 &#123;layer&#125; 层&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算差分</span></span><br><span class="line">    dx = <span class="built_in">float</span>(p2[<span class="string">&quot;x&quot;</span>].values[0] - p1[<span class="string">&quot;x&quot;</span>].values[0])</span><br><span class="line">    dy = <span class="built_in">float</span>(p2[<span class="string">&quot;y&quot;</span>].values[0] - p1[<span class="string">&quot;y&quot;</span>].values[0])</span><br><span class="line">    dz = <span class="built_in">float</span>(p2[<span class="string">&quot;z&quot;</span>].values[0] - p1[<span class="string">&quot;z&quot;</span>].values[0])</span><br><span class="line"></span><br><span class="line">    x_missing = <span class="built_in">float</span>(p2[<span class="string">&quot;x&quot;</span>].values[0] + dx)</span><br><span class="line">    y_missing = <span class="built_in">float</span>(p2[<span class="string">&quot;y&quot;</span>].values[0] + dy)</span><br><span class="line">    z_missing = <span class="built_in">float</span>(p2[<span class="string">&quot;z&quot;</span>].values[0] + dz)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 找到缺失行并填充</span></span><br><span class="line">    mask = (<span class="built_in">df</span>[<span class="string">&quot;year&quot;</span>] == year) &amp; (<span class="built_in">df</span>[<span class="string">&quot;layer&quot;</span>] == layer) &amp; (<span class="built_in">df</span>[<span class="string">&quot;point&quot;</span>] == point)</span><br><span class="line">    <span class="keyword">if</span> mask.sum() == 0:</span><br><span class="line">        raise ValueError(f<span class="string">&quot;&#123;year&#125; 年第 &#123;layer&#125; 层第 &#123;point&#125; 点行不存在&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        df.loc[mask, [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]] = [x_missing, y_missing, z_missing]</span><br><span class="line"></span><br><span class="line">    <span class="built_in">return</span> <span class="built_in">df</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">file_path = <span class="string">&#x27;/Volumes/HIKSEMI/作业/数学建模集训/模拟实战2_古塔的变形/模拟实战2_古塔的变形/temp.csv&#x27;</span></span><br><span class="line"><span class="built_in">df</span> = pd.read_csv(file_path)</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[<span class="string">&quot;year&quot;</span>] = <span class="built_in">df</span>[<span class="string">&quot;year&quot;</span>].astype(<span class="string">&quot;Int64&quot;</span>)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&quot;point&quot;</span>] = <span class="built_in">df</span>[<span class="string">&quot;point&quot;</span>].astype(<span class="string">&quot;Int64&quot;</span>)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&quot;layer&quot;</span>] = pd.to_numeric(<span class="built_in">df</span>[<span class="string">&quot;layer&quot;</span>], errors=<span class="string">&quot;coerce&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 补全 1996 和 2006 年第 13 层第 5 点</span></span><br><span class="line"><span class="built_in">df</span> = fill_missing_interlayer(<span class="built_in">df</span>, 1996, 13, 5)</span><br><span class="line"><span class="built_in">df</span> = fill_missing_interlayer(<span class="built_in">df</span>, 2006, 13, 5)</span><br><span class="line"></span><br><span class="line">df.to_csv(<span class="string">&quot;tower.csv&quot;</span>, index=False)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;缺失点已补全 保存到 tower.csv&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;填补的数据为：&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">df</span>[(<span class="built_in">df</span>[<span class="string">&quot;year&quot;</span>].isin([1996, 2006])) &amp; (<span class="built_in">df</span>[<span class="string">&quot;layer&quot;</span>] == 13) &amp; (<span class="built_in">df</span>[<span class="string">&quot;point&quot;</span>] == 5)])</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取数据</span></span><br><span class="line">file_path = <span class="string">&#x27;/Volumes/HIKSEMI/作业/数学建模集训/模拟实战2_古塔的变形/模拟实战2_古塔的变形/temp.csv&#x27;</span></span><br><span class="line"><span class="built_in">df</span> = pd.read_csv(file_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分组求中心</span></span><br><span class="line">centers = df.groupby([<span class="string">&quot;year&quot;</span>, <span class="string">&quot;layer&quot;</span>]).agg(</span><br><span class="line">    x_center=(<span class="string">&quot;x&quot;</span>, <span class="string">&quot;mean&quot;</span>),</span><br><span class="line">    y_center=(<span class="string">&quot;y&quot;</span>, <span class="string">&quot;mean&quot;</span>),</span><br><span class="line">    z_center=(<span class="string">&quot;z&quot;</span>, <span class="string">&quot;mean&quot;</span>)</span><br><span class="line">).reset_index()</span><br><span class="line"></span><br><span class="line">centers.to_csv(<span class="string">&quot;guta_centers.csv&quot;</span>, index=False)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;各层中心坐标已保存到 guta_centers.csv&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(centers.head(20))  <span class="comment"># 先看前20行</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">from scipy.optimize import least_squares</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义最小二乘圆拟合函数</span></span><br><span class="line">def fit_circle(xs, ys):</span><br><span class="line">    x_m, y_m = np.mean(xs), np.mean(ys)</span><br><span class="line">    r0 = np.mean(np.sqrt((xs - x_m)**<span class="number">2</span> + (ys - y_m)**<span class="number">2</span>))</span><br><span class="line">    <span class="keyword">if</span> r0 &lt;= 0 or np.isnan(r0):</span><br><span class="line">        r0 = 1.0  <span class="comment"># 给一个合理的初始半径</span></span><br><span class="line">    </span><br><span class="line">    init_params = [x_m, y_m, r0]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 残差函数</span></span><br><span class="line">    def residuals(params):</span><br><span class="line">        a, b, r = params</span><br><span class="line">        <span class="built_in">return</span> np.sqrt((xs - a)**<span class="number">2</span> + (ys - b)**<span class="number">2</span>) - r</span><br><span class="line"></span><br><span class="line">    # 设置约束：半径 &gt;= <span class="number">0</span></span><br><span class="line">    res = least_squares(residuals, init_params, bounds=([-np.inf, -np.inf, <span class="number">0</span>], [np.inf, np.inf, np.inf]))</span><br><span class="line">    a, b, r = res.x</span><br><span class="line">    <span class="built_in">return</span> a, b, r</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span> = pd.read_csv(file_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分组拟合每层中心</span></span><br><span class="line">results = []</span><br><span class="line"><span class="keyword">for</span> (year, layer), group <span class="keyword">in</span> df.groupby([<span class="string">&quot;year&quot;</span>, <span class="string">&quot;layer&quot;</span>]):</span><br><span class="line">    xs, ys, zs = group[<span class="string">&quot;x&quot;</span>].values, group[<span class="string">&quot;y&quot;</span>].values, group[<span class="string">&quot;z&quot;</span>].values</span><br><span class="line">    <span class="keyword">if</span> len(group) &gt;= 3:   <span class="comment"># 点数&gt;=3才能拟合圆</span></span><br><span class="line">        try:</span><br><span class="line">            a, b, r = fit_circle(xs, ys)</span><br><span class="line">        except Exception as e:</span><br><span class="line">            <span class="built_in">print</span>(f<span class="string">&quot;&#123;year&#125;-&#123;layer&#125; 拟合失败，改用平均值: &#123;e&#125;&quot;</span>)</span><br><span class="line">            a, b = xs.mean(), ys.mean()</span><br><span class="line">            r = np.nan</span><br><span class="line">    <span class="keyword">else</span>:  <span class="comment"># 塔尖只有1~2点时直接取平均</span></span><br><span class="line">        a, b = xs.mean(), ys.mean()</span><br><span class="line">        r = np.nan</span><br><span class="line">    zc = zs.mean()</span><br><span class="line">    results.append([year, layer, a, b, zc, r])</span><br><span class="line"></span><br><span class="line">centers_df = pd.DataFrame(results, columns=[<span class="string">&quot;year&quot;</span>, <span class="string">&quot;layer&quot;</span>, <span class="string">&quot;x_center&quot;</span>, <span class="string">&quot;y_center&quot;</span>, <span class="string">&quot;z_center&quot;</span>, <span class="string">&quot;radius&quot;</span>])</span><br><span class="line"></span><br><span class="line">centers_df.to_csv(<span class="string">&quot;guta_centers_circle.csv&quot;</span>, index=False)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;圆拟合法结果已保存到 guta_centers_circle.csv&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(centers_df.head(20))</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import pandas as pd</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from mpl_toolkits.mplot3d import Axes3D</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">file_path = <span class="string">&#x27;/Volumes/HIKSEMI/作业/数学建模集训/模拟实战2_古塔的变形/guta_centers_circle.csv&#x27;</span></span><br><span class="line">centers_df = pd.read_csv(file_path)</span><br><span class="line"></span><br><span class="line">fig = plt.figure(figsize=(8,12))</span><br><span class="line">ax = fig.add_subplot(111, projection=<span class="string">&#x27;3d&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> idx, row <span class="keyword">in</span> centers_df.iterrows():</span><br><span class="line">    x0, y0, z0 = row[<span class="string">&#x27;x_center&#x27;</span>], row[<span class="string">&#x27;y_center&#x27;</span>], row[<span class="string">&#x27;z_center&#x27;</span>]</span><br><span class="line">    r = row[<span class="string">&#x27;radius&#x27;</span>]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 如果有有效半径，绘制圆</span></span><br><span class="line">    <span class="keyword">if</span> not np.isnan(r):</span><br><span class="line">        theta = np.linspace(0, 2*np.pi, 100)</span><br><span class="line">        x = x0 + r * np.cos(theta)</span><br><span class="line">        y = y0 + r * np.sin(theta)</span><br><span class="line">        z = np.full_like(x, z0)  <span class="comment"># 圆在该层的高度</span></span><br><span class="line">        ax.plot(x, y, z, color=<span class="string">&#x27;b&#x27;</span>)  <span class="comment"># 绘制圆边</span></span><br><span class="line">        ax.scatter(x0, y0, z0, color=<span class="string">&#x27;r&#x27;</span>, s=20)  <span class="comment"># 绘制中心点</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 没有半径的点，只画中心点</span></span><br><span class="line">        ax.scatter(x0, y0, z0, color=<span class="string">&#x27;r&#x27;</span>, s=20)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置比例和标签</span></span><br><span class="line">ax.set_xlabel(<span class="string">&#x27;X&#x27;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&#x27;Y&#x27;</span>)</span><br><span class="line">ax.set_zlabel(<span class="string">&#x27;Z&#x27;</span>)</span><br><span class="line">ax.set_box_aspect([1,1,2])  <span class="comment"># z轴拉长一点</span></span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">&quot;古塔三维图&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from mpl_toolkits.mplot3d.art3d import Poly3DCollection</span><br><span class="line">from scipy.spatial import ConvexHull</span><br><span class="line"></span><br><span class="line">file_path = <span class="string">&#x27;/Volumes/HIKSEMI/作业/数学建模集训/模拟实战2_古塔的变形/模拟实战2_古塔的变形/temp.csv&#x27;</span></span><br><span class="line"><span class="built_in">df</span> = pd.read_csv(file_path)</span><br><span class="line"></span><br><span class="line">def layer_sort_key(x):</span><br><span class="line">    try:</span><br><span class="line">        <span class="built_in">return</span> int(x)  <span class="comment"># 数字层按数字排序</span></span><br><span class="line">    except:</span><br><span class="line">        <span class="built_in">return</span> 1000  <span class="comment"># 非数字层（塔尖）排在最后</span></span><br><span class="line"></span><br><span class="line">layers = sorted(<span class="built_in">df</span>[<span class="string">&#x27;layer&#x27;</span>].unique(), key=layer_sort_key)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制三维塔</span></span><br><span class="line">fig = plt.figure(figsize=(10,12))</span><br><span class="line">ax = fig.add_subplot(111, projection=<span class="string">&#x27;3d&#x27;</span>)</span><br><span class="line"></span><br><span class="line">layer_points = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> layers:</span><br><span class="line">    pts = <span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">&#x27;layer&#x27;</span>]==layer][[<span class="string">&#x27;x&#x27;</span>,<span class="string">&#x27;y&#x27;</span>,<span class="string">&#x27;z&#x27;</span>]].values</span><br><span class="line">    <span class="keyword">if</span> len(pts) &gt;= 3:</span><br><span class="line">        <span class="comment"># 用 x,y 做凸包得到该层边界</span></span><br><span class="line">        hull = ConvexHull(pts[:, :2])</span><br><span class="line">        boundary = pts[hull.vertices]</span><br><span class="line">        layer_points.append(boundary)</span><br><span class="line">        <span class="comment"># 绘制该层观测点</span></span><br><span class="line">        ax.scatter(pts[:,0], pts[:,1], pts[:,2], s=10, color=<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        layer_points.append(None)</span><br><span class="line">        ax.scatter(pts[:,0], pts[:,1], pts[:,2], s=20, color=<span class="string">&#x27;r&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接相邻层形成塔面</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(layer_points)-1):</span><br><span class="line">    pts1 = layer_points[i]</span><br><span class="line">    pts2 = layer_points[i+1]</span><br><span class="line">    <span class="keyword">if</span> pts1 is not None and pts2 is not None:</span><br><span class="line">        n1 = len(pts1)</span><br><span class="line">        n2 = len(pts2)</span><br><span class="line">        <span class="comment"># 简单按索引对应连接，循环形成四边形面</span></span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(n1):</span><br><span class="line">            p1 = pts1[j]</span><br><span class="line">            p2 = pts1[(j+1)%n1]</span><br><span class="line">            <span class="comment"># pts2 中找到与 p1 最近的两个点</span></span><br><span class="line">            distances = np.sum((pts2[:, :<span class="number">2</span>] - p1[:<span class="number">2</span>])**<span class="number">2</span>, axis=<span class="number">1</span>)</span><br><span class="line">            idx = np.argsort(distances)[:<span class="number">2</span>]</span><br><span class="line">            p3, p4 = pts2[idx[<span class="number">0</span>]], pts2[idx[<span class="number">1</span>]]</span><br><span class="line">            verts = [[p1, p2, p4, p3]]</span><br><span class="line">            ax.add_collection3d(Poly3DCollection(verts, color=&#x27;orange&#x27;, alpha=<span class="number">0.3</span>))</span><br><span class="line"></span><br><span class="line">ax.set_xlabel(<span class="string">&#x27;X&#x27;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&#x27;Y&#x27;</span>)</span><br><span class="line">ax.set_zlabel(<span class="string">&#x27;Z&#x27;</span>)</span><br><span class="line">ax.set_box_aspect([1,1,2])</span><br><span class="line">plt.title(<span class="string">&quot;古塔三维网格模型&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from collections import defaultdict</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line"></span><br><span class="line">file_path = <span class="string">&#x27;/Volumes/HIKSEMI/作业/数学建模集训/模拟实战2_古塔的变形/模拟实战2_古塔的变形/temp.csv&#x27;</span></span><br><span class="line"><span class="built_in">df</span> = pd.read_csv(file_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 求每层层心</span></span><br><span class="line">layer_centers = []  <span class="comment"># (year, layer, x, y, z)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (year, layer), group <span class="keyword">in</span> df.groupby([<span class="string">&quot;year&quot;</span>, <span class="string">&quot;layer&quot;</span>]):</span><br><span class="line">    x_mean = group[<span class="string">&quot;x&quot;</span>].mean()</span><br><span class="line">    y_mean = group[<span class="string">&quot;y&quot;</span>].mean()</span><br><span class="line">    z_mean = group[<span class="string">&quot;z&quot;</span>].mean()</span><br><span class="line">    layer_centers.append([year, layer, x_mean, y_mean, z_mean])</span><br><span class="line"></span><br><span class="line">centers_df = pd.DataFrame(layer_centers, columns=[<span class="string">&quot;year&quot;</span>, <span class="string">&quot;layer&quot;</span>, <span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 塔轴拟合 + 倾角/倾向</span></span><br><span class="line">def fit_axis(centers):</span><br><span class="line">    <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">    输入：某一年的层心数据 (x,y,z)</span></span><br><span class="line"><span class="string">    输出：塔轴方向向量、倾角theta、倾向alpha</span></span><br><span class="line"><span class="string">    &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">    X = centers[[<span class="string">&quot;z&quot;</span>]].values</span><br><span class="line">    Yx = centers[<span class="string">&quot;x&quot;</span>].values</span><br><span class="line">    Yy = centers[<span class="string">&quot;y&quot;</span>].values</span><br><span class="line"></span><br><span class="line">    regx = LinearRegression().fit(X, Yx)</span><br><span class="line">    regy = LinearRegression().fit(X, Yy)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 方向向量 (dx/dz, dy/dz, 1)</span></span><br><span class="line">    a = regx.coef_[0]</span><br><span class="line">    b = regy.coef_[0]</span><br><span class="line">    c = 1.0</span><br><span class="line"></span><br><span class="line">    theta = np.arctan(np.sqrt(a**2 + b**2) / c) * 180 / np.pi</span><br><span class="line">    alpha = np.arctan2(b, a) * 180 / np.pi</span><br><span class="line">    <span class="built_in">return</span> (a, b, c), theta, alpha</span><br><span class="line"></span><br><span class="line">axis_results = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> year, group <span class="keyword">in</span> centers_df.groupby(<span class="string">&quot;year&quot;</span>):</span><br><span class="line">    vec, theta, alpha = fit_axis(group)</span><br><span class="line">    axis_results[year] = &#123;<span class="string">&quot;theta&quot;</span>: theta, <span class="string">&quot;alpha&quot;</span>: alpha&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 偏心量计算（相对第一层）</span></span><br><span class="line">ecc_results = defaultdict(list)</span><br><span class="line"><span class="keyword">for</span> (year, group) <span class="keyword">in</span> centers_df.groupby(<span class="string">&quot;year&quot;</span>):</span><br><span class="line">    base_x, base_y = group[group[<span class="string">&quot;layer&quot;</span>] == group[<span class="string">&quot;layer&quot;</span>].min()][[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>]].values[0]</span><br><span class="line">    <span class="keyword">for</span> _, row <span class="keyword">in</span> group.iterrows():</span><br><span class="line">        ecc = np.sqrt((row[&quot;x&quot;] - base_x) ** <span class="number">2</span> + (row[&quot;y&quot;] - base_y) ** <span class="number">2</span>)</span><br><span class="line">        ecc_results[year].append((row[&quot;layer&quot;], row[&quot;z&quot;], ecc))</span><br><span class="line"></span><br><span class="line">bending_results = defaultdict(list)</span><br><span class="line">torsion_results = defaultdict(list)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> year, group <span class="keyword">in</span> centers_df.groupby(<span class="string">&quot;year&quot;</span>):</span><br><span class="line">    <span class="comment"># 底层中心</span></span><br><span class="line">    x0, y0 = group[group[<span class="string">&quot;layer&quot;</span>]==group[<span class="string">&quot;layer&quot;</span>].min()][[<span class="string">&quot;x&quot;</span>,<span class="string">&quot;y&quot;</span>]].values[0]</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 拟合塔轴</span></span><br><span class="line">    vec, theta, alpha = fit_axis(group)</span><br><span class="line">    a, b, c = vec</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> _, row <span class="keyword">in</span> group.iterrows():</span><br><span class="line">        x, y, z = row[<span class="string">&quot;x&quot;</span>], row[<span class="string">&quot;y&quot;</span>], row[<span class="string">&quot;z&quot;</span>]</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 弯曲：层心到塔轴的垂直距离</span></span><br><span class="line">        d = abs((x - x0)*b - (y - y0)*a) / np.sqrt(a**<span class="number">2</span> + b**<span class="number">2</span>)</span><br><span class="line">        bending_results[year].append((row[&quot;layer&quot;], z, d))</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 扭曲：层心相对底层的偏心角</span></span><br><span class="line">        phi = np.arctan2(y - y0, x - x0) * 180/np.pi</span><br><span class="line">        torsion_results[year].append((row[&quot;layer&quot;], z, phi))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;=== 倾角与倾向 ===&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> year <span class="keyword">in</span> sorted(axis_results.keys()):</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;&#123;year&#125;: 倾角 θ = &#123;axis_results[year][&#x27;theta&#x27;]:.4f&#125;°, 倾向 α = &#123;axis_results[year][&#x27;alpha&#x27;]:.2f&#125;°&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;=== 偏心量 ===&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> year, values <span class="keyword">in</span> ecc_results.items():</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;&#123;year&#125;: 平均偏心量 = &#123;np.mean([v[2] for v in values]):.4f&#125; m&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;=== 弯曲量 ===&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> year, values <span class="keyword">in</span> bending_results.items():</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;&#123;year&#125;: 平均弯曲量 = &#123;np.mean([v[2] for v in values]):.4f&#125; m&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;=== 扭曲量 ===&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> year, values <span class="keyword">in</span> torsion_results.items():</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;&#123;year&#125;: 平均扭曲角 = &#123;np.mean([v[2] for v in values]):.4f&#125;°&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;=== 顶层偏心量 ===&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> year, values <span class="keyword">in</span> ecc_results.items():</span><br><span class="line">    top_layer, top_z, top_ecc = values[-1]</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;&#123;year&#125;: 顶层 &#123;top_layer&#125; 偏心量 = &#123;top_ecc:.4f&#125; m&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造 CSV 数据</span></span><br><span class="line">years = sorted(axis_results.keys())</span><br><span class="line">theta_values = [axis_results[y][<span class="string">&quot;theta&quot;</span>] <span class="keyword">for</span> y <span class="keyword">in</span> years]</span><br><span class="line">ecc_top = [max(ecc_results[y], key=lambda v: v[1])[2] <span class="keyword">for</span> y <span class="keyword">in</span> years]  <span class="comment"># 顶层偏心量</span></span><br><span class="line">di = [max(bending_results[y], key=lambda v: v[1])[2] <span class="keyword">for</span> y <span class="keyword">in</span> years]  <span class="comment"># 最大弯曲量</span></span><br><span class="line">phi = [max(torsion_results[y], key=lambda v: v[1])[2] <span class="keyword">for</span> y <span class="keyword">in</span> years]  <span class="comment"># 最大扭曲角</span></span><br><span class="line"><span class="comment"># 创建 DataFrame</span></span><br><span class="line">predict_df = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">&quot;year&quot;</span>: years,</span><br><span class="line">    <span class="string">&quot;theta&quot;</span>: theta_values,</span><br><span class="line">    <span class="string">&quot;ecc&quot;</span>: ecc_top,</span><br><span class="line">    <span class="string">&quot;di&quot;</span>: di,</span><br><span class="line">    <span class="string">&quot;phi&quot;</span>: phi</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存 CSV</span></span><br><span class="line">predict_df.to_csv(<span class="string">&quot;problem3.csv&quot;</span>, index=False)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;问题3使用的数据已保存到 problem3.csv&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 可视化结果</span></span><br><span class="line"><span class="comment"># 每年的剖面偏心</span></span><br><span class="line">plt.figure(figsize=(6,8))</span><br><span class="line"><span class="keyword">for</span> year, values <span class="keyword">in</span> ecc_results.items():</span><br><span class="line">    zs = [v[1] <span class="keyword">for</span> v <span class="keyword">in</span> values]</span><br><span class="line">    eccs = [v[2] <span class="keyword">for</span> v <span class="keyword">in</span> values]</span><br><span class="line">    plt.plot(eccs, zs, marker=<span class="string">&quot;o&quot;</span>, label=str(year))</span><br><span class="line">plt.xlabel(<span class="string">&quot;偏心量 (m)&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;高度 z (m)&quot;</span>)</span><br><span class="line">plt.title(<span class="string">&quot;塔身剖面偏心量&quot;</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.gca().invert_yaxis()</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 倾角随时间变化</span></span><br><span class="line">years = sorted(axis_results.keys())</span><br><span class="line">thetas = [axis_results[y][<span class="string">&quot;theta&quot;</span>] <span class="keyword">for</span> y <span class="keyword">in</span> years]</span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot(years, thetas, marker=<span class="string">&quot;s&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;年份&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;倾角 θ (°)&quot;</span>)</span><br><span class="line">plt.title(<span class="string">&quot;倾角随时间变化&quot;</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 顶层偏心随时间变化</span></span><br><span class="line">top_ecc = []</span><br><span class="line"><span class="keyword">for</span> year, values <span class="keyword">in</span> ecc_results.items():</span><br><span class="line">    top_ecc.append((year, max(values, key=lambda v: v[<span class="number">1</span>])[<span class="number">2</span>]))  <span class="comment"># 最高层 ecc</span></span><br><span class="line">top_ecc.sort()</span><br><span class="line">plt.figure()</span><br><span class="line">plt.plot([t[0] <span class="keyword">for</span> t <span class="keyword">in</span> top_ecc], [t[1] <span class="keyword">for</span> t <span class="keyword">in</span> top_ecc], marker=<span class="string">&quot;^&quot;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&quot;年份&quot;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&quot;顶层偏心量 (m)&quot;</span>)</span><br><span class="line">plt.title(<span class="string">&quot;顶层偏心随时间变化&quot;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&quot;problem3.csv&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> [<span class="string">&quot;theta&quot;</span>, <span class="string">&quot;ecc&quot;</span>, <span class="string">&quot;di&quot;</span>, <span class="string">&quot;phi&quot;</span>]:</span><br><span class="line">    <span class="comment"># 线性回归拟合</span></span><br><span class="line">    X = <span class="built_in">df</span>[[<span class="string">&quot;year&quot;</span>]].values</span><br><span class="line">    y = <span class="built_in">df</span>[col].values</span><br><span class="line">    model = LinearRegression().fit(X, y)</span><br><span class="line">    y_pred = model.predict(X)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 计算残差</span></span><br><span class="line">    residuals = y - y_pred</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 画残差散点图</span></span><br><span class="line">    plt.figure(figsize=(10,4))</span><br><span class="line"></span><br><span class="line">    plt.subplot(1,2,1)</span><br><span class="line">    plt.scatter(<span class="built_in">df</span>[<span class="string">&quot;year&quot;</span>], residuals, color=<span class="string">&quot;blue&quot;</span>, s=60)</span><br><span class="line">    plt.axhline(0, color=<span class="string">&quot;red&quot;</span>, linestyle=<span class="string">&quot;--&quot;</span>)</span><br><span class="line">    plt.xlabel(<span class="string">&quot;Year&quot;</span>)</span><br><span class="line">    plt.ylabel(<span class="string">&quot;Residuals&quot;</span>)</span><br><span class="line">    plt.ylim(-1,1) </span><br><span class="line">    plt.title(f<span class="string">&quot;&#123;col&#125; Residuals Scatter Plot&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 画残差直方图</span></span><br><span class="line">    plt.subplot(1,2,2)</span><br><span class="line">    plt.hist(residuals, bins=5, color=<span class="string">&quot;orange&quot;</span>, edgecolor=<span class="string">&quot;black&quot;</span>, alpha=0.7)</span><br><span class="line">    plt.xlabel(<span class="string">&quot;Residual&quot;</span>)</span><br><span class="line">    plt.ylabel(<span class="string">&quot;Frequency&quot;</span>)</span><br><span class="line">    plt.title(<span class="string">&quot;Residuals Distribution&quot;</span>)</span><br><span class="line"></span><br><span class="line">    plt.tight_layout()</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd, numpy as np</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from scipy.stats import kendalltau</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&quot;problem3.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line">def ols_forecast(x_year, y, years_ahead=5):</span><br><span class="line">    X = x_year.reshape(-1,1)</span><br><span class="line">    reg = LinearRegression().fit(X, y)</span><br><span class="line">    y_fit = reg.predict(X)</span><br><span class="line">    future_years = np.arange(x_year.max()+1, x_year.max()+1+years_ahead)</span><br><span class="line">    y_future = reg.predict(future_years.reshape(-1,1))</span><br><span class="line">    <span class="built_in">return</span> reg.coef_[0], reg.intercept_, y_fit, future_years, y_future</span><br><span class="line"></span><br><span class="line">def mann_kendall(y):</span><br><span class="line">    t = np.arange(len(y))</span><br><span class="line">    tau, p = kendalltau(t, y)</span><br><span class="line">    <span class="built_in">return</span> tau, p</span><br><span class="line"></span><br><span class="line">series_list = [<span class="string">&quot;theta&quot;</span>,<span class="string">&quot;ecc&quot;</span>,<span class="string">&quot;di&quot;</span>,<span class="string">&quot;phi&quot;</span>]</span><br><span class="line">out = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> series_list:</span><br><span class="line">    s = <span class="built_in">df</span>[name].values</span><br><span class="line">    years = <span class="built_in">df</span>[<span class="string">&quot;year&quot;</span>].values</span><br><span class="line">    slope, intercept, y_fit, fy, y_pred = ols_forecast(years, s, years_ahead=5)</span><br><span class="line">    tau, p = mann_kendall(s)</span><br><span class="line">    out[name] = &#123;</span><br><span class="line">        <span class="string">&quot;ols_slope_per_year&quot;</span>: slope,</span><br><span class="line">        <span class="string">&quot;kendall_tau&quot;</span>: tau, <span class="string">&quot;kendall_p&quot;</span>: p,</span><br><span class="line">        <span class="string">&quot;future_years&quot;</span>: fy, <span class="string">&quot;future_pred&quot;</span>: y_pred</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;趋势分析结果：&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> name, res <span class="keyword">in</span> out.items():</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;=== &#123;name&#125; ===&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;OLS 斜率: &#123;res[&#x27;ols_slope_per_year&#x27;]:.4f&#125; /年&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;Mann-Kendall τ: &#123;res[&#x27;kendall_tau&#x27;]:.4f&#125;, p值: &#123;res[&#x27;kendall_p&#x27;]:.4f&#125;&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;未来预测: &#123;list(zip(res[&#x27;future_years&#x27;], res[&#x27;future_pred&#x27;]))&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#保存结果</span></span><br><span class="line">trend_df = []</span><br><span class="line"><span class="keyword">for</span> name, res <span class="keyword">in</span> out.items():</span><br><span class="line">    <span class="keyword">for</span> year, pred <span class="keyword">in</span> zip(res[<span class="string">&#x27;future_years&#x27;</span>], res[<span class="string">&#x27;future_pred&#x27;</span>]):</span><br><span class="line">        trend_df.append([name, year, pred])</span><br><span class="line">trend_df = pd.DataFrame(trend_df, columns=[<span class="string">&quot;name&quot;</span>, <span class="string">&quot;year&quot;</span>, <span class="string">&quot;pred&quot;</span>])</span><br><span class="line">trend_df.to_csv(<span class="string">&quot;problem3_trend.csv&quot;</span>, index=False)</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数学</tag>
+        <tag>数学建模</tag>
+      </tags>
+  </entry>
 </search>
