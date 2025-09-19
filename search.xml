@@ -5525,4 +5525,287 @@ weighted avg   0.96      0.96      0.96      1756
         <tag>商业数据分析</tag>
       </tags>
   </entry>
+  <entry>
+    <title>商业数据分析--客户价值数据表</title>
+    <url>/zhihaojiang.github.io/2025/09/19/20250919%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E5%AE%A2%E6%88%B7%E4%BB%B7%E5%80%BC%E6%95%B0%E6%8D%AE%E8%A1%A8/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><p>我们首先查看数据</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'客户价值数据表.xlsx'</span>)</span><br><span class="line"></span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>客户价值</th>
+<th align="left">历史贷款金额</th>
+<th align="left">贷款次数</th>
+<th align="left">学历</th>
+<th align="left">月收入</th>
+<th align="left">性别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1150</td>
+<td align="left">6488</td>
+<td align="left">2</td>
+<td align="left">2</td>
+<td align="left">9567</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1157</td>
+<td align="left">5194</td>
+<td align="left">4</td>
+<td align="left">2</td>
+<td align="left">10767</td>
+<td align="left">0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1163</td>
+<td align="left">7066</td>
+<td align="left">3</td>
+<td align="left">2</td>
+<td align="left">9317</td>
+<td align="left">0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>983</td>
+<td align="left">3550</td>
+<td align="left">3</td>
+<td align="left">2</td>
+<td align="left">10517</td>
+<td align="left">0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1205</td>
+<td align="left">7847</td>
+<td align="left">3</td>
+<td align="left">3</td>
+<td align="left">11267</td>
+<td align="left">1</td>
+</tr>
+</tbody></table>
+<p>在这个数据中 客户价值是我们要预测的目标</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>客户价值</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>历史贷款金额</td>
+<td>0</td>
+</tr>
+<tr>
+<td>贷款次数</td>
+<td>0</td>
+</tr>
+<tr>
+<td>学历</td>
+<td>0</td>
+</tr>
+<tr>
+<td>月收入</td>
+<td>0</td>
+</tr>
+<tr>
+<td>性别</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> column <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[column])</span><br><span class="line">    plt.title(column)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/19/001.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/19/002.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/19/003.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/19/004.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/19/005.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/19/006.png" alt="photo"></p>
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.metrics import mean_squared_error, r2_score</span><br><span class="line"></span><br><span class="line">X = df.drop(columns=[<span class="string">'客户价值'</span>])</span><br><span class="line">Y = <span class="built_in">df</span>[<span class="string">'客户价值'</span>]</span><br><span class="line"></span><br><span class="line">x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="多元线性回归"><a href="#多元线性回归" class="headerlink" title="多元线性回归"></a>多元线性回归</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line"></span><br><span class="line">lr = LinearRegression()</span><br><span class="line">lr.fit(x_train, y_train)</span><br><span class="line">y_pred = lr.predict(x_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'mse:'</span>, mean_squared_error(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'r2:'</span>, r2_score(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>mse: 24535.02941821733<br>r2: 0.5802551330031818</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">lr.coef_</span><br></pre></td></tr></table></figure></div>
+<p>array([5.99175873e-02, 1.01030266e+02, 1.19661451e+02, 5.92067892e-02,1.41533251e+01])</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import statsmodels.api as sm</span><br><span class="line"></span><br><span class="line">X2 = sm.add_constant(X)</span><br><span class="line">est = sm.OLS(Y, X2).fit()</span><br><span class="line">est.summary()</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="OLS-Regression-Results"><a href="#OLS-Regression-Results" class="headerlink" title="OLS Regression Results"></a>OLS Regression Results</h2><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Dep. Variable</td>
+<td>客户价值</td>
+</tr>
+<tr>
+<td>R-squared</td>
+<td>0.571</td>
+</tr>
+<tr>
+<td>Adj. R-squared</td>
+<td>0.553</td>
+</tr>
+<tr>
+<td>Model</td>
+<td>OLS</td>
+</tr>
+<tr>
+<td>Method</td>
+<td>Least Squares</td>
+</tr>
+<tr>
+<td>F-statistic</td>
+<td>32.44</td>
+</tr>
+<tr>
+<td>Prob (F-statistic)</td>
+<td>6.41e-21</td>
+</tr>
+<tr>
+<td>Log-Likelihood</td>
+<td>-843.50</td>
+</tr>
+<tr>
+<td>No. Observations</td>
+<td>128</td>
+</tr>
+<tr>
+<td>Df Residuals</td>
+<td>122</td>
+</tr>
+<tr>
+<td>Df Model</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Covariance Type</td>
+<td>nonrobust</td>
+</tr>
+<tr>
+<td>AIC</td>
+<td>1699</td>
+</tr>
+<tr>
+<td>BIC</td>
+<td>1716</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>Fri, 19 Sep 2025</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>09:57:49</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="回归系数"><a href="#回归系数" class="headerlink" title="回归系数"></a>回归系数</h2><p>| 变量 | coef | std err | t | P&gt;|t| | [0.025 | 0.975] |<br>|——|——-|———|——|——|——–|——–|<br>| const | -208.4200 | 163.810 | -1.272 | 0.206 | -532.699 | 115.859 |<br>| 历史贷款金额 | 0.0571 | 0.010 | 5.945 | 0.000 | 0.038 | 0.076 |<br>| 贷款次数 | 96.1723 | 25.962 | 3.704 | 0.000 | 44.778 | 147.567 |<br>| 学历 | 113.4520 | 37.909 | 2.993 | 0.003 | 38.406 | 188.498 |<br>| 月收入 | 0.0561 | 0.019 | 2.941 | 0.004 | 0.018 | 0.094 |<br>| 性别 | 1.9787 | 32.286 | 0.061 | 0.951 | -61.934 | 65.891 |</p>
+<hr>
+<h2 id="诊断统计量"><a href="#诊断统计量" class="headerlink" title="诊断统计量"></a>诊断统计量</h2><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Omnibus</td>
+<td>1.597</td>
+</tr>
+<tr>
+<td>Prob(Omnibus)</td>
+<td>0.450</td>
+</tr>
+<tr>
+<td>Jarque-Bera (JB)</td>
+<td>1.538</td>
+</tr>
+<tr>
+<td>Prob(JB)</td>
+<td>0.464</td>
+</tr>
+<tr>
+<td>Skew</td>
+<td>0.264</td>
+</tr>
+<tr>
+<td>Kurtosis</td>
+<td>2.900</td>
+</tr>
+<tr>
+<td>Durbin-Watson</td>
+<td>2.155</td>
+</tr>
+<tr>
+<td>Cond. No.</td>
+<td>1.28e+05</td>
+</tr>
+</tbody></table>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> = RandomForestRegressor()</span><br><span class="line">rm.fit(x_train, y_train)</span><br><span class="line">y_pred = rm.predict(x_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'mse:'</span>, mean_squared_error(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'r2:'</span>, r2_score(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>mse: 18652.006080769228<br>r2: 0.6809017964419799</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">feature_importance = pd.DataFrame({</span><br><span class="line">    <span class="string">"feature"</span>: x_train.columns,</span><br><span class="line">    <span class="string">"importance"</span>: rm.feature_importances_</span><br><span class="line">}).sort_values(by=<span class="string">"importance"</span>, ascending=False)</span><br><span class="line"><span class="built_in">print</span>(feature_importance)</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>feature</th>
+<th>importance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>历史贷款金额</td>
+<td>0.404590</td>
+</tr>
+<tr>
+<td>月收入</td>
+<td>0.362695</td>
+</tr>
+<tr>
+<td>贷款次数</td>
+<td>0.130046</td>
+</tr>
+<tr>
+<td>学历</td>
+<td>0.073263</td>
+</tr>
+<tr>
+<td>性别</td>
+<td>0.029405</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import shap</span><br><span class="line"></span><br><span class="line">explainer = shap.TreeExplainer(<span class="built_in">rm</span>)</span><br><span class="line">shap_values = explainer.shap_values(x_test)</span><br><span class="line"></span><br><span class="line">shap.summary_plot(shap_values, x_test)</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/19/007.png" alt="photo"></p>
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from xgboost import XGBRegressor</span><br><span class="line"></span><br><span class="line">xgb = XGBRegressor(random_state=42)</span><br><span class="line">xgb.fit(x_train, y_train)</span><br><span class="line">y_pred = xgb.predict(x_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"MSE:"</span>, mean_squared_error(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"r2:"</span>, r2_score(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>MSE: 32402.514511845002<br>r2: 0.4456583315103658</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import shap</span><br><span class="line"></span><br><span class="line">explainer = shap.TreeExplainer(xgb)</span><br><span class="line">shap_values = explainer.shap_values(x_test)</span><br><span class="line"></span><br><span class="line">shap.summary_plot(shap_values, x_test)</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/19/008.png" alt="photo"></p>
+<h1 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsRegressor</span><br><span class="line"></span><br><span class="line">knn = KNeighborsRegressor(n_neighbors=8)</span><br><span class="line">knn.fit(x_train, y_train)</span><br><span class="line">y_pred = knn.predict(x_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"MSE:"</span>, mean_squared_error(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"r2:"</span>, r2_score(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>MSE: 20527.141826923078<br>r2: 0.6488220059125291</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import shap</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预测函数</span></span><br><span class="line">f = lambda X: knn.predict(X)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 选取一部分训练数据作为背景数据</span></span><br><span class="line">background = x_train.sample(50, random_state=42)</span><br><span class="line"></span><br><span class="line">explainer = shap.KernelExplainer(f, background)</span><br><span class="line"></span><br><span class="line">shap_values = explainer.shap_values(x_test[:50])  </span><br><span class="line"></span><br><span class="line">shap.summary_plot(shap_values, x_test[:50])</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/19/009.png" alt="photo"></p>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line">from sklearn.svm import SVR</span><br><span class="line">from sklearn.pipeline import Pipeline</span><br><span class="line"></span><br><span class="line">svr_pipeline = Pipeline([</span><br><span class="line">    (<span class="string">'scaler'</span>, StandardScaler()),</span><br><span class="line">    (<span class="string">'svr'</span>, SVR(kernel=<span class="string">'rbf'</span>, C=100, gamma=<span class="string">'scale'</span>))</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">svr_pipeline.fit(x_train, y_train)</span><br><span class="line">y_pred = svr_pipeline.predict(x_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"MSE:"</span>, mean_squared_error(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"r2:"</span>, r2_score(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>MSE: 26681.700620075168<br>r2: 0.5435299185047356</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import shap</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预测函数</span></span><br><span class="line">f = lambda X: svr_pipeline.predict(X)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 选取一部分训练数据作为背景数据</span></span><br><span class="line">background = x_train.sample(50, random_state=42)</span><br><span class="line"></span><br><span class="line">explainer = shap.KernelExplainer(f, background)</span><br><span class="line"></span><br><span class="line">shap_values = explainer.shap_values(x_test[:50])  </span><br><span class="line"></span><br><span class="line">shap.summary_plot(shap_values, x_test[:50])</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/19/010.png" alt="photo"></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
 </search>
