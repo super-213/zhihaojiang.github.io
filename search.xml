@@ -5808,4 +5808,102 @@ weighted avg   0.96      0.96      0.96      1756
         <tag>商业数据分析</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Hadoop部署踩过的坑</title>
+    <url>/zhihaojiang.github.io/2025/09/21/20250921Hadoop%E9%83%A8%E7%BD%B2%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/</url>
+    <content><![CDATA[<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><p>拥有了3台虚拟机 每台虚拟机都安装好了jdk和Hadoop</p>
+<h1 id="Hadoop-集群搭建踩坑总结"><a href="#Hadoop-集群搭建踩坑总结" class="headerlink" title="Hadoop 集群搭建踩坑总结"></a>Hadoop 集群搭建踩坑总结</h1><h2 id="网络与-IP-配置问题"><a href="#网络与-IP-配置问题" class="headerlink" title="网络与 IP 配置问题"></a>网络与 IP 配置问题</h2><ul>
+<li>在运行<strong>start-dfs.sh</strong>后 通过<strong>jps</strong>验证时发现节点不存在<strong>DataNode</strong></li>
+<li><code>hdfs dfsadmin -report</code> 报错 <code>Connection refused</code></li>
+<li>日志显示：</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">Address change detected. Old: 172.16.79.129 New: 127.0.1.1</span><br></pre></td></tr></table></figure></div>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><ul>
+<li>/etc/hosts 文件配置不当，主机名解析到 127.0.1.1 或 localhost</li>
+<li>虚拟机使用 NAT 或错误的网络模式</li>
+</ul>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>进入/etc/hosts文件</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano /etc/hosts</span><br></pre></td></tr></table></figure></div>
+<p>打开应该是显示为</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 localhost</span><br><span class="line">127.0.0.1 &lt;你设置的主机名&gt;</span><br></pre></td></tr></table></figure></div>
+<p>将其改成</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 localhost</span><br><span class="line">XXX.XXX.XXX.XXX &lt;你设置的主机名&gt;</span><br></pre></td></tr></table></figure></div>
+<p>XXX.XXX.XXX.XXXz这个是你主机的IP</p>
+<p>虚拟机推荐使用桥接模式 NAT也不是不可以 不过要进行端口转发</p>
+<h2 id="DataNode-启动失败"><a href="#DataNode-启动失败" class="headerlink" title="DataNode 启动失败"></a>DataNode 启动失败</h2><ul>
+<li>DataNode 启动后很快退出，jps 不显示 DataNode</li>
+<li><ul>
+<li>日志显示：</li>
+</ul>
+</li>
+</ul>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">Address change detected. Old: 172.16.79.129 New: 127.0.1.1</span><br></pre></td></tr></table></figure></div>
+<h3 id="原因-1"><a href="#原因-1" class="headerlink" title="原因"></a>原因</h3><ul>
+<li>DataNode 尝试连接 NameNode，但 NameNode 地址解析错误</li>
+<li>遗留的 PID 文件阻止进程正常启动</li>
+</ul>
+<h3 id="解决-1"><a href="#解决-1" class="headerlink" title="解决"></a>解决</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -f /tmp/hadoop-用户名-*.pid</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>确保 hdfs-site.xml 中 dfs.datanode.data.dir 指向存在且可写的目录</li>
+<li>NameNode 运行正常后再启动 DataNode</li>
+</ul>
+<h2 id="重复启动-PID-文件残留"><a href="#重复启动-PID-文件残留" class="headerlink" title="重复启动 / PID 文件残留"></a>重复启动 / PID 文件残留</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">namenode is running as process XXX. Stop it first...</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="原因-2"><a href="#原因-2" class="headerlink" title="原因"></a>原因</h3><ul>
+<li>上次进程没有完全停止，PID 文件残留</li>
+</ul>
+<h3 id="解决-2"><a href="#解决-2" class="headerlink" title="解决"></a>解决</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">stop-dfs.sh</span><br><span class="line">stop-yarn.sh</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">rm</span> -f /tmp/hadoop-用户名-*.pid</span><br></pre></td></tr></table></figure></div>
+<p>再启动集群</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">start-dfs.sh</span><br><span class="line">start-yarn.sh</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="配置文件错误或不统一"><a href="#配置文件错误或不统一" class="headerlink" title="配置文件错误或不统一"></a>配置文件错误或不统一</h2><ul>
+<li>DataNode 与 NameNode 地址不匹配</li>
+<li>YARN NodeManager 启动后没有正常注册</li>
+</ul>
+<h3 id="原因-3"><a href="#原因-3" class="headerlink" title="原因"></a>原因</h3><ul>
+<li>core-site.xml 或 yarn-site.xml 中使用了 localhost 或旧 IP</li>
+<li>各节点 Hadoop 配置文件不一致</li>
+</ul>
+<h3 id="解决-3"><a href="#解决-3" class="headerlink" title="解决"></a>解决</h3><p>cd到你的Hadoop文件夹中</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/hadoop</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure></div>
+<p>会存在下列4个文件</p>
+<blockquote>
+<p>core-site.xml<br>hdfs-site.xml<br>yarn-site.xml<br>mapred-site.xml</p>
+</blockquote>
+<p><strong>core-site.xml</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;hdfs://主节点IP:9000&lt;/value&gt;  &lt;!-- NameNode IP --&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></div>
+<p>fs.defaultFS 指向 NameNode 的 IP:端口，所以所有节点都要写成 主节点的 IP，不能写 localhost</p>
+<p><strong>hdfs-site.xml</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;file:///home/用户名/hadoop/dfs/datanode&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></div>
+<p>然后创建个目录 确保目录存在并且 Hadoop 用户有权限读写</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /home/zhihaojiang/hadoop/dfs/datanode</span><br><span class="line"><span class="built_in">chown</span> -R zhihaojiang: /home/zhihaojiang/hadoop/dfs</span><br><span class="line"><span class="built_in">chmod</span> -R 755 /home/zhihaojiang/hadoop/dfs</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>yarn-site.xml</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;主节点IP&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>mapred-site.xml</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;property&gt;</span><br><span class="line">  &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">  &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></div>
+<p>所有节点都需要配置一致，表示 MapReduce 使用 YARN 作为资源管理</p>
+<h2 id="虚拟机克隆和静态-IP"><a href="#虚拟机克隆和静态-IP" class="headerlink" title="虚拟机克隆和静态 IP"></a>虚拟机克隆和静态 IP</h2><ul>
+<li>克隆虚拟机如果直接启动，IP 会冲突，导致 DataNode 无法注册</li>
+<li>/etc/hosts 中重复或错误映射旧节点</li>
+</ul>
+<h3 id="解决-4"><a href="#解决-4" class="headerlink" title="解决"></a>解决</h3><ul>
+<li>克隆虚拟机后修改静态 IP</li>
+<li>更新 NameNode 上的 workers 文件</li>
+<li>更新所有节点 /etc/hosts</li>
+</ul>
+<p>在Hadoop文件夹中ls找到workers</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">sudo</span> nano workers</span><br></pre></td></tr></table></figure></div>
+<p>里面的文件改成</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">IP 节点1主机名称</span><br><span class="line">IP 节点2主机名称</span><br><span class="line">IP 节点3主机名称</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>Hadoop</tag>
+      </tags>
+  </entry>
 </search>
