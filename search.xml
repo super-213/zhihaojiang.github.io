@@ -5906,4 +5906,1910 @@ weighted avg   0.96      0.96      0.96      1756
         <tag>Hadoop</tag>
       </tags>
   </entry>
+  <entry>
+    <title>商业数据分析--员工离职预测模型</title>
+    <url>/zhihaojiang.github.io/2025/09/23/20250923%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E5%91%98%E5%B7%A5%E7%A6%BB%E8%81%8C%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> =pd.read_excel(<span class="string">'员工离职预测模型.xlsx'</span>)</span><br><span class="line"></span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>工资</th>
+<th>满意度</th>
+<th>考核得分</th>
+<th>工程数量</th>
+<th>月工时</th>
+<th>工龄</th>
+<th>离职</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>低</td>
+<td>3.8</td>
+<td>0.53</td>
+<td>2</td>
+<td>157</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>中</td>
+<td>8.0</td>
+<td>0.86</td>
+<td>5</td>
+<td>262</td>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>中</td>
+<td>1.1</td>
+<td>0.88</td>
+<td>7</td>
+<td>272</td>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>低</td>
+<td>7.2</td>
+<td>0.87</td>
+<td>5</td>
+<td>223</td>
+<td>5</td>
+<td>1</td>
+</tr>
+<tr>
+<td>低</td>
+<td>3.7</td>
+<td>0.52</td>
+<td>2</td>
+<td>159</td>
+<td>3</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h1 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>缺失值数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>工资</td>
+<td>0</td>
+</tr>
+<tr>
+<td>满意度</td>
+<td>0</td>
+</tr>
+<tr>
+<td>考核得分</td>
+<td>0</td>
+</tr>
+<tr>
+<td>工程数量</td>
+<td>0</td>
+</tr>
+<tr>
+<td>月工时</td>
+<td>0</td>
+</tr>
+<tr>
+<td>工龄</td>
+<td>0</td>
+</tr>
+<tr>
+<td>离职</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h1 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.select_dtypes(include=[<span class="string">'number'</span>]).columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/009.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/010.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/011.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/012.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/013.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/014.png" alt="photo"></p>
+<p>通过上述图表我们发现<br><strong>离职（目标变量）存在异常值</strong><br>从上面分析中我们知道离职是0-1变量 这说明离职的样本中 不离职的样本非常多 离职的样本非常少 这导致其把离职的当成了异常值</p>
+<p><strong>工龄存在异常值</strong><br>我们发现大部份人的工龄在2-5年之间 那些被认为是异常值的都是工龄较长的由于我们是要做员工离职预测模型 我认为那些离职的员工有可能是那些工龄年限长的员工 因此我们不能把这个异常值给删除或归一化处理 因此我们将这个异常值给突出保留下来</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">col = <span class="string">'工龄'</span></span><br><span class="line"></span><br><span class="line">Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">IQR = Q3 - Q1</span><br><span class="line"></span><br><span class="line">lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[f<span class="string">'{col}_is_outlier'</span>] = ((df[col] &lt; lower_bound) | (df[col] &gt; upper_bound)).astype(int)</span><br></pre></td></tr></table></figure></div>
+<h1 id="特征编码"><a href="#特征编码" class="headerlink" title="特征编码"></a>特征编码</h1><p>可以看到 工资特征不是数值型 我们需要对其进行处理</p>
+<p>因为初始工资是按照低中高分类的 因此我们直接使用映射将低中高映射为0、1、2 这样还能保留低中高的顺序关系<br><strong>注意</strong> 这里不推荐使用独热编码 因为其会丢失低中高的顺序关系</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">'工资'</span>] = <span class="built_in">df</span>[<span class="string">'工资'</span>].map({<span class="string">'低'</span>: 0, <span class="string">'中'</span>: 1, <span class="string">'高'</span>: 2})</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line"></span><br><span class="line">X = df.drop(columns=[<span class="string">'离职'</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'离职'</span>]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line">dtc = DecisionTreeClassifier(random_state=42)</span><br><span class="line">dtc.fit(X_train, y_train)</span><br><span class="line">y_pred = dtc.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>900</td>
+<td>136</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>150</td>
+<td>223</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.86</td>
+<td>0.87</td>
+<td>0.86</td>
+<td>1036</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.62</td>
+<td>0.60</td>
+<td>0.61</td>
+<td>373</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.80</strong></td>
+<td>1409</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.74</td>
+<td>0.73</td>
+<td>0.74</td>
+<td>1409</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.80</td>
+<td>0.80</td>
+<td>0.80</td>
+<td>1409</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line"></span><br><span class="line">scores = cross_val_score(dtc, X_train, y_train, cv=5, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"各折准确率："</span>, scores)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"平均准确率：%.4f (+/- %.4f)"</span> % (scores.mean(), scores.std() * 2))</span><br></pre></td></tr></table></figure></div>
+<p>各折准确率： [0.97625    0.97833333 0.96958333 0.97541667 0.98      ]<br>平均准确率：0.9759 (+/- 0.0071)</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import GridSearchCV</span><br><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line"></span><br><span class="line">param_grid = {</span><br><span class="line">    <span class="string">'max_depth'</span>: [3, 5, 7, 10, None],</span><br><span class="line">    <span class="string">'min_samples_split'</span>: [2, 5, 10],</span><br><span class="line">    <span class="string">'min_samples_leaf'</span>: [1, 2, 4],</span><br><span class="line">    <span class="string">'criterion'</span>: [<span class="string">'gini'</span>, <span class="string">'entropy'</span>]</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">dtc = DecisionTreeClassifier(random_state=42)</span><br><span class="line"></span><br><span class="line">grid_search = GridSearchCV(</span><br><span class="line">    estimator=dtc,</span><br><span class="line">    param_grid=param_grid,</span><br><span class="line">    cv=5,</span><br><span class="line">    scoring=<span class="string">'f1'</span>,</span><br><span class="line">    n_jobs=-1,           <span class="comment"># 使用所有 CPU 核心加速</span></span><br><span class="line">    verbose=1            <span class="comment"># 显示过程</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">grid_search.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"最佳参数："</span>, grid_search.best_params_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"最佳交叉验证得分：%.4f"</span> % grid_search.best_score_)</span><br><span class="line"></span><br><span class="line">best_dtc = grid_search.best_estimator_</span><br><span class="line">y_pred = best_dtc.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\n=== 测试集结果 ==="</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"混淆矩阵："</span>)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\n分类报告："</span>)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>最佳参数：</strong><br><code>{'criterion': 'entropy', 'max_depth': None, 'min_samples_leaf': 1, 'min_samples_split': 2}</code></p>
+<p><strong>最佳交叉验证得分：</strong> 0.9564<br><strong>混淆矩阵：</strong></p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>2236</td>
+<td>38</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>21</td>
+<td>705</td>
+</tr>
+</tbody></table>
+<p><strong>分类报告：</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.99</td>
+<td>0.98</td>
+<td>0.99</td>
+<td>2274</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.95</td>
+<td>0.97</td>
+<td>0.96</td>
+<td>726</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.98</strong></td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.97</td>
+<td>0.98</td>
+<td>0.97</td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.98</td>
+<td>0.98</td>
+<td>0.98</td>
+<td>3000</td>
+</tr>
+</tbody></table>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> = RandomForestClassifier(random_state=42)</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line">y_pred = rm.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>2268</td>
+<td>6</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>20</td>
+<td>706</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.99</td>
+<td>1.00</td>
+<td>0.99</td>
+<td>2274</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.99</td>
+<td>0.97</td>
+<td>0.98</td>
+<td>726</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.99</strong></td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.99</td>
+<td>0.98</td>
+<td>0.99</td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.99</td>
+<td>0.99</td>
+<td>0.99</td>
+<td>3000</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">scores = cross_val_score(<span class="built_in">rm</span>, X_train, y_train, cv=5, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"各折准确率："</span>, scores)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"平均准确率：%.4f (+/- %.4f)"</span> % (scores.mean(), scores.std() * 2))</span><br></pre></td></tr></table></figure></div>
+<p>各折准确率： [0.99041667 0.99041667 0.98833333 0.99083333 0.99208333]<br>平均准确率：0.9904 (+/- 0.0024)</p>
+<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import GradientBoostingClassifier</span><br><span class="line"></span><br><span class="line">GBDT = GradientBoostingClassifier(random_state=42)</span><br><span class="line">GBDT.fit(X_train, y_train)</span><br><span class="line">y_pred = GBDT.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>2249</td>
+<td>25</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>53</td>
+<td>673</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.98</td>
+<td>0.99</td>
+<td>0.98</td>
+<td>2274</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.96</td>
+<td>0.93</td>
+<td>0.95</td>
+<td>726</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.97</strong></td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.97</td>
+<td>0.96</td>
+<td>0.96</td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.97</td>
+<td>0.97</td>
+<td>0.97</td>
+<td>3000</td>
+</tr>
+</tbody></table>
+<p>各折准确率： [0.97333333 0.97625    0.97708333 0.97708333 0.97458333]<br>平均准确率：0.9757 (+/- 0.0030)</p>
+<h1 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line"></span><br><span class="line">nb = GaussianNB()</span><br><span class="line">nb.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">y_pred_nb = nb.predict(X_test)</span><br><span class="line">y_pred_proba = nb.predict_proba(X_test)[:, 1]  <span class="comment"># 离职概率（正类概率）</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"混淆矩阵："</span>)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred_nb))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\n分类报告："</span>)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred_nb))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\n前5个样本的离职概率："</span>, y_pred_proba[:5])</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>2071</td>
+<td>203</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>293</td>
+<td>433</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.88</td>
+<td>0.91</td>
+<td>0.89</td>
+<td>2274</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.68</td>
+<td>0.60</td>
+<td>0.64</td>
+<td>726</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.83</strong></td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.78</td>
+<td>0.75</td>
+<td>0.76</td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.83</td>
+<td>0.83</td>
+<td>0.83</td>
+<td>3000</td>
+</tr>
+</tbody></table>
+<p>前5个样本的离职概率：<br><code>[0.0299, 0.0785, 0.0041, 0.6395, 0.1225]</code></p>
+<h1 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.discriminant_analysis import LinearDiscriminantAnalysis</span><br><span class="line"></span><br><span class="line">LDA = LinearDiscriminantAnalysis()</span><br><span class="line">LDA.fit(X_train, y_train)</span><br><span class="line">y_pred_lda = LDA.predict(X_test)</span><br><span class="line">y_pred_proba_lda = LDA.predict_proba(X_test)[:, 1]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"混淆矩阵："</span>)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred_lda))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\n分类报告："</span>)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred_lda))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>2096</td>
+<td>178</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>523</td>
+<td>203</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.80</td>
+<td>0.92</td>
+<td>0.86</td>
+<td>2274</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.53</td>
+<td>0.28</td>
+<td>0.37</td>
+<td>726</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.77</strong></td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.67</td>
+<td>0.60</td>
+<td>0.61</td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.74</td>
+<td>0.77</td>
+<td>0.74</td>
+<td>3000</td>
+</tr>
+</tbody></table>
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from xgboost import XGBClassifier</span><br><span class="line"></span><br><span class="line">xgb = XGBClassifier()</span><br><span class="line">xgb.fit(X_train, y_train)</span><br><span class="line">y_pred_xgb = xgb.predict(X_test)</span><br><span class="line">y_pred_proba_xgb = xgb.predict_proba(X_test)[:, 1]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"混淆矩阵："</span>)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred_xgb))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\n分类报告："</span>)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred_xgb))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>2260</td>
+<td>14</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>29</td>
+<td>697</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.99</td>
+<td>0.99</td>
+<td>0.99</td>
+<td>2274</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.98</td>
+<td>0.96</td>
+<td>0.97</td>
+<td>726</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.99</strong></td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.98</td>
+<td>0.98</td>
+<td>0.98</td>
+<td>3000</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.99</td>
+<td>0.99</td>
+<td>0.99</td>
+<td>3000</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--手写字体识别</title>
+    <url>/zhihaojiang.github.io/2025/09/23/20250923%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E6%89%8B%E5%86%99%E5%AD%97%E4%BD%93%E8%AF%86%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'手写字体识别.xlsx'</span></span><br><span class="line"></span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>对应数字</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>…</th>
+<th>1014</th>
+<th>1015</th>
+<th>1016</th>
+<th>1017</th>
+<th>1018</th>
+<th>1019</th>
+<th>1020</th>
+<th>1021</th>
+<th>1022</th>
+<th>1023</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">X = df.drop(columns=<span class="string">'对应数字'</span>)</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'对应数字'</span>]</span><br><span class="line"></span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+<h1 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsClassifier</span><br><span class="line"></span><br><span class="line">knn = KNeighborsClassifier(n_neighbors=5)</span><br><span class="line">knn.fit(X_train, y_train)</span><br><span class="line">y_pred = knn.predict(X_test)</span><br><span class="line">from sklearn.metrics import accuracy_score</span><br><span class="line">accuracy = accuracy_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy:"</span>, accuracy)</span><br></pre></td></tr></table></figure></div>
+<p>Accuracy: 0.9534883720930233</p>
+<p><strong>测试</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from PIL import Image</span><br><span class="line">img = Image.open(<span class="string">'数字4.png'</span>)</span><br><span class="line">img = img.resize((<span class="number">32</span>,<span class="number">32</span>))</span><br><span class="line">img = img.convert(<span class="string">'L'</span>)</span><br><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">img_new = img.point(lambda x: 0 <span class="keyword">if</span> x &gt; 128 <span class="keyword">else</span> 1)</span><br><span class="line">arr = np.array(img_new)</span><br><span class="line">arr_new = arr.reshape(1, -1)</span><br><span class="line"></span><br><span class="line">answer = knn.predict(arr_new) </span><br><span class="line"><span class="built_in">print</span>(<span class="string">'图片中的数字为：'</span> + str(answer[0]))</span><br></pre></td></tr></table></figure></div>
+<p>图片中的数字为：4</p>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.svm import SVC</span><br><span class="line">svm = SVC(kernel=<span class="string">'rbf'</span>)</span><br><span class="line">svm.fit(X_train, y_train)</span><br><span class="line">score = svm.score(X_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'SVM模型的准确率为：'</span> + str(score))</span><br></pre></td></tr></table></figure></div>
+<p>SVM模型的准确率为：0.9715762273901809<br><strong>测试</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">answer = rf.predict(arr_new) </span><br><span class="line"><span class="built_in">print</span>(<span class="string">'图片中的数字为：'</span> + str(answer[0]))</span><br></pre></td></tr></table></figure></div>
+<p>图片中的数字为：4</p>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line">rf = RandomForestClassifier(n_estimators=100)</span><br><span class="line">rf.fit(X_train, y_train)</span><br><span class="line">score = rf.score(X_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'随机森林模型的准确率为：'</span> + str(score))</span><br></pre></td></tr></table></figure></div>
+<p>随机森林模型的准确率为：0.9689922480620154</p>
+<p><strong>测试</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">answer = rf.predict(arr_new) </span><br><span class="line"><span class="built_in">print</span>(<span class="string">'图片中的数字为：'</span> + str(answer[0]))</span><br></pre></td></tr></table></figure></div>
+<p>图片中的数字为：4</p>
+<h1 id="MLP"><a href="#MLP" class="headerlink" title="MLP"></a>MLP</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.neural_network import MLPClassifier</span><br><span class="line">mlp = MLPClassifier(hidden_layer_sizes=(100,), max_iter=500)</span><br><span class="line">mlp.fit(X_train, y_train)</span><br><span class="line">score = mlp.score(X_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">'神经网络模型的准确率为：'</span> + str(score))</span><br></pre></td></tr></table></figure></div>
+<p>神经网络模型的准确率为：0.958656330749354</p>
+<p><strong>测试</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">answer = rf.predict(arr_new) </span><br><span class="line"><span class="built_in">print</span>(<span class="string">'图片中的数字为：'</span> + str(answer[0]))</span><br></pre></td></tr></table></figure></div>
+<p>图片中的数字为：4</p>
+<h1 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'手写字体识别.xlsx'</span>)</span><br><span class="line"></span><br><span class="line">X = df.drop(columns=<span class="string">'对应数字'</span>)</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'对应数字'</span>]</span><br><span class="line"></span><br><span class="line">X = X.to_numpy().reshape(-1, 32, 32, 1).astype(<span class="string">'float32'</span>)</span><br><span class="line"></span><br><span class="line">X = X / 255.0</span><br><span class="line"></span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">model = models.Sequential([</span><br><span class="line">    layers.Conv2D(32, (3,3), activation=<span class="string">'relu'</span>, input_shape=(32,32,1)),</span><br><span class="line">    layers.MaxPooling2D((<span class="number">2</span>,<span class="number">2</span>)),</span><br><span class="line">    layers.Conv2D(64, (3,3), activation=<span class="string">'relu'</span>),</span><br><span class="line">    layers.MaxPooling2D((<span class="number">2</span>,<span class="number">2</span>)),</span><br><span class="line">    layers.Flatten(),</span><br><span class="line">    layers.Dense(64, activation=<span class="string">'relu'</span>),</span><br><span class="line">    layers.Dense(10, activation=<span class="string">'softmax'</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=<span class="string">'adam'</span>,</span><br><span class="line">              loss=<span class="string">'sparse_categorical_crossentropy'</span>,</span><br><span class="line">              metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">history</span> = model.fit(X_train, y_train,</span><br><span class="line">                    epochs=10,</span><br><span class="line">                    batch_size=32,</span><br><span class="line">                    validation_data=(X_test, y_test))</span><br></pre></td></tr></table></figure></div>
+<p>Epoch 1/10<br>/opt/anaconda3/envs/tf-metal/lib/python3.11/site-packages/keras/src/layers/convolutional/base_conv.py:113: UserWarning: Do not pass an <code>input_shape</code>/<code>input_dim</code> argument to a layer. When using Sequential models, prefer using an <code>Input(shape)</code> object as the first layer in the model instead.<br>  super().<strong>init</strong>(activity_regularizer=activity_regularizer, **kwargs)<br>2025-09-23 20:17:35.573018: I tensorflow/core/grappler/optimizers/custom_graph_optimizer_registry.cc:117] Plugin optimizer for device_type GPU is enabled.<br>49/49 ━━━━━━━━━━━━━━━━━━━━ 4s 33ms/step - accuracy: 0.1034 - loss: 2.3043 - val_accuracy: 0.0749 - val_loss: 2.3025<br>Epoch 2/10<br>49/49 ━━━━━━━━━━━━━━━━━━━━ 1s 13ms/step - accuracy: 0.1028 - loss: 2.3010 - val_accuracy: 0.1137 - val_loss: 2.2969<br>Epoch 3/10<br>49/49 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step - accuracy: 0.1713 - loss: 2.2660 - val_accuracy: 0.2481 - val_loss: 2.1901<br>Epoch 4/10<br>49/49 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step - accuracy: 0.5184 - loss: 1.9033 - val_accuracy: 0.6382 - val_loss: 1.4705<br>Epoch 5/10<br>49/49 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step - accuracy: 0.7673 - loss: 1.0627 - val_accuracy: 0.8062 - val_loss: 0.7945<br>Epoch 6/10<br>49/49 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step - accuracy: 0.8649 - loss: 0.5883 - val_accuracy: 0.8527 - val_loss: 0.5462<br>Epoch 7/10<br>49/49 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step - accuracy: 0.8908 - loss: 0.4113 - val_accuracy: 0.8786 - val_loss: 0.4564<br>Epoch 8/10<br>49/49 ━━━━━━━━━━━━━━━━━━━━ 1s 12ms/step - accuracy: 0.9089 - loss: 0.3249 - val_accuracy: 0.9044 - val_loss: 0.3793<br>Epoch 9/10<br>49/49 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step - accuracy: 0.9211 - loss: 0.2893 - val_accuracy: 0.9018 - val_loss: 0.3861<br>Epoch 10/10<br>49/49 ━━━━━━━━━━━━━━━━━━━━ 1s 11ms/step - accuracy: 0.9302 - loss: 0.2541 - val_accuracy: 0.9173 - val_loss: 0.3233</p>
+<p><strong>测试</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from PIL import Image</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">img = Image.open(<span class="string">'数字4.png'</span>)</span><br><span class="line">img = img.resize((<span class="number">32</span>, <span class="number">32</span>))</span><br><span class="line">img = img.convert(<span class="string">'L'</span>)</span><br><span class="line">img_new = img.point(lambda x: 0 <span class="keyword">if</span> x &gt; 128 <span class="keyword">else</span> 1)</span><br><span class="line"></span><br><span class="line">arr = np.array(img_new)</span><br><span class="line"></span><br><span class="line">arr_new = arr.reshape(1, 32, 32, 1).astype(<span class="string">'float32'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">answer = model.predict(arr_new)</span><br><span class="line">predicted_digit = np.argmax(answer[0])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">'图片中的数字为：'</span> + str(predicted_digit))</span><br></pre></td></tr></table></figure></div>
+<p>1/1 ━━━━━━━━━━━━━━━━━━━━ 1s 582ms/step<br>图片中的数字为：4</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--股票客户流失</title>
+    <url>/zhihaojiang.github.io/2025/09/23/20250923%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E8%82%A1%E7%A5%A8%E5%AE%A2%E6%88%B7%E6%B5%81%E5%A4%B1/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'股票客户流失.xlsx'</span>)</span><br><span class="line"></span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>账户资金（元）</th>
+<th>最后一次交易距今时间（天）</th>
+<th>上月交易佣金（元）</th>
+<th>累计交易佣金（元）</th>
+<th>本券商使用时长（年）</th>
+<th>是否流失</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>22686.5</td>
+<td>297</td>
+<td>149.25</td>
+<td>2029.85</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>190055.0</td>
+<td>42</td>
+<td>284.75</td>
+<td>3889.50</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>29733.5</td>
+<td>233</td>
+<td>269.25</td>
+<td>2108.15</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>185667.5</td>
+<td>44</td>
+<td>211.50</td>
+<td>3840.75</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>33648.5</td>
+<td>213</td>
+<td>353.50</td>
+<td>2151.65</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h1 id="查看缺失值情况"><a href="#查看缺失值情况" class="headerlink" title="查看缺失值情况"></a>查看缺失值情况</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>账户资金（元）</td>
+<td>0</td>
+</tr>
+<tr>
+<td>最后一次交易距今时间（天）</td>
+<td>0</td>
+</tr>
+<tr>
+<td>上月交易佣金（元）</td>
+<td>0</td>
+</tr>
+<tr>
+<td>累计交易佣金（元）</td>
+<td>0</td>
+</tr>
+<tr>
+<td>本券商使用时长（年）</td>
+<td>0</td>
+</tr>
+<tr>
+<td>是否流失</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h1 id="查看异常值情况"><a href="#查看异常值情况" class="headerlink" title="查看异常值情况"></a>查看异常值情况</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/001.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/002.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/003.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/004.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/005.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/006.png" alt="photo"></p>
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line"></span><br><span class="line">X = df.drop(columns=[<span class="string">'是否流失'</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'是否流失'</span>]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line">model = LogisticRegression()</span><br><span class="line">model.fit(X_train, y_train)</span><br><span class="line">y_pred = model.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import accuracy_score, confusion_matrix, classification_report</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy:"</span>, accuracy_score(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Confusion Matrix:\n"</span>, confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Classification Report:\n"</span>, classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p><strong>准确率 (Accuracy):</strong> 0.7949</p>
+<p><strong>混淆矩阵 (Confusion Matrix):</strong></p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>952</td>
+<td>84</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>205</td>
+<td>168</td>
+</tr>
+</tbody></table>
+<p><strong>分类报告 (Classification Report):</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.82</td>
+<td>0.92</td>
+<td>0.87</td>
+<td>1036</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.67</td>
+<td>0.45</td>
+<td>0.54</td>
+<td>373</td>
+</tr>
+<tr>
+<td>accuracy</td>
+<td></td>
+<td></td>
+<td>0.79</td>
+<td>1409</td>
+</tr>
+<tr>
+<td>macro avg</td>
+<td>0.74</td>
+<td>0.68</td>
+<td>0.70</td>
+<td>1409</td>
+</tr>
+<tr>
+<td>weighted avg</td>
+<td>0.78</td>
+<td>0.79</td>
+<td>0.78</td>
+<td>1409</td>
+</tr>
+</tbody></table>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.svm import SVC</span><br><span class="line"></span><br><span class="line">svc = SVC(random_state=42, probability=True)</span><br><span class="line">svc.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">y_svc_pred = svc.predict(X_test)</span><br><span class="line">y_svc_proba = svc.predict_proba(X_test)[:, 1]</span><br><span class="line"></span><br><span class="line">def calculate_ks(y_true, y_proba):</span><br><span class="line">    data = np.column_stack([y_proba, y_true])</span><br><span class="line">    sorted_data = data[data[:, 0].argsort()[::-1]]</span><br><span class="line">    </span><br><span class="line">    total_pos = np.sum(y_true == 1)</span><br><span class="line">    total_neg = np.sum(y_true == 0)</span><br><span class="line">    </span><br><span class="line">    cum_pos = 0</span><br><span class="line">    cum_neg = 0</span><br><span class="line">    max_ks = 0</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> prob, label <span class="keyword">in</span> sorted_data:</span><br><span class="line">        <span class="keyword">if</span> label == 1:</span><br><span class="line">            cum_pos += 1</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cum_neg += 1</span><br><span class="line">        tpr = cum_pos / total_pos</span><br><span class="line">        fpr = cum_neg / total_neg</span><br><span class="line">        ks = abs(tpr - fpr)</span><br><span class="line">        <span class="keyword">if</span> ks &gt; max_ks:</span><br><span class="line">            max_ks = ks</span><br><span class="line">    <span class="built_in">return</span> max_ks</span><br><span class="line"></span><br><span class="line">ks_score = calculate_ks(y_test, y_svc_proba)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"SVC Accuracy:"</span>, accuracy_score(y_test, y_svc_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"KS Score:"</span>, ks_score)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Confusion Matrix:\n"</span>, confusion_matrix(y_test, y_svc_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Classification Report:\n"</span>, classification_report(y_test, y_svc_pred))</span><br></pre></td></tr></table></figure></div>
+<p><strong>准确率 (Accuracy):</strong> 0.7353<br><strong>KS Score:</strong> 0.3043</p>
+<p><strong>混淆矩阵 (Confusion Matrix):</strong></p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>1036</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>373</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p><strong>分类报告 (Classification Report):</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.74</td>
+<td>1.00</td>
+<td>0.85</td>
+<td>1036</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>373</td>
+</tr>
+<tr>
+<td>accuracy</td>
+<td></td>
+<td></td>
+<td>0.74</td>
+<td>1409</td>
+</tr>
+<tr>
+<td>macro avg</td>
+<td>0.37</td>
+<td>0.50</td>
+<td>0.42</td>
+<td>1409</td>
+</tr>
+<tr>
+<td>weighted avg</td>
+<td>0.54</td>
+<td>0.74</td>
+<td>0.62</td>
+<td>1409</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">def plot_ks_curve(y_true, y_proba):</span><br><span class="line">    data = np.column_stack([y_proba, y_true])</span><br><span class="line">    sorted_data = data[data[:, 0].argsort()[::-1]]</span><br><span class="line">    </span><br><span class="line">    total_pos = np.sum(y_true == 1)</span><br><span class="line">    total_neg = np.sum(y_true == 0)</span><br><span class="line">    </span><br><span class="line">    cum_pos = 0</span><br><span class="line">    cum_neg = 0</span><br><span class="line">    tpr_list = []</span><br><span class="line">    fpr_list = []</span><br><span class="line">    thresholds = []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> prob, label <span class="keyword">in</span> sorted_data:</span><br><span class="line">        <span class="keyword">if</span> label == 1:</span><br><span class="line">            cum_pos += 1</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cum_neg += 1</span><br><span class="line">        tpr_list.append(cum_pos / total_pos)</span><br><span class="line">        fpr_list.append(cum_neg / total_neg)</span><br><span class="line">        thresholds.append(prob)</span><br><span class="line">    </span><br><span class="line">    ks_list = np.abs(np.array(tpr_list) - np.array(fpr_list))</span><br><span class="line">    max_ks_idx = np.argmax(ks_list)</span><br><span class="line">    </span><br><span class="line">    plt.figure(figsize=(8, 6))</span><br><span class="line">    plt.plot(thresholds, tpr_list, label=<span class="string">'TPR'</span>, color=<span class="string">'blue'</span>)</span><br><span class="line">    plt.plot(thresholds, fpr_list, label=<span class="string">'FPR'</span>, color=<span class="string">'red'</span>)</span><br><span class="line">    plt.plot(thresholds, ks_list, label=<span class="string">'KS'</span>, color=<span class="string">'green'</span>, linestyle=<span class="string">'--'</span>)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    plt.axvline(x=thresholds[max_ks_idx], color=<span class="string">'gray'</span>, linestyle=<span class="string">':'</span>, label=f<span class="string">'Max KS'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'预测概率阈值'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'比率'</span>)</span><br><span class="line">    plt.title(<span class="string">'KS 曲线'</span>)</span><br><span class="line">    plt.legend()</span><br><span class="line">    plt.grid(True)</span><br><span class="line">    plt.gca().invert_xaxis()</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">plot_ks_curve(y_test, y_svc_proba)</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/007.png" alt="photo"></p>
+<h1 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsClassifier</span><br><span class="line"></span><br><span class="line">knn = KNeighborsClassifier(n_neighbors=5)</span><br><span class="line">knn.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">y_knn_pred = knn.predict(X_test)</span><br><span class="line">y_knn_proba = knn.predict_proba(X_test)[:, 1]</span><br><span class="line"></span><br><span class="line">ks_score_knn = calculate_ks(y_test, y_knn_proba)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"KNN Accuracy:"</span>, accuracy_score(y_test, y_knn_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"KNN KS Score:"</span>, ks_score_knn)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"KNN Confusion Matrix:\n"</span>, confusion_matrix(y_test, y_knn_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"KNN Classification Report:\n"</span>, classification_report(y_test, y_knn_pred))</span><br></pre></td></tr></table></figure></div>
+<p><strong>准确率 (Accuracy):</strong> 0.7580<br><strong>KS Score:</strong> 0.3060</p>
+<p><strong>混淆矩阵 (Confusion Matrix):</strong></p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>940</td>
+<td>96</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>245</td>
+<td>128</td>
+</tr>
+</tbody></table>
+<p><strong>分类报告 (Classification Report):</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.79</td>
+<td>0.91</td>
+<td>0.85</td>
+<td>1036</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.57</td>
+<td>0.34</td>
+<td>0.43</td>
+<td>373</td>
+</tr>
+<tr>
+<td>accuracy</td>
+<td></td>
+<td></td>
+<td>0.76</td>
+<td>1409</td>
+</tr>
+<tr>
+<td>macro avg</td>
+<td>0.68</td>
+<td>0.63</td>
+<td>0.64</td>
+<td>1409</td>
+</tr>
+<tr>
+<td>weighted avg</td>
+<td>0.73</td>
+<td>0.76</td>
+<td>0.74</td>
+<td>1409</td>
+</tr>
+</tbody></table>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> = RandomForestClassifier(n_estimators=100, random_state=42)</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line">y_rm_pred = rm.predict(X_test)</span><br><span class="line">y_rm_proba = rm.predict_proba(X_test)[:, 1]</span><br><span class="line"></span><br><span class="line">ks_score_rm = calculate_ks(y_test, y_rm_proba)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Random Forest Accuracy:"</span>, accuracy_score(y_test, y_rm_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Random Forest KS Score:"</span>, ks_score_rm)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Random Forest Confusion Matrix:\n"</span>, confusion_matrix(y_test, y_rm_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Random Forest Classification Report:\n"</span>, classification_report(y_test, y_rm_pred))</span><br></pre></td></tr></table></figure></div>
+<p><strong>准确率 (Accuracy):</strong> 0.7686<br><strong>KS Score:</strong> 0.4445<br><strong>混淆矩阵 (Confusion Matrix):</strong></p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>909</td>
+<td>127</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>199</td>
+<td>174</td>
+</tr>
+</tbody></table>
+<p><strong>分类报告 (Classification Report):</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.82</td>
+<td>0.88</td>
+<td>0.85</td>
+<td>1036</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.58</td>
+<td>0.47</td>
+<td>0.52</td>
+<td>373</td>
+</tr>
+<tr>
+<td>accuracy</td>
+<td></td>
+<td></td>
+<td>0.77</td>
+<td>1409</td>
+</tr>
+<tr>
+<td>macro avg</td>
+<td>0.70</td>
+<td>0.67</td>
+<td>0.68</td>
+<td>1409</td>
+</tr>
+<tr>
+<td>weighted avg</td>
+<td>0.76</td>
+<td>0.77</td>
+<td>0.76</td>
+<td>1409</td>
+</tr>
+</tbody></table>
+<h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">scaler = StandardScaler()</span><br><span class="line">X_train_scaled = scaler.fit_transform(X_train)</span><br><span class="line">X_test_scaled = scaler.transform(X_test)</span><br><span class="line"></span><br><span class="line">model = Sequential([</span><br><span class="line">    Dense(32, activation=<span class="string">'relu'</span>, input_shape=(5,)),  <span class="comment"># 第一层，32个神经元</span></span><br><span class="line">    Dropout(0.3),                                   <span class="comment"># 防止过拟合</span></span><br><span class="line">    Dense(16, activation=<span class="string">'relu'</span>),                   <span class="comment"># 第二层，16个神经元</span></span><br><span class="line">    Dropout(0.3),</span><br><span class="line">    Dense(1, activation=<span class="string">'sigmoid'</span>)                  <span class="comment"># 输出层，sigmoid用于二分类</span></span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 编译模型</span></span><br><span class="line">model.compile(</span><br><span class="line">    optimizer=Adam(learning_rate=0.001),</span><br><span class="line">    loss=<span class="string">'binary_crossentropy'</span>,   <span class="comment"># 二分类损失函数</span></span><br><span class="line">    metrics=[<span class="string">'accuracy'</span>]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">early_stop = EarlyStopping(</span><br><span class="line">    monitor=<span class="string">'val_loss'</span>,</span><br><span class="line">    patience=10,           <span class="comment"># 如果验证损失10轮不下降就停止</span></span><br><span class="line">    restore_best_weights=True  <span class="comment"># 恢复最佳权重</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="built_in">history</span> = model.fit(</span><br><span class="line">    X_train_scaled, y_train,</span><br><span class="line">    validation_data=(X_test_scaled, y_test),</span><br><span class="line">    epochs=100,            <span class="comment"># 最多训练100轮</span></span><br><span class="line">    batch_size=32,</span><br><span class="line">    callbacks=[early_stop],</span><br><span class="line">    verbose=1</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">y_pred_proba = model.predict(X_test_scaled).flatten()  <span class="comment"># 预测概率</span></span><br><span class="line">y_pred = (y_pred_proba &gt; 0.5).astype(int)              <span class="comment"># 转为0/1标签</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"=== 神经网络评估结果 ==="</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Accuracy:"</span>, accuracy_score(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"AUC:"</span>, roc_auc_score(y_test, y_pred_proba))</span><br><span class="line"></span><br><span class="line">def calculate_ks(y_true, y_proba):</span><br><span class="line">    data = np.column_stack([y_proba, y_true])</span><br><span class="line">    sorted_data = data[data[:, 0].argsort()[::-1]]</span><br><span class="line">    total_pos = np.sum(y_true == 1)</span><br><span class="line">    total_neg = np.sum(y_true == 0)</span><br><span class="line">    cum_pos = 0</span><br><span class="line">    cum_neg = 0</span><br><span class="line">    max_ks = 0</span><br><span class="line">    <span class="keyword">for</span> prob, label <span class="keyword">in</span> sorted_data:</span><br><span class="line">        <span class="keyword">if</span> label == 1:</span><br><span class="line">            cum_pos += 1</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cum_neg += 1</span><br><span class="line">        tpr = cum_pos / total_pos</span><br><span class="line">        fpr = cum_neg / total_neg</span><br><span class="line">        ks = abs(tpr - fpr)</span><br><span class="line">        <span class="keyword">if</span> ks &gt; max_ks:</span><br><span class="line">            max_ks = ks</span><br><span class="line">    <span class="built_in">return</span> max_ks</span><br><span class="line"></span><br><span class="line">ks_score = calculate_ks(y_test, y_pred_proba)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"KS Score:"</span>, ks_score)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\nConfusion Matrix:\n"</span>, confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\nClassification Report:\n"</span>, classification_report(y_test, y_pred))</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(12, 4))</span><br><span class="line"></span><br><span class="line">plt.subplot(1, 2, 1)</span><br><span class="line">plt.plot(history.history[<span class="string">'loss'</span>], label=<span class="string">'Training Loss'</span>)</span><br><span class="line">plt.plot(history.history[<span class="string">'val_loss'</span>], label=<span class="string">'Validation Loss'</span>)</span><br><span class="line">plt.title(<span class="string">'Model Loss'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Epoch'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Loss'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.subplot(1, 2, 2)</span><br><span class="line">plt.plot(history.history[<span class="string">'accuracy'</span>], label=<span class="string">'Training Accuracy'</span>)</span><br><span class="line">plt.plot(history.history[<span class="string">'val_accuracy'</span>], label=<span class="string">'Validation Accuracy'</span>)</span><br><span class="line">plt.title(<span class="string">'Model Accuracy'</span>)</span><br><span class="line">plt.xlabel(<span class="string">'Epoch'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line"></span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><strong>准确率 (Accuracy):</strong> 0.7984<br><strong>AUC:</strong> 0.8338<br><strong>KS Score:</strong> 0.5174</p>
+<hr>
+<p><strong>混淆矩阵 (Confusion Matrix):</strong></p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>959</td>
+<td>77</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>207</td>
+<td>166</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>分类报告 (Classification Report):</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.82</td>
+<td>0.93</td>
+<td>0.87</td>
+<td>1036</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.68</td>
+<td>0.45</td>
+<td>0.54</td>
+<td>373</td>
+</tr>
+<tr>
+<td>accuracy</td>
+<td></td>
+<td></td>
+<td>0.80</td>
+<td>1409</td>
+</tr>
+<tr>
+<td>macro avg</td>
+<td>0.75</td>
+<td>0.69</td>
+<td>0.70</td>
+<td>1409</td>
+</tr>
+<tr>
+<td>weighted avg</td>
+<td>0.79</td>
+<td>0.80</td>
+<td>0.78</td>
+<td>1409</td>
+</tr>
+</tbody></table>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/008.png" alt="photo"></p>
+<h1 id="横向对比"><a href="#横向对比" class="headerlink" title="横向对比"></a>横向对比</h1><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>SVC</th>
+<th>KNN</th>
+<th>Random Forest</th>
+<th><strong>Neural Network</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Accuracy</strong></td>
+<td>0.735</td>
+<td>0.758</td>
+<td>0.769</td>
+<td><strong>0.798</strong></td>
+</tr>
+<tr>
+<td><strong>AUC</strong></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td><strong>0.834</strong></td>
+</tr>
+<tr>
+<td><strong>KS Score</strong></td>
+<td>0.304</td>
+<td>0.306</td>
+<td>0.444</td>
+<td><strong>0.517</strong></td>
+</tr>
+<tr>
+<td>Class 1 Recall</td>
+<td>0.00</td>
+<td>0.34</td>
+<td>0.47</td>
+<td><strong>0.45</strong></td>
+</tr>
+<tr>
+<td>Class 1 F1</td>
+<td>0.00</td>
+<td>0.43</td>
+<td>0.52</td>
+<td><strong>0.54</strong></td>
+</tr>
+</tbody></table>
+<p>看起来准确率都还行 但是可以看到召回率最高只有0.47 由于我们是要分析预测股票客户流失 因此 我们得着重提高召回率</p>
+<p>以神经网络为例 使用<strong>class_weight</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 计算类别权重</span></span><br><span class="line">classes = np.unique(y_train)</span><br><span class="line">class_weights = compute_class_weight(<span class="string">'balanced'</span>, classes=classes, y=y_train)</span><br><span class="line">class_weight_dict = dict(zip(classes, class_weights))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Class weights:"</span>, class_weight_dict)</span><br><span class="line"><span class="built_in">history</span> = model.fit(</span><br><span class="line">    X_train_scaled, y_train,</span><br><span class="line">    validation_data=(X_test_scaled, y_test),</span><br><span class="line">    epochs=100,            <span class="comment"># 最多训练100轮</span></span><br><span class="line">    batch_size=32,</span><br><span class="line">    callbacks=[early_stop],</span><br><span class="line">    class_weight=class_weight_dict,  <span class="comment"># 使用类别权重</span></span><br><span class="line">    verbose=1</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
+<p><strong>准确率 (Accuracy):</strong> 0.7459<br><strong>AUC:</strong> 0.8336<strong>KS Score:</strong> 0.5153<br><strong>混淆矩阵 (Confusion Matrix):</strong></p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>778</td>
+<td>258</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>100</td>
+<td>273</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>分类报告 (Classification Report):</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.89</td>
+<td>0.75</td>
+<td>0.81</td>
+<td>1036</td>
+</tr>
+<tr>
+<td>1</td>
+<td><strong>0.51</strong></td>
+<td><strong>0.73</strong></td>
+<td><strong>0.60</strong></td>
+<td>373</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.75</strong></td>
+<td>1409</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.70</td>
+<td><strong>0.74</strong></td>
+<td>0.71</td>
+<td>1409</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.79</td>
+<td>0.75</td>
+<td>0.76</td>
+<td>1409</td>
+</tr>
+</tbody></table>
+<p>可以看到 尽管准确率有所降低 但是召回率大幅提高到了0.73 说明模型对真实流失客户的预测准确率提高了</p>
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><p>对于不平衡的样本 我们还可以使用像XGBoost或者lightGBM</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from xgboost import XGBClassifier</span><br><span class="line"></span><br><span class="line">xgb = XGBClassifier(use_label_encoder=False, eval_metric=<span class="string">'logloss'</span>, random_state=42)</span><br><span class="line">xgb.fit(X_train, y_train)</span><br><span class="line">y_xgb_pred = xgb.predict(X_test)</span><br><span class="line">y_xgb_proba = xgb.predict_proba(X_test)[:, 1]</span><br><span class="line"></span><br><span class="line">ks_score_xgb = calculate_ks(y_test, y_xgb_proba)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"XGB Accuracy:"</span>, accuracy_score(y_test, y_xgb_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"XGB KS Score:"</span>, ks_score_xgb)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"XGB Confusion Matrix:\n"</span>, confusion_matrix(y_test, y_xgb_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"XGB Classification Report:\n"</span>, classification_report(y_test, y_xgb_pred))</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>准确率 (Accuracy):</strong> 0.812<br><strong>KS Score:</strong> 0.538<br><strong>混淆矩阵 (Confusion Matrix):</strong></p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>【如 920】</td>
+<td>【如 116】</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>【如 150】</td>
+<td>【如 223】</td>
+</tr>
+</tbody></table>
+<p><strong>分类报告 (Classification Report):</strong></p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>【如 0.86】</td>
+<td>【如 0.89】</td>
+<td>【如 0.87】</td>
+<td>1036</td>
+</tr>
+<tr>
+<td>1</td>
+<td>【如 0.66】</td>
+<td>【如 0.60】</td>
+<td>【如 0.63】</td>
+<td>373</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>【如 0.81】</strong></td>
+<td>1409</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>【如 0.76】</td>
+<td>【如 0.74】</td>
+<td>【如 0.75】</td>
+<td>1409</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>【如 0.80】</td>
+<td>【如 0.81】</td>
+<td>【如 0.80】</td>
+<td>1409</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--肿瘤数据</title>
+    <url>/zhihaojiang.github.io/2025/09/23/20250923%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E8%82%BF%E7%98%A4%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'肿瘤数据.xlsx'</span>)</span><br><span class="line"></span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>最大周长</th>
+<th>最大凹陷度</th>
+<th>平均凹陷度</th>
+<th>最大面积</th>
+<th>最大半径</th>
+<th>平均灰度值</th>
+<th>肿瘤性质</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>184.60</td>
+<td>0.2654</td>
+<td>0.14710</td>
+<td>2019.0</td>
+<td>25.38</td>
+<td>17.33</td>
+<td>0</td>
+</tr>
+<tr>
+<td>158.80</td>
+<td>0.1860</td>
+<td>0.07017</td>
+<td>1956.0</td>
+<td>24.99</td>
+<td>23.41</td>
+<td>0</td>
+</tr>
+<tr>
+<td>152.50</td>
+<td>0.2430</td>
+<td>0.12790</td>
+<td>1709.0</td>
+<td>23.57</td>
+<td>25.53</td>
+<td>1</td>
+</tr>
+<tr>
+<td>98.87</td>
+<td>0.2575</td>
+<td>0.10520</td>
+<td>567.7</td>
+<td>14.91</td>
+<td>26.50</td>
+<td>0</td>
+</tr>
+<tr>
+<td>152.20</td>
+<td>0.1625</td>
+<td>0.10430</td>
+<td>1575.0</td>
+<td>22.54</td>
+<td>16.67</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h1 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>缺失值数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>最大周长</td>
+<td>0</td>
+</tr>
+<tr>
+<td>最大凹陷度</td>
+<td>0</td>
+</tr>
+<tr>
+<td>平均凹陷度</td>
+<td>0</td>
+</tr>
+<tr>
+<td>最大面积</td>
+<td>0</td>
+</tr>
+<tr>
+<td>最大半径</td>
+<td>0</td>
+</tr>
+<tr>
+<td>平均灰度值</td>
+<td>0</td>
+</tr>
+<tr>
+<td>肿瘤性质</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h1 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/015.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/016.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/017.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/018.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/019.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/020.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/021.png" alt="photo"></p>
+<p>发现用四分位数发现存在一些异常值 朴素贝叶斯是对异常值敏感的 我们可视化数据的分布情况</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import seaborn as sns</span><br><span class="line">cols = [<span class="string">'最大周长'</span>, <span class="string">'平均凹陷度'</span>, <span class="string">'最大面积'</span>, <span class="string">'最大半径'</span>, <span class="string">'平均灰度值'</span>]</span><br><span class="line">target_col = <span class="string">'肿瘤性质'</span></span><br><span class="line"></span><br><span class="line">n_cols = len(cols)</span><br><span class="line">fig, axes = plt.subplots(n_cols, 2, figsize=(14, n_cols * 4))</span><br><span class="line">fig.suptitle(<span class="string">'特征分布与目标变量关系'</span>, fontsize=16, fontweight=<span class="string">'bold'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i, col <span class="keyword">in</span> enumerate(cols):</span><br><span class="line">    ax1 = axes[i, 0]</span><br><span class="line">    ax2 = axes[i, 1]</span><br><span class="line"></span><br><span class="line">    sns.histplot(</span><br><span class="line">        data=<span class="built_in">df</span>,</span><br><span class="line">        x=col,</span><br><span class="line">        hue=target_col,</span><br><span class="line">        kde=True,</span><br><span class="line">        ax=ax1,</span><br><span class="line">        bins=30,</span><br><span class="line">        alpha=0.7,</span><br><span class="line">        palette=<span class="string">'Set2'</span></span><br><span class="line">    )</span><br><span class="line">    ax1.set_title(f<span class="string">'{col} - 分布直方图 &amp; KDE'</span>, fontsize=14)</span><br><span class="line">    ax1.grid(True, linestyle=<span class="string">'--'</span>, alpha=0.6)</span><br><span class="line"></span><br><span class="line">    sns.boxplot(</span><br><span class="line">        data=<span class="built_in">df</span>,</span><br><span class="line">        x=target_col,</span><br><span class="line">        y=col,</span><br><span class="line">        ax=ax2,</span><br><span class="line">        palette=<span class="string">'Set2'</span></span><br><span class="line">    )</span><br><span class="line">    ax2.set_title(f<span class="string">'{col} - 箱线图'</span>, fontsize=14)</span><br><span class="line">    ax2.grid(True, linestyle=<span class="string">'--'</span>, alpha=0.6)</span><br><span class="line">    ax2.set_xlabel(<span class="string">'目标类别'</span>)</span><br><span class="line"></span><br><span class="line">plt.tight_layout(rect=[0, 0, 1, 0.97])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/23/022.png" alt="photo"></p>
+<p>可以发现 数据呈现右偏 应该是使用对数变换处理 不过为了更具体我们测试各类预处理方案</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line">from sklearn.preprocessing import StandardScaler, RobustScaler</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">score_raw = cross_val_score(GaussianNB(), X, y, cv=5, scoring=<span class="string">'f1'</span>).mean()</span><br><span class="line"></span><br><span class="line">X_scaled = StandardScaler().fit_transform(X)</span><br><span class="line">score_scaled = cross_val_score(GaussianNB(), X_scaled, y, cv=5, scoring=<span class="string">'f1'</span>).mean()</span><br><span class="line"></span><br><span class="line">X_robust = RobustScaler().fit_transform(X)</span><br><span class="line">score_robust = cross_val_score(GaussianNB(), X_robust, y, cv=5, scoring=<span class="string">'f1'</span>).mean()</span><br><span class="line"></span><br><span class="line">X_log = np.log(X + 1)</span><br><span class="line">score_log = cross_val_score(GaussianNB(), X_log, y, cv=5, scoring=<span class="string">'f1'</span>).mean()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"原始: {score_raw:.4f}"</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"标准化: {score_scaled:.4f}"</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"鲁棒缩放: {score_robust:.4f}"</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"对数变换: {score_log:.4f}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>原始: 0.9711<br>标准化: 0.9651<br>鲁棒缩放: 0.9651<br>对数变换: 0.9692<br>发现不进行预处理反而会更好</p>
+<h1 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line"></span><br><span class="line">nb = GaussianNB()</span><br><span class="line">nb.fit(X_train, y_train)</span><br><span class="line">y_pred = nb.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import accuracy_score</span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(accuracy_score(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>准确率：0.9649</p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>39</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>1</td>
+<td>71</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.97</td>
+<td>0.93</td>
+<td>0.95</td>
+<td>42</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.96</td>
+<td>0.99</td>
+<td>0.97</td>
+<td>72</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.96</strong></td>
+<td>114</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.97</td>
+<td>0.96</td>
+<td>0.96</td>
+<td>114</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.97</td>
+<td>0.96</td>
+<td>0.96</td>
+<td>114</td>
+</tr>
+</tbody></table>
+<h1 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><p>其他的数据我们添加异常值的</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'肿瘤数据.xlsx'</span>)</span><br><span class="line"></span><br><span class="line">cols = [<span class="string">'最大周长'</span>, <span class="string">'平均凹陷度'</span>, <span class="string">'最大面积'</span>, <span class="string">'最大半径'</span>, <span class="string">'平均灰度值'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> cols:</span><br><span class="line">    Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">    Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">    IQR = Q3 - Q1</span><br><span class="line"></span><br><span class="line">    lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">    upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line">    <span class="built_in">df</span>[f<span class="string">'{col}_is_outlier'</span>] = ((df[col] &lt; lower_bound) | (df[col] &gt; upper_bound)).astype(int)</span><br><span class="line"></span><br><span class="line">df.head()</span><br><span class="line"></span><br><span class="line">X = df.drop(columns=[<span class="string">'肿瘤性质'</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'肿瘤性质'</span>]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line">lr = LogisticRegression()</span><br><span class="line">lr.fit(X_train, y_train)</span><br><span class="line">y_pred = lr.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(accuracy_score(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>准确率：0.9561</p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>39</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>2</td>
+<td>70</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.95</td>
+<td>0.93</td>
+<td>0.94</td>
+<td>42</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.96</td>
+<td>0.97</td>
+<td>0.97</td>
+<td>72</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.96</strong></td>
+<td>114</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.96</td>
+<td>0.95</td>
+<td>0.95</td>
+<td>114</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.96</td>
+<td>0.96</td>
+<td>0.96</td>
+<td>114</td>
+</tr>
+</tbody></table>
+<h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line">dtc = DecisionTreeClassifier(random_state=42)</span><br><span class="line">dtc.fit(X_train, y_train)</span><br><span class="line">y_pred = dtc.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(accuracy_score(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>准确率：0.9211</p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>37</td>
+<td>5</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>4</td>
+<td>68</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.90</td>
+<td>0.88</td>
+<td>0.89</td>
+<td>42</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.93</td>
+<td>0.94</td>
+<td>0.94</td>
+<td>72</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.92</strong></td>
+<td>114</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.92</td>
+<td>0.91</td>
+<td>0.91</td>
+<td>114</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.92</td>
+<td>0.92</td>
+<td>0.92</td>
+<td>114</td>
+</tr>
+</tbody></table>
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from xgboost import XGBClassifier</span><br><span class="line"></span><br><span class="line">xgb = XGBClassifier(use_label_encoder=False, eval_metric=<span class="string">'logloss'</span>, random_state=42)</span><br><span class="line">xgb.fit(X_train, y_train)</span><br><span class="line">y_xgb_pred = xgb.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"XGB Accuracy:"</span>, accuracy_score(y_test, y_xgb_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"XGB Confusion Matrix:\n"</span>, confusion_matrix(y_test, y_xgb_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"XGB Classification Report:\n"</span>, classification_report(y_test, y_xgb_pred))</span><br></pre></td></tr></table></figure></div>
+<p><strong>XGB Accuracy:</strong> 0.9561</p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>39</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>2</td>
+<td>70</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.95</td>
+<td>0.93</td>
+<td>0.94</td>
+<td>42</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.96</td>
+<td>0.97</td>
+<td>0.97</td>
+<td>72</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.96</strong></td>
+<td>114</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.96</td>
+<td>0.95</td>
+<td>0.95</td>
+<td>114</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.96</td>
+<td>0.96</td>
+<td>0.96</td>
+<td>114</td>
+</tr>
+</tbody></table>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> = RandomForestClassifier(n_estimators=100, random_state=42)</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line">y_rm_pred = rm.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Random Forest Accuracy:"</span>, accuracy_score(y_test, y_rm_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Random Forest Confusion Matrix:\n"</span>, confusion_matrix(y_test, y_rm_pred))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Random Forest Classification Report:\n"</span>, classification_report(y_test, y_rm_pred))</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>Random Forest Accuracy:</strong> 0.9561</p>
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>39</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>2</td>
+<td>70</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.95</td>
+<td>0.93</td>
+<td>0.94</td>
+<td>42</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.96</td>
+<td>0.97</td>
+<td>0.97</td>
+<td>72</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.96</strong></td>
+<td>114</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.96</td>
+<td>0.95</td>
+<td>0.95</td>
+<td>114</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.96</td>
+<td>0.96</td>
+<td>0.96</td>
+<td>114</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
 </search>
