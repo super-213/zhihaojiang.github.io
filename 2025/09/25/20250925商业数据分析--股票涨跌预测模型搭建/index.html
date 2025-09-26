@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="姜智浩">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+            <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/2025/09/25/20250925商业数据分析--股票涨跌预测模型搭建/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="商业数据分析--股票涨跌预测模型搭建">
+<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/2025/09/25/20250925%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E8%82%A1%E7%A5%A8%E6%B6%A8%E8%B7%8C%E9%A2%84%E6%B5%8B%E6%A8%A1%E5%9E%8B%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2025-09-25T03:45:14.000Z">
+<meta property="article:modified_time" content="2025-09-25T01:44:49.090Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="商业数据分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://super-213.github.io/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/zhihaojiang.github.io/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/zhihaojiang.github.io/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/zhihaojiang.github.io/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            商业数据分析--股票涨跌预测模型搭建 | 智浩的Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+
+    <!-- 这里是 Live2D 代码 -->
+    <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/css/build/tailwind.css">
+    
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fonts/GeistMono/geist-mono.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fonts/Geist/geist.css">
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+        <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/anime.min.js" ></script>
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"super-213.github.io","root":"/zhihaojiang.github.io/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/super-213","instagram":null,"zhihu":null,"twitter":null,"email":"jiangzhihaojzh@126.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1"},"mathjax":{"tags":"none","single_dollars":true,"cjk_width":0.9,"normal_width":0.6,"append_css":true,"every_page":true}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        智浩的Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({ loop: true })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [20, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                filter: ['blur(5px)', 'blur(0px)'],
+                easing: "easeOutExpo",
+                duration: 1200,
+                delay: (el, i) => 300 + 20 * i,
+            })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [0, -20],
+                opacity: [1, 0],
+                filter: ['blur(0px)', 'blur(5px)'],
+                easing: "easeInExpo",
+                duration: 1000,
+                delay: (el, i) => 15 * i,
+                complete: function() {
+                    hidePreloader();
+                }
+            }, '-=700');
+
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/zhihaojiang.github.io/">
+                
+                智浩的Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    PHOTO
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/zhihaojiang.github.io/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/super-213">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/masonry/"
+                        >
+                            <span>
+                                PHOTO
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/zhihaojiang.github.io/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/super-213">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/bookmarks/"
+                        >
+                            <span>Bookmarks</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/tags/"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/categories/"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">21</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">56</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">商业数据分析--股票涨跌预测模型搭建</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/zhihaojiang.github.io/images/defaults/IMG_3744.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">姜智浩</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv4</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-09-25 11:45:14</span>
+        <span class="mobile">2025-09-25 11:45:14</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-09-25 09:44:49</span>
+            <span class="mobile">2025-09-25 09:44:49</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/zhihaojiang.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/zhihaojiang.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">商业数据分析</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>2k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>9 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" target="_blank" rel="noopener" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="导入库"><a href="#导入库" class="headerlink" title="导入库"></a>导入库</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import tushare as ts  <span class="comment"># 股票基本数据相关库</span></span><br><span class="line">import numpy as np  <span class="comment"># 科学计算相关库</span></span><br><span class="line">import pandas as pd  <span class="comment"># 科学计算相关库  </span></span><br><span class="line">import talib  <span class="comment"># 股票衍生变量数据相关库</span></span><br><span class="line">import matplotlib.pyplot as plt  <span class="comment"># 引入绘图相关库，可视化</span></span><br><span class="line">from sklearn.ensemble import RandomForestClassifier  <span class="comment"># 引入分类决策树模型</span></span><br><span class="line">from sklearn.metrics import accuracy_score  <span class="comment"># 引入准确度评分函数</span></span><br><span class="line">import warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">"ignore"</span>) <span class="comment"># 忽略警告信息，警告非报错，不影响代码执行</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.股票基本数据获取</span></span><br><span class="line"><span class="built_in">df</span> = ts.get_k_data(<span class="string">'000002'</span>,start=<span class="string">'2015-01-01'</span>,end=<span class="string">'2019-12-31'</span>)</span><br><span class="line"><span class="built_in">df</span> = df.set_index(<span class="string">'date'</span>)  <span class="comment"># 设置日期为索引</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.简单衍生变量构造</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'close-open'</span>] = (<span class="built_in">df</span>[<span class="string">'close'</span>] - <span class="built_in">df</span>[<span class="string">'open'</span>])/df[<span class="string">'open'</span>]</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'high-low'</span>] = (<span class="built_in">df</span>[<span class="string">'high'</span>] - <span class="built_in">df</span>[<span class="string">'low'</span>])/df[<span class="string">'low'</span>]</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'pre_close'</span>] = <span class="built_in">df</span>[<span class="string">'close'</span>].<span class="built_in">shift</span>(1)  <span class="comment"># 该列所有往下移一行形成昨日收盘价</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'price_change'</span>] = <span class="built_in">df</span>[<span class="string">'close'</span>]-<span class="built_in">df</span>[<span class="string">'pre_close'</span>]</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'p_change'</span>] = (<span class="built_in">df</span>[<span class="string">'close'</span>]-<span class="built_in">df</span>[<span class="string">'pre_close'</span>])/df[<span class="string">'pre_close'</span>]*100</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.移动平均线相关数据构造</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'MA5'</span>] = <span class="built_in">df</span>[<span class="string">'close'</span>].rolling(5).mean()</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'MA10'</span>] = <span class="built_in">df</span>[<span class="string">'close'</span>].rolling(10).mean()</span><br><span class="line">df.dropna(inplace=True)  <span class="comment"># 删除空值</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4.通过Ta_lib库构造衍生变量</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'RSI'</span>] = talib.RSI(<span class="built_in">df</span>[<span class="string">'close'</span>], timeperiod=12)  <span class="comment"># 相对强弱指标</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'MOM'</span>] = talib.MOM(<span class="built_in">df</span>[<span class="string">'close'</span>], timeperiod=5)  <span class="comment"># 动量指标</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'EMA12'</span>] = talib.EMA(<span class="built_in">df</span>[<span class="string">'close'</span>], timeperiod=12)  <span class="comment"># 12日指数移动平均线</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'EMA26'</span>] = talib.EMA(<span class="built_in">df</span>[<span class="string">'close'</span>], timeperiod=26)  <span class="comment"># 26日指数移动平均线</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'MACD'</span>], <span class="built_in">df</span>[<span class="string">'MACDsignal'</span>], <span class="built_in">df</span>[<span class="string">'MACDhist'</span>] = talib.MACD(<span class="built_in">df</span>[<span class="string">'close'</span>], fastperiod=12, slowperiod=26, signalperiod=9)  <span class="comment"># MACD值</span></span><br><span class="line">df.dropna(inplace=True)  <span class="comment"># 删除空值</span></span><br></pre></td></tr></table></figure></div>
+
+<p>库太老了 我使用其他数据获取库<br>用其他更现代的库来获取股票数据</p>
+<p>akshare</p>
+<p>pip install akshare</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import akshare as ak</span><br><span class="line"><span class="built_in">df</span> = ak.stock_zh_a_hist(symbol=<span class="string">"000002"</span>, period=<span class="string">"daily"</span>, start_date=<span class="string">"20150101"</span>, end_date=<span class="string">"20191231"</span>, adjust=<span class="string">""</span>)</span><br><span class="line"><span class="built_in">df</span> = df.set_index(<span class="string">'日期'</span>)</span><br><span class="line"></span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>股票代码</th>
+<th>开盘</th>
+<th>收盘</th>
+<th>最高</th>
+<th>最低</th>
+<th>成交量</th>
+<th>成交额</th>
+<th>振幅</th>
+<th>涨跌幅</th>
+<th>涨跌额</th>
+<th>换手率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2015-01-05</td>
+<td>000002</td>
+<td>14.39</td>
+<td>14.91</td>
+<td>15.29</td>
+<td>14.22</td>
+<td>6560836</td>
+<td>9.700712e+09</td>
+<td>7.70</td>
+<td>7.27</td>
+<td>1.01</td>
+<td>6.76</td>
+</tr>
+<tr>
+<td>2015-01-06</td>
+<td>000002</td>
+<td>14.60</td>
+<td>14.36</td>
+<td>14.99</td>
+<td>14.05</td>
+<td>3346347</td>
+<td>4.839616e+09</td>
+<td>6.30</td>
+<td>-3.69</td>
+<td>-0.55</td>
+<td>3.45</td>
+</tr>
+<tr>
+<td>2015-01-07</td>
+<td>000002</td>
+<td>14.26</td>
+<td>14.23</td>
+<td>14.50</td>
+<td>14.00</td>
+<td>2642051</td>
+<td>3.772151e+09</td>
+<td>3.48</td>
+<td>-0.91</td>
+<td>-0.13</td>
+<td>2.72</td>
+</tr>
+<tr>
+<td>2015-01-08</td>
+<td>000002</td>
+<td>14.32</td>
+<td>13.59</td>
+<td>14.37</td>
+<td>13.46</td>
+<td>2639394</td>
+<td>3.629554e+09</td>
+<td>6.39</td>
+<td>-4.50</td>
+<td>-0.64</td>
+<td>2.72</td>
+</tr>
+<tr>
+<td>2015-01-09</td>
+<td>000002</td>
+<td>13.54</td>
+<td>13.45</td>
+<td>14.22</td>
+<td>13.29</td>
+<td>3294584</td>
+<td>4.521978e+09</td>
+<td>6.84</td>
+<td>-1.03</td>
+<td>-0.14</td>
+<td>3.39</td>
+</tr>
+</tbody></table>
+<h1 id="画k线图"><a href="#画k线图" class="headerlink" title="画k线图"></a>画k线图</h1><p>针对股票市场 我们肯定要查看其k线图</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import plotly.graph_objects as go</span><br><span class="line"></span><br><span class="line">data = df.loc[<span class="string">"2015-01-01"</span>:<span class="string">"2015-01-31"</span>]</span><br><span class="line"></span><br><span class="line">fig = go.Figure(data=[go.Candlestick(</span><br><span class="line">    x=data.index,</span><br><span class="line">    open=data[<span class="string">"Open"</span>],</span><br><span class="line">    high=data[<span class="string">"High"</span>],</span><br><span class="line">    low=data[<span class="string">"Low"</span>],</span><br><span class="line">    close=data[<span class="string">"Close"</span>],</span><br><span class="line">    increasing_line_color=<span class="string">"red"</span>,</span><br><span class="line">    decreasing_line_color=<span class="string">"green"</span></span><br><span class="line">)])</span><br><span class="line"></span><br><span class="line">fig.update_layout(</span><br><span class="line">    title=<span class="string">"000002 万科A K线图 (2015-01)"</span>,</span><br><span class="line">    xaxis_title=<span class="string">"日期"</span>,</span><br><span class="line">    yaxis_title=<span class="string">"价格"</span>,</span><br><span class="line">    xaxis_rangeslider_visible=False</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">fig.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/25/001.png" alt="photo"></p>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line">from sklearn.metrics import classification_report, accuracy_score</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span> = ak.stock_zh_a_hist(symbol=<span class="string">"000002"</span>, period=<span class="string">"daily"</span>, start_date=<span class="string">"20150101"</span>, end_date=<span class="string">"20150131"</span>, adjust=<span class="string">"qfq"</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[<span class="string">"label"</span>] = (<span class="built_in">df</span>[<span class="string">"收盘"</span>].<span class="built_in">shift</span>(-1) &gt; <span class="built_in">df</span>[<span class="string">"收盘"</span>]).astype(int)  <span class="comment"># 次日涨=1，跌=0</span></span><br><span class="line"></span><br><span class="line">X = <span class="built_in">df</span>[[<span class="string">"开盘"</span>, <span class="string">"最高"</span>, <span class="string">"最低"</span>, <span class="string">"收盘"</span>, <span class="string">"成交量"</span>, <span class="string">"成交额"</span>, <span class="string">"振幅"</span>, <span class="string">"涨跌幅"</span>, <span class="string">"换手率"</span>]]</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">"label"</span>]</span><br><span class="line"></span><br><span class="line">X = X[:-1]</span><br><span class="line">y = y[:-1]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)</span><br><span class="line"></span><br><span class="line">rf = RandomForestClassifier(n_estimators=200, random_state=42)</span><br><span class="line">rf.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">y_pred = rf.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"准确率:"</span>, accuracy_score(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>准确率: 1.0</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>1.00</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">feature_importances = pd.Series(rf.feature_importances_, index=X.columns)</span><br><span class="line">feature_importances = feature_importances.sort_values(ascending=False)</span><br><span class="line"><span class="built_in">print</span>(feature_importances)</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th>重要性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开盘</td>
+<td>0.3772</td>
+</tr>
+<tr>
+<td>最高</td>
+<td>0.2516</td>
+</tr>
+<tr>
+<td>最低</td>
+<td>0.1511</td>
+</tr>
+<tr>
+<td>收盘</td>
+<td>0.1213</td>
+</tr>
+<tr>
+<td>涨跌幅</td>
+<td>0.0444</td>
+</tr>
+<tr>
+<td>振幅</td>
+<td>0.0196</td>
+</tr>
+<tr>
+<td>成交量</td>
+<td>0.0173</td>
+</tr>
+<tr>
+<td>换手率</td>
+<td>0.0095</td>
+</tr>
+<tr>
+<td>成交额</td>
+<td>0.0081</td>
+</tr>
+</tbody></table>
+<h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line">dtc = DecisionTreeClassifier(random_state=42)</span><br><span class="line">dtc.fit(X_train, y_train)</span><br><span class="line">y_pred = dtc.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.67</td>
+<td>1.00</td>
+<td>0.80</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.00</td>
+<td>0.50</td>
+<td>0.67</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.75</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.83</td>
+<td>0.75</td>
+<td>0.73</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.83</td>
+<td>0.75</td>
+<td>0.73</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line"></span><br><span class="line">scores = cross_val_score(dtc, X_train, y_train, cv=5, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"各折准确率："</span>, scores)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"平均准确率：%.4f (+/- %.4f)"</span> % (scores.mean(), scores.std() * 2))</span><br></pre></td></tr></table></figure></div>
+<p>各折准确率： [1.         1.         0.66666667 0.66666667 1.        ]<br>平均准确率：0.8667 (+/- 0.3266)</p>
+<h2 id="决策树结果分析"><a href="#决策树结果分析" class="headerlink" title="决策树结果分析"></a>决策树结果分析</h2><p>发现决策树效果并没有随机森林那么好 这是因为随机森林是一种集成算法 是由多个决策树集成的 其结果是由多个决策树共同打分的 因此随机森林在处高维数据时会比决策树要好</p>
+<h1 id="GBDT"><a href="#GBDT" class="headerlink" title="GBDT"></a>GBDT</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.ensemble import GradientBoostingClassifier</span><br><span class="line"></span><br><span class="line">GBDT = GradientBoostingClassifier(random_state=42)</span><br><span class="line">GBDT.fit(X_train, y_train)</span><br><span class="line">y_pred = GBDT.predict(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.67</td>
+<td>1.00</td>
+<td>0.80</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.00</td>
+<td>0.50</td>
+<td>0.67</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.75</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.83</td>
+<td>0.75</td>
+<td>0.73</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.83</td>
+<td>0.75</td>
+<td>0.73</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line"></span><br><span class="line">scores = cross_val_score(GBDT, X_train, y_train, cv=5, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"各折准确率："</span>, scores)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"平均准确率：%.4f (+/- %.4f)"</span> % (scores.mean(), scores.std() * 2))</span><br></pre></td></tr></table></figure></div>
+<p>各折准确率： [1.         1.         0.66666667 0.66666667 1.        ]<br>平均准确率：0.8667 (+/- 0.3266)</p>
+<h2 id="GBDT结果分析"><a href="#GBDT结果分析" class="headerlink" title="GBDT结果分析"></a>GBDT结果分析</h2><p>发现GBDT的结果没随机森林要好 这是因为GBDT对参数敏感 需要进行调参 使用网格优化</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import GridSearchCV</span><br><span class="line"></span><br><span class="line">param_grid = {</span><br><span class="line">    <span class="string">'n_estimators'</span>: [100, 200, 500],</span><br><span class="line">    <span class="string">'learning_rate'</span>: [0.1, 0.05, 0.01],</span><br><span class="line">    <span class="string">'max_depth'</span>: [3, 5, 7],</span><br><span class="line">    <span class="string">'min_samples_split'</span>: [2, 5, 10],</span><br><span class="line">    <span class="string">'min_samples_leaf'</span>: [1, 2, 4]</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">grid = GridSearchCV(</span><br><span class="line">    GradientBoostingClassifier(random_state=42),</span><br><span class="line">    param_grid,</span><br><span class="line">    cv=5,</span><br><span class="line">    scoring=<span class="string">'f1_macro'</span>,  <span class="comment"># 也可以换成 'accuracy', 'roc_auc'</span></span><br><span class="line">    n_jobs=-1</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">grid.fit(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Best Params:"</span>, grid.best_params_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Best Score:"</span>, grid.best_score_)</span><br></pre></td></tr></table></figure></div>
+<p>Best Params: {‘learning_rate’: 0.1, ‘max_depth’: 3, ‘min_samples_leaf’: 1, ‘min_samples_split’: 2, ‘n_estimators’: 100}<br>Best Score: 0.8666666666666666<br>其结果要比之前的好了一些</p>
+<h1 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line"></span><br><span class="line">nb = GaussianNB()</span><br><span class="line">nb.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">y_pred_nb = nb.predict(X_test)</span><br><span class="line">y_pred_proba = nb.predict_proba(X_test)[:, 1]  <span class="comment"># 离职概率（正类概率）</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"混淆矩阵："</span>)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred_nb))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\n分类报告："</span>)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred_nb))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\n前5个样本的离职概率："</span>, y_pred_proba[:5])</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line"></span><br><span class="line">scores = cross_val_score(nb, X_train, y_train, cv=5, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"各折准确率："</span>, scores)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"平均准确率：%.4f (+/- %.4f)"</span> % (scores.mean(), scores.std() * 2))</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="贝叶斯结果分析"><a href="#贝叶斯结果分析" class="headerlink" title="贝叶斯结果分析"></a>贝叶斯结果分析</h2><p>可以看到 贝叶斯的结果非常不好 这是因为 贝叶斯模型是假设特征之间是相互独立的 而在股票市场中 特征之间往往是存在相关性的 因此贝叶斯模型的效果是要比其他模型差的</p>
+<p>我们还可以画出特征之间的热力图</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import seaborn as sns</span><br><span class="line">correlation_matrix = pd.concat([X_train, y_train], axis=1).corr()</span><br><span class="line"></span><br><span class="line">sns.heatmap(correlation_matrix, annot=True, cmap=<span class="string">'coolwarm'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p>可以看到 像开盘与最高 开盘与最低等之间呈现高相关性</p>
+<h1 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.discriminant_analysis import LinearDiscriminantAnalysis</span><br><span class="line"></span><br><span class="line">LDA = LinearDiscriminantAnalysis()</span><br><span class="line">LDA.fit(X_train, y_train)</span><br><span class="line">y_pred_lda = LDA.predict(X_test)</span><br><span class="line">y_pred_proba_lda = LDA.predict_proba(X_test)[:, 1]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"混淆矩阵："</span>)</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred_lda))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\n分类报告："</span>)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred_lda))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>0</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>1.00</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>1.00</td>
+<td>1.00</td>
+<td>1.00</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line"></span><br><span class="line">scores = cross_val_score(LDA, X_train, y_train, cv=5, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"各折准确率："</span>, scores)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"平均准确率：%.4f (+/- %.4f)"</span> % (scores.mean(), scores.std() * 2))</span><br></pre></td></tr></table></figure></div>
+<p>各折准确率： [0.66666667 0.66666667 0.66666667 0.66666667 0.33333333]<br>平均准确率：0.6000 (+/- 0.2667)</p>
+<h2 id="LDA结果分析"><a href="#LDA结果分析" class="headerlink" title="LDA结果分析"></a>LDA结果分析</h2><p>我们看到 LDA的分类报告非常好 但是进行k折交叉验证的时候没那么好<br>这是因为我的数据样本少 分类报告恰好分类得很好 但是在交叉验证的时候发现了此问题 此外 对于股票行情 不推荐使用k折交叉验证 因为交叉验证是随机划分的 有可能会泄漏未来的信息 推荐使用时序交叉验证</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.model_selection import TimeSeriesSplit, cross_val_score</span><br><span class="line"></span><br><span class="line">tscv = TimeSeriesSplit(n_splits=5)</span><br><span class="line">scores = cross_val_score(LDA, X_train, y_train, cv=tscv, scoring=<span class="string">'accuracy'</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"各折准确率："</span>, scores)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"平均准确率：%.4f (+/- %.4f)"</span> % (scores.mean(), scores.std() * 2))</span><br></pre></td></tr></table></figure></div>
+<p>各折准确率： [0.5 0.5 0.5 0.5 0.5]<br>平均准确率：0.5000 (+/- 0.0000)</p>
+<p>LDA 假设特征服从高斯分布 且协方差矩阵相同 但股票特征往往不满足</p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 商业数据分析--股票涨跌预测模型搭建</li>
+        <li><strong>Author:</strong> 姜智浩</li>
+        <li><strong>Created at
+                :</strong> 2025-09-25 11:45:14</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-09-25 09:44:49
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2025/09/25/20250925商业数据分析--股票涨跌预测模型搭建/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">#计算机科学</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">#数据分析</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">#商业数据分析</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/zhihaojiang.github.io/2025/09/25/20250925%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E4%BF%A1%E7%94%A8%E5%8D%A1%E7%B2%BE%E5%87%86%E8%90%A5%E9%94%80%E6%A8%A1%E5%9E%8B/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">商业数据分析--信用卡精准营销模型</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/zhihaojiang.github.io/2025/09/24/20250924Hadoop%E9%83%A8%E7%BD%B2--%E9%AA%8C%E8%AF%81%E5%88%86%E5%B8%83%E5%BC%8F%E6%98%AF%E5%90%A6%E6%88%90%E5%8A%9F/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">Hadoop部署--验证分布式是否成功</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">商业数据分析--股票涨跌预测模型搭建</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E"><span class="nav-text">声明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%E5%BA%93"><span class="nav-text">导入库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE"><span class="nav-text">查看数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%BBk%E7%BA%BF%E5%9B%BE"><span class="nav-text">画k线图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97"><span class="nav-text">随机森林</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E6%A0%91"><span class="nav-text">决策树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%B3%E7%AD%96%E6%A0%91%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-text">决策树结果分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GBDT"><span class="nav-text">GBDT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#GBDT%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-text">GBDT结果分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF"><span class="nav-text">朴素贝叶斯</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-text">贝叶斯结果分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LDA"><span class="nav-text">LDA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90"><span class="nav-text">LDA结果分析</span></a></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/zhihaojiang.github.io/">姜智浩</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        56 posts in total
+                    </span>
+                    
+                        <span>
+                            114.9k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/Swup.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupSlideTheme.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupScriptsPlugin.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupProgressPlugin.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupScrollPlugin.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupPreloadPlugin.min.js" ></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	<script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/imageViewer.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/utils.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/main.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/navbarShrink.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/scrollTopBottom.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/lightDarkSwitch.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/categoryList.js" ></script>
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/localSearch.js" ></script>
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/codeBlock.js" ></script>
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/lazyload.js" ></script>
+
+
+
+    <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/runtime.js" ></script>
+    <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/odometer.min.js" ></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/Typed.min.js" ></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/typed.js" ></script>
+
+
+
+
+
+    <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/minimasonry.min.js" ></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/masonry.js" ></script>
+
+
+
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/tocToggle.js" data-swup-reload-script></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/toc.js" data-swup-reload-script></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/tabs.js" data-swup-reload-script></script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/moment-with-locales.min.js" data-swup-reload-script></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/essays.js" data-swup-reload-script></script>
+
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/bookmarkNav.js" ></script>
+
+	
+	<div id="aplayer"></div>
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/APlayer.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/aplayer.js" ></script>
+
+	
+</body>
+
+</html>
