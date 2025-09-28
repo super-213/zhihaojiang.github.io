@@ -9653,4 +9653,1630 @@ import {initHBE} from "/zhihaojiang.github.io/js/plugins/hbe.js";
         <tag>商业数据分析</tag>
       </tags>
   </entry>
+  <entry>
+    <title>商业数据分析--信用卡交易数据</title>
+    <url>/zhihaojiang.github.io/2025/09/26/20250926%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E4%BF%A1%E7%94%A8%E5%8D%A1%E4%BA%A4%E6%98%93%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'信用卡交易数据.xlsx'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>换设备次数</th>
+<th>支付失败次数</th>
+<th>换IP次数</th>
+<th>换IP国次数</th>
+<th>交易金额</th>
+<th>欺诈标签</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>11</td>
+<td>3</td>
+<td>5</td>
+<td>28836</td>
+<td>1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>6</td>
+<td>1</td>
+<td>4</td>
+<td>21966</td>
+<td>1</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>18199</td>
+<td>1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>8</td>
+<td>2</td>
+<td>2</td>
+<td>24803</td>
+<td>1</td>
+</tr>
+<tr>
+<td>7</td>
+<td>10</td>
+<td>5</td>
+<td>0</td>
+<td>26277</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h1 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>缺失值数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>换设备次数</td>
+<td>0</td>
+</tr>
+<tr>
+<td>支付失败次数</td>
+<td>0</td>
+</tr>
+<tr>
+<td>换IP次数</td>
+<td>0</td>
+</tr>
+<tr>
+<td>换IP国次数</td>
+<td>0</td>
+</tr>
+<tr>
+<td>交易金额</td>
+<td>0</td>
+</tr>
+<tr>
+<td>欺诈标签</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h1 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/018.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/019.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/020.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/021.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/022.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/023.png" alt="photo"></p>
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">X = df.drop(columns=[<span class="string">'欺诈标签'</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'欺诈标签'</span>]</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from xgboost import XGBClassifier</span><br><span class="line"></span><br><span class="line">xgb = XGBClassifier(</span><br><span class="line">    n_estimators=100,</span><br><span class="line">    learning_rate=0.1,</span><br><span class="line">    max_depth=5,</span><br><span class="line">    subsample=0.8,</span><br><span class="line">    colsample_bytree=0.8,</span><br><span class="line">    objective=<span class="string">'binary:logistic'</span>,</span><br><span class="line">    eval_metric=<span class="string">'auc'</span>,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line">xgb.fit(X_train, y_train)</span><br><span class="line">y_pred = xgb.predict(X_test)</span><br><span class="line">y_pred_proba = xgb.predict_proba(X_test)[:, 1]</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import roc_curve, auc</span><br><span class="line">fpr, tpr, thresholds = roc_curve(y_test, y_pred_proba)</span><br><span class="line">roc_auc = auc(fpr, tpr)</span><br><span class="line">plt.plot(fpr, tpr, color=<span class="string">'darkorange'</span>, lw=2, label=<span class="string">'ROC curve (area = %0.2f)'</span> % roc_auc)</span><br><span class="line">plt.title(<span class="string">'ROC - XGBoost'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>119</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>18</td>
+<td>63</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.87</td>
+<td>1.00</td>
+<td>0.93</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.00</td>
+<td>0.78</td>
+<td>0.88</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.91</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.93</td>
+<td>0.89</td>
+<td>0.90</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.92</td>
+<td>0.91</td>
+<td>0.91</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/024.png" alt="photo"></p>
+<h1 id="LGBM"><a href="#LGBM" class="headerlink" title="LGBM"></a>LGBM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from lightgbm import LGBMClassifier</span><br><span class="line"></span><br><span class="line">lgbm = LGBMClassifier(</span><br><span class="line">    n_estimators=100,</span><br><span class="line">    learning_rate=0.1,</span><br><span class="line">    max_depth=5,</span><br><span class="line">    subsample=0.8,</span><br><span class="line">    colsample_bytree=0.8,</span><br><span class="line">    objective=<span class="string">'binary'</span>,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line">lgbm.fit(X_train, y_train)</span><br><span class="line">y_pred_lgbm = lgbm.predict(X_test)</span><br><span class="line">y_pred_proba_lgbm = lgbm.predict_proba(X_test)[:,1]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred_lgbm))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred_lgbm))</span><br><span class="line"></span><br><span class="line">fpr_lgbm, tpr_lgbm, thresholds_lgbm = roc_curve(y_test, y_pred_proba_lgbm)</span><br><span class="line">roc_auc_lgbm = auc(fpr_lgbm, tpr_lgbm)</span><br><span class="line">plt.plot(fpr_lgbm, tpr_lgbm, color=<span class="string">'blue'</span>, lw=2, label=<span class="string">'ROC curve (area = %0.2f)'</span> % roc_auc_lgbm)</span><br><span class="line">plt.title(<span class="string">'ROC - LGBM'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>118</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>18</td>
+<td>63</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.87</td>
+<td>0.99</td>
+<td>0.93</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.98</td>
+<td>0.78</td>
+<td>0.87</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.91</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.93</td>
+<td>0.88</td>
+<td>0.90</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.91</td>
+<td>0.91</td>
+<td>0.90</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/025.png" alt="photo"></p>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> = RandomForestClassifier(n_estimators=100, random_state=42)</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line">y_pred_rm = rm.predict(X_test)</span><br><span class="line">y_pred_proba_rm = rm.predict_proba(X_test)[:,1]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred_rm))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred_rm))</span><br><span class="line"></span><br><span class="line">fpr_rm, tpr_rm, thresholds_rm = roc_curve(y_test, y_pred_proba_rm)</span><br><span class="line">roc_auc_rm = auc(fpr_rm, tpr_rm)</span><br><span class="line">plt.plot(fpr_rm, tpr_rm, color=<span class="string">'green'</span>, lw=2, label=<span class="string">'ROC curve (area = %0.2f)'</span> % roc_auc_rm)</span><br><span class="line">plt.title(<span class="string">'ROC - Random Forest'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>118</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>17</td>
+<td>64</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.87</td>
+<td>0.99</td>
+<td>0.93</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.98</td>
+<td>0.79</td>
+<td>0.88</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.91</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.93</td>
+<td>0.89</td>
+<td>0.90</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.92</td>
+<td>0.91</td>
+<td>0.91</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/026.png" alt="photo"></p>
+<h1 id="贝叶斯"><a href="#贝叶斯" class="headerlink" title="贝叶斯"></a>贝叶斯</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line"></span><br><span class="line">nb = GaussianNB()</span><br><span class="line">nb.fit(X_train, y_train)</span><br><span class="line">y_pred_nb = nb.predict(X_test)</span><br><span class="line">y_pred_proba_nb = nb.predict_proba(X_test)[:,1]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred_nb))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred_nb))</span><br><span class="line"></span><br><span class="line">fpr_nb, tpr_nb, thresholds_nb = roc_curve(y_test, y_pred_proba_nb)</span><br><span class="line">roc_auc_nb = auc(fpr_nb, tpr_nb)</span><br><span class="line">plt.plot(fpr_nb, tpr_nb, color=<span class="string">'red'</span>, lw=2, label=<span class="string">'ROC curve (area = %0.2f)'</span> % roc_auc_nb)</span><br><span class="line">plt.title(<span class="string">'ROC - NB'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>114</td>
+<td>5</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>24</td>
+<td>57</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.83</td>
+<td>0.96</td>
+<td>0.89</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.92</td>
+<td>0.70</td>
+<td>0.80</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.85</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.87</td>
+<td>0.83</td>
+<td>0.84</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.86</td>
+<td>0.85</td>
+<td>0.85</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/027.png" alt="photo"></p>
+<h1 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsClassifier</span><br><span class="line"></span><br><span class="line">knn = KNeighborsClassifier()</span><br><span class="line">knn.fit(X_train, y_train)</span><br><span class="line">y_pred_knn = knn.predict(X_test)</span><br><span class="line">y_pred_proba_knn = knn.predict_proba(X_test)[:,1]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred_knn))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred_knn))</span><br><span class="line">fpr_knn, tpr_knn, thresholds_knn = roc_curve(y_test, y_pred_proba_knn)</span><br><span class="line">roc_auc_knn = auc(fpr_knn, tpr_knn)</span><br><span class="line">plt.plot(fpr_knn, tpr_knn, color=<span class="string">'purple'</span>, lw=2, label=<span class="string">'ROC curve (area = %0.2f)'</span> % roc_auc_knn)</span><br><span class="line">plt.title(<span class="string">'ROC - KNN'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>86</td>
+<td>33</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>57</td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.60</td>
+<td>0.72</td>
+<td>0.66</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.42</td>
+<td>0.30</td>
+<td>0.35</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.55</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.51</td>
+<td>0.51</td>
+<td>0.50</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.53</td>
+<td>0.55</td>
+<td>0.53</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/028.png" alt="photo"></p>
+<h1 id="模型结果汇总对比"><a href="#模型结果汇总对比" class="headerlink" title="模型结果汇总对比"></a>模型结果汇总对比</h1><h2 id="XGBoost-1"><a href="#XGBoost-1" class="headerlink" title="XGBoost"></a>XGBoost</h2><table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>119</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>18</td>
+<td>63</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.87</td>
+<td>1.00</td>
+<td>0.93</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1.00</td>
+<td>0.78</td>
+<td>0.88</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.91</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.93</td>
+<td>0.89</td>
+<td>0.90</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.92</td>
+<td>0.91</td>
+<td>0.91</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<h2 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h2><table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>118</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>18</td>
+<td>63</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.87</td>
+<td>0.99</td>
+<td>0.93</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.98</td>
+<td>0.78</td>
+<td>0.87</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.91</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.93</td>
+<td>0.88</td>
+<td>0.90</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.91</td>
+<td>0.91</td>
+<td>0.90</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<h2 id="随机森林-1"><a href="#随机森林-1" class="headerlink" title="随机森林"></a>随机森林</h2><table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>118</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>17</td>
+<td>64</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.87</td>
+<td>0.99</td>
+<td>0.93</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.98</td>
+<td>0.79</td>
+<td>0.88</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.91</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.93</td>
+<td>0.89</td>
+<td>0.90</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.92</td>
+<td>0.91</td>
+<td>0.91</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<h2 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h2><table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>114</td>
+<td>5</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>24</td>
+<td>57</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.83</td>
+<td>0.96</td>
+<td>0.89</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.92</td>
+<td>0.70</td>
+<td>0.80</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.85</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.87</td>
+<td>0.83</td>
+<td>0.84</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.86</td>
+<td>0.85</td>
+<td>0.85</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<h2 id="KNN-1"><a href="#KNN-1" class="headerlink" title="KNN"></a>KNN</h2><table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>86</td>
+<td>33</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>57</td>
+<td>24</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.60</td>
+<td>0.72</td>
+<td>0.66</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.42</td>
+<td>0.30</td>
+<td>0.35</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.55</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.51</td>
+<td>0.51</td>
+<td>0.50</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.53</td>
+<td>0.55</td>
+<td>0.53</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><strong>树模型 (XGBoost / LightGBM / 随机森林)</strong> → 表现最好，准确率 0.91，ROC-AUC 高，Precision 接近 1，但 Recall 约 0.78–0.79，有一定漏判风险。  </li>
+<li><strong>朴素贝叶斯</strong> → 简单快速，但 Recall 下降到 0.70，漏判更多。  </li>
+<li><strong>KNN</strong> → 表现最差，不适合该任务。</li>
+</ul>
+<blockquote>
+<p><strong>结论：</strong> 金融场景推荐使用 <strong>XGBoost / LightGBM / 随机森林</strong>，并可通过 <strong>阈值调整、类别权重、SMOTE</strong> 等方法进一步优化 Recall。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--客户信息及违约表现</title>
+    <url>/zhihaojiang.github.io/2025/09/26/20250926%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E5%AE%A2%E6%88%B7%E4%BF%A1%E6%81%AF%E5%8F%8A%E8%BF%9D%E7%BA%A6%E8%A1%A8%E7%8E%B0/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'客户信息及违约表现.xlsx'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>收入</th>
+<th>年龄</th>
+<th>性别</th>
+<th>历史授信额度</th>
+<th>历史违约次数</th>
+<th>是否违约</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>462087</td>
+<td>26</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>362324</td>
+<td>32</td>
+<td>0</td>
+<td>13583</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>332011</td>
+<td>52</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>252895</td>
+<td>39</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>352355</td>
+<td>50</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h1 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/010.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/011.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/012.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/013.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/014.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/015.png" alt="photo"></p>
+<p>发现两个特征存在异常值 使用热力图查看特征之间的关系</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import seaborn as sns</span><br><span class="line"></span><br><span class="line">sns.heatmap(df.corr(), annot=True, cmap=<span class="string">'coolwarm'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/016.png" alt="photo"></p>
+<p>看到 历史违约次数和是否违约相关性很大 并且历史违约次数存在异常值 因此新增此特征的异常值特征列</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">col = <span class="string">'历史违约次数'</span></span><br><span class="line"></span><br><span class="line">Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">IQR = Q3 - Q1</span><br><span class="line"></span><br><span class="line">lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[f<span class="string">'{col}_is_outlier'</span>] = ((df[col] &lt; lower_bound) | (df[col] &gt; upper_bound)).astype(int)</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span> = df.drop(columns=[<span class="string">'历史授信额度'</span>])</span><br></pre></td></tr></table></figure></div>
+
+<p>继续查看另一个异常值的特征分布</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">plt.hist(<span class="built_in">df</span>[<span class="string">'历史授信额度'</span>], bins=30, color=<span class="string">'skyblue'</span>, edgecolor=<span class="string">'black'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/017.png" alt="photo"></p>
+<p>可以看到 数据是右偏的 并且是长尾分布 对于此数据 使用对数变换</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">col = <span class="string">'历史授信额度'</span></span><br><span class="line"><span class="built_in">df</span>[f<span class="string">'{col}_log'</span>] = np.log1p(<span class="built_in">df</span>[col])</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">X = df.drop(columns=[<span class="string">'是否违约'</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'是否违约'</span>]</span><br><span class="line"></span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from xgboost import XGBClassifier</span><br><span class="line"></span><br><span class="line">xgb = XGBClassifier(</span><br><span class="line">    n_estimators=100,</span><br><span class="line">    learning_rate=0.1,</span><br><span class="line">    max_depth=5,</span><br><span class="line">    subsample=0.8,</span><br><span class="line">    colsample_bytree=0.8,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line">xgb.fit(X_train, y_train)</span><br><span class="line">y_pred = xgb.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>110</td>
+<td>9</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>29</td>
+<td>52</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.79</td>
+<td>0.92</td>
+<td>0.85</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.85</td>
+<td>0.64</td>
+<td>0.73</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.81</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.82</td>
+<td>0.78</td>
+<td>0.79</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.82</td>
+<td>0.81</td>
+<td>0.80</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<h1 id="LGBM"><a href="#LGBM" class="headerlink" title="LGBM"></a>LGBM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from lightgbm import LGBMClassifier</span><br><span class="line"></span><br><span class="line">lgbm = LGBMClassifier(</span><br><span class="line">    n_estimators=100,</span><br><span class="line">    learning_rate=0.1,</span><br><span class="line">    max_depth=5,</span><br><span class="line">    subsample=0.8,</span><br><span class="line">    colsample_bytree=0.8,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line">lgbm.fit(X_train, y_train)</span><br><span class="line">y_pred = lgbm.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>113</td>
+<td>6</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>29</td>
+<td>52</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.80</td>
+<td>0.95</td>
+<td>0.87</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.90</td>
+<td>0.64</td>
+<td>0.75</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.82</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.85</td>
+<td>0.80</td>
+<td>0.81</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.84</td>
+<td>0.82</td>
+<td>0.82</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> = RandomForestClassifier(</span><br><span class="line">    n_estimators=100,</span><br><span class="line">    max_depth=5,</span><br><span class="line">    random_state=42</span><br><span class="line">)</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line">y_pred = rm.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>117</td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>29</td>
+<td>52</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.80</td>
+<td>0.98</td>
+<td>0.88</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.96</td>
+<td>0.64</td>
+<td>0.77</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.84</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.88</td>
+<td>0.81</td>
+<td>0.83</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.87</td>
+<td>0.84</td>
+<td>0.84</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<h1 id="贝叶斯"><a href="#贝叶斯" class="headerlink" title="贝叶斯"></a>贝叶斯</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line"></span><br><span class="line">nb = GaussianNB()</span><br><span class="line">nb.fit(X_train, y_train)</span><br><span class="line">y_pred = nb.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>111</td>
+<td>8</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>43</td>
+<td>38</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.72</td>
+<td>0.93</td>
+<td>0.81</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.83</td>
+<td>0.47</td>
+<td>0.60</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.74</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.77</td>
+<td>0.70</td>
+<td>0.71</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.76</td>
+<td>0.74</td>
+<td>0.73</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<h1 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line">lr = LogisticRegression()</span><br><span class="line">lr.fit(X_train, y_train)</span><br><span class="line">y_pred = lr.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>88</td>
+<td>31</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>60</td>
+<td>21</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.59</td>
+<td>0.74</td>
+<td>0.66</td>
+<td>119</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.40</td>
+<td>0.26</td>
+<td>0.32</td>
+<td>81</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.55</strong></td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.50</td>
+<td>0.50</td>
+<td>0.49</td>
+<td>200</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.52</td>
+<td>0.55</td>
+<td>0.52</td>
+<td>200</td>
+</tr>
+</tbody></table>
+<h1 id="模型横向对比"><a href="#模型横向对比" class="headerlink" title="模型横向对比"></a>模型横向对比</h1><h2 id="XGBoost-1"><a href="#XGBoost-1" class="headerlink" title="XGBoost"></a>XGBoost</h2><ul>
+<li><strong>整体表现：</strong> Accuracy = 0.81</li>
+<li><strong>优点：</strong><ul>
+<li>Precision 对 1 类 较高 (0.85)，但 Recall 偏低 (0.64)</li>
+<li>说明它比较谨慎 预测为违约时大多是真的（低假阳性）但漏掉了不少实际违约（高假阴性）</li>
+<li>适合在误判正常人为违约成本高的场景</li>
+</ul>
+</li>
+</ul>
+<h2 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h2><ul>
+<li><strong>整体表现：</strong> Accuracy = 0.82（略高于 XGB）  </li>
+<li><strong>优点：</strong><ul>
+<li>对类别 1 的 Precision 更高 (0.90) Recall 同样偏低 (0.64)</li>
+<li>预测结果更保守 对 1 的识别严格 但仍漏掉一部分违约客户</li>
+<li>对比 XGBoost：性能非常接近，但 LightGBM 对类别 0 的 Recall 更高 对正常客户的识别更稳</li>
+</ul>
+</li>
+</ul>
+<h2 id="随机森林-1"><a href="#随机森林-1" class="headerlink" title="随机森林"></a>随机森林</h2><ul>
+<li><strong>整体表现：</strong> Accuracy = 0.84</li>
+<li><strong>优点：</strong><ul>
+<li>类别 0 的 Recall 极高 几乎不会把正常客户错判为违约</li>
+<li>类别 1 的 Precision 很高 (0.96)，但 Recall 仍然只有 0.64 但还是漏掉部分</li>
+</ul>
+</li>
+<li><strong>特点：</strong><ul>
+<li>Bagging 思路让它在这类低维表格数据上表现最稳健。</li>
+<li>如果更在意总体准确率和稳健性，随机森林是首选。</li>
+</ul>
+</li>
+</ul>
+<h2 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h2><ul>
+<li><strong>整体表现：</strong> Accuracy = 0.74  </li>
+<li><strong>优点：</strong> 对类别 0 Recall 较高</li>
+<li><strong>缺点：</strong> 类别 1 Recall 低 几乎一半违约客户都漏掉。  </li>
+<li><strong>原因：</strong><ul>
+<li>假设特征独立，这在客户数据里往往不成立 会导致性能下降</li>
+</ul>
+</li>
+</ul>
+<h2 id="逻辑回归-1"><a href="#逻辑回归-1" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><ul>
+<li><strong>整体表现：</strong> Accuracy = 0.55</li>
+<li><strong>缺点：</strong><ul>
+<li>类别 1 的 Recall 极低 大部分违约客户被判成了正常</li>
+<li>说明数据中的关系并不是线性可分的 逻辑回归模型过于简单</li>
+</ul>
+</li>
+<li><strong>适用场景：</strong><ul>
+<li>在数据高度线性且变量少时可用 但在这个复杂数据集上严重欠拟合</li>
+</ul>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Accuracy</th>
+<th>类别 1 (违约) Recall</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>随机森林</td>
+<td>0.84</td>
+<td>0.64</td>
+<td>最优表现，稳健，几乎不误判正常客户</td>
+</tr>
+<tr>
+<td>LightGBM</td>
+<td>0.82</td>
+<td>0.64</td>
+<td>高效，Precision 高，Recall 偏低</td>
+</tr>
+<tr>
+<td>XGBoost</td>
+<td>0.81</td>
+<td>0.64</td>
+<td>与 LGBM 接近，偏保守</td>
+</tr>
+<tr>
+<td>朴素贝叶斯</td>
+<td>0.74</td>
+<td>0.47</td>
+<td>偏弱，假设不符合实际</td>
+</tr>
+<tr>
+<td>逻辑回归</td>
+<td>0.55</td>
+<td>0.26</td>
+<td>严重欠拟合，不适合此任务</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>结论：</strong>  </p>
+<ul>
+<li>整体上 <strong>树模型（RF、XGB、LGBM）表现远优于线性模型（LR）和简单概率模型（NB）</strong> </li>
+<li><strong>随机森林在这里是最佳选择</strong>，因为它在准确率和稳定性上均优 并且对违约的准确率特别高</li>
+<li>但三种树模型都有一个共性：<strong>违约 Recall 偏低（都在 0.64 左右）</strong> 意味着有不少违约客户没被识别出来</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--广告收益数据</title>
+    <url>/zhihaojiang.github.io/2025/09/26/20250926%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E5%B9%BF%E5%91%8A%E6%94%B6%E7%9B%8A%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'广告收益数据.xlsx'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>电视</th>
+<th>广播</th>
+<th>报纸</th>
+<th>收益</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>230.1</td>
+<td>37.8</td>
+<td>69.2</td>
+<td>331.5</td>
+</tr>
+<tr>
+<td>44.5</td>
+<td>39.3</td>
+<td>45.1</td>
+<td>156.0</td>
+</tr>
+<tr>
+<td>17.2</td>
+<td>45.9</td>
+<td>69.3</td>
+<td>139.5</td>
+</tr>
+<tr>
+<td>151.5</td>
+<td>41.3</td>
+<td>58.5</td>
+<td>277.5</td>
+</tr>
+<tr>
+<td>180.8</td>
+<td>10.8</td>
+<td>58.4</td>
+<td>193.5</td>
+</tr>
+</tbody></table>
+<h1 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>缺失值数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电视</td>
+<td>0</td>
+</tr>
+<tr>
+<td>广播</td>
+<td>0</td>
+</tr>
+<tr>
+<td>报纸</td>
+<td>0</td>
+</tr>
+<tr>
+<td>收益</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h1 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/001.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/002.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/003.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/004.png" alt="photo"></p>
+<p>发现报纸存在异常值 画出热力图查看其相关性<br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/005.png" alt="photo"></p>
+<p>发现报纸与收益的相关性系数为0.22 虽然是一个比较小的数 但是考虑到数据只有3个特征 我们添加一列用于保留异常值</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">col = <span class="string">'报纸'</span></span><br><span class="line"></span><br><span class="line">Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">IQR = Q3 - Q1</span><br><span class="line"></span><br><span class="line">lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[f<span class="string">'{col}_is_outlier'</span>] = ((df[col] &lt; lower_bound) | (df[col] &gt; upper_bound)).astype(int)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line"></span><br><span class="line">X = df.drop(columns=[<span class="string">'收益'</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'收益'</span>]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from xgboost import XGBRegressor</span><br><span class="line"></span><br><span class="line">xgb = XGBRegressor()</span><br><span class="line">xgb.fit(X_train, y_train)</span><br><span class="line">y_pred = xgb.predict(X_test)</span><br><span class="line">from sklearn.metrics import mean_squared_error, r2_score</span><br><span class="line"></span><br><span class="line">mse = mean_squared_error(y_test, y_pred)</span><br><span class="line">r2 = r2_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'MSE: {mse}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'R2: {r2}'</span>)</span><br><span class="line"></span><br><span class="line">feature_importance = pd.DataFrame({</span><br><span class="line">    <span class="string">"feature"</span>: X_train.columns,</span><br><span class="line">    <span class="string">"importance"</span>: xgb.feature_importances_</span><br><span class="line">}).sort_values(by=<span class="string">"importance"</span>, ascending=False)</span><br><span class="line"><span class="built_in">print</span>(feature_importance)</span><br><span class="line"></span><br><span class="line">import shap</span><br><span class="line"></span><br><span class="line">explainer = shap.TreeExplainer(xgb)</span><br><span class="line">shap_values = explainer.shap_values(X_test)</span><br><span class="line"></span><br><span class="line">shap.summary_plot(shap_values, X_test)</span><br></pre></td></tr></table></figure></div>
+<p><strong>XGBoost 模型性能</strong>  </p>
+<ul>
+<li><strong>MSE:</strong> 297.333</li>
+<li><strong>R²:</strong> 0.9586</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>feature</th>
+<th>importance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电视</td>
+<td>0.561881</td>
+</tr>
+<tr>
+<td>广播</td>
+<td>0.412244</td>
+</tr>
+<tr>
+<td>报纸</td>
+<td>0.025875</td>
+</tr>
+<tr>
+<td>报纸_is_outlier</td>
+<td>0.000000</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>可以看到 我们新增的特征完全没有用 可以将上述的新增特征的代码删除</p>
+</blockquote>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/006.png" alt="photo"></p>
+<h1 id="LGBM"><a href="#LGBM" class="headerlink" title="LGBM"></a>LGBM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from lightgbm import LGBMRegressor</span><br><span class="line"></span><br><span class="line">lgbm = LGBMRegressor()</span><br><span class="line">lgbm.fit(X_train, y_train)</span><br><span class="line">y_pred_lgbm = lgbm.predict(X_test)</span><br><span class="line">mse_lgbm = mean_squared_error(y_test, y_pred_lgbm)</span><br><span class="line">r2_lgbm = r2_score(y_test, y_pred_lgbm)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'LGBM MSE: {mse_lgbm}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'LGBM R2: {r2_lgbm}'</span>)</span><br><span class="line">feature_importance_lgbm = pd.DataFrame({</span><br><span class="line">    <span class="string">"feature"</span>: X_train.columns,</span><br><span class="line">    <span class="string">"importance"</span>: lgbm.feature_importances_</span><br><span class="line">}).sort_values(by=<span class="string">"importance"</span>, ascending=False)</span><br><span class="line"><span class="built_in">print</span>(feature_importance_lgbm)</span><br><span class="line"></span><br><span class="line">explainer = shap.TreeExplainer(lgbm)</span><br><span class="line">shap_values = explainer.shap_values(X_test)</span><br><span class="line"></span><br><span class="line">shap.summary_plot(shap_values, X_test)</span><br></pre></td></tr></table></figure></div>
+<p><strong>LGBM 模型性能</strong>  </p>
+<ul>
+<li><strong>MSE:</strong> 308.58  </li>
+<li><strong>R²:</strong> 0.9570</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>feature</th>
+<th>importance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>广播</td>
+<td>990</td>
+</tr>
+<tr>
+<td>电视</td>
+<td>981</td>
+</tr>
+<tr>
+<td>报纸</td>
+<td>978</td>
+</tr>
+<tr>
+<td>报纸_is_outlier</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/007.png" alt="photo"></p>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> = RandomForestRegressor(n_estimators=100, random_state=42)</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line">y_pred_rm = rm.predict(X_test)</span><br><span class="line">mse_rm = mean_squared_error(y_test, y_pred_rm)</span><br><span class="line">r2_rm = r2_score(y_test, y_pred_rm)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'Random Forest MSE: {mse_rm}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'Random Forest R2: {r2_rm}'</span>)</span><br><span class="line">feature_importance_rm = pd.DataFrame({</span><br><span class="line">    <span class="string">"feature"</span>: X_train.columns,</span><br><span class="line">    <span class="string">"importance"</span>: rm.feature_importances_</span><br><span class="line">}).sort_values(by=<span class="string">"importance"</span>, ascending=False)</span><br><span class="line"><span class="built_in">print</span>(feature_importance_rm)</span><br><span class="line"></span><br><span class="line">explainer = shap.TreeExplainer(<span class="built_in">rm</span>)</span><br><span class="line">shap_values = explainer.shap_values(X_test)</span><br><span class="line"></span><br><span class="line">shap.summary_plot(shap_values, X_test)</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>Random Forest 模型性能</strong>  </p>
+<ul>
+<li><strong>MSE:</strong> 277.82  </li>
+<li><strong>R²:</strong> 0.9613</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>feature</th>
+<th>importance</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电视</td>
+<td>0.624624</td>
+</tr>
+<tr>
+<td>广播</td>
+<td>0.356226</td>
+</tr>
+<tr>
+<td>报纸</td>
+<td>0.018884</td>
+</tr>
+<tr>
+<td>报纸_is_outlier</td>
+<td>0.000266</td>
+</tr>
+</tbody></table>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/008.png" alt="photo"></p>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.svm import SVR</span><br><span class="line"></span><br><span class="line">svr = SVR()</span><br><span class="line">svr.fit(X_train, y_train)</span><br><span class="line">y_pred_svr = svr.predict(X_test)</span><br><span class="line">mse_svr = mean_squared_error(y_test, y_pred_svr)</span><br><span class="line">r2_svr = r2_score(y_test, y_pred_svr)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'SVR MSE: {mse_svr}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'SVR R2: {r2_svr}'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">explainer = shap.TreeExplainer(<span class="built_in">rm</span>)</span><br><span class="line">shap_values = explainer.shap_values(X_test)</span><br><span class="line"></span><br><span class="line">shap.summary_plot(shap_values, X_test)</span><br></pre></td></tr></table></figure></div>
+
+<p>SVR MSE: 2942.2258137398626<br>SVR R2: 0.5903858154199828</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/26/009.png" alt="photo"></p>
+<h1 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsRegressor</span><br><span class="line"></span><br><span class="line">knn = KNeighborsRegressor(n_neighbors=5)</span><br><span class="line">knn.fit(X_train, y_train)</span><br><span class="line">y_pred_knn = knn.predict(X_test)</span><br><span class="line">mse_knn = mean_squared_error(y_test, y_pred_knn)</span><br><span class="line">r2_knn = r2_score(y_test, y_pred_knn)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'KNN MSE: {mse_knn}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'KNN R2: {r2_knn}'</span>)</span><br></pre></td></tr></table></figure></div>
+<p>KNN MSE: 423.61199999999997<br>KNN R2: 0.9410250963240132</p>
+<h1 id="模型横向对比"><a href="#模型横向对比" class="headerlink" title="模型横向对比"></a>模型横向对比</h1><h2 id="XGBoost-1"><a href="#XGBoost-1" class="headerlink" title="XGBoost"></a>XGBoost</h2><ul>
+<li><strong>性能：</strong> MSE = 297.33，R2 = 0.9586  </li>
+<li><strong>特征重要性：</strong> 电视 &gt; 广播 &gt; 报纸  </li>
+<li><strong>特点：</strong><ul>
+<li>作为 Boosting 模型，它在处理非线性关系和特征交互方面很强 能较好地拟合广告投入与收益的关系</li>
+<li>由于数据集相对简单（变量少，关系较直观） XGBoost 表现稳定但没有压倒性优势</li>
+<li>新增的“报纸_is_outlier”特征完全无效 说明模型能自动忽略无信息量的特征 避免过拟合</li>
+</ul>
+</li>
+</ul>
+<h2 id="LightGBM"><a href="#LightGBM" class="headerlink" title="LightGBM"></a>LightGBM</h2><ul>
+<li><strong>性能：</strong> MSE = 308.58，R2 = 0.9570  </li>
+<li><strong>特征重要性：</strong> 广播 ≈ 电视 ≈ 报纸（几乎持平）  </li>
+<li><strong>特点：</strong><ul>
+<li>LightGBM 与 XGBoost 同属 Boosting 系列 但它采用了基于直方图的分裂方式，更适合高维稀疏特征</li>
+<li>在这个小数据集上 优势不明显 反而略逊于 XGBoost</li>
+<li>特征重要性差别不大 说明 LightGBM 在分裂时对每个特征都较平均地利用 但这可能导致它对真实最关键的“电视”变量抓取力度稍弱</li>
+</ul>
+</li>
+</ul>
+<h2 id="随机森林-1"><a href="#随机森林-1" class="headerlink" title="随机森林"></a>随机森林</h2><ul>
+<li><strong>性能：</strong> MSE = 277.82，R2 = 0.9613</li>
+<li><strong>特征重要性：</strong> 电视 &gt; 广播 &gt; 报纸  </li>
+<li><strong>特点：</strong><ul>
+<li>Bagging 思路 适合低维小数据 能降低方差、提高稳定性</li>
+<li>在广告收益数据集中 投入与收益的关系并不复杂 因此随机森林可以在不需要 Boosting 那种强烈逐步修正的情况下 直接通过平均化结果取得最优表现</li>
+<li>树模型捕捉到了 “电视广告” 的关键作用</li>
+</ul>
+</li>
+</ul>
+<h2 id="SVM-1"><a href="#SVM-1" class="headerlink" title="SVM"></a>SVM</h2><ul>
+<li><strong>性能：</strong> MSE = 2942.23，R2 = 0.5904</li>
+<li><strong>特点：</strong><ul>
+<li>默认参数的 SVR（核函数 RBF，C=1）不适合这种回归任务。它需要仔细调参（C、γ、ε）才能拟合非线性关系</li>
+<li>数据集维度很低（只有 3 个主要特征） 而 SVR 在小样本、复杂边界时更有优势 但这里的关系接近线性 SVR 没有优势。</li>
+<li>因此在这个广告收益场景中 SVR 明显欠拟合</li>
+</ul>
+</li>
+</ul>
+<h2 id="KNN-1"><a href="#KNN-1" class="headerlink" title="KNN"></a>KNN</h2><ul>
+<li><strong>性能：</strong> MSE = 423.61，R2 = 0.9410</li>
+<li><strong>特点：</strong><ul>
+<li>基于邻居的局部平均方法 效果依赖样本分布和邻居数 k</li>
+<li>在数据集较小、关系清晰时 KNN 能捕捉到一定趋势 但预测平滑化严重</li>
+<li>所以它的表现比树模型差 但仍然比 SVR 稳定</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>MSE</th>
+<th>R2</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>随机森林</td>
+<td>277.82</td>
+<td>0.9613</td>
+<td>Bagging 模型，抗过拟合强，最适合此数据集</td>
+</tr>
+<tr>
+<td>XGBoost</td>
+<td>297.33</td>
+<td>0.9586</td>
+<td>Boosting 思路，拟合能力强，但未明显优于RF</td>
+</tr>
+<tr>
+<td>LightGBM</td>
+<td>308.58</td>
+<td>0.9570</td>
+<td>与XGB接近，小数据集不占优</td>
+</tr>
+<tr>
+<td>KNN</td>
+<td>423.61</td>
+<td>0.9410</td>
+<td>捕捉趋势，但预测过于平滑</td>
+</tr>
+<tr>
+<td>SVR</td>
+<td>2942.23</td>
+<td>0.5904</td>
+<td>默认参数欠拟合，不适合本任务</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>结论：</strong>  </p>
+<ul>
+<li>广告收益预测是一个低维、非极复杂的回归问题，<strong>随机森林表现最佳</strong>。  </li>
+<li><strong>Boosting 系列（XGBoost / LightGBM）</strong> 在特征复杂、数据量大时会更有优势。  </li>
+<li><strong>SVR 和 KNN</strong> 更适合特定场景，这里表现不佳。</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RGB灯光与OLED显示</title>
+    <url>/zhihaojiang.github.io/2025/09/28/20250928RGB%E7%81%AF%E5%85%89%E4%B8%8EOLED%E6%98%BE%E7%A4%BA/</url>
+    <content><![CDATA[<h2 id="开发板"><a href="#开发板" class="headerlink" title="开发板"></a>开发板</h2><p>Arduino UNO R3</p>
+<h2 id="接线"><a href="#接线" class="headerlink" title="接线"></a>接线</h2><p><strong>共阴极RGB灯组</strong></p>
+<blockquote>
+<p>R → D9<br>G → D10<br>B → D11<br>GND → GND</p>
+</blockquote>
+<p><strong>OLED (SSD1306 I2C)</strong></p>
+<blockquote>
+<p>VCC → 3.3V 或 5V<br>GND → GND<br>SCL → A5<br>SDA → A4</p>
+</blockquote>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#include &lt;Wire.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_GFX.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_SSD1306.h&gt;</span></span><br><span class="line"></span><br><span class="line">// OLED 屏幕分辨率</span><br><span class="line"><span class="comment">#define SCREEN_WIDTH 128</span></span><br><span class="line"><span class="comment">#define SCREEN_HEIGHT 64</span></span><br><span class="line">Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, -1);</span><br><span class="line"></span><br><span class="line">// RGB 引脚</span><br><span class="line">const int redPin = 9;</span><br><span class="line">const int greenPin = 10;</span><br><span class="line">const int bluePin = 11;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">setup</span></span>() &#123;</span><br><span class="line">  // 初始化 RGB 引脚</span><br><span class="line">  pinMode(redPin, OUTPUT);</span><br><span class="line">  pinMode(greenPin, OUTPUT);</span><br><span class="line">  pinMode(bluePin, OUTPUT);</span><br><span class="line"></span><br><span class="line">  // 初始化 OLED</span><br><span class="line">  <span class="keyword">if</span> (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) &#123; // 0x3C 是常见地址</span><br><span class="line">    <span class="keyword">for</span> (;;); // 如果初始化失败就卡住</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.setTextSize(2);      // 字体大小</span><br><span class="line">  display.setTextColor(SSD1306_WHITE);</span><br><span class="line">  display.setCursor(0, 0);</span><br><span class="line">  display.println(<span class="string">&quot;RGB TEST&quot;</span>);</span><br><span class="line">  display.display();</span><br><span class="line">  delay(1000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">loop</span></span>() &#123;</span><br><span class="line">  // 红色</span><br><span class="line">  setColor(HIGH, LOW, LOW);</span><br><span class="line">  showText(<span class="string">&quot;RED&quot;</span>);</span><br><span class="line">  delay(1000);</span><br><span class="line"></span><br><span class="line">  // 绿色</span><br><span class="line">  setColor(LOW, HIGH, LOW);</span><br><span class="line">  showText(<span class="string">&quot;GREEN&quot;</span>);</span><br><span class="line">  delay(1000);</span><br><span class="line"></span><br><span class="line">  // 蓝色</span><br><span class="line">  setColor(LOW, LOW, HIGH);</span><br><span class="line">  showText(<span class="string">&quot;BLUE&quot;</span>);</span><br><span class="line">  delay(1000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 控制 RGB 灯亮灭</span><br><span class="line">void setColor(int r, int g, int b) &#123;</span><br><span class="line">  digitalWrite(redPin, r);</span><br><span class="line">  digitalWrite(greenPin, g);</span><br><span class="line">  digitalWrite(bluePin, b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// OLED 显示文字</span><br><span class="line">void showText(const char *text) &#123;</span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.setCursor(0, 20);</span><br><span class="line">  display.println(text);</span><br><span class="line">  display.display();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>Arduino</tag>
+      </tags>
+  </entry>
 </search>
