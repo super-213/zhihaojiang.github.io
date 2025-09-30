@@ -11279,4 +11279,1302 @@ import {initHBE} from "/zhihaojiang.github.io/js/plugins/hbe.js";
         <tag>Arduino</tag>
       </tags>
   </entry>
+  <entry>
+    <title>商业数据分析--信用评分卡模型</title>
+    <url>/zhihaojiang.github.io/2025/09/28/20250928%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E5%8D%A1%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'信用评分卡模型.xlsx'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>月收入</th>
+<th>年龄</th>
+<th>性别</th>
+<th>历史授信额度</th>
+<th>历史违约次数</th>
+<th>信用评分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7783</td>
+<td>29</td>
+<td>0</td>
+<td>32274</td>
+<td>3</td>
+<td>73</td>
+</tr>
+<tr>
+<td>7836</td>
+<td>40</td>
+<td>1</td>
+<td>6681</td>
+<td>4</td>
+<td>72</td>
+</tr>
+<tr>
+<td>6398</td>
+<td>25</td>
+<td>0</td>
+<td>26038</td>
+<td>2</td>
+<td>74</td>
+</tr>
+<tr>
+<td>6483</td>
+<td>23</td>
+<td>1</td>
+<td>24584</td>
+<td>4</td>
+<td>65</td>
+</tr>
+<tr>
+<td>5167</td>
+<td>23</td>
+<td>1</td>
+<td>6710</td>
+<td>3</td>
+<td>73</td>
+</tr>
+</tbody></table>
+<h1 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>缺失值数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>月收入</td>
+<td>0</td>
+</tr>
+<tr>
+<td>年龄</td>
+<td>0</td>
+</tr>
+<tr>
+<td>性别</td>
+<td>0</td>
+</tr>
+<tr>
+<td>历史授信额度</td>
+<td>0</td>
+</tr>
+<tr>
+<td>历史违约次数</td>
+<td>0</td>
+</tr>
+<tr>
+<td>信用评分</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h1 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/28/001.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/28/002.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/28/003.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/28/004.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/28/005.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/28/006.png" alt="photo"></p>
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">X = df.drop(columns=[<span class="string">'信用评分'</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'信用评分'</span>]</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from xgboost import XGBRegressor</span><br><span class="line"></span><br><span class="line">xgb = XGBRegressor(objective=<span class="string">'reg:squarederror'</span>, random_state=42)</span><br><span class="line">xgb.fit(X_train, y_train)</span><br><span class="line">y_pred = xgb.predict(X_test)</span><br><span class="line"></span><br><span class="line">from sklearn.metrics import mean_squared_error, r2_score</span><br><span class="line">mse = mean_squared_error(y_test, y_pred)</span><br><span class="line">r2 = r2_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'Mean Squared Error: {mse}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'R^2 Score: {r2}'</span>)</span><br></pre></td></tr></table></figure></div>
+<p>Mean Squared Error: 30.737820683092288<br>R^2 Score: 0.5528881678156692</p>
+<h2 id="网格优化"><a href="#网格优化" class="headerlink" title="网格优化"></a>网格优化</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import GridSearchCV  </span><br><span class="line">parameters = {<span class="string">'max_depth'</span>: [1, 3, 5], <span class="string">'n_estimators'</span>: [50, 100, 150], <span class="string">'learning_rate'</span>: [0.01, 0.05, 0.1, 0.2]}  <span class="comment"># 指定模型中参数的范围</span></span><br><span class="line">xgb_best = XGBRegressor()</span><br><span class="line">grid_search = GridSearchCV(xgb_best, parameters, cv=5, scoring=<span class="string">'neg_mean_squared_error'</span>)  <span class="comment"># 5折交叉验证</span></span><br><span class="line">grid_search.fit(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Best parameters:"</span>, grid_search.best_params_)</span><br><span class="line"></span><br><span class="line">best_xgb = grid_search.best_estimator_</span><br><span class="line">y_pred_best = best_xgb.predict(X_test)</span><br><span class="line">mse_best = mean_squared_error(y_test, y_pred_best)</span><br><span class="line">r2_best = r2_score(y_test, y_pred_best)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'Optimized Mean Squared Error: {mse_best}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'Optimized R^2 Score: {r2_best}'</span>)</span><br></pre></td></tr></table></figure></div>
+<p>Best parameters: {‘learning_rate’: 0.05, ‘max_depth’: 3, ‘n_estimators’: 50}</p>
+<p>Optimized Mean Squared Error: 22.005304773406532<br>Optimized R^2 Score: 0.6799112000668165</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">feature_importances = best_xgb.feature_importances_</span><br><span class="line">features = X.columns</span><br><span class="line">importance_df = pd.DataFrame({<span class="string">'Feature'</span>: features, <span class="string">'Importance'</span>: feature_importances})</span><br><span class="line">importance_df.sort_values(by=<span class="string">'Importance'</span>, ascending=False, inplace=True)</span><br><span class="line">importance_df</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import shap</span><br><span class="line">explainer = shap.Explainer(best_xgb)</span><br><span class="line">shap_values = explainer(X)</span><br><span class="line">shap.summary_plot(shap_values, X)</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/28/007.png" alt="photo"></p>
+<h1 id="LGBM"><a href="#LGBM" class="headerlink" title="LGBM"></a>LGBM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from lightgbm import LGBMRegressor</span><br><span class="line">from sklearn.metrics import mean_squared_error, r2_score</span><br><span class="line"></span><br><span class="line">lgbm = LGBMRegressor(random_state=42)</span><br><span class="line">lgbm.fit(X_train, y_train)</span><br><span class="line">y_pred_lgbm = lgbm.predict(X_test)</span><br><span class="line">mse_lgbm = mean_squared_error(y_test, y_pred_lgbm)</span><br><span class="line">r2_lgbm = r2_score(y_test, y_pred_lgbm)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'LightGBM Mean Squared Error: {mse_lgbm}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'LightGBM R^2 Score: {r2_lgbm}'</span>)</span><br><span class="line"></span><br><span class="line">feature_importances_lgbm = lgbm.feature_importances_</span><br><span class="line">features = X.columns</span><br><span class="line">importance_df_lgbm = pd.DataFrame({<span class="string">'Feature'</span>: features, <span class="string">'Importance'</span>: feature_importances_lgbm})</span><br><span class="line">importance_df_lgbm.sort_values(by=<span class="string">'Importance'</span>, ascending=False, inplace=True)</span><br><span class="line">importance_df_lgbm</span><br><span class="line"></span><br><span class="line">explainer = shap.Explainer(lgbm)</span><br><span class="line">shap_values = explainer(X)</span><br><span class="line">shap.summary_plot(shap_values, X)</span><br></pre></td></tr></table></figure></div>
+<p>LightGBM Mean Squared Error: 25.26260176146583<br>LightGBM R^2 Score: 0.6325306118554737</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/28/008.png" alt="photo"></p>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> = RandomForestRegressor(random_state=42)</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line">y_pred_rm = rm.predict(X_test)</span><br><span class="line">mse_rm = mean_squared_error(y_test, y_pred_rm)</span><br><span class="line">r2_rm = r2_score(y_test, y_pred_rm)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'Random Forest Mean Squared Error: {mse_rm}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'Random Forest R^2 Score: {r2_rm}'</span>)</span><br><span class="line"></span><br><span class="line">feature_importances_rm = rm.feature_importances_</span><br><span class="line">features = X.columns</span><br><span class="line">importance_df_rm = pd.DataFrame({<span class="string">'Feature'</span>: features, <span class="string">'Importance'</span>: feature_importances_rm})</span><br><span class="line">importance_df_rm.sort_values(by=<span class="string">'Importance'</span>, ascending=False, inplace=True)</span><br><span class="line">importance_df_rm</span><br><span class="line"></span><br><span class="line">explainer = shap.Explainer(<span class="built_in">rm</span>)</span><br><span class="line">shap_values = explainer(X)</span><br><span class="line">shap.summary_plot(shap_values, X)</span><br></pre></td></tr></table></figure></div>
+<p>Random Forest Mean Squared Error: 22.497981999999997<br>Random Forest R^2 Score: 0.6727447252627369</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/28/009.png" alt="photo"></p>
+<h1 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.discriminant_analysis import LinearDiscriminantAnalysis</span><br><span class="line"></span><br><span class="line">lda = LinearDiscriminantAnalysis()</span><br><span class="line">lda.fit(X_train, y_train)</span><br><span class="line">y_pred_lda = lda.predict(X_test)</span><br><span class="line">mse_lda = mean_squared_error(y_test, y_pred_lda)</span><br><span class="line">r2_lda = r2_score(y_test, y_pred_lda)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'Linear Discriminant Analysis Mean Squared Error: {mse_lda}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'Linear Discriminant Analysis R^2 Score: {r2_lda}'</span>)</span><br><span class="line"></span><br><span class="line">feature_importances_lda = lda.coef_[0]</span><br><span class="line">features = X.columns</span><br><span class="line">importance_df_lda = pd.DataFrame({<span class="string">'Feature'</span>: features, <span class="string">'Importance'</span>: feature_importances_lda})</span><br><span class="line">importance_df_lda.sort_values(by=<span class="string">'Importance'</span>, ascending=False, inplace=True)</span><br><span class="line">importance_df_lda</span><br></pre></td></tr></table></figure></div>
+<p>Linear Discriminant Analysis Mean Squared Error: 30.66<br>Linear Discriminant Analysis R^2 Score: 0.5540201461871341</p>
+<h1 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsRegressor</span><br><span class="line"></span><br><span class="line">knn = KNeighborsRegressor(n_neighbors=5)</span><br><span class="line">knn.fit(X_train, y_train)</span><br><span class="line">y_pred_knn = knn.predict(X_test)</span><br><span class="line">mse_knn = mean_squared_error(y_test, y_pred_knn)</span><br><span class="line">r2_knn = r2_score(y_test, y_pred_knn)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'KNN Mean Squared Error: {mse_knn}'</span>)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">'KNN R^2 Score: {r2_knn}'</span>)</span><br></pre></td></tr></table></figure></div>
+<p>KNN Mean Squared Error: 25.003800000000002<br>KNN R^2 Score: 0.6362951380050184</p>
+<h1 id="模型横向比较"><a href="#模型横向比较" class="headerlink" title="模型横向比较"></a>模型横向比较</h1><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>MSE ↓</th>
+<th>R² ↑</th>
+<th>特点总结</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>XGBoost (优化后)</td>
+<td>22.01</td>
+<td>0.680</td>
+<td>树模型，调参后效果最好之一，兼顾偏差与方差，特征重要性可解释性强。</td>
+</tr>
+<tr>
+<td>LightGBM</td>
+<td>25.26</td>
+<td>0.633</td>
+<td>与XGBoost类似，但默认参数下稍逊，可能因数据量不大导致优势未显现。</td>
+</tr>
+<tr>
+<td>随机森林</td>
+<td>22.50</td>
+<td>0.673</td>
+<td>稳定性高，效果接近XGBoost，调参空间不如Boosting大。</td>
+</tr>
+<tr>
+<td>LDA</td>
+<td>30.66</td>
+<td>0.554</td>
+<td>线性判别方法，更适合分类；在回归任务上受限，表现最差。</td>
+</tr>
+<tr>
+<td>KNN</td>
+<td>25.00</td>
+<td>0.636</td>
+<td>简单直观，依赖局部邻域；在高维数据中容易过拟合或欠拟合。</td>
+</tr>
+</tbody></table>
+<h2 id="差异分析"><a href="#差异分析" class="headerlink" title="差异分析"></a>差异分析</h2><ol>
+<li><p><strong>树模型（XGBoost / LightGBM / 随机森林）表现最佳</strong>  </p>
+<ul>
+<li>它们能捕捉非线性关系，适合处理信用评分这类复杂特征交互的任务。  </li>
+<li><strong>XGBoost 调参后效果最好（R²≈0.68）</strong>，说明该数据集对树模型的适配性很好。  </li>
+<li><strong>随机森林 与 XGBoost 表现接近</strong>，但略逊，因为 Boosting 更好地优化了偏差。  </li>
+<li><strong>LightGBM</strong> 在大数据下优势明显，但在你这种数据量（200左右样本）下未完全发挥。</li>
+</ul>
+</li>
+<li><p><strong>线性方法（LDA）表现最差</strong>  </p>
+<ul>
+<li>信用评分与特征之间关系并非单纯线性，导致 LDA 只能捕捉有限信息。  </li>
+<li>R²≈0.55，MSE最大，说明解释力有限。</li>
+</ul>
+</li>
+<li><p><strong>KNN 居中但不稳定</strong>  </p>
+<ul>
+<li>表现优于 LDA，但不如树模型。  </li>
+<li>优点是简单、无需训练；缺点是容易受到特征尺度影响，且在高维空间中“邻近”的意义变弱。</li>
+</ul>
+</li>
+</ol>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ul>
+<li><strong>最佳模型推荐：XGBoost（调参后）</strong><br>兼具预测准确性和可解释性，适合在信用评分建模中作为主力模型。  </li>
+<li><strong>随机森林</strong> 可作为备选基准模型，在稳定性上更强，但可解释性略弱。  </li>
+<li><strong>LightGBM</strong> 如果数据规模增大 可能会超过XGBoost。  </li>
+<li><strong>LDA 和 KNN</strong> 更适合作为参考或对比，实际预测能力有限。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--人脸识别</title>
+    <url>/zhihaojiang.github.io/2025/09/30/20250930%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E4%BA%BA%E8%84%B8%E8%AF%86%E5%88%AB/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import os</span><br><span class="line">names = os.listdir(<span class="string">'olivettifaces'</span>)</span><br><span class="line"></span><br><span class="line">names[0:5]</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from PIL import Image</span><br><span class="line">img0 = Image.open(<span class="string">'olivettifaces/'</span> + names[0]) <span class="comment"># MAC或者类unix是用一个斜杠，Windows用两个反斜杠</span></span><br><span class="line">img0.show()</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">img0 = img0.convert(<span class="string">'L'</span>)</span><br><span class="line">img0 = img0.resize((<span class="number">32</span>, <span class="number">32</span>))</span><br><span class="line">arr = np.array(img0)</span><br><span class="line"></span><br><span class="line">arr</span><br></pre></td></tr></table></figure></div>
+<p>array([[186,  76,  73, …, 100, 103, 106],<br>       [196,  85,  68, …,  85, 106, 103],<br>       [193,  69,  79, …,  82,  99, 100],<br>       …,<br>       [196,  87, 193, …, 103,  66,  52],<br>       [219, 179, 202, …, 150, 127, 109],<br>       [244, 228, 230, …, 198, 202, 206]], dtype=uint8)</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">pd.DataFrame(arr)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">arr = arr.reshape(1, -1)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(arr)</span><br></pre></td></tr></table></figure></div>
+<p>[[186  76  73 … 198 202 206]]</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(arr.flatten().tolist())</span><br></pre></td></tr></table></figure></div>
+<p>[186, 76, 73, 87, 89…]</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">X = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> names:</span><br><span class="line">    <span class="keyword">if</span> i.startswith(<span class="string">"._"</span>):  <span class="comment"># Mac的隐藏文件 跳过</span></span><br><span class="line">        <span class="built_in">continue</span></span><br><span class="line">    img = Image.open(<span class="string">'olivettifaces/'</span> + i)</span><br><span class="line">    img = img.convert(<span class="string">'L'</span>)</span><br><span class="line">    img = img.resize((<span class="number">32</span>, <span class="number">32</span>))</span><br><span class="line">    arr = np.array(img)</span><br><span class="line">    X.append(arr.reshape(1, -1).flatten().tolist())</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">X = pd.DataFrame(X)</span><br><span class="line"></span><br><span class="line">X</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(X.shape)</span><br></pre></td></tr></table></figure></div>
+<p>(400, 1024)</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(int(names[0].<span class="built_in">split</span>(<span class="string">'_'</span>)[0]))</span><br></pre></td></tr></table></figure></div>
+<p>10</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">y = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> names:</span><br><span class="line">    <span class="keyword">if</span> i.startswith(<span class="string">"._"</span>):  <span class="comment"># Mac的隐藏文件 跳过</span></span><br><span class="line">        <span class="built_in">continue</span></span><br><span class="line">    img = Image.open(<span class="string">'olivettifaces/'</span> + i)</span><br><span class="line">    y.append(int(i.split(<span class="string">'_'</span>)[0]))</span><br><span class="line">    </span><br><span class="line"><span class="built_in">print</span>(y)</span><br></pre></td></tr></table></figure></div>
+<p>[10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 11, 11, 11…]</p>
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="PCA降维"><a href="#PCA降维" class="headerlink" title="PCA降维"></a>PCA降维</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.decomposition import PCA</span><br><span class="line">pca = PCA(n_components=100)</span><br><span class="line">pca.fit(X_train)</span><br><span class="line"></span><br><span class="line">X_train_pca = pca.transform(X_train)</span><br><span class="line">X_test_pca = pca.transform(X_test)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(X_train_pca.shape)</span><br><span class="line"><span class="built_in">print</span>(X_test_pca.shape)</span><br></pre></td></tr></table></figure></div>
+<p>(320, 100)<br>(80, 100)</p>
+<h1 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsClassifier</span><br><span class="line"></span><br><span class="line">knn = KNeighborsClassifier()</span><br><span class="line">knn.fit(X_train_pca, y_train)</span><br><span class="line"></span><br><span class="line">y_pred = knn.predict(X_test_pca)</span><br><span class="line">from sklearn.metrics import accuracy_score</span><br><span class="line"><span class="built_in">print</span>(accuracy_score(y_test, y_pred))</span><br><span class="line"></span><br><span class="line">score = knn.score(X_test_pca, y_test)</span><br><span class="line"><span class="built_in">print</span>(score)</span><br></pre></td></tr></table></figure></div>
+<p>0.9125<br>0.9125</p>
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> = RandomForestClassifier(random_state=42)</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"></span><br><span class="line">y_pred = rm.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(accuracy_score(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>0.975</p>
+<h1 id="LGBM"><a href="#LGBM" class="headerlink" title="LGBM"></a>LGBM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from lightgbm import LGBMClassifier</span><br><span class="line"></span><br><span class="line">lgbm = LGBMClassifier(random_state=42)</span><br><span class="line">lgbm.fit(X_train, y_train)</span><br><span class="line">y_pred = lgbm.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(accuracy_score(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>0.8875</p>
+<h1 id="贝叶斯"><a href="#贝叶斯" class="headerlink" title="贝叶斯"></a>贝叶斯</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.naive_bayes import GaussianNB</span><br><span class="line"></span><br><span class="line">nb = GaussianNB()</span><br><span class="line">nb.fit(X_train, y_train)</span><br><span class="line">y_pred = nb.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(accuracy_score(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>0.925</p>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.svm import SVC</span><br><span class="line"></span><br><span class="line">svm = SVC(random_state=42)</span><br><span class="line">svm.fit(X_train, y_train)</span><br><span class="line">y_pred = svm.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(accuracy_score(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+<p>0.95</p>
+<h1 id="模型横向对比"><a href="#模型横向对比" class="headerlink" title="模型横向对比"></a>模型横向对比</h1><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>特点</th>
+<th>是否降维</th>
+<th>测试准确率</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>KNN</td>
+<td>基于邻近样本投票</td>
+<td>✔ (PCA → 100维)</td>
+<td>0.9125</td>
+<td>简单直观，效果较好</td>
+<td>预测时计算量大，对高维数据敏感</td>
+</tr>
+<tr>
+<td>随机森林</td>
+<td>多棵决策树投票</td>
+<td>✘ (原始 1024维)</td>
+<td>0.9750</td>
+<td>精度高，抗过拟合，特征重要性可解释</td>
+<td>训练速度较慢，模型体积较大</td>
+</tr>
+<tr>
+<td>LightGBM</td>
+<td>基于梯度提升的树模型</td>
+<td>✘ (原始 1024维)</td>
+<td>0.8875</td>
+<td>训练预测快，适合大规模数据</td>
+<td>在小数据集上易过拟合或欠拟合</td>
+</tr>
+<tr>
+<td>朴素贝叶斯 (GaussianNB)</td>
+<td>基于概率的生成模型</td>
+<td>✘</td>
+<td>0.9250</td>
+<td>简单快速，鲁棒性好</td>
+<td>特征独立性假设过强，可能丢失信息</td>
+</tr>
+<tr>
+<td>SVM (RBF kernel)</td>
+<td>最大化间隔的判别模型</td>
+<td>✘</td>
+<td>0.9500</td>
+<td>对高维小样本表现好，分类边界清晰</td>
+<td>参数调优敏感，计算复杂度高</td>
+</tr>
+</tbody></table>
+<h2 id="综合结论"><a href="#综合结论" class="headerlink" title="综合结论"></a>综合结论</h2><ul>
+<li><strong>最优结果：随机森林 (97.5%)</strong> 在未降维的高维特征下表现最好。  </li>
+<li><strong>次优结果：SVM (95%)</strong> 适合这种小样本高维特征的分类。  </li>
+<li><strong>轻量方案：朴素贝叶斯 (92.5%)</strong> 简单快速，适合 baseline。  </li>
+<li><strong>KNN (91.25%)</strong> 降维后效果不错，但预测效率差。  </li>
+<li><strong>LightGBM (88.75%)</strong> 对小样本不够稳定，不如 RF/SVM。</li>
+</ul>
+<blockquote>
+<ul>
+<li>推荐 <strong>随机森林 / SVM</strong>，它们在小样本情况下表现最稳。  </li>
+<li>如果需要实时性和轻量，可以考虑 <strong>朴素贝叶斯 + PCA</strong>。</li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--信用卡数据</title>
+    <url>/zhihaojiang.github.io/2025/09/30/20250930%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E4%BF%A1%E7%94%A8%E5%8D%A1%E6%95%B0%E6%8D%AE/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'信用卡数据.xlsx'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>年龄</th>
+<th>负债比率</th>
+<th>月收入</th>
+<th>贷款数量</th>
+<th>家属人数</th>
+<th>分类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>29</td>
+<td>0.22</td>
+<td>7800</td>
+<td>1</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>52</td>
+<td>0.46</td>
+<td>4650</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>28</td>
+<td>0.10</td>
+<td>3000</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>29</td>
+<td>0.20</td>
+<td>5916</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>27</td>
+<td>1.28</td>
+<td>1300</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h1 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h1><h2 id="查看异常值"><a href="#查看异常值" class="headerlink" title="查看异常值"></a>查看异常值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/001.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/002.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/003.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/004.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/005.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/006.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/007.png" alt="photo"></p>
+<h2 id="查看数据分布"><a href="#查看数据分布" class="headerlink" title="查看数据分布"></a>查看数据分布</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from scipy import stats</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.figure(figsize=(12, 4))</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 直方图 + KDE</span></span><br><span class="line">    plt.subplot(1, 2, 1)</span><br><span class="line">    sns.histplot(<span class="built_in">df</span>[col].dropna(), kde=True, bins=30)</span><br><span class="line">    plt.title(f<span class="string">'{col} 分布'</span>)</span><br><span class="line">    plt.xlabel(col)</span><br><span class="line">    plt.ylabel(<span class="string">'Frequency'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># QQ图</span></span><br><span class="line">    plt.subplot(1, 2, 2)</span><br><span class="line">    stats.probplot(<span class="built_in">df</span>[col].dropna(), dist=<span class="string">"norm"</span>, plot=plt)</span><br><span class="line">    plt.title(f<span class="string">'{col} QQ 图'</span>)</span><br><span class="line">    </span><br><span class="line">    plt.tight_layout()</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/008.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/009.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/010.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/011.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/012.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/013.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/014.png" alt="photo"></p>
+<p>查看数据可知 数据存在异常值 查看数据分布得知 数据是长尾分布 并且目标的数据是不平衡的数据集</p>
+<h2 id="对数变换"><a href="#对数变换" class="headerlink" title="对数变换"></a>对数变换</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line"></span><br><span class="line">cols = [<span class="string">'负债比率'</span>, <span class="string">'月收入'</span>, <span class="string">'贷款数量'</span>]</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> cols:</span><br><span class="line">    <span class="built_in">df</span>[col+<span class="string">'_log'</span>] = np.log1p(<span class="built_in">df</span>[col])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 对比</span></span><br><span class="line">    plt.figure(figsize=(12, 4))</span><br><span class="line">    plt.subplot(1, 2, 1)</span><br><span class="line">    sns.histplot(<span class="built_in">df</span>[col], kde=True)</span><br><span class="line"></span><br><span class="line">    plt.subplot(1, 2, 2)</span><br><span class="line">    sns.histplot(<span class="built_in">df</span>[col+<span class="string">'_log'</span>], kde=True)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/015.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/016.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/30/017.png" alt="photo"></p>
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = df.drop(columns=[<span class="string">'负债比率'</span>, <span class="string">'月收入'</span>, <span class="string">'贷款数量'</span>])</span><br><span class="line"></span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line"></span><br><span class="line">X = df.drop(columns=[<span class="string">'分类'</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'分类'</span>]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="随机森林"><a href="#随机森林" class="headerlink" title="随机森林"></a>随机森林</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> = RandomForestClassifier(random_state=42)</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line">from sklearn.metrics import classification_report, confusion_matrix</span><br><span class="line"></span><br><span class="line">y_pred = rm.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>200</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>20</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.91</td>
+<td>1.00</td>
+<td>0.95</td>
+<td>200</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.91</strong></td>
+<td>220</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.45</td>
+<td>0.50</td>
+<td>0.48</td>
+<td>220</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.83</td>
+<td>0.91</td>
+<td>0.87</td>
+<td>220</td>
+</tr>
+</tbody></table>
+<h1 id="XGBoost"><a href="#XGBoost" class="headerlink" title="XGBoost"></a>XGBoost</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from xgboost import XGBClassifier</span><br><span class="line"></span><br><span class="line">xgb = XGBClassifier(random_state=42)</span><br><span class="line">xgb.fit(X_train, y_train)</span><br><span class="line">y_pred = xgb.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>197</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>19</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.91</td>
+<td>0.98</td>
+<td>0.95</td>
+<td>200</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.25</td>
+<td>0.05</td>
+<td>0.08</td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.90</strong></td>
+<td>220</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.58</td>
+<td>0.52</td>
+<td>0.52</td>
+<td>220</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.85</td>
+<td>0.90</td>
+<td>0.87</td>
+<td>220</td>
+</tr>
+</tbody></table>
+<h1 id="LGBM"><a href="#LGBM" class="headerlink" title="LGBM"></a>LGBM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from lightgbm import LGBMClassifier</span><br><span class="line"></span><br><span class="line">lgbm = LGBMClassifier(random_state=42)</span><br><span class="line">lgbm.fit(X_train, y_train)</span><br><span class="line">y_pred = lgbm.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>197</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>20</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.91</td>
+<td>0.98</td>
+<td>0.94</td>
+<td>200</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.90</strong></td>
+<td>220</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.45</td>
+<td>0.49</td>
+<td>0.47</td>
+<td>220</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.83</td>
+<td>0.90</td>
+<td>0.86</td>
+<td>220</td>
+</tr>
+</tbody></table>
+<h1 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.neighbors import KNeighborsClassifier</span><br><span class="line"></span><br><span class="line">knn = KNeighborsClassifier(n_neighbors=5)</span><br><span class="line">knn.fit(X_train, y_train)</span><br><span class="line">y_pred = knn.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>197</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>20</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.91</td>
+<td>0.98</td>
+<td>0.94</td>
+<td>200</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.90</strong></td>
+<td>220</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.45</td>
+<td>0.49</td>
+<td>0.47</td>
+<td>220</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.83</td>
+<td>0.90</td>
+<td>0.86</td>
+<td>220</td>
+</tr>
+</tbody></table>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.svm import SVC</span><br><span class="line"></span><br><span class="line">svm = SVC(kernel=<span class="string">'linear'</span>)</span><br><span class="line">svm.fit(X_train, y_train)</span><br><span class="line">y_pred = svm.predict(X_test)</span><br><span class="line"><span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line"><span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>实际 \ 预测</th>
+<th>0</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong></td>
+<td>200</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>20</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1-Score</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.91</td>
+<td>1.00</td>
+<td>0.95</td>
+<td>200</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>accuracy</strong></td>
+<td></td>
+<td></td>
+<td><strong>0.91</strong></td>
+<td>220</td>
+</tr>
+<tr>
+<td><strong>macro avg</strong></td>
+<td>0.45</td>
+<td>0.50</td>
+<td>0.48</td>
+<td>220</td>
+</tr>
+<tr>
+<td><strong>weighted avg</strong></td>
+<td>0.83</td>
+<td>0.91</td>
+<td>0.87</td>
+<td>220</td>
+</tr>
+</tbody></table>
+<h1 id="模型横向比较"><a href="#模型横向比较" class="headerlink" title="模型横向比较"></a>模型横向比较</h1><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Accuracy</th>
+<th>Recall(类别1)</th>
+<th>Precision(类别1)</th>
+<th>主要问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>随机森林</td>
+<td>0.91</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>完全没预测出类别1</td>
+</tr>
+<tr>
+<td>XGBoost</td>
+<td>0.90</td>
+<td>0.05</td>
+<td>0.25</td>
+<td>能预测到1个类别1，但严重偏向类别0</td>
+</tr>
+<tr>
+<td>LightGBM</td>
+<td>0.90</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>和随机森林类似，类别1全漏掉</td>
+</tr>
+<tr>
+<td>KNN</td>
+<td>0.90</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>全部预测为类别0</td>
+</tr>
+<tr>
+<td>SVM (线性核)</td>
+<td>0.91</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>完全没识别类别1</td>
+</tr>
+</tbody></table>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ol>
+<li><p><strong>总体表现</strong>  </p>
+<ul>
+<li>所有模型在 <strong>总体准确率 (accuracy ~0.90–0.91)</strong> 上看似不错，但这主要来自于对 <strong>类别0</strong> 的正确预测。  </li>
+<li><strong>类别1（少数类）几乎完全无法识别，F1=0。</strong></li>
+</ul>
+</li>
+<li><p><strong>类别分布极度不均衡</strong>  </p>
+<ul>
+<li>从混淆矩阵看，真实标签中类别1只有20个（占比 &lt; 10%）。  </li>
+<li>模型都选择了“保守预测类别0”，因为这样可以最小化整体错误率。</li>
+</ul>
+</li>
+<li><p><strong>XGBoost 稍微好一些</strong>  </p>
+<ul>
+<li>至少捕捉到了1个类别1（recall=0.05），但 precision 很低（0.25），说明模型在识别少数类上还是力不从心。</li>
+</ul>
+</li>
+</ol>
+<h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p>要解决“类别1完全被忽视”的问题，可以尝试以下方法：</p>
+<ol>
+<li><p><strong>数据层面</strong>  </p>
+<ul>
+<li><strong>过采样少数类</strong>：用 SMOTE 等方法扩充类别1。  </li>
+<li><strong>欠采样多数类</strong>：平衡正负样本。  </li>
+<li><strong>组合方法</strong>：如 SMOTEENN（过采样+清理噪声）。</li>
+</ul>
+</li>
+<li><p><strong>模型层面</strong>  </p>
+<ul>
+<li><strong>类别权重调整</strong>：在 <code>RandomForestClassifier</code>、<code>XGBClassifier</code>、<code>LGBMClassifier</code>、<code>SVC</code> 中都可以加 <code>class_weight='balanced'</code> 或手动设置 <code>{0:1, 1:10}</code> 类似的比例。  </li>
+<li><strong>调节阈值</strong>：现在默认阈值是 0.5，可以通过 ROC/PR 曲线选择更适合的阈值，提高对少数类的 recall。  </li>
+<li><strong>专门针对不平衡的算法</strong>：比如 <code>BalancedRandomForest</code>、<code>EasyEnsemble</code>、<code>CatBoost</code>（支持内置类别平衡）。</li>
+</ul>
+</li>
+<li><p><strong>评价指标改进</strong>  </p>
+<ul>
+<li>不要只看 accuracy，更适合看 <strong>Recall/F1-score（尤其是少数类）</strong> 或 <strong>AUC-ROC / AUC-PR</strong>。</li>
+</ul>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>目前模型对多数类预测很好，但由于样本严重不平衡，<strong>少数类（类别1）几乎被完全忽略</strong>。你需要通过 <strong>采样方法 + 类别权重 + 阈值调整</strong> 来改善模型对类别1的识别。</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--数据预处理&amp;特征工程</title>
+    <url>/zhihaojiang.github.io/2025/09/29/20250929%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86&amp;%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>查看第10章的代码 发现其主要是特征工程与数据预处理的代码 因此本章主要罗列各种特征工程与数据预处理的方法</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'股票客户流失.xlsx'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>账户资金（元）</th>
+<th>最后一次交易距今时间（天）</th>
+<th>上月交易佣金（元）</th>
+<th>本券商使用时长（年）</th>
+<th>是否流失</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>22686.5</td>
+<td>297</td>
+<td>149.25</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>190055.0</td>
+<td>42</td>
+<td>284.75</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>29733.5</td>
+<td>233</td>
+<td>269.25</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>185667.5</td>
+<td>44</td>
+<td>211.50</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>33648.5</td>
+<td>213</td>
+<td>353.50</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h1 id="查看数据分布"><a href="#查看数据分布" class="headerlink" title="查看数据分布"></a>查看数据分布</h1><p><strong>热力图</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import seaborn as sns</span><br><span class="line"></span><br><span class="line">sns.heatmap(df.corr(), annot=True, cmap=<span class="string">'YlGnBu'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/001.png" alt="photo"></p>
+<p><strong>直方图和QQ图</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from scipy import stats</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.figure(figsize=(12, 4))</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 直方图 + KDE</span></span><br><span class="line">    plt.subplot(1, 2, 1)</span><br><span class="line">    sns.histplot(<span class="built_in">df</span>[col].dropna(), kde=True, bins=30)</span><br><span class="line">    plt.title(f<span class="string">'{col} 分布'</span>)</span><br><span class="line">    plt.xlabel(col)</span><br><span class="line">    plt.ylabel(<span class="string">'Frequency'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># QQ图</span></span><br><span class="line">    plt.subplot(1, 2, 2)</span><br><span class="line">    stats.probplot(<span class="built_in">df</span>[col].dropna(), dist=<span class="string">"norm"</span>, plot=plt)</span><br><span class="line">    plt.title(f<span class="string">'{col} QQ 图'</span>)</span><br><span class="line">    </span><br><span class="line">    plt.tight_layout()</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/002.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/003.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/004.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/005.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/006.png" alt="photo"></p>
+<h1 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h1><p>首先查看是否存在缺失值</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="删除缺失值"><a href="#删除缺失值" class="headerlink" title="删除缺失值"></a>删除缺失值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方法1 删除缺失率 &gt; 50% 的列</span></span><br><span class="line">df.dropna(thresh=len(<span class="built_in">df</span>)*0.5, axis=1, inplace=True)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法2 删除含缺失的行</span></span><br><span class="line">df.dropna(inplace=True)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="简单填充缺失值"><a href="#简单填充缺失值" class="headerlink" title="简单填充缺失值"></a>简单填充缺失值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 数值型 中位数或均值填充</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'age'</span>].fillna(<span class="built_in">df</span>[<span class="string">'age'</span>].median(), inplace=True) <span class="comment"># .mean()是均值</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 类别型 众数填充</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'gender'</span>].fillna(<span class="built_in">df</span>[<span class="string">'gender'</span>].mode()[0], inplace=True)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者 固定值</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'income'</span>].fillna(-1, inplace=True)  <span class="comment"># -1 表示缺失</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="模型填充缺失值"><a href="#模型填充缺失值" class="headerlink" title="模型填充缺失值"></a>模型填充缺失值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># KNN填充</span></span><br><span class="line">from sklearn.impute import KNNImputer</span><br><span class="line">imputer = KNNImputer(n_neighbors=5)</span><br><span class="line">df_filled = pd.DataFrame(imputer.fit_transform(<span class="built_in">df</span>), columns=df.columns)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 多重插补法</span></span><br><span class="line">from sklearn.experimental import enable_iterative_imputer</span><br><span class="line">from sklearn.impute import IterativeImputer</span><br><span class="line">imp = IterativeImputer(random_state=0)</span><br><span class="line">df_filled = pd.DataFrame(imp.fit_transform(<span class="built_in">df</span>), columns=df.columns)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="保留缺失值"><a href="#保留缺失值" class="headerlink" title="保留缺失值"></a>保留缺失值</h2><p>缺失值本身可能就是一种信息</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 数值型缺失值标记</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'income_missing'</span>] = <span class="built_in">df</span>[<span class="string">'income'</span>].isnull().astype(int)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 类别变量可以直接保留为NaN 或替换为 Missing</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'occupation'</span>].fillna(<span class="string">'Missing'</span>, inplace=True)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="可视化缺失值"><a href="#可视化缺失值" class="headerlink" title="可视化缺失值"></a>可视化缺失值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import missingno as msno</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 矩阵图 查看缺失位置</span></span><br><span class="line">msno.matrix(<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 条形图 各列缺失比例</span></span><br><span class="line">msno.bar(<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 相关性热力图 缺失是否相关</span></span><br><span class="line">msno.heatmap(<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/007.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/008.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/009.png" alt="photo"></p>
+<p>热力图是空白的是因为数据集中没有缺失值</p>
+<h1 id="异常值检测"><a href="#异常值检测" class="headerlink" title="异常值检测"></a>异常值检测</h1><h2 id="箱线图可视化异常值"><a href="#箱线图可视化异常值" class="headerlink" title="箱线图可视化异常值"></a>箱线图可视化异常值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/010.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/011.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/012.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/013.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/014.png" alt="photo"></p>
+<h2 id="3-Sigma-准则检测"><a href="#3-Sigma-准则检测" class="headerlink" title="3 Sigma 准则检测"></a>3 Sigma 准则检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from scipy import stats</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    z_scores = np.abs(stats.zscore(<span class="built_in">df</span>[col].dropna()))</span><br><span class="line">    outliers = <span class="built_in">df</span>[z_scores &gt; 3]</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"列 {col} 中的异常值数量: {len(outliers)}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>列 账户资金（元） 中的异常值数量: 0<br>列 最后一次交易距今时间（天） 中的异常值数量: 0<br>列 上月交易佣金（元） 中的异常值数量: 0<br>列 本券商使用时长（年） 中的异常值数量: 0<br>列 是否流失 中的异常值数量: 0</p>
+<h2 id="IQR检测"><a href="#IQR检测" class="headerlink" title="IQR检测"></a>IQR检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">    Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">    IQR = Q3 - Q1</span><br><span class="line">    lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">    upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line">    outliers = <span class="built_in">df</span>[(<span class="built_in">df</span>[col] &lt; lower_bound) | (<span class="built_in">df</span>[col] &gt; upper_bound)]</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"列 {col} 中的异常值数量: {len(outliers)}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>列 账户资金（元） 中的异常值数量: 0<br>列 最后一次交易距今时间（天） 中的异常值数量: 0<br>列 上月交易佣金（元） 中的异常值数量: 0<br>列 本券商使用时长（年） 中的异常值数量: 0<br>列 是否流失 中的异常值数量: 0</p>
+<h2 id="百分位数检测"><a href="#百分位数检测" class="headerlink" title="百分位数检测"></a>百分位数检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    lower = <span class="built_in">df</span>[col].quantile(0.01)</span><br><span class="line">    upper = <span class="built_in">df</span>[col].quantile(0.99)</span><br><span class="line">    df_clipped = <span class="built_in">df</span>[(<span class="built_in">df</span>[col] &gt;= lower) &amp; (<span class="built_in">df</span>[col] &lt;= upper)]</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"列 {col} 中的异常值数量: {len(df) - len(df_clipped)}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>列 账户资金（元） 中的异常值数量: 135<br>列 最后一次交易距今时间（天） 中的异常值数量: 66<br>列 上月交易佣金（元） 中的异常值数量: 135<br>列 本券商使用时长（年） 中的异常值数量: 0<br>列 是否流失 中的异常值数量: 0</p>
+<h2 id="散点图查看数值型特征之间的关系"><a href="#散点图查看数值型特征之间的关系" class="headerlink" title="散点图查看数值型特征之间的关系"></a>散点图查看数值型特征之间的关系</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">plt.scatter(<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>], <span class="built_in">df</span>[<span class="string">'最后一次交易距今时间（天）'</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/015.png" alt="photo"></p>
+<h2 id="孤立森林检测"><a href="#孤立森林检测" class="headerlink" title="孤立森林检测"></a>孤立森林检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import IsolationForest</span><br><span class="line">iso = IsolationForest(contamination=0.05)  <span class="comment"># 预估异常比例5%</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'anomaly'</span>] = iso.fit_predict(<span class="built_in">df</span>[[<span class="string">'账户资金（元）'</span>, <span class="string">'最后一次交易距今时间（天）'</span>]])</span><br><span class="line">outliers = <span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">'anomaly'</span>] == -1]</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"检测到的异常值数量: {len(outliers)}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>检测到的异常值数量: 349</p>
+<h1 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h1><h2 id="直接删除"><a href="#直接删除" class="headerlink" title="直接删除"></a>直接删除</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = <span class="built_in">df</span>[~outliers].copy()</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="截断"><a href="#截断" class="headerlink" title="截断"></a>截断</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">def winsorize_iqr(<span class="built_in">df</span>, col, <span class="built_in">factor</span>=1.5):</span><br><span class="line">    <span class="string">""</span><span class="string">"用 IQR 边界截断异常值"</span><span class="string">""</span></span><br><span class="line">    Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">    Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">    IQR = Q3 - Q1</span><br><span class="line">    lower_bound = Q1 - <span class="built_in">factor</span> * IQR</span><br><span class="line">    upper_bound = Q3 + <span class="built_in">factor</span> * IQR</span><br><span class="line">    <span class="built_in">return</span> <span class="built_in">df</span>[col].clip(lower=lower_bound, upper=upper_bound)</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'income_winsorized'</span>] = winsorize_iqr(<span class="built_in">df</span>, <span class="string">'income'</span>, <span class="built_in">factor</span>=3)  <span class="comment"># 3倍IQR</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="z-score处理"><a href="#z-score处理" class="headerlink" title="z-score处理"></a>z-score处理</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">def detect_outliers_zscore(<span class="built_in">df</span>, col, threshold=3):</span><br><span class="line">    <span class="string">""</span><span class="string">"使用 Z-score 检测异常值"</span><span class="string">""</span></span><br><span class="line">    z_scores = np.abs(stats.zscore(<span class="built_in">df</span>[col].dropna()))</span><br><span class="line">    outlier_mask = np.zeros(len(<span class="built_in">df</span>), dtype=bool)</span><br><span class="line">    outlier_mask[<span class="built_in">df</span>[col].notna()] = z_scores &gt; threshold</span><br><span class="line">    <span class="built_in">return</span> outlier_mask</span><br><span class="line"></span><br><span class="line"><span class="comment"># 若数据是接近正态的 用 Z-score 检测</span></span><br><span class="line">z_outliers = detect_outliers_zscore(<span class="built_in">df</span>, <span class="string">'score'</span>, threshold=3)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'score_clean'</span>] = <span class="built_in">df</span>[<span class="string">'score'</span>].<span class="built_in">where</span>(~z_outliers, <span class="built_in">df</span>[<span class="string">'score'</span>].median())  <span class="comment"># 用中位数填充异常</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="对数变换"><a href="#对数变换" class="headerlink" title="对数变换"></a>对数变换</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 仅支持全为整数且右偏的数据</span></span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'账户资金（元）_log'</span>] = np.log1p(<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对比</span></span><br><span class="line">plt.figure(figsize=(12, 4))</span><br><span class="line">plt.subplot(1, 2, 1)</span><br><span class="line">sns.histplot(<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>], kde=True)</span><br><span class="line"></span><br><span class="line">plt.subplot(1, 2, 2)</span><br><span class="line">sns.histplot(<span class="built_in">df</span>[<span class="string">'账户资金（元）_log'</span>], kde=True)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/016.png" alt="photo"></p>
+<h2 id="分箱"><a href="#分箱" class="headerlink" title="分箱"></a>分箱</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 等频分箱（Quantile-based），自动处理极端值</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'账户资金（元）_binned'</span>] = pd.qcut(<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>], q=10, duplicates=<span class="string">'drop'</span>)  <span class="comment"># 分10箱</span></span><br><span class="line">sns.countplot(x=<span class="built_in">df</span>[<span class="string">'账户资金（元）_binned'</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 或自定义边界（把 &gt;200000 的都归为 "High"）</span></span><br><span class="line">bins = [0, 30000, 60000, 100000, np.inf]</span><br><span class="line">labels = [<span class="string">'Low'</span>, <span class="string">'Medium'</span>, <span class="string">'High'</span>, <span class="string">'Very High'</span>]</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'账户资金（元）_group'</span>] = pd.cut(<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>], bins=bins, labels=labels, include_lowest=True)</span><br><span class="line">sns.countplot(x=<span class="built_in">df</span>[<span class="string">'账户资金（元）_group'</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/017.png" alt="photo"></p>
+<h2 id="保留异常值"><a href="#保留异常值" class="headerlink" title="保留异常值"></a>保留异常值</h2><p>有时候异常值本身就是一种信号 例如借款金额非常大的值</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">'账户资金（元）_is_outlier'</span>] = (<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>] &gt; 200000).astype(int)</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--新闻</title>
+    <url>/zhihaojiang.github.io/2025/09/30/20250930%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E6%96%B0%E9%97%BB/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'新闻.xlsx'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>关键词</th>
+<th>标题</th>
+<th>网址</th>
+<th>来源</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>华能信托</td>
+<td>信托公司2019年上半年经营业绩概览</td>
+<td><a class="link" href="http://www.financialnews.com.cn/jrsb_m/xt/zx/2">http://www.financialnews.com.cn/jrsb_m/xt/zx/2<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>…</td>
+<td>中国金融新闻网</td>
+<td>2019年07月23日 00:00</td>
+</tr>
+<tr>
+<td>华能信托</td>
+<td>首单信托型企业ABS获批</td>
+<td><a class="link" href="http://www.jjckb.cn/2018-10/23/c_137552198.htm">http://www.jjckb.cn/2018-10/23/c_137552198.htm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></td>
+<td>经济参考网</td>
+<td>2018年10月23日 12:21</td>
+</tr>
+<tr>
+<td>华能信托</td>
+<td>华能贵诚信托孙磊:金融科技助力打造开放信托生态</td>
+<td><a class="link" href="https://baijiahao.baidu.com/s?id=1639276579449">https://baijiahao.baidu.com/s?id=1639276579449<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>…</td>
+<td>同花顺财经</td>
+<td>2019年07月17日 10:49</td>
+</tr>
+<tr>
+<td>华能信托</td>
+<td>华能贵诚信托孙磊:金融科技已经成为信托行业重要的基础设施</td>
+<td><a class="link" href="https://finance.qq.com/a/20190716/007898.htm">https://finance.qq.com/a/20190716/007898.htm<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></td>
+<td>腾讯财经</td>
+<td>2019年07月16日 18:53</td>
+</tr>
+<tr>
+<td>华能信托</td>
+<td>格力电器股权转让意向方闭门开会 华能信托赫然在列</td>
+<td><a class="link" href="https://finance.sina.com.cn/trust/roll/2019-05">https://finance.sina.com.cn/trust/roll/2019-05<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>…</td>
+<td>新浪</td>
+<td>2019年05月22日 22:53</td>
+</tr>
+</tbody></table>
+<h1 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">words = []</span><br><span class="line"><span class="keyword">for</span> i, row <span class="keyword">in</span> df.iterrows():</span><br><span class="line">    words.append(<span class="string">' '</span>.<span class="built_in">join</span>(jieba.cut(row[<span class="string">'标题'</span>])))</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">vect = TfidfVectorizer()</span><br><span class="line">X = vect.fit_transform(words)</span><br></pre></td></tr></table></figure></div>
+<h1 id="词袋法"><a href="#词袋法" class="headerlink" title="词袋法"></a>词袋法</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 除了TF-IDF 还可以使用词袋法</span></span><br><span class="line">from sklearn.feature_extraction.text import CountVectorizer</span><br><span class="line">vect = CountVectorizer()</span><br><span class="line">X = vect.fit_transform(words)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="K-means"><a href="#K-means" class="headerlink" title="K-means"></a>K-means</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">kms = KMeans(n_clusters=10, random_state=123)</span><br><span class="line">labels = kms.fit_predict(X)</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'cluster'</span>] = labels</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(10):</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"\n类别 {i}"</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">'cluster'</span>] == i][<span class="string">'标题'</span>].<span class="built_in">head</span>(5).to_list())</span><br></pre></td></tr></table></figure></div>
+
+<p>类别 0<br>[‘体育场地共享 群众健身受惠’, ‘江苏省体育局构建全民健身设施网络体系’, ‘乐享全民健身公益体育彩票就在你我身边’, ‘惠州将举行系列体育活动迎接全民健身日的到来’, ‘惠州将举行系列体育活动迎接全民健身日的到来’]</p>
+<p>类别 1<br>[‘杨广伟:未来10年 人工智能一定会改变房地产行业’, ‘文献述评:人工智能在精神科的应用’, ‘严重提醒!骗子都用上AI技术了!你却还不知道啥是人工智能?’, ‘“芯时代、芯征程、芯机遇”人工智能与机器视觉高峰论坛如期而至’, ‘“读心术”新高地,基于血谱光学成像的情感人工智能’]</p>
+<p>类别 2<br>[‘华能国际:华能资本是华能贵诚信托有限公司大股东’, ‘贵诚信托’, ‘华能贵诚信托有限公司’, ‘华能贵诚信托有限公司’, ‘华能贵诚信托有限公司’]</p>
+<p>类别 3<br>[‘数字媒体的体育版权经营逻辑’, ‘关心下一代华夏国际体育训练营丨美国体育训练营’, ‘左手优酷体育右手苏宁体育 阿里体育组队围攻腾讯体育’, ‘新赛季“抢人”大战正酣 优酷体育会员悄然下架’, ‘学校体育资源开放,步子再快一点’]</p>
+<p>类别 4<br>[‘全球《财富》榜再次更新,阿里巴巴腾讯被反超?京东成最大黑马!’, ‘腾讯、阿里巴巴、京东……等名字的由来,你知道哪些?’, ‘格力全品类上线京东家电 与京东展开深度合作’, ‘格力“联姻”京东 预计2年后进行业前四’, ‘博鳌快讯 | 唐学斌:京东、360看中的是彩生活的社区服务模式’]</p>
+<p>类别 5<br>[‘信托公司2019年上半年经营业绩概览’, ‘2018年信托业人均创利304万元 华润、华能贵诚跌出万亿俱乐部’, ‘去年信托业人均创利304万元,华能贵诚信托跌出万亿俱乐部’, ‘华能贵诚信托换帅,孙磊出任总经理’, ‘持单家公司股票超产品净值20% 华能贵诚信托被罚20万元’]</p>
+<p>类别 6<br>[‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’]</p>
+<p>类别 7<br>[‘数据科学哪家强?Python和R的对决 - 博客园新闻手机版’, ‘数字化阅读空间 | 怎么用Python迅速获取网站数据?’, ‘今天破解了压缩文件的密码:使用python轻松编写破解程序’, ‘程序员如何利用 Python 解决女朋友不看天气的坏习惯?’, ‘向Excel说再见,神级编辑器统一表格与Python’]</p>
+<p>类别 8<br>[‘…电视总台七夕特别节目《天下有情人》浪漫升级,引领传统文化新…’, ‘北京文化“封神”:爆款如何持续’, ‘深挖“仓颉造字”历史文化,寿光这个村新时代文明实践有高招’, ‘让夜间经济更有文化味 哪里才是真正“网红打卡地”?’, ‘嘉兴:“伯鸿城市书房”构筑风雅桐乡最美文化地标’]</p>
+<p>类别 9<br>[‘首单信托型企业ABS获批’, ‘华能贵诚信托孙磊:金融科技助力打造开放信托生态’, ‘华能贵诚信托孙磊:金融科技已经成为信托行业重要的基础设施’, ‘格力电器股权转让意向方闭门开会 华能信托赫然在列’, ‘直击格力电器意向投资者见面会:参会者华能信托背后现国务院国资委…’]</p>
+<h1 id="DBSCAN"><a href="#DBSCAN" class="headerlink" title="DBSCAN"></a>DBSCAN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.cluster import DBSCAN</span><br><span class="line"></span><br><span class="line">dbs = DBSCAN(eps=0.5, min_samples=5)</span><br><span class="line">dbs.fit(X)</span><br><span class="line">labels = dbs.labels_</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'cluster'</span>] = labels</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(10):</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"\n类别 {i}"</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">'cluster'</span>] == i][<span class="string">'标题'</span>].<span class="built_in">head</span>(5).to_list())</span><br></pre></td></tr></table></figure></div>
+
+<p>类别 0<br>[‘五矿信托首任总经理辞职 接任者或为华能信托王卓’, ‘五矿信托首任总经理辞职 接任者或为华能信托王卓’, ‘五矿信托首任总经理辞职 接任者或为华能信托王卓’, ‘五矿信托首任总经理辞职 接任者或为华能信托王卓’, ‘五矿信托首任总经理辞职 接任者或为华能信托王卓’]</p>
+<p>类别 1<br>[‘华夏幸福关于拟与华能信托签署《增资协议》的公告’, ‘华夏幸福关于拟与华能信托签署《增资协议》的公告’, ‘华夏幸福关于拟与华能信托签署《增资协议》的公告’, ‘华夏幸福关于拟与华能信托签署《增资协议》的公告’, ‘华夏幸福关于拟与华能信托签署《增资协议》的公告’]</p>
+<p>类别 2<br>[‘普邦股份:华能信托.普邦1号集合资金信托计划信托合同’, ‘普邦股份:华能信托.普邦1号集合资金信托计划信托合同’, ‘普邦股份:华能信托.普邦1号集合资金信托计划信托合同’, ‘普邦股份:华能信托.普邦1号集合资金信托计划信托合同’, ‘普邦股份:华能信托.普邦1号集合资金信托计划信托合同’]</p>
+<p>类别 3<br>[‘华能信托试水首单不良资产收益权转让已有46家信托公司与银登中心…’, ‘华能信托试水首单不良资产收益权转让已有46家信托公司与银登中心…’, ‘华能信托试水首单不良资产收益权转让已有46家信托公司与银登中心…’, ‘华能信托试水首单不良资产收益权转让已有46家信托公司与银登中心…’, ‘华能信托试水首单不良资产收益权转让已有46家信托公司与银登中心…’]</p>
+<p>类别 4<br>[‘北京银行携手华能、中航信托创新慈善信托模式’, ‘北京银行携手华能、中航信托创新慈善信托模式’, ‘北京银行携手华能、中航信托创新慈善信托模式’, ‘北京银行携手华能、中航信托创新慈善信托模式’, ‘北京银行携手华能、中航信托创新慈善信托模式’]</p>
+<p>类别 5<br>[‘ACCA-华能信托“财经领袖培养计划”第一期学员选拔结果公布’, ‘ACCA-华能信托“财经领袖培养计划”第一期学员选拔结果公布’, ‘ACCA-华能信托“财经领袖培养计划”第一期学员选拔结果公布’, ‘ACCA-华能信托“财经领袖培养计划”第一期学员选拔结果公布’, ‘ACCA-华能信托“财经领袖培养计划”第一期学员选拔结果公布’]</p>
+<p>类别 6<br>[‘华能贵诚信托有限公司’, ‘华能贵诚信托有限公司’, ‘华能贵诚信托有限公司’, ‘华能贵诚信托有限公司’, ‘华能贵诚信托有限公司’]</p>
+<p>类别 7<br>[‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’]</p>
+<p>类别 8<br>[‘用益-信托日报:平安江苏中信华能位列前四!58家信托上半年净利排位!’, ‘用益-信托日报:平安江苏中信华能位列前四!58家信托上半年净利排位!’, ‘用益-信托日报:平安江苏中信华能位列前四!58家信托上半年净利排位!’, ‘用益-信托日报:平安江苏中信华能位列前四!58家信托上半年净利排位!’, ‘用益-信托日报:平安江苏中信华能位列前四!58家信托上半年净利排位!’]</p>
+<p>类别 9<br>[]</p>
+<h1 id="层次聚类"><a href="#层次聚类" class="headerlink" title="层次聚类"></a>层次聚类</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.cluster import AgglomerativeClustering</span><br><span class="line"></span><br><span class="line"><span class="comment"># 比如 TF-IDF 输出是稀疏矩阵 需要转 dense</span></span><br><span class="line">X_dense = X.toarray()</span><br><span class="line"></span><br><span class="line">agg = AgglomerativeClustering(n_clusters=10, metric=<span class="string">'cosine'</span>, linkage=<span class="string">'average'</span>)</span><br><span class="line">labels = agg.fit_predict(X_dense)</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'cluster'</span>] = labels</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(10):</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"\n类别 {i}"</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">'cluster'</span>] == i][<span class="string">'标题'</span>].<span class="built_in">head</span>(5).to_list())</span><br></pre></td></tr></table></figure></div>
+<p>类别 0<br>[‘华能信托:信托公司参与消费金融的新机会与模式分析’, ‘文献述评:人工智能在精神科的应用’, ‘严重提醒!骗子都用上AI技术了!你却还不知道啥是人工智能?’, ‘“芯时代、芯征程、芯机遇”人工智能与机器视觉高峰论坛如期而至’, ‘华为Atlas:AI遥感的“碧空慧眼”’]</p>
+<p>类别 1<br>[‘既要人工智能高效发展,还要符合伦理,该怎么做?’, ‘又一项人工智能技术被确认,自动避开行人,开车睡觉或将成为现实’, ‘欧洲联盟人工智能生态系统调查’, ‘人工智能是一种受欢迎的推动力 可以为GDP增加数百万美元’, ‘法律人工智能的十大前沿问题’]</p>
+<p>类别 2<br>[‘信托公司2019年上半年经营业绩概览’, ‘助推人工智能创新资源聚集珠海’, ‘湖南大力开展“科技成果转化年”活动’, ‘看看韩雪住的豪宅,室内做了很多 “科技”设计,进门才知很实用’, ‘活动汇丨成都8月科技互联网活动知多少?’]</p>
+<p>类别 3<br>[‘杨广伟:未来10年 人工智能一定会改变房地产行业’, ‘渗透!人工智能将在10年内占领房地产市场?’, ‘西媒盘点:2016年中国打响了人工智能发展的发令枪’, ‘盘点全球各国人工智能战略:中国打响发令枪’, ‘为什么全球的富豪主要集中在科技领域?’]</p>
+<p>类别 4<br>[‘亚马逊的StyleSnap是一款人工智能工具’, ‘谷歌正在使用人工智能来预测风电场的输出功率’, ‘谷歌正在使用人工智能来预测风电场的输出功率’, ‘这类纪录片用“硬核影像”见证“硬核科技”’, ‘三维传感组件公司“安思疆科技”获亿元A轮融资 北京清控金信资本…’]</p>
+<p>类别 5<br>[‘&gt; 科技局’]</p>
+<p>类别 6<br>[‘首单信托型企业ABS获批’, ‘华能贵诚信托孙磊:金融科技助力打造开放信托生态’, ‘华能贵诚信托孙磊:金融科技已经成为信托行业重要的基础设施’, ‘格力电器股权转让意向方闭门开会 华能信托赫然在列’, ‘直击格力电器意向投资者见面会:参会者华能信托背后现国务院国资委…’]</p>
+<p>类别 7<br>[‘Python3.7知其然知其所以然-第六章 字符串’]</p>
+<p>类别 8<br>[‘对话|山村女教师自制体育器材:听孩子说想当老师,我流泪了’, ‘乖乖女不适合娱乐圈?她第一个不同意!’, ‘娱乐圈里的真·糊咖混得有多惨?’, ‘去年是分手季,今年是恋情季,娱乐圈的八月都组团吗’, ‘娱乐记者大起底!传出421页明星爆料,421文档究竟是怎么回事?’]</p>
+<p>类别 9<br>[‘8月起停播娱乐性较强古装剧偶像剧’, ‘广电:展播期间不得播娱乐性较强的古装剧偶像剧’, ‘教育部禁止高校及实习单位安排学生到娱乐性场所实习’]</p>
+<h1 id="GMM"><a href="#GMM" class="headerlink" title="GMM"></a>GMM</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.mixture import GaussianMixture</span><br><span class="line"></span><br><span class="line">gmm = GaussianMixture(n_components=10, covariance_type=<span class="string">'full'</span>)</span><br><span class="line">gmm.fit(X_dense)</span><br><span class="line">labels = gmm.predict(X_dense)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'cluster'</span>] = labels</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(10):</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"\n类别 {i}"</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">'cluster'</span>] == i][<span class="string">'标题'</span>].<span class="built_in">head</span>(5).to_list())</span><br></pre></td></tr></table></figure></div>
+<p>类别 0<br>[‘杨广伟:未来10年 人工智能一定会改变房地产行业’, ‘文献述评:人工智能在精神科的应用’, ‘严重提醒!骗子都用上AI技术了!你却还不知道啥是人工智能?’, ‘“芯时代、芯征程、芯机遇”人工智能与机器视觉高峰论坛如期而至’, ‘“读心术”新高地,基于血谱光学成像的情感人工智能’]</p>
+<p>类别 1<br>[‘华能贵诚信托孙磊:金融科技已经成为信托行业重要的基础设施’, ‘阿尔法蛋现身人工智能与教育大数据峰会,智能科技获点赞’, ‘装病骗政府645万,科技远不是你想的那样’, ‘昔日网游第一股迅游科技实控人被动减持,商誉压顶’, ‘ChinaJoy 2019丨ITheat热点科技展台人气火爆 这些精彩看点不容错过’]</p>
+<p>类别 2<br>[‘来腾讯音乐娱乐蔡徐坤全新EP派对探寻不一《YOUNG》的青春答案’, ‘TGC腾讯数字文创:腾讯的文化抱负’, ‘腾讯云进入日本市场 今年目标是使国际营收增长至多5倍’, ‘湖南省政府与腾讯公司签署深化合作框架协议’, ‘腾讯(00700)需要喜茶’]</p>
+<p>类别 3<br>[‘华能贵诚信托孙磊:金融科技助力打造开放信托生态’, ‘华能贵诚信托换帅,孙磊出任总经理’, ‘华能国际:华能资本是华能贵诚信托有限公司大股东’, ‘2018年上半年62家信托公司净利润排名 平安中信华能位列前三’, ‘速睹62家信托上半年业绩!平安中信华能位列前三’]</p>
+<p>类别 4<br>[‘信托公司2019年上半年经营业绩概览’, ‘首单信托型企业ABS获批’, ‘格力电器股权转让意向方闭门开会 华能信托赫然在列’, ‘直击格力电器意向投资者见面会:参会者华能信托背后现国务院国资委…’, ‘格力电器股权转让意向投资者见面会召开 自称华能信托的人士到场’]</p>
+<p>类别 5<br>[‘数字媒体的体育版权经营逻辑’, ‘关心下一代华夏国际体育训练营丨美国体育训练营’, ‘左手优酷体育右手苏宁体育 阿里体育组队围攻腾讯体育’, ‘新赛季“抢人”大战正酣 优酷体育会员悄然下架’, ‘学校体育资源开放,步子再快一点’]</p>
+<p>类别 6<br>[‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’, ‘国金ABS云 · 早报丨招行与华能信托将合作发行99亿元ABS’]</p>
+<p>类别 7<br>[‘阿里巴巴的食堂长啥样?上海网红美食杭州首站开在这’, ‘阿里巴巴朋新宇:为何中台能帮企业突破增长瓶颈?’, ‘阿里巴巴搭起数字鹊桥:4000万人种下情侣树 600万人绑定淘宝亲情号’, ‘阿里巴巴大数据折射中国式“我爱你”:54%码商夫妻店由老婆管帐’, ‘阿里巴巴合伙人之一 跟了马云19年后 分了40亿给她’]</p>
+<p>类别 8<br>[‘…电视总台七夕特别节目《天下有情人》浪漫升级,引领传统文化新…’, ‘北京文化“封神”:爆款如何持续’, ‘深挖“仓颉造字”历史文化,寿光这个村新时代文明实践有高招’, ‘让夜间经济更有文化味 哪里才是真正“网红打卡地”?’, ‘嘉兴:“伯鸿城市书房”构筑风雅桐乡最美文化地标’]</p>
+<p>类别 9<br>[‘…或200亿收购中江信托 50亿爆雷“烫手山芋”如何处置?;华能信托…’, ‘…或200亿收购中江信托 50亿爆雷“烫手山芋”如何处置?;华能信托…’, ‘华能信托换帅总经理孙磊任职资格获批’, ‘华能信托、东莞信托昨日双双增资 今年信托公司注册资本增加总额逾…’, ‘肖钢密集调研资产证券化业务 走访华能信托和中信信托’]</p>
+<h1 id="HDBSCAN"><a href="#HDBSCAN" class="headerlink" title="HDBSCAN"></a>HDBSCAN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.cluster import HDBSCAN</span><br><span class="line"></span><br><span class="line">hdbscan = HDBSCAN(min_cluster_size=5, min_samples=3)</span><br><span class="line">hdbscan.fit(X_dense)</span><br><span class="line">labels = hdbscan.labels_</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'cluster'</span>] = labels</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(10):</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"\n类别 {i}"</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">'cluster'</span>] == i][<span class="string">'标题'</span>].<span class="built_in">head</span>(5).to_list())</span><br></pre></td></tr></table></figure></div>
+<p>类别 0<br>[‘灵超尤长靖节目互动被无耻造谣?坤音娱乐老板惹众怒,竟贷款道歉’, ‘尤长靖无辜躺枪?秦周懿言语中伤尤长靖,香蕉娱乐要求正式道歉’, ‘坤音娱乐频出问题,自卜凡解约风波后,老板也因骂尤长靖而惹争议’, ‘尤长靖无辜躺枪?秦周懿言语中伤尤长靖,香蕉娱乐要求正式道歉’, ‘坤音娱乐频出问题,自卜凡解约风波后,老板也因骂尤长靖而惹争议’]</p>
+<p>类别 1<br>[‘乐队鼓手要失业?索尼用人工智能自动为音乐打节拍’, ‘来腾讯音乐娱乐蔡徐坤全新EP派对探寻不一《YOUNG》的青春答案’, ‘中国原声民歌节展现传统音乐非遗’, ‘来腾讯音乐娱乐蔡徐坤全新EP派对探寻不一《YOUNG》的青春答案’, ‘腾讯音乐“等风来”’]</p>
+<p>类别 2<br>[‘广州:中考体育跳绳满分标准逐步提高’, ‘体育分值提至70分 “三大球”为选考项目’, ‘体育分值提至70分 “三大球”为选考项目’, ‘广州市中考体育部分加入足球、篮球、排球为选考项目’, ‘「最新」沪学校体育艺术项目将形成小初高“一条龙”!这里有你关心…’]</p>
+<p>类别 3<br>[‘学好少儿编程,未来轻松掌控人工智能时代’, ‘长春人工智能编程’, ‘长春人工智能编程’, ‘编程小少年有个人工智能大梦想’, ‘编程小少年有个人工智能大梦想’]</p>
+<p>类别 4<br>[‘让夜间经济更有文化味 哪里才是真正“网红打卡地”?’, ‘文化增活力 旅游添魅力 文旅融合讓濟南旅游悄然發生著變化’, ‘讲好中国故事 展示文化魅力’, ‘视频|临清首届汉服文化旅游周开幕 千年魅力文化尽在山水间’, ‘「财经纵横」戴斌:旅游研究与文化建设,初心在哪里…’]</p>
+<p>类别 5<br>[‘一波三折的腾讯手游《拉结尔》最终定档3月底正式上线!’, ‘腾讯独家代理手游《权力的游戏》首测,SLG游戏或打破手游布局!’, ‘腾讯独家代理手游《权力的游戏》首测,SLG游戏或打破手游布局!’, ‘腾讯完美强强联合《完美世界》手游,信仰测试定档1月16日’, ‘那些为腾讯赚了上千亿的游戏人,都去哪了?’]</p>
+<p>类别 6<br>[‘中国又掌握一项核心科技:火箭残骸指哪儿落哪儿’, ‘Python虚拟环境详解’, ‘腾讯拿它也没办法,详解为什么《剑网3:指尖江湖》不氪金’, ‘腾讯等它内测等了35000多个小时,剑网3指尖江湖把时间花哪儿了?’, ‘腾讯等它内测等了35000多个小时,剑网3指尖江湖把时间花哪儿了?’]</p>
+<p>类别 7<br>[‘美股全线高开,标普500指数涨0.7%,中概股反弹,阿里巴巴涨逾3%’, ‘FAANG全线下跌!美股小幅低开,阿里巴巴跌逾2%’, ‘美股小幅低开,阿里巴巴跌逾2%’, ‘阿里巴巴集团:股票分割将于7月30日生效!’, ‘阿里巴巴宣布股票分割,是为回港上市做准备吗?’]</p>
+<p>类别 8<br>[‘Python的武器库11:os模块’, ‘Python的武器库10:Pillow模块’, ‘Python的武器库09:psutil模块’, ‘提供给开发者 10 款最好的 Python IDE’, ‘提供给开发者 10 款最好的 Python IDE’]</p>
+<p>类别 9<br>[‘体育惠民,让全城“动起来”’, ‘为什么Python在中国突然就火了起来了呢?’, ‘为什么Python在中国突然就火了起来了呢?’, ‘为什么Python在中国突然就火了起来了呢?’, ‘为什么我觉得Python烂的要死?原因有八’]</p>
+<h1 id="余弦相似度"><a href="#余弦相似度" class="headerlink" title="余弦相似度"></a>余弦相似度</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.metrics.pairwise import cosine_similarity</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算余弦相似度</span></span><br><span class="line">cos_sim = cosine_similarity(X)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印前 5 条新闻的相似度矩阵</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"前5条新闻的余弦相似度："</span>)</span><br><span class="line"><span class="built_in">print</span>(pd.DataFrame(cos_sim[:5, :5]))</span><br><span class="line"></span><br><span class="line">similar_idx = cos_sim[0].argsort()[::-1][1:6]  <span class="comment"># 降序，跳过自己</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"\n与第1条新闻最相似的5条："</span>)</span><br><span class="line"><span class="keyword">for</span> idx <span class="keyword">in</span> similar_idx:</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"相似度={cos_sim[0, idx]:.3f} -&gt; {df.loc[idx, '标题']}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>前5条新闻的余弦相似度：<br>     0         1         2         3         4<br>0  1.0  0.000000  0.000000  0.000000  0.000000<br>1  0.0  1.000000  0.063591  0.055208  0.055039<br>2  0.0  0.063591  1.000000  0.464255  0.084141<br>3  0.0  0.055208  0.464255  1.000000  0.073049<br>4  0.0  0.055039  0.084141  0.073049  1.000000</p>
+<p>与第1条新闻最相似的5条：<br>相似度=0.292 -&gt; 速睹62家信托上半年业绩!平安中信华能位列前三<br>相似度=0.215 -&gt; 2018年上半年62家信托公司净利润排名 平安中信华能位列前三<br>相似度=0.210 -&gt; 数字媒体的体育版权经营逻辑<br>相似度=0.138 -&gt; 5.94亿重组遭问询 汇金科技否认标的公司卖资产粉饰业绩<br>相似度=0.121 -&gt; 华能信托:信托公司参与消费金融的新机会与模式分析</p>
+<h1 id="聚类模型横向对比"><a href="#聚类模型横向对比" class="headerlink" title="聚类模型横向对比"></a>聚类模型横向对比</h1><table>
+<thead>
+<tr>
+<th>模型</th>
+<th>聚类数量</th>
+<th>噪声点</th>
+<th>聚类特征 / 评论</th>
+<th>示例类标题特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>K-means</td>
+<td>10</td>
+<td>无</td>
+<td>均匀分配簇，容易出现重复或相似内容被拆开</td>
+<td>类别 0: 全民健身类；类别 1: AI技术类；类别 2: 华能信托多条重复标题</td>
+</tr>
+<tr>
+<td>DBSCAN</td>
+<td>多个簇，但部分簇为空或重复</td>
+<td>存在噪声</td>
+<td>聚类基于密度，相似度高的新闻容易形成簇，但参数敏感；簇内容重复严重</td>
+<td>类别 0–8 多条重复“华能信托”新闻；类别 9 为空</td>
+</tr>
+<tr>
+<td>层次聚类 (Agglomerative, cosine)</td>
+<td>10</td>
+<td>无</td>
+<td>用余弦距离更贴合 TF-IDF，部分小类只含极少标题</td>
+<td>类别 5 只有“&gt; 科技局”；类别 6 聚合了信托新闻</td>
+</tr>
+<tr>
+<td>GMM (GaussianMixture)</td>
+<td>10</td>
+<td>无</td>
+<td>假设数据服从高斯分布，簇比较均匀，但可能出现语义混杂</td>
+<td>类别 0: AI新闻类；类别 1: 科技/信托混合；类别 4: 信托新闻类</td>
+</tr>
+<tr>
+<td>HDBSCAN (cosine)</td>
+<td>自动</td>
+<td>存在噪声 (-1)</td>
+<td>能发现任意形状簇，噪声点分离，主题聚合较好</td>
+<td>类别 0: 娱乐八卦；类别 1: 音乐；类别 2: 体育新闻；噪声点主要是孤立新闻</td>
+</tr>
+</tbody></table>
+<h2 id="横向对比总结"><a href="#横向对比总结" class="headerlink" title="横向对比总结"></a>横向对比总结</h2><ol>
+<li><strong>K-means</strong>：簇数量固定，容易出现重复或相似标题分到不同簇；对离散和稀疏向量敏感。  </li>
+<li><strong>DBSCAN</strong>：可以发现任意形状簇，但对 <code>eps</code> 参数非常敏感；可能出现重复簇或空簇。  </li>
+<li><strong>层次聚类</strong>：用余弦距离效果比欧氏更好，但对小类敏感；能得到层次结构。  </li>
+<li><strong>GMM</strong>：适合高斯分布数据，簇之间概率分布清晰，但主题可能混合。  </li>
+<li><strong>HDBSCAN</strong>：最适合稀疏高维文本，自动确定簇数量，能标记噪声点，<strong>主题聚合性最好</strong>。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--电影推荐系统</title>
+    <url>/zhihaojiang.github.io/2025/09/30/20250930%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'电影推荐系统.xlsx'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>Unnamed: 0</th>
+<th>电影编号</th>
+<th>名称</th>
+<th>类别</th>
+<th>用户编号</th>
+<th>评分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>1</td>
+<td>玩具总动员（1995）</td>
+<td>冒险|动画|儿童|喜剧|幻想</td>
+<td>1</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>玩具总动员（1995）</td>
+<td>冒险|动画|儿童|喜剧|幻想</td>
+<td>5</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>玩具总动员（1995）</td>
+<td>冒险|动画|儿童|喜剧|幻想</td>
+<td>7</td>
+<td>4.5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1</td>
+<td>玩具总动员（1995）</td>
+<td>冒险|动画|儿童|喜剧|幻想</td>
+<td>15</td>
+<td>2.5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>玩具总动员（1995）</td>
+<td>冒险|动画|儿童|喜剧|幻想</td>
+<td>17</td>
+<td>4.5</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = df.drop(columns=[<span class="string">'Unnamed: 0'</span>])</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">user_movie = df.pivot_table(index=<span class="string">'用户编号'</span>, columns=<span class="string">'名称'</span>, values=<span class="string">'评分'</span>)</span><br><span class="line">user_movie.head()</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="计算相关性"><a href="#计算相关性" class="headerlink" title="计算相关性"></a>计算相关性</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">FG = user_movie[<span class="string">'阿甘正传（1994）'</span>]</span><br><span class="line"></span><br><span class="line">corr_FG = user_movie.corrwith(FG)</span><br><span class="line">similarity = pd.DataFrame(corr_FG, columns=[<span class="string">'相关系数'</span>])</span><br><span class="line">similarity.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>相关系数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>007之黄金眼（1995）</td>
+<td>0.217441</td>
+</tr>
+<tr>
+<td>100个女孩（2000）</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>100条街道（2016）</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>101忠狗续集:伦敦大冒险（2003）</td>
+<td>NaN</td>
+</tr>
+<tr>
+<td>101忠狗（1961）</td>
+<td>0.141023</td>
+</tr>
+</tbody></table>
+<h1 id="查看相关的电影"><a href="#查看相关的电影" class="headerlink" title="查看相关的电影"></a>查看相关的电影</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 去掉自身和缺失值</span></span><br><span class="line">similar_movies = similarity.dropna().sort_values(by=<span class="string">'相关系数'</span>, ascending=False)</span><br><span class="line">similar_movies = similar_movies[similar_movies.index != <span class="string">'阿甘正传（1994）'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 取前10</span></span><br><span class="line">top10 = similar_movies.head(10)</span><br><span class="line"><span class="built_in">print</span>(top10)</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>相关系数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Savannah Smiles（1982）</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Badassdom骑士（2013）</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>亲密的陌生人（有信心的时间）（2004）</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>珀西杰克逊：怪兽之海（2013）</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>追逐者（1994）</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>地狱（2016）</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>爬行之夜（1986）</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>睡衣派对大屠杀，（1982）</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>我男朋友的回归（1993）</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>如何像英国人一样做爱（2014）</td>
+<td>1.0</td>
+</tr>
+</tbody></table>
+<h1 id="SVD"><a href="#SVD" class="headerlink" title="SVD"></a>SVD</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">reader = Reader(rating_scale=(<span class="built_in">df</span>[<span class="string">'评分'</span>].min(), <span class="built_in">df</span>[<span class="string">'评分'</span>].max()))</span><br><span class="line">data = Dataset.load_from_df(<span class="built_in">df</span>[[<span class="string">'用户编号'</span>, <span class="string">'名称'</span>, <span class="string">'评分'</span>]], reader)</span><br><span class="line">trainset, testset = surprise_train_test_split(data, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">svd_model = SVD()</span><br><span class="line">svd_model.fit(trainset)</span><br><span class="line">svd_pred = svd_model.test(testset)</span><br><span class="line">svd_rmse = accuracy.rmse(svd_pred)</span><br><span class="line">svd_mae = accuracy.mae(svd_pred)</span><br></pre></td></tr></table></figure></div>
+<p>RMSE: 0.8793<br>MAE:  0.6738</p>
+<h1 id="KNN-预测电影评分"><a href="#KNN-预测电影评分" class="headerlink" title="KNN 预测电影评分"></a>KNN 预测电影评分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">knn = NearestNeighbors(metric=<span class="string">'cosine'</span>, algorithm=<span class="string">'brute'</span>)</span><br><span class="line">R = user_movie.fillna(0).values</span><br><span class="line">knn.fit(R)</span><br><span class="line"></span><br><span class="line">def knn_predict(user_id, movie_name, user_movie, knn_model, k=5):</span><br><span class="line">    user_vector = user_movie.loc[user_id].fillna(0).values.reshape(1, -1)</span><br><span class="line">    distances, indices = knn_model.kneighbors(user_vector, n_neighbors=k+1)</span><br><span class="line">    neighbors = indices.flatten()[1:]  <span class="comment"># 排除自己</span></span><br><span class="line">    ratings = []</span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> neighbors:</span><br><span class="line">        rating = user_movie.iloc[n][movie_name]</span><br><span class="line">        <span class="keyword">if</span> not np.isnan(rating):</span><br><span class="line">            ratings.append(rating)</span><br><span class="line">    <span class="keyword">if</span> len(ratings) == 0:</span><br><span class="line">        <span class="built_in">return</span> user_movie[movie_name].mean()</span><br><span class="line">    <span class="built_in">return</span> np.mean(ratings)</span><br><span class="line"></span><br><span class="line">pred = knn_predict(1, <span class="string">'阿甘正传（1994）'</span>, user_movie, knn)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"KNN 预测评分: {pred:.4f}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>KNN 预测评分: 3.7500</p>
+<h1 id="user-user协同过滤"><a href="#user-user协同过滤" class="headerlink" title="user-user协同过滤"></a>user-user协同过滤</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">user_id = 10</span><br><span class="line">movie_name = <span class="string">'阿甘正传（1994）'</span></span><br><span class="line"></span><br><span class="line">user_corr = user_movie.corrwith(user_movie.loc[user_id], axis=1)</span><br><span class="line"><span class="comment"># 取已评分用户</span></span><br><span class="line">rated_users = user_movie[movie_name].dropna()</span><br><span class="line"><span class="comment"># 用加权平均预测</span></span><br><span class="line">pred = np.dot(user_corr[rated_users.index], rated_users) / user_corr[rated_users.index].<span class="built_in">sum</span>()</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"加权平均预测评分: {pred:.4f}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>加权平均预测评分: nan</p>
+<h1 id="Item-Item-协同过滤"><a href="#Item-Item-协同过滤" class="headerlink" title="Item-Item 协同过滤"></a>Item-Item 协同过滤</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">user_id = 1</span><br><span class="line">movie_name = <span class="string">'阿甘正传（1994）'</span></span><br><span class="line"></span><br><span class="line">movie_corr = user_movie.corrwith(user_movie[movie_name])</span><br><span class="line">rated_movies = user_movie.loc[user_id].dropna()</span><br><span class="line">pred = np.dot(movie_corr[rated_movies.index], rated_movies) / movie_corr[rated_movies.index].<span class="built_in">sum</span>()</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"基于电影相似度的预测评分: {pred:.4f}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>基于电影相似度的预测评分: nan</p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
 </search>

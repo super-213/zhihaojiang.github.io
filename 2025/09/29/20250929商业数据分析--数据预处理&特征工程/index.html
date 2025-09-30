@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="姜智浩">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+            <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/2025/09/29/20250929商业数据分析--数据预处理&特征工程/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="商业数据分析--数据预处理&amp;特征工程">
+<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/2025/09/29/20250929%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86&%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2025-09-29T03:45:14.000Z">
+<meta property="article:modified_time" content="2025-09-30T00:44:24.390Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="数据分析">
+<meta property="article:tag" content="商业数据分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://super-213.github.io/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/zhihaojiang.github.io/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/zhihaojiang.github.io/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/zhihaojiang.github.io/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            商业数据分析--数据预处理&amp;特征工程 | 智浩的Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+
+    <!-- 这里是 Live2D 代码 -->
+    <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/css/build/tailwind.css">
+    
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fonts/GeistMono/geist-mono.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fonts/Geist/geist.css">
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+        <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/anime.min.js" ></script>
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"super-213.github.io","root":"/zhihaojiang.github.io/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/super-213","instagram":null,"zhihu":null,"twitter":null,"email":"jiangzhihaojzh@126.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1"},"mathjax":{"tags":"none","single_dollars":true,"cjk_width":0.9,"normal_width":0.6,"append_css":true,"every_page":true}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        智浩的Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({ loop: true })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [20, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                filter: ['blur(5px)', 'blur(0px)'],
+                easing: "easeOutExpo",
+                duration: 1200,
+                delay: (el, i) => 300 + 20 * i,
+            })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [0, -20],
+                opacity: [1, 0],
+                filter: ['blur(0px)', 'blur(5px)'],
+                easing: "easeInExpo",
+                duration: 1000,
+                delay: (el, i) => 15 * i,
+                complete: function() {
+                    hidePreloader();
+                }
+            }, '-=700');
+
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/zhihaojiang.github.io/">
+                
+                智浩的Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    PHOTO
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/zhihaojiang.github.io/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/super-213">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/masonry/"
+                        >
+                            <span>
+                                PHOTO
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/zhihaojiang.github.io/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/super-213">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/bookmarks/"
+                        >
+                            <span>Bookmarks</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/tags/"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/categories/"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">21</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">66</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">商业数据分析--数据预处理&amp;特征工程</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/zhihaojiang.github.io/images/defaults/IMG_3744.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">姜智浩</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv5</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-09-29 11:45:14</span>
+        <span class="mobile">2025-09-29 11:45:14</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-09-30 08:44:24</span>
+            <span class="mobile">2025-09-30 08:44:24</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/zhihaojiang.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/zhihaojiang.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">商业数据分析</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.5k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>6 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" target="_blank" rel="noopener" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>查看第10章的代码 发现其主要是特征工程与数据预处理的代码 因此本章主要罗列各种特征工程与数据预处理的方法</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'股票客户流失.xlsx'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>账户资金（元）</th>
+<th>最后一次交易距今时间（天）</th>
+<th>上月交易佣金（元）</th>
+<th>本券商使用时长（年）</th>
+<th>是否流失</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>22686.5</td>
+<td>297</td>
+<td>149.25</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>190055.0</td>
+<td>42</td>
+<td>284.75</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>29733.5</td>
+<td>233</td>
+<td>269.25</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>185667.5</td>
+<td>44</td>
+<td>211.50</td>
+<td>3</td>
+<td>0</td>
+</tr>
+<tr>
+<td>33648.5</td>
+<td>213</td>
+<td>353.50</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h1 id="查看数据分布"><a href="#查看数据分布" class="headerlink" title="查看数据分布"></a>查看数据分布</h1><p><strong>热力图</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import seaborn as sns</span><br><span class="line"></span><br><span class="line">sns.heatmap(df.corr(), annot=True, cmap=<span class="string">'YlGnBu'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/001.png" alt="photo"></p>
+<p><strong>直方图和QQ图</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">from scipy import stats</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.figure(figsize=(12, 4))</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 直方图 + KDE</span></span><br><span class="line">    plt.subplot(1, 2, 1)</span><br><span class="line">    sns.histplot(<span class="built_in">df</span>[col].dropna(), kde=True, bins=30)</span><br><span class="line">    plt.title(f<span class="string">'{col} 分布'</span>)</span><br><span class="line">    plt.xlabel(col)</span><br><span class="line">    plt.ylabel(<span class="string">'Frequency'</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># QQ图</span></span><br><span class="line">    plt.subplot(1, 2, 2)</span><br><span class="line">    stats.probplot(<span class="built_in">df</span>[col].dropna(), dist=<span class="string">"norm"</span>, plot=plt)</span><br><span class="line">    plt.title(f<span class="string">'{col} QQ 图'</span>)</span><br><span class="line">    </span><br><span class="line">    plt.tight_layout()</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/002.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/003.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/004.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/005.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/006.png" alt="photo"></p>
+<h1 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h1><p>首先查看是否存在缺失值</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="删除缺失值"><a href="#删除缺失值" class="headerlink" title="删除缺失值"></a>删除缺失值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法1 删除缺失率 &gt; 50% 的列</span></span><br><span class="line">df.dropna(thresh=len(<span class="built_in">df</span>)*0.5, axis=1, inplace=True)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法2 删除含缺失的行</span></span><br><span class="line">df.dropna(inplace=True)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="简单填充缺失值"><a href="#简单填充缺失值" class="headerlink" title="简单填充缺失值"></a>简单填充缺失值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数值型 中位数或均值填充</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'age'</span>].fillna(<span class="built_in">df</span>[<span class="string">'age'</span>].median(), inplace=True) <span class="comment"># .mean()是均值</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 类别型 众数填充</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'gender'</span>].fillna(<span class="built_in">df</span>[<span class="string">'gender'</span>].mode()[0], inplace=True)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者 固定值</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'income'</span>].fillna(-1, inplace=True)  <span class="comment"># -1 表示缺失</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="模型填充缺失值"><a href="#模型填充缺失值" class="headerlink" title="模型填充缺失值"></a>模型填充缺失值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># KNN填充</span></span><br><span class="line">from sklearn.impute import KNNImputer</span><br><span class="line">imputer = KNNImputer(n_neighbors=5)</span><br><span class="line">df_filled = pd.DataFrame(imputer.fit_transform(<span class="built_in">df</span>), columns=df.columns)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 多重插补法</span></span><br><span class="line">from sklearn.experimental import enable_iterative_imputer</span><br><span class="line">from sklearn.impute import IterativeImputer</span><br><span class="line">imp = IterativeImputer(random_state=0)</span><br><span class="line">df_filled = pd.DataFrame(imp.fit_transform(<span class="built_in">df</span>), columns=df.columns)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="保留缺失值"><a href="#保留缺失值" class="headerlink" title="保留缺失值"></a>保留缺失值</h2><p>缺失值本身可能就是一种信息</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数值型缺失值标记</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'income_missing'</span>] = <span class="built_in">df</span>[<span class="string">'income'</span>].isnull().astype(int)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 类别变量可以直接保留为NaN 或替换为 Missing</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'occupation'</span>].fillna(<span class="string">'Missing'</span>, inplace=True)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="可视化缺失值"><a href="#可视化缺失值" class="headerlink" title="可视化缺失值"></a>可视化缺失值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import missingno as msno</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 矩阵图 查看缺失位置</span></span><br><span class="line">msno.matrix(<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 条形图 各列缺失比例</span></span><br><span class="line">msno.bar(<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 相关性热力图 缺失是否相关</span></span><br><span class="line">msno.heatmap(<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/007.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/008.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/009.png" alt="photo"></p>
+<p>热力图是空白的是因为数据集中没有缺失值</p>
+<h1 id="异常值检测"><a href="#异常值检测" class="headerlink" title="异常值检测"></a>异常值检测</h1><h2 id="箱线图可视化异常值"><a href="#箱线图可视化异常值" class="headerlink" title="箱线图可视化异常值"></a>箱线图可视化异常值</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/010.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/011.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/012.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/013.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/014.png" alt="photo"></p>
+<h2 id="3-Sigma-准则检测"><a href="#3-Sigma-准则检测" class="headerlink" title="3 Sigma 准则检测"></a>3 Sigma 准则检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from scipy import stats</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    z_scores = np.abs(stats.zscore(<span class="built_in">df</span>[col].dropna()))</span><br><span class="line">    outliers = <span class="built_in">df</span>[z_scores &gt; 3]</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"列 {col} 中的异常值数量: {len(outliers)}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>列 账户资金（元） 中的异常值数量: 0<br>列 最后一次交易距今时间（天） 中的异常值数量: 0<br>列 上月交易佣金（元） 中的异常值数量: 0<br>列 本券商使用时长（年） 中的异常值数量: 0<br>列 是否流失 中的异常值数量: 0</p>
+<h2 id="IQR检测"><a href="#IQR检测" class="headerlink" title="IQR检测"></a>IQR检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">    Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">    IQR = Q3 - Q1</span><br><span class="line">    lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">    upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line">    outliers = <span class="built_in">df</span>[(<span class="built_in">df</span>[col] &lt; lower_bound) | (<span class="built_in">df</span>[col] &gt; upper_bound)]</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"列 {col} 中的异常值数量: {len(outliers)}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>列 账户资金（元） 中的异常值数量: 0<br>列 最后一次交易距今时间（天） 中的异常值数量: 0<br>列 上月交易佣金（元） 中的异常值数量: 0<br>列 本券商使用时长（年） 中的异常值数量: 0<br>列 是否流失 中的异常值数量: 0</p>
+<h2 id="百分位数检测"><a href="#百分位数检测" class="headerlink" title="百分位数检测"></a>百分位数检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    lower = <span class="built_in">df</span>[col].quantile(0.01)</span><br><span class="line">    upper = <span class="built_in">df</span>[col].quantile(0.99)</span><br><span class="line">    df_clipped = <span class="built_in">df</span>[(<span class="built_in">df</span>[col] &gt;= lower) &amp; (<span class="built_in">df</span>[col] &lt;= upper)]</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">"列 {col} 中的异常值数量: {len(df) - len(df_clipped)}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>列 账户资金（元） 中的异常值数量: 135<br>列 最后一次交易距今时间（天） 中的异常值数量: 66<br>列 上月交易佣金（元） 中的异常值数量: 135<br>列 本券商使用时长（年） 中的异常值数量: 0<br>列 是否流失 中的异常值数量: 0</p>
+<h2 id="散点图查看数值型特征之间的关系"><a href="#散点图查看数值型特征之间的关系" class="headerlink" title="散点图查看数值型特征之间的关系"></a>散点图查看数值型特征之间的关系</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>], <span class="built_in">df</span>[<span class="string">'最后一次交易距今时间（天）'</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/015.png" alt="photo"></p>
+<h2 id="孤立森林检测"><a href="#孤立森林检测" class="headerlink" title="孤立森林检测"></a>孤立森林检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.ensemble import IsolationForest</span><br><span class="line">iso = IsolationForest(contamination=0.05)  <span class="comment"># 预估异常比例5%</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'anomaly'</span>] = iso.fit_predict(<span class="built_in">df</span>[[<span class="string">'账户资金（元）'</span>, <span class="string">'最后一次交易距今时间（天）'</span>]])</span><br><span class="line">outliers = <span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">'anomaly'</span>] == -1]</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"检测到的异常值数量: {len(outliers)}"</span>)</span><br></pre></td></tr></table></figure></div>
+<p>检测到的异常值数量: 349</p>
+<h1 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h1><h2 id="直接删除"><a href="#直接删除" class="headerlink" title="直接删除"></a>直接删除</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> = <span class="built_in">df</span>[~outliers].copy()</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="截断"><a href="#截断" class="headerlink" title="截断"></a>截断</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def winsorize_iqr(<span class="built_in">df</span>, col, <span class="built_in">factor</span>=1.5):</span><br><span class="line">    <span class="string">""</span><span class="string">"用 IQR 边界截断异常值"</span><span class="string">""</span></span><br><span class="line">    Q1 = <span class="built_in">df</span>[col].quantile(0.25)</span><br><span class="line">    Q3 = <span class="built_in">df</span>[col].quantile(0.75)</span><br><span class="line">    IQR = Q3 - Q1</span><br><span class="line">    lower_bound = Q1 - <span class="built_in">factor</span> * IQR</span><br><span class="line">    upper_bound = Q3 + <span class="built_in">factor</span> * IQR</span><br><span class="line">    <span class="built_in">return</span> <span class="built_in">df</span>[col].clip(lower=lower_bound, upper=upper_bound)</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'income_winsorized'</span>] = winsorize_iqr(<span class="built_in">df</span>, <span class="string">'income'</span>, <span class="built_in">factor</span>=3)  <span class="comment"># 3倍IQR</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="z-score处理"><a href="#z-score处理" class="headerlink" title="z-score处理"></a>z-score处理</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">def detect_outliers_zscore(<span class="built_in">df</span>, col, threshold=3):</span><br><span class="line">    <span class="string">""</span><span class="string">"使用 Z-score 检测异常值"</span><span class="string">""</span></span><br><span class="line">    z_scores = np.abs(stats.zscore(<span class="built_in">df</span>[col].dropna()))</span><br><span class="line">    outlier_mask = np.zeros(len(<span class="built_in">df</span>), dtype=bool)</span><br><span class="line">    outlier_mask[<span class="built_in">df</span>[col].notna()] = z_scores &gt; threshold</span><br><span class="line">    <span class="built_in">return</span> outlier_mask</span><br><span class="line"></span><br><span class="line"><span class="comment"># 若数据是接近正态的 用 Z-score 检测</span></span><br><span class="line">z_outliers = detect_outliers_zscore(<span class="built_in">df</span>, <span class="string">'score'</span>, threshold=3)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'score_clean'</span>] = <span class="built_in">df</span>[<span class="string">'score'</span>].<span class="built_in">where</span>(~z_outliers, <span class="built_in">df</span>[<span class="string">'score'</span>].median())  <span class="comment"># 用中位数填充异常</span></span><br></pre></td></tr></table></figure></div>
+
+<h2 id="对数变换"><a href="#对数变换" class="headerlink" title="对数变换"></a>对数变换</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 仅支持全为整数且右偏的数据</span></span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'账户资金（元）_log'</span>] = np.log1p(<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对比</span></span><br><span class="line">plt.figure(figsize=(12, 4))</span><br><span class="line">plt.subplot(1, 2, 1)</span><br><span class="line">sns.histplot(<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>], kde=True)</span><br><span class="line"></span><br><span class="line">plt.subplot(1, 2, 2)</span><br><span class="line">sns.histplot(<span class="built_in">df</span>[<span class="string">'账户资金（元）_log'</span>], kde=True)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/016.png" alt="photo"></p>
+<h2 id="分箱"><a href="#分箱" class="headerlink" title="分箱"></a>分箱</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 等频分箱（Quantile-based），自动处理极端值</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'账户资金（元）_binned'</span>] = pd.qcut(<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>], q=10, duplicates=<span class="string">'drop'</span>)  <span class="comment"># 分10箱</span></span><br><span class="line">sns.countplot(x=<span class="built_in">df</span>[<span class="string">'账户资金（元）_binned'</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 或自定义边界（把 &gt;200000 的都归为 "High"）</span></span><br><span class="line">bins = [0, 30000, 60000, 100000, np.inf]</span><br><span class="line">labels = [<span class="string">'Low'</span>, <span class="string">'Medium'</span>, <span class="string">'High'</span>, <span class="string">'Very High'</span>]</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'账户资金（元）_group'</span>] = pd.cut(<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>], bins=bins, labels=labels, include_lowest=True)</span><br><span class="line">sns.countplot(x=<span class="built_in">df</span>[<span class="string">'账户资金（元）_group'</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/09/29/017.png" alt="photo"></p>
+<h2 id="保留异常值"><a href="#保留异常值" class="headerlink" title="保留异常值"></a>保留异常值</h2><p>有时候异常值本身就是一种信号 例如借款金额非常大的值</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">'账户资金（元）_is_outlier'</span>] = (<span class="built_in">df</span>[<span class="string">'账户资金（元）'</span>] &gt; 200000).astype(int)</span><br></pre></td></tr></table></figure></div>
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 商业数据分析--数据预处理&amp;特征工程</li>
+        <li><strong>Author:</strong> 姜智浩</li>
+        <li><strong>Created at
+                :</strong> 2025-09-29 11:45:14</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-09-30 08:44:24
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2025/09/29/20250929商业数据分析--数据预处理&amp;特征工程/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">#机器学习</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">#计算机科学</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">#数据分析</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">#商业数据分析</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/zhihaojiang.github.io/2025/09/30/20250930%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E7%94%B5%E5%BD%B1%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">商业数据分析--电影推荐系统</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/zhihaojiang.github.io/2025/09/28/20250928RGB%E7%81%AF%E5%85%89%E4%B8%8EOLED%E6%98%BE%E7%A4%BA/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">RGB灯光与OLED显示</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">商业数据分析--数据预处理&amp;特征工程</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E"><span class="nav-text">声明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE"><span class="nav-text">查看数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83"><span class="nav-text">查看数据分布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A4%84%E7%90%86"><span class="nav-text">缺失值处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%BC%BA%E5%A4%B1%E5%80%BC"><span class="nav-text">删除缺失值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%A1%AB%E5%85%85%E7%BC%BA%E5%A4%B1%E5%80%BC"><span class="nav-text">简单填充缺失值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%A1%AB%E5%85%85%E7%BC%BA%E5%A4%B1%E5%80%BC"><span class="nav-text">模型填充缺失值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E7%95%99%E7%BC%BA%E5%A4%B1%E5%80%BC"><span class="nav-text">保留缺失值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E7%BC%BA%E5%A4%B1%E5%80%BC"><span class="nav-text">可视化缺失值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%80%BC%E6%A3%80%E6%B5%8B"><span class="nav-text">异常值检测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%B1%E7%BA%BF%E5%9B%BE%E5%8F%AF%E8%A7%86%E5%8C%96%E5%BC%82%E5%B8%B8%E5%80%BC"><span class="nav-text">箱线图可视化异常值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Sigma-%E5%87%86%E5%88%99%E6%A3%80%E6%B5%8B"><span class="nav-text">3 Sigma 准则检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IQR%E6%A3%80%E6%B5%8B"><span class="nav-text">IQR检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BE%E5%88%86%E4%BD%8D%E6%95%B0%E6%A3%80%E6%B5%8B"><span class="nav-text">百分位数检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%A3%E7%82%B9%E5%9B%BE%E6%9F%A5%E7%9C%8B%E6%95%B0%E5%80%BC%E5%9E%8B%E7%89%B9%E5%BE%81%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">散点图查看数值型特征之间的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A4%E7%AB%8B%E6%A3%AE%E6%9E%97%E6%A3%80%E6%B5%8B"><span class="nav-text">孤立森林检测</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%80%BC%E5%A4%84%E7%90%86"><span class="nav-text">异常值处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%88%A0%E9%99%A4"><span class="nav-text">直接删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%AA%E6%96%AD"><span class="nav-text">截断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#z-score%E5%A4%84%E7%90%86"><span class="nav-text">z-score处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%95%B0%E5%8F%98%E6%8D%A2"><span class="nav-text">对数变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%AE%B1"><span class="nav-text">分箱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E7%95%99%E5%BC%82%E5%B8%B8%E5%80%BC"><span class="nav-text">保留异常值</span></a></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/zhihaojiang.github.io/">姜智浩</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        66 posts in total
+                    </span>
+                    
+                        <span>
+                            131k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/Swup.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupSlideTheme.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupScriptsPlugin.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupProgressPlugin.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupScrollPlugin.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupPreloadPlugin.min.js" ></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	<script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/imageViewer.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/utils.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/main.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/navbarShrink.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/scrollTopBottom.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/lightDarkSwitch.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/categoryList.js" ></script>
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/localSearch.js" ></script>
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/codeBlock.js" ></script>
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/lazyload.js" ></script>
+
+
+
+    <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/runtime.js" ></script>
+    <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/odometer.min.js" ></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/Typed.min.js" ></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/typed.js" ></script>
+
+
+
+
+
+    <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/minimasonry.min.js" ></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/masonry.js" ></script>
+
+
+
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/tocToggle.js" data-swup-reload-script></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/toc.js" data-swup-reload-script></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/tabs.js" data-swup-reload-script></script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/moment-with-locales.min.js" data-swup-reload-script></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/essays.js" data-swup-reload-script></script>
+
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/bookmarkNav.js" ></script>
+
+	
+	<div id="aplayer"></div>
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/APlayer.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/aplayer.js" ></script>
+
+	
+</body>
+
+</html>
