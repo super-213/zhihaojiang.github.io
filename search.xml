@@ -12577,4 +12577,247 @@ import {initHBE} from "/zhihaojiang.github.io/js/plugins/hbe.js";
         <tag>商业数据分析</tag>
       </tags>
   </entry>
+  <entry>
+    <title>商业数据分析--中医辨证</title>
+    <url>/zhihaojiang.github.io/2025/10/09/20251009%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E4%B8%AD%E5%8C%BB%E8%BE%A8%E8%AF%81/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'中医辨证.xlsx'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>病人编号</th>
+<th>病人症状</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>消化不良,便秘</td>
+</tr>
+<tr>
+<td>2</td>
+<td>心悸,失眠</td>
+</tr>
+<tr>
+<td>3</td>
+<td>腰疼,脱发,眼干</td>
+</tr>
+<tr>
+<td>4</td>
+<td>腹胀,便秘,哮喘,胸闷气短,消化不良</td>
+</tr>
+<tr>
+<td>5</td>
+<td>神经衰弱,失眠,月经不调</td>
+</tr>
+</tbody></table>
+<h1 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">transactions = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">df</span>[<span class="string">'病人症状'</span>].tolist():</span><br><span class="line">    transactions.append(i.split(<span class="string">','</span>))</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="Apriori"><a href="#Apriori" class="headerlink" title="Apriori"></a>Apriori</h1><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>Apriori 基于向下封闭原则</p>
+<blockquote>
+<p>如果一个项集是频繁的，那么它的所有子集也一定是频繁的<br>如果一个项集不是频繁的，那么它的所有超集也不可能频繁</p>
+</blockquote>
+<p>我们先找出每个单个症状出现的频率<br>然后只保留出现频率高（支持度高）的症状<br>再用它们组合成双项、三项……，逐步扩展<br>并在每次扩展时剪枝，减少不可能频繁的组合</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> results:  <span class="comment"># 遍历results中的每一个频繁项集</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> i.ordered_statistics:  <span class="comment"># 获取频繁项集中的关联规则</span></span><br><span class="line">        X = j.items_base  <span class="comment"># 关联规则的前件</span></span><br><span class="line">        Y = j.items_add  <span class="comment"># 关联规则的后件</span></span><br><span class="line">        x = <span class="string">', '</span>.<span class="built_in">join</span>([item <span class="keyword">for</span> item <span class="keyword">in</span> X])  <span class="comment"># 连接前件中的元素</span></span><br><span class="line">        y = <span class="string">', '</span>.<span class="built_in">join</span>([item <span class="keyword">for</span> item <span class="keyword">in</span> Y])  <span class="comment"># 连接后件中的元素</span></span><br><span class="line">        <span class="keyword">if</span> x != <span class="string">''</span>:  <span class="comment"># 防止出现关联规则前件为空的情况</span></span><br><span class="line">            <span class="built_in">print</span>(x + <span class="string">' -&gt; '</span> + y)  <span class="comment"># 通过字符串拼接的方式更好呈现结果</span></span><br></pre></td></tr></table></figure></div>
+
+<h1 id="FP-Growth"><a href="#FP-Growth" class="headerlink" title="FP-Growth"></a>FP-Growth</h1><h2 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h2><p>Apriori 的问题是“候选项集太多”，计算量指数级增加。<br>FP-Growth 采用 压缩存储 和 模式增长 思想：</p>
+<ol>
+<li>把所有样本转成一棵频繁模式树（FP-Tree），只存出现次数；</li>
+<li>然后从树结构中“挖”出所有频繁项集，而不用穷举所有组合。</li>
+</ol>
+<p>这样可以极大提升效率，尤其在上千条病例时，FP-Growth 比 Apriori 快 10～100 倍。</p>
+<h2 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from mlxtend.frequent_patterns import apriori, fpgrowth, association_rules</span><br><span class="line"></span><br><span class="line">freq_fp = fpgrowth(df_hot, min_support=0.05, use_colnames=True)</span><br><span class="line">rules_fp = association_rules(freq_fp, metric=<span class="string">"confidence"</span>, min_threshold=0.6)</span><br><span class="line">rules_fp.sort_values(by=<span class="string">'lift'</span>, ascending=False, inplace=True)</span><br><span class="line"></span><br><span class="line">rules_fp.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>antecedents</th>
+<th>consequents</th>
+<th>antecedent support</th>
+<th>consequent support</th>
+<th>support</th>
+<th>confidence</th>
+<th>lift</th>
+<th>representativity</th>
+<th>leverage</th>
+<th>conviction</th>
+<th>zhangs_metric</th>
+<th>jaccard</th>
+<th>certainty</th>
+<th>kulczynski</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>(腹胀, 消化不良)</td>
+<td>(便秘)</td>
+<td>0.076</td>
+<td>0.184</td>
+<td>0.076</td>
+<td>1.000000</td>
+<td>5.434783</td>
+<td>1.0</td>
+<td>0.062016</td>
+<td>inf</td>
+<td>0.883117</td>
+<td>0.413043</td>
+<td>1.000000</td>
+<td>0.706522</td>
+</tr>
+<tr>
+<td>(腹胀)</td>
+<td>(便秘, 消化不良)</td>
+<td>0.092</td>
+<td>0.160</td>
+<td>0.076</td>
+<td>0.826087</td>
+<td>5.163043</td>
+<td>1.0</td>
+<td>0.061280</td>
+<td>4.830000</td>
+<td>0.888013</td>
+<td>0.431818</td>
+<td>0.792961</td>
+<td>0.650543</td>
+</tr>
+<tr>
+<td>(胸闷气短)</td>
+<td>(哮喘)</td>
+<td>0.140</td>
+<td>0.124</td>
+<td>0.088</td>
+<td>0.628571</td>
+<td>5.069124</td>
+<td>1.0</td>
+<td>0.070640</td>
+<td>2.3</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h1><h2 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h2><p>Word2Vec 是一种词嵌入模型（embedding），最初用于自然语言处理。<br>思想非常简单：<br>如果两个词经常出现在相同的上下文中，它们的意义就可能相似。<br>这就是分布式语义假设（Distributional Hypothesis）。</p>
+<p>模型通过两种方式学习：</p>
+<blockquote>
+<p>CBOW（Continuous Bag of Words）：用周围词预测中间词；<br>Skip-gram：用当前词预测周围词</p>
+</blockquote>
+<p>训练后，每个词（症状）都会得到一个向量表示<br>向量之间的余弦相似度代表症状的语义相似度</p>
+<p>如果我们把每个病例当作一句话，症状当作词语，Word2Vec 就能学出“哪些症状经常一起出现”的语义模式</p>
+<p>例如模型可能学出</p>
+<blockquote>
+<p>头痛 与 眩晕 相似度高（0.89）<br>咳嗽 与 咽干 相似度高（0.84）</p>
+</blockquote>
+<p>说明它们经常一起出现，甚至可以作为同一证候的表现。</p>
+<p>这种方法从连续分布的角度理解“症状间的语义接近度”，<br>比 Apriori 的硬规则更柔和、能度量相似强度。</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">model = Word2Vec(sentences=transactions, vector_size=50, window=3, min_count=1, sg=1)</span><br><span class="line">symptom = all_symptoms[0]</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"与『{symptom}』最相似的症状："</span>)</span><br><span class="line"><span class="built_in">print</span>(model.wv.most_similar(symptom, topn=5))</span><br></pre></td></tr></table></figure></div>
+<p>与『便秘』最相似的症状：<br>[(‘哮喘’, 0.32900574803352356), (‘神经衰弱’, 0.30445194244384766), (‘腰疼’, 0.29307475686073303), (‘心悸’, 0.29051631689071655), (‘失眠’, 0.2569029927253723)]</p>
+<h1 id="K-Means"><a href="#K-Means" class="headerlink" title="K-Means"></a>K-Means</h1><h2 id="原理-3"><a href="#原理-3" class="headerlink" title="原理"></a>原理</h2><p>K-Means 是一种经典的无监督学习算法。<br>它的目标是：把样本自动分成 k 个簇，使得同一簇内部相似度高、不同簇之间差异大。</p>
+<p>算法步骤：</p>
+<ol>
+<li>随机选 k 个初始中心；</li>
+<li>把每个样本分配到距离最近的中心；</li>
+<li>重新计算各簇的中心；</li>
+<li>重复直到收敛。</li>
+</ol>
+<p><strong>数学目标</strong></p>
+<p><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -3.002ex;" xmlns="http://www.w3.org/2000/svg" width="20.228ex" height="6.941ex" role="img" focusable="false" viewBox="0 -1740.7 8940.8 3067.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path><path data-c="69" d="M69 609Q69 637 87 653T131 669Q154 667 171 652T188 609Q188 579 171 564T129 549Q104 549 87 564T69 609ZM247 0Q232 3 143 3Q132 3 106 3T56 1L34 0H26V46H42Q70 46 91 49Q100 53 102 60T104 102V205V293Q104 345 102 359T88 378Q74 385 41 385H30V408Q30 431 32 431L42 432Q52 433 70 434T106 436Q123 437 142 438T171 441T182 442H185V62Q190 52 197 50T232 46H255V0H247Z" transform="translate(833,0)"></path><path data-c="6E" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q450 438 463 329Q464 322 464 190V104Q464 66 466 59T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z" transform="translate(1111,0)"></path></g><g data-mml-node="munderover" transform="translate(1833.7,0)"><g data-mml-node="mo"><path data-c="2211" d="M60 948Q63 950 665 950H1267L1325 815Q1384 677 1388 669H1348L1341 683Q1320 724 1285 761Q1235 809 1174 838T1033 881T882 898T699 902H574H543H251L259 891Q722 258 724 252Q725 250 724 246Q721 243 460 -56L196 -356Q196 -357 407 -357Q459 -357 548 -357T676 -358Q812 -358 896 -353T1063 -332T1204 -283T1307 -196Q1328 -170 1348 -124H1388Q1388 -125 1381 -145T1356 -210T1325 -294L1267 -449L666 -450Q64 -450 61 -448Q55 -446 55 -439Q55 -437 57 -433L590 177Q590 178 557 222T452 366T322 544L56 909L55 924Q55 945 60 948Z"></path></g><g data-mml-node="TeXAtom" transform="translate(148.2,-1087.9) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mo" transform="translate(345,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1123,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g><g data-mml-node="TeXAtom" transform="translate(537.8,1150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D458" d="M121 647Q121 657 125 670T137 683Q138 683 209 688T282 694Q294 694 294 686Q294 679 244 477Q194 279 194 272Q213 282 223 291Q247 309 292 354T362 415Q402 442 438 442Q468 442 485 423T503 369Q503 344 496 327T477 302T456 291T438 288Q418 288 406 299T394 328Q394 353 410 369T442 390L458 393Q446 405 434 405H430Q398 402 367 380T294 316T228 255Q230 254 243 252T267 246T293 238T320 224T342 206T359 180T365 147Q365 130 360 106T354 66Q354 26 381 26Q429 26 459 145Q461 153 479 153H483Q499 153 499 144Q499 139 496 130Q455 -11 378 -11Q333 -11 305 15T277 90Q277 108 280 121T283 145Q283 167 269 183T234 206T200 217T182 220H180Q168 178 159 139T145 81T136 44T129 20T122 7T111 -2Q98 -11 83 -11Q66 -11 57 -1T48 16Q48 26 85 176T158 471L195 616Q196 629 188 632T149 637H144Q134 637 131 637T124 640T121 647Z"></path></g></g></g><g data-mml-node="munder" transform="translate(3444.3,0)"><g data-mml-node="mo" transform="translate(84.4,0)"><path data-c="2211" d="M60 948Q63 950 665 950H1267L1325 815Q1384 677 1388 669H1348L1341 683Q1320 724 1285 761Q1235 809 1174 838T1033 881T882 898T699 902H574H543H251L259 891Q722 258 724 252Q725 250 724 246Q721 243 460 -56L196 -356Q196 -357 407 -357Q459 -357 548 -357T676 -358Q812 -358 896 -353T1063 -332T1204 -283T1307 -196Q1328 -170 1348 -124H1388Q1388 -125 1381 -145T1356 -210T1325 -294L1267 -449L666 -450Q64 -450 61 -448Q55 -446 55 -439Q55 -437 57 -433L590 177Q590 178 557 222T452 366T322 544L56 909L55 924Q55 945 60 948Z"></path></g><g data-mml-node="TeXAtom" transform="translate(0,-1115.5) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mo" transform="translate(572,0)"><path data-c="2208" d="M84 250Q84 372 166 450T360 539Q361 539 377 539T419 540T469 540H568Q583 532 583 520Q583 511 570 501L466 500Q355 499 329 494Q280 482 242 458T183 409T147 354T129 306T124 272V270H568Q583 262 583 250T568 230H124V228Q124 207 134 177T167 112T231 48T328 7Q355 1 466 0H570Q583 -10 583 -20Q583 -32 568 -40H471Q464 -40 446 -40T417 -41Q262 -41 172 45Q84 127 84 250Z"></path></g><g data-mml-node="msub" transform="translate(1239,0)"><g data-mml-node="mi"><path data-c="1D436" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path></g><g data-mml-node="mi" transform="translate(748,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g><g data-mml-node="mo" transform="translate(5223.9,0) translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mi" transform="translate(5501.9,0)"><path data-c="1D465" d="M52 289Q59 331 106 386T222 442Q257 442 286 424T329 379Q371 442 430 442Q467 442 494 420T522 361Q522 332 508 314T481 292T458 288Q439 288 427 299T415 328Q415 374 465 391Q454 404 425 404Q412 404 406 402Q368 386 350 336Q290 115 290 78Q290 50 306 38T341 26Q378 26 414 59T463 140Q466 150 469 151T485 153H489Q504 153 504 145Q504 144 502 134Q486 77 440 33T333 -11Q263 -11 227 52Q186 -10 133 -10H127Q78 -10 57 16T35 71Q35 103 54 123T99 143Q142 143 142 101Q142 81 130 66T107 46T94 41L91 40Q91 39 97 36T113 29T132 26Q168 26 194 71Q203 87 217 139T245 247T261 313Q266 340 266 352Q266 380 251 392T217 404Q177 404 142 372T93 290Q91 281 88 280T72 278H58Q52 284 52 289Z"></path></g><g data-mml-node="mo" transform="translate(6296.1,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="msub" transform="translate(7296.3,0)"><g data-mml-node="mi"><path data-c="1D707" d="M58 -216Q44 -216 34 -208T23 -186Q23 -176 96 116T173 414Q186 442 219 442Q231 441 239 435T249 423T251 413Q251 401 220 279T187 142Q185 131 185 107V99Q185 26 252 26Q261 26 270 27T287 31T302 38T315 45T327 55T338 65T348 77T356 88T365 100L372 110L408 253Q444 395 448 404Q461 431 491 431Q504 431 512 424T523 412T525 402L449 84Q448 79 448 68Q448 43 455 35T476 26Q485 27 496 35Q517 55 537 131Q543 151 547 152Q549 153 557 153H561Q580 153 580 144Q580 138 575 117T555 63T523 13Q510 0 491 -8Q483 -10 467 -10Q446 -10 429 -4T402 11T385 29T376 44T374 51L368 45Q362 39 350 30T324 12T288 -4T246 -11Q199 -11 153 12L129 -85Q108 -167 104 -180T92 -202Q76 -216 58 -216Z"></path></g><g data-mml-node="mi" transform="translate(636,-150) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g><g data-mml-node="msup" transform="translate(8226.3,0)"><g data-mml-node="mo" transform="translate(0 -0.5)"><path data-c="7C" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path></g><g data-mml-node="mn" transform="translate(311,413) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></g></svg></mjx-container></p>
+<p>在中医理论中，不同病人虽然症状各异，但可以归为几种“证型”：</p>
+<blockquote>
+<p>气滞血瘀型<br>湿热内蕴型<br>阴虚火旺型<br>……</p>
+</blockquote>
+<p>KMeans 可以把患者按照症状向量（One-Hot 形式）聚类，<br>从而自动分出潜在的证型群体。<br>之后可以观察每类群体中最常见的症状组合，就能从数据中“还原证候分类”。</p>
+<h2 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.cluster import KMeans</span><br><span class="line"></span><br><span class="line">kmeans = KMeans(n_clusters=4, random_state=42)</span><br><span class="line">labels = kmeans.fit_predict(df_hot)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'聚类标签'</span>] = labels</span><br><span class="line"></span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="PCA"><a href="#PCA" class="headerlink" title="PCA"></a>PCA</h1><h2 id="原理-4"><a href="#原理-4" class="headerlink" title="原理"></a>原理</h2><p>PCA（Principal Component Analysis）是一种降维算法，<br>通过线性变换找到数据中最主要的变化方向（主成分）。<br>核心思想：<br>找一组正交方向，使得投影后样本的方差最大。</p>
+<p>换句话说：<br>它用尽量少的维度（通常 2～3 个）去保留最多的信息。</p>
+<p>症状矩阵维度非常高（每个症状一列），<br>直接观察不方便。<br>PCA 可以把这些高维数据投影到二维平面，<br>让我们直观地看到：<br>	•	不同患者在症状空间中的分布；<br>	•	不同聚类（证型）之间是否分离清晰；<br>	•	哪些症状是主要的区分因素（主成分载荷高的症状）。</p>
+<p>这样医生或研究者可以快速识别：</p>
+<p>“这群患者的症状模式相似、可能属于同一证型。”</p>
+<h2 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">all_symptoms = sorted(list(<span class="built_in">set</span>(<span class="built_in">sum</span>(transactions, []))))</span><br><span class="line">df_hot = pd.DataFrame([[1 <span class="keyword">if</span> s <span class="keyword">in</span> t <span class="keyword">else</span> 0 <span class="keyword">for</span> s <span class="keyword">in</span> all_symptoms] <span class="keyword">for</span> t <span class="keyword">in</span> transactions],</span><br><span class="line">                      columns=all_symptoms)</span><br><span class="line">                      </span><br><span class="line">                      </span><br><span class="line">from sklearn.decomposition import PCA</span><br><span class="line"></span><br><span class="line">pca = PCA(n_components=2)</span><br><span class="line">reduced_data = pca.fit_transform(df_hot)</span><br><span class="line">plt.figure(figsize=(7,6))</span><br><span class="line">plt.scatter(reduced_data[:,0], reduced_data[:,1], c=labels, cmap=<span class="string">'rainbow'</span>, s=30)</span><br><span class="line">plt.title(<span class="string">"患者症状分布图"</span>)</span><br><span class="line">plt.xlabel(<span class="string">"主成分1"</span>)</span><br><span class="line">plt.ylabel(<span class="string">"主成分2"</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/09/001.png" alt="photo"></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>商业数据分析--产品评价</title>
+    <url>/zhihaojiang.github.io/2025/10/09/20251009%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E4%BA%A7%E5%93%81%E8%AF%84%E4%BB%B7/</url>
+    <content><![CDATA[<h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>本文代码均保存在<br><a class="link" href="https://github.com/super-213/business_data_analysis">https://github.com/super-213/business_data_analysis<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>有需要的可以自行下载</p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import jieba</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.feature_extraction.text import TfidfVectorizer</span><br><span class="line">from sklearn.metrics import accuracy_score, classification_report</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span> = pd.read_excel(<span class="string">'产品评价.xlsx'</span></span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">def clean_text(text):</span><br><span class="line">    <span class="built_in">return</span> <span class="string">' '</span>.<span class="built_in">join</span>(jieba.cut(str(text)))</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'评论_clean'</span>] = <span class="built_in">df</span>[<span class="string">'评论'</span>].apply(clean_text)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># TF-IDF特征</span></span><br><span class="line">vectorizer = TfidfVectorizer(max_features=5000)</span><br><span class="line">X = vectorizer.fit_transform(<span class="built_in">df</span>[<span class="string">'评论_clean'</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'评价'</span>]</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.naive_bayes import MultinomialNB</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn.svm import LinearSVC</span><br><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line">from xgboost import XGBClassifier</span><br><span class="line">from sklearn.neural_network import MLPClassifier</span><br><span class="line"></span><br><span class="line">models = {</span><br><span class="line">    <span class="string">'朴素贝叶斯'</span>: MultinomialNB(),</span><br><span class="line">    <span class="string">'逻辑回归'</span>: LogisticRegression(max_iter=200),</span><br><span class="line">    <span class="string">'支持向量机'</span>: LinearSVC(),</span><br><span class="line">    <span class="string">'随机森林'</span>: RandomForestClassifier(n_estimators=100, random_state=42),</span><br><span class="line">    <span class="string">'XGBoost'</span>: XGBClassifier(use_label_encoder=False, eval_metric=<span class="string">'logloss'</span>),</span><br><span class="line">    <span class="string">'MLP'</span>: MLPClassifier(random_state=42)</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, model <span class="keyword">in</span> models.items():</span><br><span class="line">    model.fit(X_train, y_train)</span><br><span class="line">    y_pred = model.predict(X_test)</span><br><span class="line">    acc = accuracy_score(y_test, y_pred)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">'\n模型：{name}'</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'准确率：'</span>, acc)</span><br><span class="line">    <span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>模型：朴素贝叶斯<br>准确率： 0.875<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       1.00      0.70      0.83        91
+       1       0.82      1.00      0.90       125
+
+accuracy                           0.88       216
+</code></pre>
+<p>   macro avg       0.91      0.85      0.86       216<br>weighted avg       0.90      0.88      0.87       216</p>
+<p>模型：逻辑回归<br>准确率： 0.9814814814814815<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.97      0.99      0.98        91
+       1       0.99      0.98      0.98       125
+
+accuracy                           0.98       216
+</code></pre>
+<p>   macro avg       0.98      0.98      0.98       216<br>weighted avg       0.98      0.98      0.98       216</p>
+<p>模型：支持向量机<br>准确率： 0.9629629629629629<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.93      0.99      0.96        91
+       1       0.99      0.94      0.97       125
+
+accuracy                           0.96       216
+</code></pre>
+<p>   macro avg       0.96      0.97      0.96       216<br>weighted avg       0.96      0.96      0.96       216</p>
+<p>模型：随机森林<br>准确率： 0.9768518518518519<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.96      0.99      0.97        91
+       1       0.99      0.97      0.98       125
+
+accuracy                           0.98       216
+</code></pre>
+<p>   macro avg       0.97      0.98      0.98       216<br>weighted avg       0.98      0.98      0.98       216</p>
+<p>模型：XGBoost<br>准确率： 0.9675925925925926<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.94      0.99      0.96        91
+       1       0.99      0.95      0.97       125
+
+accuracy                           0.97       216
+</code></pre>
+<p>   macro avg       0.96      0.97      0.97       216<br>weighted avg       0.97      0.97      0.97       216</p>
+<p>模型：MLP<br>准确率： 0.9583333333333334<br>              precision    recall  f1-score   support</p>
+<pre><code>       0       0.93      0.98      0.95        91
+       1       0.98      0.94      0.96       125
+
+accuracy                           0.96       216
+</code></pre>
+<p>   macro avg       0.96      0.96      0.96       216<br>weighted avg       0.96      0.96      0.96       216</p>
+</blockquote>
+<h1 id="CNN"><a href="#CNN" class="headerlink" title="CNN"></a>CNN</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import jieba</span><br><span class="line">import numpy as np</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from tensorflow.keras.preprocessing.text import Tokenizer</span><br><span class="line">from tensorflow.keras.preprocessing.sequence import pad_sequences</span><br><span class="line">from tensorflow.keras.models import Sequential</span><br><span class="line">from tensorflow.keras.layers import Embedding, Conv1D, GlobalMaxPooling1D, Dense, Dropout</span><br><span class="line">from tensorflow.keras.callbacks import EarlyStopping</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tokenizer 序列化</span></span><br><span class="line">max_words = 10000 <span class="comment"># 词表大小</span></span><br><span class="line">max_len = 100 <span class="comment"># 每条评论的最大长度</span></span><br><span class="line"></span><br><span class="line">tokenizer = Tokenizer(num_words=max_words)</span><br><span class="line">tokenizer.fit_on_texts(<span class="built_in">df</span>[<span class="string">'评论_clean'</span>])</span><br><span class="line"></span><br><span class="line">X = tokenizer.texts_to_sequences(<span class="built_in">df</span>[<span class="string">'评论_clean'</span>])</span><br><span class="line">X = pad_sequences(X, maxlen=max_len)</span><br><span class="line">y = np.array(<span class="built_in">df</span>[<span class="string">'评价'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据划分</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(</span><br><span class="line">    X, y, test_size=0.2, random_state=42</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">model = Sequential([</span><br><span class="line">    Embedding(max_words, 128, input_length=max_len),</span><br><span class="line">    Conv1D(128, 3, activation=<span class="string">'relu'</span>),</span><br><span class="line">    GlobalMaxPooling1D(),</span><br><span class="line">    Dropout(0.5),</span><br><span class="line">    Dense(64, activation=<span class="string">'relu'</span>),</span><br><span class="line">    Dropout(0.3),</span><br><span class="line">    Dense(1, activation=<span class="string">'sigmoid'</span>)</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line">model.compile(optimizer=<span class="string">'adam'</span>, loss=<span class="string">'binary_crossentropy'</span>, metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line">model.summary()</span><br><span class="line"></span><br><span class="line">early_stop = EarlyStopping(monitor=<span class="string">'val_loss'</span>, patience=3, restore_best_weights=True)</span><br><span class="line"></span><br><span class="line"><span class="built_in">history</span> = model.fit(</span><br><span class="line">    X_train, y_train,</span><br><span class="line">    validation_split=0.2,</span><br><span class="line">    epochs=10,</span><br><span class="line">    batch_size=64,</span><br><span class="line">    callbacks=[early_stop],</span><br><span class="line">    verbose=1</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">loss, acc = model.evaluate(X_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"\n测试集准确率: {acc:.4f}"</span>)</span><br><span class="line"></span><br><span class="line">def predict_comment(text):</span><br><span class="line">    text_cut = <span class="string">' '</span>.<span class="built_in">join</span>(jieba.cut(text))</span><br><span class="line">    <span class="built_in">seq</span> = tokenizer.texts_to_sequences([text_cut])</span><br><span class="line">    <span class="built_in">seq</span> = pad_sequences(<span class="built_in">seq</span>, maxlen=max_len)</span><br><span class="line">    pred = model.predict(<span class="built_in">seq</span>)[0][0]</span><br><span class="line">    <span class="built_in">return</span> <span class="string">"好评 "</span> <span class="keyword">if</span> pred &gt; 0.5 <span class="keyword">else</span> <span class="string">"差评 "</span>, <span class="built_in">float</span>(pred)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(predict_comment(<span class="string">"这款手机手感非常棒，运行速度快"</span>))</span><br><span class="line"><span class="built_in">print</span>(predict_comment(<span class="string">"质量太差了，用了两天就坏"</span>))</span><br></pre></td></tr></table></figure></div>
+
+<p>测试集准确率: 0.9676<br>1/1 ━━━━━━━━━━━━━━━━━━━━ 1s 681ms/step<br>(‘好评’, 0.999203622341156)<br>1/1 ━━━━━━━━━━━━━━━━━━━━ 0s 17ms/step<br>(‘差评’, 0.03876214474439621)</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">plt.plot(history.history[<span class="string">'accuracy'</span>], label=<span class="string">'training accuracy'</span>)</span><br><span class="line">plt.plot(history.history[<span class="string">'val_accuracy'</span>], label=<span class="string">'validation accuracy'</span>)</span><br><span class="line">plt.legend()</span><br><span class="line">plt.xlabel(<span class="string">'Epoch'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Accuracy'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/09/002.png" alt="photo"></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>计算机科学</tag>
+        <tag>数据分析</tag>
+        <tag>商业数据分析</tag>
+      </tags>
+  </entry>
 </search>
