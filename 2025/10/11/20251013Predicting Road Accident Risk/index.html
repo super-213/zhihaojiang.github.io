@@ -19,7 +19,7 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/2025/04/21/20250421环境检测/"/>
+    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/2025/10/11/20251013predicting road accident risk/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
@@ -29,16 +29,18 @@
         
         <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="环境检测">
-<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/2025/04/21/20250421%E7%8E%AF%E5%A2%83%E6%A3%80%E6%B5%8B/index.html">
+<meta property="og:title" content="Predicting Road Accident Risk">
+<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/2025/10/11/20251013Predicting%20Road%20Accident%20Risk/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
-<meta property="article:published_time" content="2025-04-21T03:45:14.000Z">
-<meta property="article:modified_time" content="2025-04-21T02:42:41.030Z">
+<meta property="article:published_time" content="2025-10-11T03:45:14.000Z">
+<meta property="article:modified_time" content="2025-10-13T05:36:27.290Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="Arduino">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="数学">
+<meta property="article:tag" content="数据分析">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://super-213.github.io/images/redefine-og.webp">
     
@@ -52,7 +54,7 @@
     
     <title>
         
-            环境检测 | 智浩的Blog
+            Predicting Road Accident Risk | 智浩的Blog
         
     </title>
 
@@ -561,7 +563,7 @@
 		<div class="article-title relative w-full">
 			
 			<div class="w-full flex items-center pt-6 justify-start">
-				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">环境检测</h1>
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Predicting Road Accident Risk</h1>
 			</div>
 			
 		</div>
@@ -582,15 +584,15 @@
 					<div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2025-04-21 11:45:14</span>
-        <span class="mobile">2025-04-21 11:45:14</span>
+        <span class="desktop">2025-10-11 11:45:14</span>
+        <span class="mobile">2025-10-11 11:45:14</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2025-04-21 10:42:41</span>
-            <span class="mobile">2025-04-21 10:42:41</span>
+            <span class="desktop">2025-10-13 13:36:27</span>
+            <span class="mobile">2025-10-13 13:36:27</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -618,7 +620,15 @@
             <ul>
                 
                     <li>
-                        <a href="/zhihaojiang.github.io/tags/Arduino/">Arduino</a>&nbsp;
+                        <a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E6%95%B0%E5%AD%A6/">数学</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">数据分析</a>&nbsp;
                     </li>
                 
             </ul>
@@ -628,12 +638,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>245 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.8k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>9 Mins</span>
         </span>
     
     
@@ -652,46 +662,314 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h2 id="开发板"><a href="#开发板" class="headerlink" title="开发板"></a>开发板</h2><p>Arduino UNO R3</p>
-<h2 id="接线"><a href="#接线" class="headerlink" title="接线"></a>接线</h2><p><strong>BMP180</strong></p>
+			<h1 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h1><p><a class="link"   target="_blank" rel="noopener" href="https://www.kaggle.com/competitions/playground-series-s5e10" >https://www.kaggle.com/competitions/playground-series-s5e10<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;&#x27;</span><span class="string">&#x27;</span></span><br><span class="line"><span class="string">MacOS专用字体设置</span></span><br><span class="line"><span class="string">MacOS 系统中使用的中文字体路径</span></span><br><span class="line"><span class="string">适用于MacOS15版本</span></span><br><span class="line"><span class="string">可直接复制到代码中使用</span></span><br><span class="line"><span class="string">&#x27;</span><span class="string">&#x27;&#x27;</span></span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">from matplotlib import font_manager</span><br><span class="line"><span class="comment"># 设置字体路径</span></span><br><span class="line">font_path = <span class="string">&#x27;/System/Library/Fonts/STHeiti Medium.ttc&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载字体</span></span><br><span class="line">my_font = font_manager.FontProperties(fname=font_path)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置为默认字体</span></span><br><span class="line">plt.rcParams[<span class="string">&#x27;font.family&#x27;</span>] = my_font.get_name()</span><br><span class="line">plt.rcParams[<span class="string">&#x27;axes.unicode_minus&#x27;</span>] = False  <span class="comment"># 正确显示负号</span></span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">df_train = pd.read_csv(<span class="string">&#x27;train.csv&#x27;</span>)</span><br><span class="line">df_train.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>road_type</th>
+<th>num_lanes</th>
+<th>curvature</th>
+<th>speed_limit</th>
+<th>lighting</th>
+<th>weather</th>
+<th>road_signs_present</th>
+<th>public_road</th>
+<th>time_of_day</th>
+<th>holiday</th>
+<th>school_season</th>
+<th>num_reported_accidents</th>
+<th>accident_risk</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>urban</td>
+<td>2</td>
+<td>0.06</td>
+<td>35</td>
+<td>daylight</td>
+<td>rainy</td>
+<td>False</td>
+<td>True</td>
+<td>afternoon</td>
+<td>False</td>
+<td>True</td>
+<td>1</td>
+<td>0.13</td>
+</tr>
+<tr>
+<td>1</td>
+<td>urban</td>
+<td>4</td>
+<td>0.99</td>
+<td>35</td>
+<td>daylight</td>
+<td>clear</td>
+<td>True</td>
+<td>False</td>
+<td>evening</td>
+<td>True</td>
+<td>True</td>
+<td>0</td>
+<td>0.35</td>
+</tr>
+<tr>
+<td>2</td>
+<td>rural</td>
+<td>4</td>
+<td>0.63</td>
+<td>70</td>
+<td>dim</td>
+<td>clear</td>
+<td>False</td>
+<td>True</td>
+<td>morning</td>
+<td>True</td>
+<td>False</td>
+<td>2</td>
+<td>0.30</td>
+</tr>
+<tr>
+<td>3</td>
+<td>highway</td>
+<td>4</td>
+<td>0.07</td>
+<td>35</td>
+<td>dim</td>
+<td>rainy</td>
+<td>True</td>
+<td>True</td>
+<td>morning</td>
+<td>False</td>
+<td>False</td>
+<td>1</td>
+<td>0.21</td>
+</tr>
+<tr>
+<td>4</td>
+<td>rural</td>
+<td>1</td>
+<td>0.58</td>
+<td>60</td>
+<td>daylight</td>
+<td>foggy</td>
+<td>False</td>
+<td>False</td>
+<td>evening</td>
+<td>True</td>
+<td>False</td>
+<td>1</td>
+<td>0.56</td>
+</tr>
+</tbody></table>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_train.info()</span><br></pre></td></tr></table></figure></div>
+<pre><code> Column                  Non-Null Count   Dtype  
+</code></pre>
+<hr>
+<p> 0   id                      517754 non-null  int64<br> 1   road_type               517754 non-null  object<br> 2   num_lanes               517754 non-null  int64<br> 3   curvature               517754 non-null  float64<br> 4   speed_limit             517754 non-null  int64<br> 5   lighting                517754 non-null  object<br> 6   weather                 517754 non-null  object<br> 7   road_signs_present      517754 non-null  bool<br> 8   public_road             517754 non-null  bool<br> 9   time_of_day             517754 non-null  object<br> 10  holiday                 517754 non-null  bool<br> 11  school_season           517754 non-null  bool<br> 12  num_reported_accidents  517754 non-null  int64<br> 13  accident_risk           517754 non-null  float64</p>
+<ul>
+<li>id 编号</li>
+<li>road_type 道路类型</li>
+<li>num_lanes 车道数量</li>
+<li>curvature 曲率</li>
+<li>speed_limit 最高限速</li>
+<li>lighting 照明条件</li>
+<li>weather 天气条件</li>
+<li>road_signs_present 是否有道路标识</li>
+<li>public_road 是否为公共道路</li>
+<li>time_of_day 时间（早中晚）</li>
+<li>holiday 是否是假期</li>
+<li>school_season 是否是开学季</li>
+<li>num_reported_accidents 报告的交通事故数量</li>
+<li>accident_risk 交通事故风险等级</li>
+</ul>
+<h1 id="缺失值检测"><a href="#缺失值检测" class="headerlink" title="缺失值检测"></a>缺失值检测</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_train.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
 <blockquote>
-<p>VCC → 3.3V 或 5V<br>GND → GND<br>SCL → A5<br>SDA → A4</p>
+<p>id                        0<br>road_type                 0<br>num_lanes                 0<br>curvature                 0<br>speed_limit               0<br>lighting                  0<br>weather                   0<br>road_signs_present        0<br>public_road               0<br>time_of_day               0<br>holiday                   0<br>school_season             0<br>num_reported_accidents    0<br>accident_risk             0<br>dtype: int64</p>
 </blockquote>
-<p><strong>OLED (SSD1306 I2C)</strong></p>
+<p>查看后可知 该数据集没有缺失值</p>
+<h1 id="异常值"><a href="#异常值" class="headerlink" title="异常值"></a>异常值</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from scipy import stats</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df_train.columns:</span><br><span class="line">    <span class="keyword">if</span> df_train[col].dtype != <span class="string">&#x27;object&#x27;</span>:</span><br><span class="line">        z_scores = np.abs(stats.zscore(df_train[col].dropna()))</span><br><span class="line">        outliers = df_train[z_scores &gt; 3]</span><br><span class="line">        <span class="built_in">print</span>(f<span class="string">&quot;列 &#123;col&#125; 中的异常值数量: &#123;len(outliers)&#125;&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
 <blockquote>
-<p>VCC → 3.3V 或 5V<br>GND → GND<br>SCL → A5<br>SDA → A4</p>
+<p>列 id 中的异常值数量: 0<br>列 num_lanes 中的异常值数量: 0<br>列 curvature 中的异常值数量: 0<br>列 speed_limit 中的异常值数量: 0<br>列 road_signs_present 中的异常值数量: 0<br>列 public_road 中的异常值数量: 0<br>列 holiday 中的异常值数量: 0<br>列 school_season 中的异常值数量: 0<br>列 num_reported_accidents 中的异常值数量: 2649<br>列 accident_risk 中的异常值数量: 1163</p>
 </blockquote>
+<p>发现 num_reported_accidents 和 accident_risk 存在异常值 由于 accident_risk 是我们要预测的目标 这说明 accident_risk 中数据分布是不平衡的</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">plt.boxplot(df_train[<span class="string">&#x27;num_reported_accidents&#x27;</span>])</span><br><span class="line">plt.title(<span class="string">&#x27;num_reported_accidents&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/001.png"
+                      alt="photo"
+                ></p>
+<h1 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from scipy import stats</span><br><span class="line">import seaborn as sns</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df_train.columns:</span><br><span class="line">    <span class="keyword">if</span> df_train[col].dtype != <span class="string">&#x27;object&#x27;</span>:</span><br><span class="line">        plt.figure(figsize=(12, 4))</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 直方图 + KDE</span></span><br><span class="line">        plt.subplot(1, 2, 1)</span><br><span class="line">        sns.histplot(df_train[col].dropna(), kde=True, bins=30)</span><br><span class="line">        plt.title(f<span class="string">&#x27;&#123;col&#125; 分布&#x27;</span>)</span><br><span class="line">        plt.xlabel(col)</span><br><span class="line">        plt.ylabel(<span class="string">&#x27;Frequency&#x27;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># QQ图</span></span><br><span class="line">        plt.subplot(1, 2, 2)</span><br><span class="line">        stats.probplot(df_train[col].dropna(), dist=<span class="string">&quot;norm&quot;</span>, plot=plt)</span><br><span class="line">        plt.title(f<span class="string">&#x27;&#123;col&#125; QQ 图&#x27;</span>)</span><br><span class="line">        </span><br><span class="line">        plt.tight_layout()</span><br><span class="line">        plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/002.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/003.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/004.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/005.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/006.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/007.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/008.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/009.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/010.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/011.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">df_num = df_train.select_dtypes(include=[<span class="string">&#x27;int64&#x27;</span>, <span class="string">&#x27;float64&#x27;</span>, <span class="string">&#x27;bool&#x27;</span>])</span><br><span class="line">sns.heatmap(df_num.corr(), annot=True, cmap=<span class="string">&#x27;YlGnBu&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/012.png"
+                      alt="photo"
+                ></p>
+<p>我们可以看到 curvature speed_limit num_reported_accidents 和 accident_risk 之间有很强的相关性</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(</span><br><span class="line">    x=<span class="string">&#x27;speed_limit&#x27;</span>,</span><br><span class="line">    y=<span class="string">&#x27;accident_risk&#x27;</span>,</span><br><span class="line">    data=df_train</span><br><span class="line">)</span><br><span class="line">plt.title(<span class="string">&#x27;speed_limit vs accident_risk&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/013.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">plt.hexbin(df_train[<span class="string">&#x27;curvature&#x27;</span>], df_train[<span class="string">&#x27;accident_risk&#x27;</span>], gridsize=30, cmap=<span class="string">&#x27;viridis&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Curvature&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Accident Risk&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Curvature vs Accident Risk&#x27;</span>)</span><br><span class="line">plt.colorbar(label=<span class="string">&#x27;Density&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/014.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df_train[<span class="string">&#x27;curvature_bin&#x27;</span>] = pd.qcut(df_train[<span class="string">&#x27;curvature&#x27;</span>], q=5)</span><br><span class="line">sns.boxplot(x=<span class="string">&#x27;curvature_bin&#x27;</span>, y=<span class="string">&#x27;accident_risk&#x27;</span>, data=df_train)</span><br><span class="line">plt.xticks(rotation=45)</span><br><span class="line">plt.title(<span class="string">&#x27;Accident Risk Distribution by Curvature Bins&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/015.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sns.boxplot(x=<span class="string">&#x27;num_reported_accidents&#x27;</span>, y=<span class="string">&#x27;accident_risk&#x27;</span>, data=df_train)</span><br><span class="line">plt.xticks(rotation=45)</span><br><span class="line">plt.title(<span class="string">&#x27;num_reported_accidents VS accident_risk&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/016.png"
+                      alt="photo"
+                ></p>
+<p>在我们的直觉中 交通事故数量越多 交通事故风险等级越高 但从图中可以看出 报告的事故数量从0-5风险逐渐变大 在4和5时风险最大 而到6和7时 风险反而变小了 这里我认为是由于道路交通部门发现了这段路报告的事故数量异常高 因此采取了某些举措从而降低了风险</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(2, 2, figsize=(10,8))</span><br><span class="line">sns.boxplot(x=<span class="string">&#x27;road_type&#x27;</span>, y=<span class="string">&#x27;accident_risk&#x27;</span>, data=df_train, ax=axes[0,0])</span><br><span class="line">sns.boxplot(x=<span class="string">&#x27;lighting&#x27;</span>, y=<span class="string">&#x27;accident_risk&#x27;</span>, data=df_train, ax=axes[0,1])</span><br><span class="line">sns.boxplot(x=<span class="string">&#x27;weather&#x27;</span>, y=<span class="string">&#x27;accident_risk&#x27;</span>, data=df_train, ax=axes[1,0])</span><br><span class="line">sns.boxplot(x=<span class="string">&#x27;time_of_day&#x27;</span>, y=<span class="string">&#x27;accident_risk&#x27;</span>, data=df_train, ax=axes[1,1])</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/11/017.png"
+                      alt="photo"
+                ></p>
+<h1 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df_obj = df_train.select_dtypes(include=[<span class="string">&#x27;object&#x27;</span>])</span><br><span class="line">df_obj.columns</span><br></pre></td></tr></table></figure></div>
+<p>Index([‘road_type’, ‘lighting’, ‘weather’, ‘time_of_day’], dtype&#x3D;’object’)</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df_obj.columns:</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;列名：&#123;col&#125;&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(df_obj[col].unique())</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>列名：road_type<br>[‘urban’ ‘rural’ ‘highway’]</p>
+<p>列名：lighting<br>[‘daylight’ ‘dim’ ‘night’]</p>
+<p>列名：weather<br>[‘rainy’ ‘clear’ ‘foggy’]</p>
+<p>列名：time_of_day<br>[‘afternoon’ ‘evening’ ‘morning’]</p>
+</blockquote>
+<p>由于road_type是无序的，我们对road_type进行one-hot编码<br>lighting和weather存在一定的顺序 这样模型能理解“夜晚比白天危险”、“雨天比晴天风险高”<br>time_of_day存在一定的顺序 因此使用正弦编码，模型这样可以感知“早晨和晚上”在周期上是相邻的，而不是数值差很大。</p>
+<h2 id="独热编码"><a href="#独热编码" class="headerlink" title="独热编码"></a>独热编码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_train = pd.get_dummies(df_train, columns=[<span class="string">&#x27;road_type&#x27;</span>], drop_first=False)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="标签编码"><a href="#标签编码" class="headerlink" title="标签编码"></a>标签编码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lighting_map = &#123;<span class="string">&#x27;daylight&#x27;</span>: 0, <span class="string">&#x27;dim&#x27;</span>: 1, <span class="string">&#x27;night&#x27;</span>: 2&#125;</span><br><span class="line">weather_map = &#123;<span class="string">&#x27;clear&#x27;</span>: 0, <span class="string">&#x27;foggy&#x27;</span>: 1, <span class="string">&#x27;rainy&#x27;</span>: 2&#125;</span><br><span class="line"></span><br><span class="line">df_train[<span class="string">&#x27;lighting&#x27;</span>] = df_train[<span class="string">&#x27;lighting&#x27;</span>].map(lighting_map)</span><br><span class="line">df_train[<span class="string">&#x27;weather&#x27;</span>] = df_train[<span class="string">&#x27;weather&#x27;</span>].map(weather_map)</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="正弦编码"><a href="#正弦编码" class="headerlink" title="正弦编码"></a>正弦编码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">time_map = &#123;<span class="string">&#x27;morning&#x27;</span>: 0, <span class="string">&#x27;afternoon&#x27;</span>: 1, <span class="string">&#x27;evening&#x27;</span>: 2&#125;</span><br><span class="line">df_train[<span class="string">&#x27;time_code&#x27;</span>] = df_train[<span class="string">&#x27;time_of_day&#x27;</span>].map(time_map)</span><br><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">df_train[<span class="string">&#x27;time_sin&#x27;</span>] = np.sin(2 * np.pi * df_train[<span class="string">&#x27;time_code&#x27;</span>] / 3)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_train = df_train.drop(columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;time_of_day&#x27;</span>, <span class="string">&#x27;curvature_bin&#x27;</span>, <span class="string">&#x27;time_code&#x27;</span>])</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from xgboost import XGBRegressor</span><br><span class="line">from lightgbm import LGBMRegressor</span><br><span class="line"></span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.metrics import mean_squared_error, r2_score</span><br><span class="line"></span><br><span class="line">models = &#123;</span><br><span class="line">    <span class="string">&#x27;XGBoost&#x27;</span>: XGBRegressor(random_state=42),</span><br><span class="line">    <span class="string">&#x27;LightGBM&#x27;</span>: LGBMRegressor(random_state=42)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p>XGBoost 模型得分: 0.8852848521865487<br>XGBoost 模型 RMSE: 0.05628087549522937<br>[LightGBM] [Info] Auto-choosing row-wise multi-threading, the overhead of testing was 0.003744 seconds.<br>You can set <code>force_row_wise=true</code> to remove the overhead.<br>And if memory is not enough, you can set <code>force_col_wise=true</code>.<br>[LightGBM] [Info] Total Bins 170<br>[LightGBM] [Info] Number of data points in the train set: 414203, number of used features: 14<br>[LightGBM] [Info] Start training from score 0.352605<br>LightGBM 模型得分: 0.8850232397713161<br>LightGBM 模型 RMSE: 0.05634501432550113</p>
 
   <div class="note-large default">
     <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>报错信息</p>
+      <i class="notel-icon fa-solid fa-info"></i><p>随机森林</p>
 
     </div>
     <div class="notel-content">
-      <p>这两个的SDA和SCL都接A4和A5 可以共用的</p>
+      <p>你也可以使用随机森林进行 不过在我的电脑上随机森林运行时间比较长（1分30秒） 我就贴出了我自己运行的结果<br>RandomForest 模型得分: 0.8721398843806608<br>RandomForest 模型 RMSE: 0.059417996862623244</p>
 
     </div>
   </div>
 
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;Wire.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_Sensor.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_BMP085_U.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_GFX.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_SSD1306.h&gt;</span></span><br><span class="line"></span><br><span class="line">// OLED 设置</span><br><span class="line"><span class="comment">#define SCREEN_WIDTH 128</span></span><br><span class="line"><span class="comment">#define SCREEN_HEIGHT 64</span></span><br><span class="line"><span class="comment">#define OLED_RESET    -1</span></span><br><span class="line">Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, OLED_RESET);</span><br><span class="line"></span><br><span class="line">// BMP180 传感器对象</span><br><span class="line">Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">setup</span></span>() &#123;</span><br><span class="line">  Serial.begin(9600);</span><br><span class="line"></span><br><span class="line">  // 初始化 OLED</span><br><span class="line">  <span class="keyword">if</span> (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) &#123;</span><br><span class="line">    Serial.println(<span class="string">&quot;OLED ERROR&quot;</span>);</span><br><span class="line">    <span class="keyword">while</span> (1);</span><br><span class="line">  &#125;</span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.setTextSize(1);</span><br><span class="line">  display.setTextColor(WHITE);</span><br><span class="line"></span><br><span class="line">  // 初始化 BMP180</span><br><span class="line">  <span class="keyword">if</span> (!bmp.begin()) &#123;</span><br><span class="line">    Serial.println(<span class="string">&quot;can&#x27;t find BMP180&quot;</span>);</span><br><span class="line">    <span class="keyword">while</span> (1);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">loop</span></span>() &#123;</span><br><span class="line">  sensors_event_t event;</span><br><span class="line">  bmp.getEvent(&amp;event);</span><br><span class="line"></span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.setCursor(0, 0);</span><br><span class="line">  display.println(<span class="string">&quot;Environment&quot;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (event.pressure) &#123;</span><br><span class="line">    display.setCursor(0, 20);</span><br><span class="line">    display.print(<span class="string">&quot;ATM: &quot;</span>);</span><br><span class="line">    display.print(event.pressure);</span><br><span class="line">    display.println(<span class="string">&quot; hPa&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">float</span> temperature;</span><br><span class="line">    bmp.getTemperature(&amp;temperature);</span><br><span class="line"></span><br><span class="line">    display.setCursor(0, 40);</span><br><span class="line">    display.print(<span class="string">&quot;temperature: &quot;</span>);</span><br><span class="line">    display.print(temperature);</span><br><span class="line">    display.println(<span class="string">&quot; C&quot;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    display.setCursor(0, 20);</span><br><span class="line">    display.println(<span class="string">&quot;ERROR&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  display.display();</span><br><span class="line">  delay(1000);  // 每秒刷新一次</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h1 id="测试集处理"><a href="#测试集处理" class="headerlink" title="测试集处理"></a>测试集处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">df_test = pd.read_csv(<span class="string">&#x27;test.csv&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># one-hot</span></span><br><span class="line">df_test = pd.get_dummies(df_test, columns=[<span class="string">&#x27;road_type&#x27;</span>], drop_first=False)</span><br><span class="line"></span><br><span class="line"><span class="comment"># label</span></span><br><span class="line">lighting_map = &#123;<span class="string">&#x27;daylight&#x27;</span>: 0, <span class="string">&#x27;dim&#x27;</span>: 1, <span class="string">&#x27;night&#x27;</span>: 2&#125;</span><br><span class="line">weather_map = &#123;<span class="string">&#x27;clear&#x27;</span>: 0, <span class="string">&#x27;foggy&#x27;</span>: 1, <span class="string">&#x27;rainy&#x27;</span>: 2&#125;</span><br><span class="line"></span><br><span class="line">df_test[<span class="string">&#x27;lighting&#x27;</span>] = df_test[<span class="string">&#x27;lighting&#x27;</span>].map(lighting_map)</span><br><span class="line">df_test[<span class="string">&#x27;weather&#x27;</span>] = df_test[<span class="string">&#x27;weather&#x27;</span>].map(weather_map)</span><br><span class="line"></span><br><span class="line"><span class="comment"># sin</span></span><br><span class="line">time_map = &#123;<span class="string">&#x27;morning&#x27;</span>: 0, <span class="string">&#x27;afternoon&#x27;</span>: 1, <span class="string">&#x27;evening&#x27;</span>: 2&#125;</span><br><span class="line">df_test[<span class="string">&#x27;time_code&#x27;</span>] = df_test[<span class="string">&#x27;time_of_day&#x27;</span>].map(time_map)</span><br><span class="line"></span><br><span class="line">import numpy as np</span><br><span class="line">df_test[<span class="string">&#x27;time_sin&#x27;</span>] = np.sin(2 * np.pi * df_test[<span class="string">&#x27;time_code&#x27;</span>] / 3)</span><br><span class="line"></span><br><span class="line">ids = df_test[<span class="string">&#x27;id&#x27;</span>]</span><br><span class="line">df_test = df_test.drop(columns=[<span class="string">&#x27;id&#x27;</span>, <span class="string">&#x27;time_of_day&#x27;</span>, <span class="string">&#x27;time_code&#x27;</span>])</span><br><span class="line"></span><br><span class="line">XGBoost = models[<span class="string">&#x27;XGBoost&#x27;</span>]</span><br><span class="line">y_pred_test = XGBoost.predict(df_test)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="提交数据"><a href="#提交数据" class="headerlink" title="提交数据"></a>提交数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">submission = pd.DataFrame(&#123;</span><br><span class="line">    <span class="string">&#x27;id&#x27;</span>: ids,</span><br><span class="line">    <span class="string">&#x27;accident_risk&#x27;</span>: y_pred_test</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">submission.to_csv(<span class="string">&#x27;submission.csv&#x27;</span>, index=False)</span><br></pre></td></tr></table></figure></div>
+
+<p>其成绩判定的方式是RMSE 我的成绩是0.05569</p>
+
 		</div>
 
 		
 		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
 			<div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> 环境检测</li>
+        <li><strong>Title:</strong> Predicting Road Accident Risk</li>
         <li><strong>Author:</strong> 姜智浩</li>
         <li><strong>Created at
-                :</strong> 2025-04-21 11:45:14</li>
+                :</strong> 2025-10-11 11:45:14</li>
         
             <li>
                 <strong>Updated at
-                    :</strong> 2025-04-21 10:42:41
+                    :</strong> 2025-10-13 13:36:27
             </li>
         
         <li>
-            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2025/04/21/20250421环境检测/
+            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2025/10/11/20251013Predicting Road Accident Risk/
         </li>
         <li>
             <strong>
@@ -713,7 +991,15 @@
 		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
 			
 			<li class="tag-item mx-0.5">
-				<a href="/zhihaojiang.github.io/tags/Arduino/">#Arduino</a>&nbsp;
+				<a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">#计算机科学</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E6%95%B0%E5%AD%A6/">#数学</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">#数据分析</a>&nbsp;
 			</li>
 			
 		</ul>
@@ -724,23 +1010,11 @@
 		
 		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
 			
-			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="prev" rel="prev" href="/zhihaojiang.github.io/2025/04/26/20250426%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%E5%8F%8A%E5%85%B6python%E5%AE%9E%E7%8E%B0/">
-					<span class="left arrow-icon flex justify-center items-center">
-						<i class="fa-solid fa-chevron-left"></i>
-					</span>
-					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">机器学习中的优化方法及其python实现</span>
-						<span class="post-nav-item">Prev posts</span>
-					</span>
-				</a>
-			</div>
-			
 			
 			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
-				<a class="next" rel="next" href="/zhihaojiang.github.io/2025/04/21/20250421%E8%B6%85%E5%A3%B0%E6%B3%A2%E9%9B%B7%E8%BE%BE%E6%B5%8B%E8%B7%9D/">
+				<a class="next" rel="next" href="/zhihaojiang.github.io/2025/10/09/20251009%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90--%E4%B8%AD%E5%8C%BB%E8%BE%A8%E8%AF%81/">
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">超声波雷达测距</span>
+						<span class="post-nav-title-item">商业数据分析--中医辨证</span>
 						<span class="post-nav-item">Next posts</span>
 					</span>
 					<span class="right arrow-icon flex justify-center items-center">
@@ -761,8 +1035,8 @@
 		<div class="post-toc-wrap">
 	<div class="post-toc">
 		<div class="toc-title">On this page</div>
-		<div class="page-title">环境检测</div>
-		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%9D%BF"><span class="nav-text">开发板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E7%BA%BF"><span class="nav-text">接线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-text">代码</span></a></li></ol>
+		<div class="page-title">Predicting Road Accident Risk</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90"><span class="nav-text">数据来源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE"><span class="nav-text">查看数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E6%A3%80%E6%B5%8B"><span class="nav-text">缺失值检测</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8%E5%80%BC"><span class="nav-text">异常值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EDA"><span class="nav-text">EDA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B"><span class="nav-text">特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81"><span class="nav-text">独热编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE%E7%BC%96%E7%A0%81"><span class="nav-text">标签编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%BC%A6%E7%BC%96%E7%A0%81"><span class="nav-text">正弦编码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9"><span class="nav-text">模型选择</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E9%9B%86%E5%A4%84%E7%90%86"><span class="nav-text">测试集处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E6%95%B0%E6%8D%AE"><span class="nav-text">提交数据</span></a></li></ol>
 
 	</div>
 </div>
