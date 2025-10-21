@@ -13723,4 +13723,204 @@ accuracy                           0.96       216
         <tag>数据分析</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Lifestyle_and_Health_Risk_Prediction_Synthetic_Dataset</title>
+    <url>/zhihaojiang.github.io/2025/10/21/20251021Lifestyle_and_Health_Risk_Prediction/</url>
+    <content><![CDATA[<h1 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h1><p><a class="link"   href="https://www.kaggle.com/datasets/miadul/lifestyle-and-health-risk-prediction" >https://www.kaggle.com/datasets/miadul/lifestyle-and-health-risk-prediction<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h1 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&#x27;Lifestyle_and_Health_Risk_Prediction_Synthetic_Dataset.csv&#x27;</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.info()</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>&lt;class ‘pandas.core.frame.DataFrame’&gt;<br>RangeIndex: 5000 entries, 0 to 4999<br>Data columns (total 12 columns):</p>
+<h1 id="Column-Non-Null-Count-Dtype"><a href="#Column-Non-Null-Count-Dtype" class="headerlink" title="Column        Non-Null Count  Dtype"></a>Column        Non-Null Count  Dtype</h1><hr>
+<p> 0   age           5000 non-null   int64<br> 1   weight        5000 non-null   int64<br> 2   height        5000 non-null   int64<br> 3   exercise      5000 non-null   object<br> 4   sleep         5000 non-null   float64<br> 5   sugar_intake  5000 non-null   object<br> 6   smoking       5000 non-null   object<br> 7   alcohol       5000 non-null   object<br> 8   married       5000 non-null   object<br> 9   profession    5000 non-null   object<br> 10  bmi           5000 non-null   float64<br> 11  health_risk   5000 non-null   object<br>dtypes: float64(2), int64(3), object(7)<br>memory usage: 468.9+ KB</p>
+</blockquote>
+<h1 id="缺失值查看和处理"><a href="#缺失值查看和处理" class="headerlink" title="缺失值查看和处理"></a>缺失值查看和处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
+<blockquote>
+<p>age             0<br>weight          0<br>height          0<br>exercise        0<br>sleep           0<br>sugar_intake    0<br>smoking         0<br>alcohol         0<br>married         0<br>profession      0<br>bmi             0<br>health_risk     0<br>dtype: int64</p>
+</blockquote>
+<h1 id="异常值查看与处理"><a href="#异常值查看与处理" class="headerlink" title="异常值查看与处理"></a>异常值查看与处理</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> column <span class="keyword">in</span> df.select_dtypes(include=[<span class="string">&#x27;number&#x27;</span>]).columns:</span><br><span class="line">    plt.boxplot(<span class="built_in">df</span>[column])</span><br><span class="line">    plt.title(column)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/001.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/002.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/003.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/004.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/005.png"
+                      alt="photo"
+                ></p>
+<p>发现bmi存在异常值 鉴于bmi过高会导致健康风险 查看两者的关系</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">df_bmi_50 = <span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">&#x27;bmi&#x27;</span>] &gt; 50]</span><br><span class="line"></span><br><span class="line">sns.boxplot(x=<span class="string">&#x27;health_risk&#x27;</span>, y=<span class="string">&#x27;bmi&#x27;</span>, data=df_bmi_50)</span><br><span class="line">plt.title(<span class="string">&#x27;BMI与健康风险的关系&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;健康风险&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;BMI&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/006.png"
+                      alt="photo"
+                ></p>
+<p>可以看到 健康风险较高的人群 其bmi最大值较高 但是在bmi&gt;50的人群中 健康风险低的人群 bmi平均值要比健康风险高的人群高 这说明 衡量健康风险不仅仅看bmi 还要考虑其他因素</p>
+<h1 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;profession&#x27;</span>].value_counts().plot(kind=<span class="string">&#x27;bar&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;职业分布&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/011.png"
+                      alt="photo"
+                ><br>数据集中不同职业的数量分布是均衡的</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">age_groups = pd.cut(<span class="built_in">df</span>[<span class="string">&#x27;age&#x27;</span>], bins=5)</span><br><span class="line">ct = pd.crosstab(age_groups, <span class="built_in">df</span>[<span class="string">&#x27;health_risk&#x27;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ct_pct = ct.div(ct.sum(axis=1), axis=0)</span><br><span class="line">ct_pct.plot(</span><br><span class="line">    kind=<span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">    stacked=True,</span><br><span class="line">    figsize=(10, 6),</span><br><span class="line">    color=[<span class="string">&#x27;#f8f3d4&#x27;</span>, <span class="string">&#x27;#00b8a9&#x27;</span>]</span><br><span class="line">    )</span><br><span class="line">plt.title(<span class="string">&#x27;健康风险与年龄分组的关系&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;年龄分组&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;百分比&#x27;</span>)</span><br><span class="line">plt.xticks(rotation=45)</span><br><span class="line">plt.legend(title=<span class="string">&#x27;健康风险&#x27;</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/007.png"
+                      alt="photo"
+                ></p>
+<p>可以看到 随着年龄的增加 健康风险也在增加</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">ct = pd.crosstab(<span class="built_in">df</span>[<span class="string">&#x27;exercise&#x27;</span>], <span class="built_in">df</span>[<span class="string">&#x27;health_risk&#x27;</span>])</span><br><span class="line"></span><br><span class="line">exercise_order = [<span class="string">&#x27;none&#x27;</span>, <span class="string">&#x27;low&#x27;</span>, <span class="string">&#x27;medium&#x27;</span>, <span class="string">&#x27;high&#x27;</span>]</span><br><span class="line">ct = ct.reindex(exercise_order, fill_value=0)</span><br><span class="line"></span><br><span class="line">ct_pct = ct.div(ct.sum(axis=1), axis=0) </span><br><span class="line">ct_pct.plot(</span><br><span class="line">    kind=<span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">    stacked=True,</span><br><span class="line">    figsize=(8, 6),</span><br><span class="line">    color=[<span class="string">&#x27;#f8f3d4&#x27;</span>, <span class="string">&#x27;#00b8a9&#x27;</span>]</span><br><span class="line">)</span><br><span class="line">plt.title(<span class="string">&#x27;锻炼频率与健康风险的关系&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;锻炼频率&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;百分比&#x27;</span>)</span><br><span class="line">plt.xticks(rotation=0)</span><br><span class="line">plt.legend(title=<span class="string">&#x27;健康风险&#x27;</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/012.png"
+                      alt="photo"
+                ></p>
+<p>发现 锻炼频率高的人群 健康风险有明显的降低</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sleep_groups = pd.cut(<span class="built_in">df</span>[<span class="string">&#x27;sleep&#x27;</span>], bins=5)</span><br><span class="line">ct = pd.crosstab(sleep_groups, <span class="built_in">df</span>[<span class="string">&#x27;health_risk&#x27;</span>])</span><br><span class="line"></span><br><span class="line">ct_pct = ct.div(ct.sum(axis=1), axis=0)</span><br><span class="line">ct_pct.plot(</span><br><span class="line">    kind=<span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">    stacked=True,</span><br><span class="line">    figsize=(10, 6),</span><br><span class="line">    color=[<span class="string">&#x27;#f8f3d4&#x27;</span>, <span class="string">&#x27;#00b8a9&#x27;</span>]</span><br><span class="line">    )</span><br><span class="line">plt.title(<span class="string">&#x27;健康风险与睡眠时长的关系&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;睡眠分组&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;百分比&#x27;</span>)</span><br><span class="line">plt.xticks(rotation=45)</span><br><span class="line">plt.legend(title=<span class="string">&#x27;健康风险&#x27;</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/013.png"
+                      alt="photo"
+                ></p>
+<p>发现 睡眠时长长的人群 健康风险更低<br>更长的睡眠时间说明其睡眠质量更好 休息得更充分 这有助于提高健康水平</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line">ct = pd.crosstab(<span class="built_in">df</span>[<span class="string">&#x27;sugar_intake&#x27;</span>], <span class="built_in">df</span>[<span class="string">&#x27;health_risk&#x27;</span>])</span><br><span class="line"></span><br><span class="line">sugar_order = [<span class="string">&#x27;low&#x27;</span>, <span class="string">&#x27;medium&#x27;</span>, <span class="string">&#x27;high&#x27;</span>]</span><br><span class="line">ct = ct.reindex(sugar_order, fill_value=0)</span><br><span class="line"></span><br><span class="line">ct_pct = ct.div(ct.sum(axis=1), axis=0) </span><br><span class="line">ct_pct.plot(</span><br><span class="line">    kind=<span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">    stacked=True,</span><br><span class="line">    figsize=(8, 6),</span><br><span class="line">    color=[<span class="string">&#x27;#f8f3d4&#x27;</span>, <span class="string">&#x27;#00b8a9&#x27;</span>]</span><br><span class="line">)</span><br><span class="line">plt.title(<span class="string">&#x27;糖摄入量与健康风险的关系&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;糖摄入量&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;百分比&#x27;</span>)</span><br><span class="line">plt.xticks(rotation=0)</span><br><span class="line">plt.legend(title=<span class="string">&#x27;健康风险&#x27;</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/008.png"
+                      alt="photo"
+                ></p>
+<p>发现 糖摄入量高的人群 其健康风险更高 这可能是因为糖对身体的影响更大 会有患糖尿病的风险 导致健康风险增加</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ct = pd.crosstab(<span class="built_in">df</span>[<span class="string">&#x27;smoking&#x27;</span>], <span class="built_in">df</span>[<span class="string">&#x27;health_risk&#x27;</span>])</span><br><span class="line"></span><br><span class="line">smoking_order = [<span class="string">&#x27;yes&#x27;</span>, <span class="string">&#x27;no&#x27;</span>]</span><br><span class="line">ct = ct.reindex(smoking_order, fill_value=0)</span><br><span class="line"></span><br><span class="line">ct_pct = ct.div(ct.sum(axis=1), axis=0) </span><br><span class="line">ct_pct.plot(</span><br><span class="line">    kind=<span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">    stacked=True,</span><br><span class="line">    figsize=(8, 6),</span><br><span class="line">    color=[<span class="string">&#x27;#f8f3d4&#x27;</span>, <span class="string">&#x27;#00b8a9&#x27;</span>]</span><br><span class="line">)</span><br><span class="line">plt.title(<span class="string">&#x27;吸烟与健康风险的关系&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;吸烟&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;百分比&#x27;</span>)</span><br><span class="line">plt.xticks(rotation=0)</span><br><span class="line">plt.legend(title=<span class="string">&#x27;健康风险&#x27;</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/014.png"
+                      alt="photo"
+                ></p>
+<p>发现 不吸烟的人健康风险要比吸烟人的健康风险低<br>吸烟有患肺癌的风险</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ct = pd.crosstab(<span class="built_in">df</span>[<span class="string">&#x27;alcohol&#x27;</span>], <span class="built_in">df</span>[<span class="string">&#x27;health_risk&#x27;</span>])</span><br><span class="line"></span><br><span class="line">alcohol_order = [<span class="string">&#x27;yes&#x27;</span>, <span class="string">&#x27;no&#x27;</span>]</span><br><span class="line">ct = ct.reindex(alcohol_order, fill_value=0)</span><br><span class="line"></span><br><span class="line">ct_pct = ct.div(ct.sum(axis=1), axis=0) </span><br><span class="line">ct_pct.plot(</span><br><span class="line">    kind=<span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">    stacked=True,</span><br><span class="line">    figsize=(8, 6),</span><br><span class="line">    color=[<span class="string">&#x27;#f8f3d4&#x27;</span>, <span class="string">&#x27;#00b8a9&#x27;</span>]</span><br><span class="line">)</span><br><span class="line">plt.title(<span class="string">&#x27;饮酒与健康风险的关系&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;饮酒&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;百分比&#x27;</span>)</span><br><span class="line">plt.xticks(rotation=0)</span><br><span class="line">plt.legend(title=<span class="string">&#x27;健康风险&#x27;</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/009.png"
+                      alt="photo"
+                ></p>
+<p>发现 不饮酒的人健康风险要比饮酒的人健康风险低<br>饮酒有患肝脏疾病的风险</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">ct = pd.crosstab(<span class="built_in">df</span>[<span class="string">&#x27;married&#x27;</span>], <span class="built_in">df</span>[<span class="string">&#x27;health_risk&#x27;</span>])</span><br><span class="line"></span><br><span class="line">married_order = [<span class="string">&#x27;yes&#x27;</span>, <span class="string">&#x27;no&#x27;</span>]</span><br><span class="line">ct = ct.reindex(married_order, fill_value=0)</span><br><span class="line"></span><br><span class="line">ct_pct = ct.div(ct.sum(axis=1), axis=0) </span><br><span class="line">ct_pct.plot(</span><br><span class="line">    kind=<span class="string">&#x27;bar&#x27;</span>,</span><br><span class="line">    stacked=True,</span><br><span class="line">    figsize=(8, 6),</span><br><span class="line">    color=[<span class="string">&#x27;#f8f3d4&#x27;</span>, <span class="string">&#x27;#00b8a9&#x27;</span>]</span><br><span class="line">)</span><br><span class="line">plt.title(<span class="string">&#x27;婚姻状态与健康风险的关系&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;婚姻状态&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;百分比&#x27;</span>)</span><br><span class="line">plt.xticks(rotation=0)</span><br><span class="line">plt.legend(title=<span class="string">&#x27;健康风险&#x27;</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/10/21/010.png"
+                      alt="photo"
+                ></p>
+<p>婚姻状况与健康风险的关系不明显 可以把这个特征删除</p>
+<h1 id="特征编码"><a href="#特征编码" class="headerlink" title="特征编码"></a>特征编码</h1><p>对于exercise、sugar_intake、smoking、alcohol、married、health_risk<br>这些类别型特征是有明显大小关系的 因此使用标签编码保留其大小区别<br>对于profession由于特征中的值是无关的 并且特征中的唯一值只有8个 因此我们可以用独热编码</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#标签编码</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;exercise&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;exercise&#x27;</span>].map(&#123;<span class="string">&#x27;none&#x27;</span>: 0, <span class="string">&#x27;low&#x27;</span>: 1, <span class="string">&#x27;medium&#x27;</span>: 2, <span class="string">&#x27;high&#x27;</span>: 3&#125;)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;sugar_intake&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;sugar_intake&#x27;</span>].map(&#123;<span class="string">&#x27;low&#x27;</span>: 0, <span class="string">&#x27;medium&#x27;</span>: 1, <span class="string">&#x27;high&#x27;</span>: 2&#125;)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;smoking&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;smoking&#x27;</span>].map(&#123;<span class="string">&#x27;yes&#x27;</span>: 1, <span class="string">&#x27;no&#x27;</span>: 0&#125;)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;alcohol&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;alcohol&#x27;</span>].map(&#123;<span class="string">&#x27;yes&#x27;</span>: 1, <span class="string">&#x27;no&#x27;</span>: 0&#125;)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;married&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;married&#x27;</span>].map(&#123;<span class="string">&#x27;yes&#x27;</span>: 1, <span class="string">&#x27;no&#x27;</span>: 0&#125;)</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;health_risk&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;health_risk&#x27;</span>].map(&#123;<span class="string">&#x27;low&#x27;</span>: 0, <span class="string">&#x27;high&#x27;</span>: 1&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 独热编码</span></span><br><span class="line"><span class="built_in">df</span> = pd.get_dummies(<span class="built_in">df</span>, columns=[<span class="string">&#x27;profession&#x27;</span>], drop_first=True)</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 删除&#x27;married&#x27;列</span></span><br><span class="line"><span class="built_in">df</span> = df.drop(columns=[<span class="string">&#x27;married&#x27;</span>])</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line"></span><br><span class="line">X = df.drop(columns=[<span class="string">&#x27;health_risk&#x27;</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;health_risk&#x27;</span>]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line">from xgboost import XGBClassifier</span><br><span class="line">from lightgbm import LGBMClassifier</span><br><span class="line"></span><br><span class="line">model = &#123;</span><br><span class="line">    <span class="string">&#x27;logistic_regression&#x27;</span>: LogisticRegression(),</span><br><span class="line">    <span class="string">&#x27;random_forest&#x27;</span>: RandomForestClassifier(),</span><br><span class="line">    <span class="string">&#x27;svm&#x27;</span>: SVC(),</span><br><span class="line">    <span class="string">&#x27;XGB&#x27;</span>: XGBClassifier(),</span><br><span class="line">    <span class="string">&#x27;LGBM&#x27;</span>: LGBMClassifier()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score,classification_report,confusion_matrix</span><br><span class="line">model_scores = pd.DataFrame(</span><br><span class="line">    index=model.keys(),</span><br><span class="line">    columns=[</span><br><span class="line">        <span class="string">&quot;accuracy&quot;</span>,</span><br><span class="line">        <span class="string">&quot;precision&quot;</span>,</span><br><span class="line">        <span class="string">&quot;recall&quot;</span>,</span><br><span class="line">        <span class="string">&quot;f1_score&quot;</span>,</span><br><span class="line">        <span class="string">&quot;cross_val_score&quot;</span></span><br><span class="line">    ]</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, clf <span class="keyword">in</span> model.items():</span><br><span class="line">    clf.fit(X_train, y_train)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;&#123;name&#125;模型训练完成&quot;</span>)</span><br><span class="line">    y_pred = clf.predict(X_test)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;&#123;name&#125;模型测试结果&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(classification_report(y_test, y_pred))</span><br><span class="line">    <span class="built_in">print</span>(confusion_matrix(y_test, y_pred))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;----------------------------------------&#x27;</span>)</span><br><span class="line">    model_scores.loc[name, <span class="string">&quot;accuracy&quot;</span>] = accuracy_score(y_test, y_pred)</span><br><span class="line">    model_scores.loc[name, <span class="string">&quot;precision&quot;</span>] = precision_score(y_test, y_pred)</span><br><span class="line">    model_scores.loc[name, <span class="string">&quot;recall&quot;</span>] = recall_score(y_test, y_pred)</span><br><span class="line">    model_scores.loc[name, <span class="string">&quot;f1_score&quot;</span>] = f1_score(y_test, y_pred)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="k折交叉验证"><a href="#k折交叉验证" class="headerlink" title="k折交叉验证"></a>k折交叉验证</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import cross_val_score</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, clf <span class="keyword">in</span> model.items():</span><br><span class="line">    scores = cross_val_score(clf, X, y, cv=5)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;&#123;name&#125;模型的交叉验证得分: &#123;scores.mean()&#125;&quot;</span>)</span><br><span class="line">    model_scores.loc[name, <span class="string">&quot;cross_val_score&quot;</span>] = scores.mean()</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">model_scores.head()</span><br></pre></td></tr></table></figure></div>
+
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>F1_Score</th>
+<th>Cross_Val_Score</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>logistic_regression</td>
+<td>0.858</td>
+<td>0.893056</td>
+<td>0.908192</td>
+<td>0.90056</td>
+<td>0.8652</td>
+</tr>
+<tr>
+<td>random_forest</td>
+<td>0.99</td>
+<td>0.992938</td>
+<td>0.992938</td>
+<td>0.992938</td>
+<td>0.993</td>
+</tr>
+<tr>
+<td>svm</td>
+<td>0.804</td>
+<td>0.829897</td>
+<td>0.909605</td>
+<td>0.867925</td>
+<td>0.8076</td>
+</tr>
+<tr>
+<td>XGB</td>
+<td>0.995</td>
+<td>0.997171</td>
+<td>0.995763</td>
+<td>0.996466</td>
+<td>0.9966</td>
+</tr>
+<tr>
+<td>LGBM</td>
+<td>0.997</td>
+<td>0.997179</td>
+<td>0.998588</td>
+<td>0.997883</td>
+<td>0.9968</td>
+</tr>
+</tbody></table>
+<h1 id="特征重要性"><a href="#特征重要性" class="headerlink" title="特征重要性"></a>特征重要性</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">name = [<span class="string">&#x27;random_forest&#x27;</span>, <span class="string">&#x27;XGB&#x27;</span>, <span class="string">&#x27;LGBM&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> name:</span><br><span class="line">    importances = pd.Series(model[name].feature_importances_, index=X_train.columns).sort_values(ascending=False)</span><br><span class="line">    <span class="built_in">print</span>(f<span class="string">&quot;&#123;name&#125;模型特征重要性排序&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(importances)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;----------------------------------------&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<div class="tabs" id="tab-importance"><ul class="nav-tabs"><li class="tab active"><a class="#importance-1">random_forest</a></li><li class="tab"><a class="#importance-2">XGB</a></li><li class="tab"><a class="#importance-3">LGBM</a></li></ul><div class="tab-content"><div class="tab-pane active" id="importance-1"><p><strong>random_forest模型特征重要性排序</strong><br>age                         0.268261<br>bmi                         0.182540<br>smoking                     0.100002<br>exercise                    0.094879<br>sleep                       0.085877<br>weight                      0.079399<br>sugar_intake                0.065287<br>alcohol                     0.063469<br>height                      0.038578<br>profession_teacher          0.003532<br>profession_doctor           0.003400<br>profession_student          0.003397<br>profession_engineer         0.003007<br>profession_driver           0.002944<br>profession_farmer           0.002875<br>profession_office_worker    0.002553<br>dtype: float64</p></div><div class="tab-pane" id="importance-2"><p><strong>XGB模型特征重要性排序</strong><br>bmi                         0.198563<br>smoking                     0.173180<br>age                         0.148690<br>alcohol                     0.139040<br>exercise                    0.122766<br>sugar_intake                0.114938<br>sleep                       0.075064<br>profession_doctor           0.007731<br>profession_engineer         0.005987<br>profession_student          0.004006<br>profession_farmer           0.002454<br>profession_driver           0.002379<br>weight                      0.002147<br>height                      0.001987<br>profession_teacher          0.001068<br>profession_office_worker    0.000000<br>dtype: float32</p></div><div class="tab-pane" id="importance-3"><p><strong>LGBM模型特征重要性排序</strong><br>sleep                       614<br>sugar_intake                416<br>exercise                    406<br>smoking                     371<br>bmi                         339<br>alcohol                     337<br>age                         298<br>height                       99<br>weight                       66<br>profession_doctor            14<br>profession_engineer          10<br>profession_farmer            10<br>profession_student            8<br>profession_teacher            7<br>profession_driver             5<br>profession_office_worker      0<br>dtype: int32</p></div></div></div>
+
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数学</tag>
+        <tag>数据分析</tag>
+      </tags>
+  </entry>
 </search>
