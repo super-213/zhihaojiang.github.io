@@ -13923,4 +13923,260 @@ accuracy                           0.96       216
         <tag>数据分析</tag>
       </tags>
   </entry>
+  <entry>
+    <title>广告投放策略与效益</title>
+    <url>/zhihaojiang.github.io/2025/11/06/20251106%E5%B9%BF%E5%91%8A%E6%8A%95%E6%94%BE%E7%AD%96%E7%95%A5%E4%B8%8E%E6%95%88%E7%9B%8A/</url>
+    <content><![CDATA[<h1 id="广告投放策略与效益"><a href="#广告投放策略与效益" class="headerlink" title="广告投放策略与效益"></a>广告投放策略与效益</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本研究通过对广告投放数据的可视化分析，探索了CPC、GMV、ROI等核心指标与广告效果之间的关系，旨在揭示不同投放策略下的效益差异，并为广告主提供优化建议。<br>分析CPC成本的合理性，表明大部分广告投放策略的CPC费用集中在中低成本区间，但仍存在一些高花费低转化的现象。<br>对ROI的分析，发现广告投放效益受季节性波动、外部事件影响显著。反映了外部环境对广告投放效果的强烈影响。<br>CTR分析揭示了广告投放的吸引力，整体CTR偏低，尤其是在0.05至0.10区间内形成明显的峰值，表明大多数广告的点击率较低。反映了广告定向和素材优化的空间。高CTR广告较为稀少，优化广告定向和提升广告创意质量能够显著提高CTR和转化率。<br>关于CPC流量与自然流量的关系，分析结果表明，两者并未表现出显著的正相关，表明CPC流量并未有效促进自然流量的增长。这表明广告投放未能有效提升品牌知名度或用户搜索意图，可能与内容质量、品牌效应和SEO策略不足有关。<br>回归分析表明自然访问量和CPC访问量对有效订单数具有显著正向影响，<br>R^2为0.770，表明两者是影响广告效果的核心因素。自然访问量每增加1单位，有效订单数将增加0.2053单位，而CPC访问量每增加1单位，有效订单数将增加0.1891单位。</p>
+<p>关键词：CPC; GMV; ROI ; CTR; 广告投放</p>
+<h1 id="一、引言"><a href="#一、引言" class="headerlink" title="一、引言"></a>一、引言</h1><p>在当前数字化广告投放中，如何精准地评估广告效果，优化广告投放策略，已成为企业提高营销效益和竞争力的关键。特别是在电商、餐饮等行业，广告投放的效果直接影响到销量和用户转化。因此，合理评估广告投放的成本与回报关系，深入分析影响广告效果的关键因素，已成为优化广告策略的核心任务。<br>广告投放的成本和回报是衡量广告效果的核心指标。CPC直接反映了广告主获取流量的成本，而GMV和ROI则衡量了广告投放带来的实际收入与营销投入之间的关系。通过对这三者的分析，企业能够判断广告费用的投入是否合理，是否存在高花费低转化的现象，以及如何提高广告投放的效益。<br>在广告投放过程中，点击率作为衡量广告吸引力的前置指标，其与下单转化率之间的关系也至关重要。广告的点击率是否健康，直接影响到转化率的提升。因此，深入探讨CTR与下单转化率之间的关系，有助于揭示CPC流量质量对转化效果的影响，为进一步优化广告策略提供理论依据。<br>本文将通过对多个门店和日期的广告数据进行系统分析，探讨CPC成本、GMV、ROI和CTR等核心指标的分布特征与相互关系，分析CPC流量与自然流量的协同效应，并提出优化广告投放策略的建议。研究结果将为广告主提供数据支持，帮助其实现更高效的广告预算分配和更精确的投放策略。</p>
+<h1 id="二、数据特征"><a href="#二、数据特征" class="headerlink" title="二、数据特征"></a>二、数据特征</h1><h2 id="2-1-查看数据"><a href="#2-1-查看数据" class="headerlink" title="2.1 查看数据"></a>2.1 查看数据</h2><p>在处理任何数据集时，第一步是对数据进行初步的审视，包括查看各特征的名称、类型、分布及其所代表的含义等。通过导入数据并使用columns函数查看特征名称，发现数据中涉及了多个关键指标，如CPC、GMV、ROI等。为了深入理解这些特征，我们查询并解释了它们的具体定义与业务意义。</p>
+<h3 id="2-1-1-数据含义"><a href="#2-1-1-数据含义" class="headerlink" title="2.1.1 数据含义"></a>2.1.1 数据含义</h3><p>在数据集的多个关键指标中，CPC、GMV、ROI是广告投放分析中最为核心的三个变量。以下是它们的详细定义及其对广告效果评估的意义：<br>CPC（每次点击费用）<br>定义：广告主每获得一次点击所需支付的费用。<br>意义：衡量广告流量获取成本，CPC越低说明花同样的钱能吸引更多用户访问。</p>
+<p>GMV（成交总额）<br>定义：通过广告或平台产生的商品交易总金额。<br>意义：衡量销售规模。GMV 大说明广告带来了高销售额。</p>
+<p>ROI（投资回报率）<br>定义：广告带来的收入与广告投入之间的比值。<br>意义：ROI 表示每花 1 元广告费带来多少销售额，ROI 越高越好。</p>
+<h2 id="2-2-数据分布"><a href="#2-2-数据分布" class="headerlink" title="2.2 数据分布"></a>2.2 数据分布</h2><h3 id="2-2-1-CPC单次点击费用"><a href="#2-2-1-CPC单次点击费用" class="headerlink" title="2.2.1 CPC单次点击费用"></a>2.2.1 CPC单次点击费用</h3><p>针对“CPC单次点击费用”这一核心广告投放成本指标，从描述性统计、分布形态、可视化特征及业务含义四个维度展开系统分析，旨在全面刻画该变量的数据分布特性。<br>通过计算基本统计量，我们初步掌握该特征的集中趋势、离散程度与分布形态。相关指标如下表所示</p>
+<table>
+<thead>
+<tr>
+<th>最小值</th>
+<th align="left">最大值</th>
+<th align="left">均值</th>
+<th>中位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.02</td>
+<td align="left">2.98</td>
+<td align="left">1.389</td>
+<td>1.38</td>
+</tr>
+<tr>
+<td>四分位距</td>
+<td align="left">标准差</td>
+<td align="left">峰度</td>
+<td>偏度</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td align="left">0.304</td>
+<td align="left">2.077</td>
+<td>0.212</td>
+</tr>
+</tbody></table>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/001.png"
+                      alt="photo"
+                ></p>
+<p>样本中所有广告点击的平均成本约为 1.39 元。作为衡量整体水平的核心指标，它反映了当前投放策略下的平均获客成本。<br>中位数为1.38，与均值高度接近，未受极端值显著干扰。说明大部分广告点击成本集中在合理区间内。<br>标准差为0.304，四分位距为0.3，表明数据分布紧凑，无明显的异常值。并且IQR&#x2F;Std\approx1，说明数据近似正态。<br>峰度为2.077，标准正态分布的峰度为3，这属于低峰态，意味着分布曲线比正态分布更平坦，数据在中心区域不如正态分布集中，两侧更宽。从柱状图也可以看到在峰值两侧呈现较平缓的下降趋势，而非陡峭的钟形。表明CPC值在主流区间内分布较为均匀，无明显集中或缺失，有利于稳定投放策略。<br>偏度为0.212，属于轻微右偏，在广告投放场景中，右偏是常见现象——部分高竞争关键词或优质流量渠道的CPC天然较高。</p>
+<h3 id="2-2-2-CPC总费用"><a href="#2-2-2-CPC总费用" class="headerlink" title="2.2.2 CPC总费用"></a>2.2.2 CPC总费用</h3><p>CPC总费用，即单次点击成本×点击量，该指标反映广告投放在特定单元上的总体支出水平。</p>
+<table>
+<thead>
+<tr>
+<th>最小值</th>
+<th align="left">最大值</th>
+<th align="left">均值</th>
+<th>中位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td align="left">846.4</td>
+<td align="left">129.58</td>
+<td>76.2</td>
+</tr>
+<tr>
+<td>四分位距</td>
+<td align="left">标准差</td>
+<td align="left">峰度</td>
+<td>偏度</td>
+</tr>
+<tr>
+<td>150.09</td>
+<td align="left">134.539</td>
+<td align="left">5.317</td>
+<td>2.091</td>
+</tr>
+</tbody></table>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/002.png"
+                      alt="photo"
+                ></p>
+<p>均值为129.58，表示样本中各单元的平均总费用约为129.58 元。但从图中可以看到，数据分布是长尾分布，均值受极端值影响较大，不能作为典型值使用。而中位数为76.2，在此分布中，中位数更具有代表性。<br>标准差为134.539表明数据波动剧烈。四分位距 IQR &#x3D; 150.09意味费用跨度很大。<br>偏度&#x3D; 2.091是严重右偏<br>意味着绝大多数的费用较低，但存在少量极高费用，这些“头部”显著拉高了均值。<br>在广告投放场景中，这通常是二八定律的体现——少数关键词或计划贡献了大部分支出。<br>峰度为5.317，标准正态分布峰度为3。此处峰度&gt;3，属于高峰态。<br>意味着分布曲线比正态分布更尖峭，中心区域更集中，同时两侧尾部更厚即存在更多极端值。高峰态和严重右偏说明存在头部效应，即少数高消耗单元主导总支出。</p>
+<h1 id="三、广告效果评估"><a href="#三、广告效果评估" class="headerlink" title="三、广告效果评估"></a>三、广告效果评估</h1><p>聚焦CPC、 ROI 和效率，我们需要弄清楚：</p>
+<ol>
+<li>CPC 成本是否合理？是否存在“高花费低转化”？</li>
+<li>ROI 是否 &gt; 1？哪些门店&#x2F;日期 ROI 异常高或低？</li>
+<li>点击率（CTR）是否健康？</li>
+<li>下单转化率是否受 CPC 流量质量影响？</li>
+</ol>
+<h2 id="3-1-CPC成本合理性"><a href="#3-1-CPC成本合理性" class="headerlink" title="3.1 CPC成本合理性"></a>3.1 CPC成本合理性</h2><p>利用密度图查看CPC总费用和下单转换率之间的关系如图</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/003.png"
+                      alt="photo"
+                ></p>
+<p>上图反应了两个变量的联合概率密度分布，可以看到主要数据集中在左下部，次区域的CPC总费用在[0,200]之间，下单转换率在[0.1,0,3]之间，说明大部分投放广告的策略是中等消费和中低转换率。<br>下单转换率在0.3以上的属于高转换率，可以看到高转换率区域主要分布在中低费用区间，在此区域的部分是高性价比区域——少量低成本单元实现了高转化率，这可能与广告的精准投放、新上线、合理推流相关，若要提高转化率性价比，推荐借鉴这些广告的推送方式以及广告的形式。</p>
+<h2 id="3-2-GMV-ROI周度趋势"><a href="#3-2-GMV-ROI周度趋势" class="headerlink" title="3.2 GMV ROI周度趋势"></a>3.2 GMV ROI周度趋势</h2><p>针对门店周度GMV ROI这一关键经营效率指标，从整体趋势、门店间对比、季节性&#x2F;事件性波动展开深入分析。GMV ROI &#x3D; GMV&#x2F;营销投入成本，反映单位营销费用带来的销售回报，是衡量门店盈利能力与投放效率的核心指标。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/004.png"
+                      alt="photo"
+                ></p>
+<p>从整体趋势上看，其呈现明显的季节波动。<br>2019年11月–2020年1月：多数门店ROI呈上升趋势，尤其在2020年1月达到阶段性高点。这可能受春节前消费高峰或年终促销活动驱动。<br>部分门店如蛙小辣美蛙火锅杯[五角场店]在2020年1月ROI飙升至16以上，表现突出。<br>2020年2月–2020年3月：受新冠疫情影响，多数门店ROI出现断崖式下跌。多条折线在2020年2月跌至低谷。如蛙小辣·美蛙火锅杯[虹口足球场店]降至4以下。表明疫情对线下餐饮业冲击巨大，营销投入回报率显著下降。<br>2020年4月–2020年6月：逐步复苏，部分门店恢复至疫情前水平，甚至超越。如蛙小辣火锅杯（五角场店）在2020年6月回升至14+，表现强劲。蛙小辣火锅杯（龙阳路店）在2020年5月后稳步上升。<br>2020年7月–2020年10月：趋于稳定，部分门店出现小幅回落。如粉色线蛙小辣·美蛙火锅杯[真如店]在2020年7月后逐渐下滑。<br>整体呈现疫情后复苏→平稳运行→小幅回调的典型路径。</p>
+<p>还可以看到，部分店铺的曲线出现停滞的现象，其主要出现在2020年2月–2020年3月，正好是疫情发生的时间点。根据国家统计局数据显示，2020年我国全年餐饮收入39527亿元，同比下降16.6%。受疫情影响，全年超2000家餐厅关闭，平均每月达200多家。<br>因此可以得出那些餐饮受疫情影响，不得不说关闭以减少亏损。</p>
+<h2 id="3-3-点击率健康性分析"><a href="#3-3-点击率健康性分析" class="headerlink" title="3.3 点击率健康性分析"></a>3.3 点击率健康性分析</h2><p>CTR反映广告被展示后用户点击的比例，是衡量广告相关性与吸引力的重要前置指标。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/005.png"
+                      alt="photo"
+                ></p>
+<p>从上图可能得出绝大多数门店的CTR集中在 0.0 ~ 0.15 区间内，尤其在 0.05 ~ 0.10 附近形成一个尖锐峰值，之后迅速衰减，右侧几乎无数据。说明当前广告投放的整体CTR水平偏低，不过这也是一个常见的现象，像电商&#x2F;本地生活类广告CTR通常在1%~10%之间。<br>在 CTR &gt; 0.15 后，门店数急剧下降，CT R &gt; 0.2 的门店几乎为零。说明高CTR单元极为稀少，可能是优质素材、精准定向或特殊场景带来的偶然结果。</p>
+<h2 id="3-4-下单转化率与-CPC-流量质量关系"><a href="#3-4-下单转化率与-CPC-流量质量关系" class="headerlink" title="3.4 下单转化率与 CPC 流量质量关系"></a>3.4 下单转化率与 CPC 流量质量关系</h2><p>聚焦每日CPC投入与每日下单转化率两个关键指标的时间序列变化，揭示：<br>1.	广告预算投入是否带来预期转化？<br>2.	两者是否存在协同或背离关系？<br>3.	是否存在高投入低转化或低投入高转化的异常时段？<br>4.	如何基于趋势优化每日预算分配？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/006.png"
+                      alt="photo"
+                ></p>
+<h3 id="3-4-1-整体趋势分析"><a href="#3-4-1-整体趋势分析" class="headerlink" title="3.4.1 整体趋势分析"></a>3.4.1 整体趋势分析</h3><p>整体趋势为：投入先升后降，转化率起伏明显<br>2019年10月–2020年1月：<br>CPC投入稳步上升，最高达2500+元&#x2F;日。下单转化率在0.15<del>0.25区间波动，无明显增长。表明此阶段高投入未带来转化提升，可能存在边际效益递减或流量质量下降。<br>2020年2月–2020年3月：<br>CPC投入断崖式下跌至100</del>300元&#x2F;日。下单转化率不降反升，从0.15升至0.20。疫情导致线下消费受限，转化效率反而提升——用户更理性、更精准点击，转化率自然上升。同时，广告主主动缩减预算，导致CPC投入骤降，形成低投入，高转化的理想组合。<br>2020年4月–2020年6月：<br>CPC投入逐步回升，但未恢复至疫情前水平维持在。下单转化率持续攀升，多次突破0.25，甚至达到0.30。表明复苏期用户活跃度高、转化意愿强，广告投放效率显著提升。<br>2020年7月–2020年9月：<br>CPC投入趋于稳定，波动范围缩小。下单转化率保持高位震荡，偶有峰值。表明运营进入稳态，转化效率已建立新基准。</p>
+<h3 id="3-4-2-相关性分析"><a href="#3-4-2-相关性分析" class="headerlink" title="3.4.2 相关性分析"></a>3.4.2 相关性分析</h3><p>2019年10月–2020年1月：投入与转化基本无正相关，甚至部分时段负相关。这可能与流量泛化、素材疲劳、竞争加剧导致花钱买不到好转化。<br>2020年2月–2020年3月：投入下降但是转化上升，表现出强烈负相关。疫情导致用户行为改变，广告主减少无效投放，留下高质量流量，转化率被动提升。<br>2020年4月–2020年9月：投入小幅上升，转化维持高位——弱正相关或无相关。表明转化效率已建立“新平衡”，投入增加不再显著影响转化率，说明运营策略成熟。<br>两者不存在稳定的线性关系，而是受外部环境、用户行为、投放策略共同驱动的动态关系。</p>
+<h1 id="四、自然流量与CPC流量"><a href="#四、自然流量与CPC流量" class="headerlink" title="四、自然流量与CPC流量"></a>四、自然流量与CPC流量</h1><h2 id="4-1-每日CPC访问量与自然访问量趋势"><a href="#4-1-每日CPC访问量与自然访问量趋势" class="headerlink" title="4.1 每日CPC访问量与自然访问量趋势"></a>4.1 每日CPC访问量与自然访问量趋势</h2><p>聚焦每日CPC访问量与每日自然访问量两个指标的时间序列变化，揭示：<br>1.	广告投放是否有效带动整体流量增长？<br>2.	自然流量是否具备独立增长能力？<br>3.	两者是否存在协同效应或替代效应？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/007.png"
+                      alt="photo"
+                ></p>
+<p>整体趋势为CPC流量主导，自然流量稳步增长<br>2019年10月–2020年1月：<br>CPC访问量稳步上升，最高达2000+人次&#x2F;日。自然访问量在100<del>250区间波动，无明显增长。表明此阶段流量增长主要依赖广告投放，自然流量未形成规模效应。<br>2020年2月–2020年3月：<br>CPC访问量断崖式下跌至100</del>300人次&#x2F;日。自然访问量不降反升，从100升至150+，甚至短暂突破200。疫情导致线下消费受限，用户更依赖线上搜索与推荐，自然流量被动提升；同时广告主缩减预算，CPC流量骤降，形成低CPC+高自然的组合。<br>2020年4月–2020年6月：<br>CPC访问量逐步回升，但未恢复至疫情前水平。自然访问量持续攀升，多次突破200，甚至达到250+。表明复苏期用户活跃度高、搜索意愿强，自然流量增长动力强劲。<br>2020年7月–2020年9月：<br>CPC访问量趋于稳定，波动范围缩小。自然访问量保持高位震荡，偶有峰值。表明运营进入稳态，自然流量已建立新基准，不再完全依赖CPC。</p>
+<h2 id="4-2-CPC曝光量与CPC访问量的关系"><a href="#4-2-CPC曝光量与CPC访问量的关系" class="headerlink" title="4.2 CPC曝光量与CPC访问量的关系"></a>4.2 CPC曝光量与CPC访问量的关系</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/008.png"
+                      alt="photo"
+                ></p>
+<p>整体趋势是强正相关，但存在离散度数据点大致沿一条从原点出发的直线分布，表明曝光量越高，访问量越高，符合广告投放的基本逻辑。<br>虽然整体呈正相关，但点并非严格落在一条直线上，存在一定波动，说明不同广告单元的CTR存在差异。<br>点密度集中在中低曝光区间。<br>在高密度区，曝光量为 1000<del>4000，访问量 100</del>300 区间。此区域点最密集，表明这是最常见的广告单元表现区间。对应CTR ≈ 10% 到 7.5%，属于行业常见范围。<br>稀疏区处于右上角，这些属于大预算单元，访问量高，但CTR不一定更高，如6000曝光却只有400访问——CTR≈6.7%。</p>
+<h2 id="4-3-自然曝光量与自然访问量的关系"><a href="#4-3-自然曝光量与自然访问量的关系" class="headerlink" title="4.3 自然曝光量与自然访问量的关系"></a>4.3 自然曝光量与自然访问量的关系</h2><p>聚焦自然曝光量与自然访问量两个自然流量指标的联合分布，揭示：<br>1.	自然曝光是否有效转化为访问？<br>2.	两者是否存在线性或非线性关系？<br>3.	自然点击率是否稳定？是否存在波动区间？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/009.png"
+                      alt="photo"
+                ></p>
+<p>整体趋势呈现强正相关，但存在离散度。<br>主趋势线明显,数据点大致沿一条从原点出发的直线分布，表明“自然曝光量越高，自然访问量越高”，符合搜索引擎与用户行为的基本逻辑。<br>离散度适中,虽然整体呈正相关，但点并非严格落在一条直线上，存在一定波动，说明不同自然流量入口的点击效率存在差异。</p>
+<p>自然点击率分析：<br>CTR &#x3D; 访问量 &#x2F; 曝光量，是衡量自然流量吸引力的核心指标。我们可通过散点图推断CTR的分布特征：<br>在曝光量&#x3D;2000，访问量&#x3D;200处，CTR &#x3D; 10%<br>在曝光量&#x3D;4000，访问量&#x3D;300处，CTR &#x3D; 7.5%<br>在曝光量&#x3D;7000，访问量&#x3D;730处，CTR &#x3D; 10.4%<br>随着曝光量增加，CTR呈轻微下降趋势（从10%降至7.5%），但在极高曝光量处又回升至10.4%。<br>这可能与大曝光单元可能覆盖更泛化的流量，导致点击效率降低；但“爆款”内容或关键词因用户主动搜索意愿强，CTR反而更高。<br>这说明：<br>1．	并非曝光越多越好，需关注单位曝光带来的访问量。<br>2．	应优先优化高曝光低CTR单元，提升其标题、摘要、排名或内容质量。</p>
+<h2 id="4-4-CPC访问量与自然访问量"><a href="#4-4-CPC访问量与自然访问量" class="headerlink" title="4.4 CPC访问量与自然访问量"></a>4.4 CPC访问量与自然访问量</h2><p>聚焦CPC访问量与自然访问量两个流量指标的联合分布，揭示：<br>1.	付费流量是否带动自然流量增长？<br>2.	两者是否存在正相关、负相关或无相关？<br>3.	是否存在高CPC低自然或低CPC高自然的异常单元？<br>4.	流量结构是否健康？是否存在过度依赖付费流量的风险？</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/010.png"
+                      alt="photo"
+                ></p>
+<p>整体趋势呈现弱相关或无显著线性相关。无明显主趋势线数据点呈云团状分布，表明两者不存在稳定的线性关系。<br>点密度分布集中在低CPC低自然区间。高密度区：CPC访问量 0<del>200，自然访问量 50</del>300 区间，此区域点最密集，表明这是最常见的流量组合。对应中等付费+中等自然单元，流量结构相对健康。<br>数据点无明显线性趋势，表明CPC访问量与自然访问量之间不存在强相关性。</p>
+<h2 id="4-5-自然流量与CPC流量关系分析总结"><a href="#4-5-自然流量与CPC流量关系分析总结" class="headerlink" title="4.5 自然流量与CPC流量关系分析总结"></a>4.5 自然流量与CPC流量关系分析总结</h2><p>付费流量并未显著带动自然流量增长，两者更多是独立运作的渠道。这意味着：<br>1.	品牌效应不足：用户点击广告后未形成品牌记忆，未主动搜索。<br>2.	内容质量一般：落地页或内容未激发用户分享或二次访问。<br>3.	SEO策略薄弱：自然流量主要依赖外部引流，而非广告带动。</p>
+<p>因此不应期望付费流量直接带动自然流量，而应通过内容建设、品牌塑造、SEO优化等手段提升自然流量独立增长能力。应建立流量结构健康度指标，指导预算分配。<br>例如可通过引导用户搜索品牌词、设置品牌专区、优化落地页SEO等方式，将付费流量转化为自然流量。<br>通过再营销广告、关键词拓展等方式，将自然流量用户重新召回，提升LTV。<br>在保证总访问量的前提下，优先分配预算给高自然占比单元，降低对付费流量的依赖。<br>在高CPC低自然单元中，设计A&#x2F;B测试验证不同落地页、引导语、品牌露出的效果，观察是否能提升自然流量。<br>在低CPC高自然单元中，尝试增加付费预算，观察其能否维持高自然流量并带来规模效应。
+ </p>
+<h1 id="五、归因分析"><a href="#五、归因分析" class="headerlink" title="五、归因分析"></a>五、归因分析</h1><p>针对自然访问量和CPC访问量，关注两者对订单数量的贡献比例。从定性分析和定量分析两种角度进行解释。</p>
+<h2 id="5-1-定性分析"><a href="#5-1-定性分析" class="headerlink" title="5.1 定性分析"></a>5.1 定性分析</h2><p>SHAP值是一种基于博弈论的特征贡献分配方法，满足公平性公理，能为每个样本中的每个特征分配一个贡献值。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/11/06/011.png"
+                      alt="photo"
+                ></p>
+<p>自然流量的SHAP值分布形状呈钟形，集中在X轴右侧，且向右延伸较长。负值区多为低值，正值区多为高值。表明自然流量对订单有强烈的正向推动作用，且其影响随访问量增加而增大。当自然流量值较低时，SHAP值接近0或略负，对订单贡献小。当自然流量值较高时，SHAP值显著为正，是订单的主要驱动因素。<br>CPC流量的SHAP值分布形状同样集中在X轴右侧，但分布更扁平，且峰值不如自然流量明显。负值区多为低值，正值区多为高值。CPC流量对订单也有正向推动作用，但其影响幅度小于自然流量，且在高值区的贡献趋于稳定。当CPC流量值较低时，SHAP值接近0说明贡献小。当CPC流量值较高时，SHAP值稳定在20-40之间，说明有一定拉动作用，但边际效应递减。</p>
+<h2 id="5-2-定量分析"><a href="#5-2-定量分析" class="headerlink" title="5.2 定量分析"></a>5.2 定量分析</h2><p>利用最小二乘回归来建立一个回归模型，以预测有效订单作为因变量，基于 自然访问量和CPC访问量。<br>分别将自然访问量和CPC访问量进行中心化并创建交互项再添加截距项。得到:</p>
+<table>
+<thead>
+<tr>
+<th>R2</th>
+<th>F统计量</th>
+<th>P统计量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0.770</td>
+<td>1288</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>模型解释了77%的门店实收变异，说明自然访问量和付费访问量是核心驱动因素。剩余23%可能由客单价波动、促销活动、天气、竞争等未纳入变量解释。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="left">conf</th>
+<th align="left">std err</th>
+<th>t值</th>
+<th>p值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>const</td>
+<td align="left">42.8127</td>
+<td align="left">0.555</td>
+<td>77.190</td>
+<td>0</td>
+</tr>
+<tr>
+<td>自然访问量_c</td>
+<td align="left">0.2053</td>
+<td align="left">0.006</td>
+<td>35.909</td>
+<td>0</td>
+</tr>
+<tr>
+<td>cpc访问量_c</td>
+<td align="left">0.1891</td>
+<td align="left">0.007</td>
+<td>25.319</td>
+<td>0</td>
+</tr>
+<tr>
+<td>自然_CPC_交互</td>
+<td align="left">-0.002</td>
+<td align="left">5.54e-5</td>
+<td>-3.271</td>
+<td>0.001</td>
+</tr>
+</tbody></table>
+<p>上表中模型可写成：<br>有效订单 &#x3D; 0.2053自然访问量_c + 0.1891cpc访问量_c - 0.0002自然_CPC_交互 + 42.8127<br>自然访问量_c：<br>这个系数表示自然访问量每增加1个单位，有效订单数将增加0.2053单位。并且该系数非常显著，t值为35.909，p值接近0，表明自然访问量对有效订单的影响是正向且显著的。</p>
+<p>CPC访问量_c：<br>这个系数表示CPC访问量每增加1个单位，有效订单数将增加0.1891单位。t值为25.319，p值接近0，说明CPC访问量对有效订单的影响也是正向且显著的。<br>自然_CPC_交互:<br>	交互项的系数为负值，表示自然访问量和CPC访问量之间的交互效应对有效订单有负向影响。即当自然访问量和CPC访问量同时增加时，对有效订单的影响会稍微减弱。尽管这个系数非常小，但它依然显著，说明二者之间存在一定的交互效应。
+ </p>
+<h1 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h1><p>本研究通过对广告投放中CPC、GMV、ROI等关键指标的深入分析，揭示了不同广告投放策略下的效益差异，并对优化广告策略提供了理论依据。发现：<br>1.	CPC成本合理性与高花费低转化现象：<br>通过分析CPC总费用与下单转化率之间的关系，发现大部分广告投放策略集中在中低成本区间，且存在一定比例的高转化率广告，表现出高性价比。<br>然而，部分广告策略表现出高投入低转化的情况，特别是在CPC费用过高而转化率未见提升的情境下，反映了高花费低转化的现象。<br>2.	ROI分析与异常值识别：<br>从ROI的周度变化趋势来看，广告投放的效益受季节波动、事件性因素影响显著。部分门店在特定时段出现异常高或低的ROI，特别是受疫情等外部因素的影响，导致ROI出现显著波动。<br>3.	点击率的健康性：<br>整体CTR水平偏低，尤其是在0.05 ~ 0.10区间内形成明显峰值，表明绝大多数广告投放的CTR较低，但这一现象符合电商行业的常见情况。<br>高CTR广告较为稀少，表明精准投放和高质量流量对广告效果有显著提升作用。应特别关注CTR较高的广告策略，优化其他低CTR广告的素材和定向策略。<br>4.	CPC流量与自然流量的关系：<br>自然流量与CPC流量之间未表现出明显的正相关，表明CPC流量并未显著带动自然流量的增长。这可能反映了品牌效应不足、内容质量一般或SEO策略薄弱的问题。<br>自然流量与CPC流量的独立运作性意味着广告主应避免过度依赖CPC流量，而应通过品牌建设、内容优化等措施提升自然流量的独立增长能力。<br>5.	CPC流量质量对下单转化率的影响：<br>通过分析CTR与下单转化率的关系，发现高质量的CPC流量对下单转化率有正向影响。特别是CPC流量质量较高时，转化率显著提升，反之则表现为较低的转化效率。<br>对于流量质量较低的广告，应考虑优化投放策略，提高广告的精准度和内容质量，以提升转化率。</p>
+<p><strong>参考文献</strong><br>[1] 高洁.（2025）. C公司搜索广告投放效果分析及优化策略研究. 广州大学.<br>[2] 王楠.（2025）. W公司在亚马逊美国站的广告投放策略优化研究. 广东工业大学.<br>[3] 尤运琴.（2023）. Y品牌家居互联网广告精准营销策略优化研究. 华东师范大学.<br>[4] 代文强, 初维佳, 钟婧.（2022）. CPC模式下保量合同的在线展示广告投放策略优化. 中国管理科学, 30(10), 168–178.</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p><strong>附录A支撑材料文件列表</strong></p>
+<table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>文件内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>cpc_EDA.ipynb</td>
+<td>数据可视化源代码</td>
+</tr>
+<tr>
+<td>cpc.csv</td>
+<td>数据集</td>
+</tr>
+</tbody></table>
+<p><strong>附录B程序代码(部分)</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import matplotlib.dates as mdates</span><br><span class="line"></span><br><span class="line">df_time = df.groupby(<span class="string">&#x27;日期&#x27;</span>).agg(&#123;<span class="string">&#x27;cpc总费用&#x27;</span>:<span class="string">&#x27;sum&#x27;</span>,<span class="string">&#x27;下单转换率&#x27;</span>:<span class="string">&#x27;mean&#x27;</span>,<span class="string">&#x27;gmvroi&#x27;</span>:<span class="string">&#x27;mean&#x27;</span>&#125;).reset_index()</span><br><span class="line">fig, ax1 = plt.subplots(figsize=(12,6))</span><br><span class="line">ax2 = ax1.twinx()</span><br><span class="line"></span><br><span class="line">ax1.plot(df_time[<span class="string">&#x27;日期&#x27;</span>], df_time[<span class="string">&#x27;cpc总费用&#x27;</span>], color=<span class="string">&#x27;orange&#x27;</span>, label=<span class="string">&#x27;CPC总费用&#x27;</span>)</span><br><span class="line">ax2.plot(df_time[<span class="string">&#x27;日期&#x27;</span>], df_time[<span class="string">&#x27;下单转换率&#x27;</span>], color=<span class="string">&#x27;blue&#x27;</span>, label=<span class="string">&#x27;下单转化率&#x27;</span>)</span><br><span class="line"></span><br><span class="line">ax1.set_xlabel(<span class="string">&#x27;日期&#x27;</span>)</span><br><span class="line">ax1.set_ylabel(<span class="string">&#x27;CPC总费用&#x27;</span>, color=<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">ax2.set_ylabel(<span class="string">&#x27;下单转化率&#x27;</span>, color=<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line">ax1.tick_params(axis=<span class="string">&#x27;y&#x27;</span>, labelcolor=<span class="string">&#x27;orange&#x27;</span>)</span><br><span class="line">ax2.tick_params(axis=<span class="string">&#x27;y&#x27;</span>, labelcolor=<span class="string">&#x27;blue&#x27;</span>)</span><br><span class="line"></span><br><span class="line">ax1.xaxis.set_major_locator(mdates.WeekdayLocator(interval=4))  <span class="comment"># 每月显示一次</span></span><br><span class="line">ax1.xaxis.set_major_formatter(mdates.DateFormatter(<span class="string">&#x27;%Y-%m-%d&#x27;</span>))</span><br><span class="line">plt.xticks(rotation=45)</span><br><span class="line"></span><br><span class="line">plt.title(<span class="string">&#x27;每日CPC投入与下单转化率趋势&#x27;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line">import pandas as pd</span><br><span class="line">import statsmodels.api as sm</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">X = <span class="built_in">df</span>[[<span class="string">&#x27;自然访问量&#x27;</span>, <span class="string">&#x27;cpc访问量&#x27;</span>]].copy()</span><br><span class="line"></span><br><span class="line">X[<span class="string">&#x27;自然访问量_c&#x27;</span>] = X[<span class="string">&#x27;自然访问量&#x27;</span>] - X[<span class="string">&#x27;自然访问量&#x27;</span>].mean()</span><br><span class="line">X[<span class="string">&#x27;cpc访问量_c&#x27;</span>] = X[<span class="string">&#x27;cpc访问量&#x27;</span>] - X[<span class="string">&#x27;cpc访问量&#x27;</span>].mean()</span><br><span class="line"></span><br><span class="line">X[<span class="string">&#x27;自然_CPC_交互&#x27;</span>] = X[<span class="string">&#x27;自然访问量_c&#x27;</span>] * X[<span class="string">&#x27;cpc访问量_c&#x27;</span>]</span><br><span class="line"></span><br><span class="line">X_reg = X[[<span class="string">&#x27;自然访问量_c&#x27;</span>, <span class="string">&#x27;cpc访问量_c&#x27;</span>, <span class="string">&#x27;自然_CPC_交互&#x27;</span>]]</span><br><span class="line">X_reg = sm.add_constant(X_reg)</span><br><span class="line"></span><br><span class="line">y_order = <span class="built_in">df</span>[<span class="string">&#x27;有效订单&#x27;</span>]</span><br><span class="line"></span><br><span class="line">model_order = sm.OLS(y_order, X_reg).fit()</span><br><span class="line"><span class="built_in">print</span>(model_order.summary())</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数学</tag>
+        <tag>数据分析</tag>
+      </tags>
+  </entry>
 </search>
