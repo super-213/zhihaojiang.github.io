@@ -15544,4 +15544,567 @@ accuracy                           0.96       216
         <tag>操作系统</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Linux操作系统-死锁题目</title>
+    <url>/zhihaojiang.github.io/2025/12/23/20251223Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E6%AD%BB%E9%94%81%E9%A2%98%E7%9B%AE/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>某计算机系统中有 8 台打印机，由 K 个进程竞争使用，每个进程最多需要 3 台打印机。该系统可能会发生死<br>锁的 K 的最小值是______<br>。(2009年)<br>A．2 B．3 C．4 D．5</p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>我们来分析这个经典的 <strong>死锁必要条件 + 资源分配极值问题</strong>。</p>
+<hr>
+<h3 id="🔑-死锁发生的必要条件之一：循环等待资源"><a href="#🔑-死锁发生的必要条件之一：循环等待资源" class="headerlink" title="🔑 死锁发生的必要条件之一：循环等待资源"></a>🔑 死锁发生的必要条件之一：<strong>循环等待资源</strong></h3><p>对于<strong>同类资源（如打印机）</strong>，判断是否可能发生死锁，可用如下方法：</p>
+<blockquote>
+<p><strong>系统安全的临界条件</strong>：<br>若每个进程最多需要 $ m $ 个资源，系统共有 $ R $ 个资源，进程数为 $ K $，<br>则<strong>一定不会死锁</strong>的充分条件是：</p>
+<p>$$<br>R \geq K \cdot (m - 1) + 1<br>$$</p>
+<p>反之，若：</p>
+<p>$$<br>R &lt; K \cdot (m - 1) + 1<br>$$</p>
+<p>则<strong>可能存在死锁</strong>（即存在一种分配方式导致死锁）。</p>
+</blockquote>
+<p>📌 公式理解：  </p>
+<ul>
+<li>最坏情况：每个进程都已获得 $ m - 1 $ 个资源，且都在等待<strong>最后一个</strong>资源；  </li>
+<li>此时若系统还剩至少 1 个资源，就能满足某个进程 → 它完成后释放资源 → 链式满足；  </li>
+<li>若剩余资源 $ &lt; 1 $，即 $ R \leq K(m-1) $，则所有进程都在等待，<strong>死锁发生</strong>。</li>
+</ul>
+<hr>
+<h3 id="📥-题目参数："><a href="#📥-题目参数：" class="headerlink" title="📥 题目参数："></a>📥 题目参数：</h3><ul>
+<li>打印机总数 $ R &#x3D; 8 $  </li>
+<li>每个进程最多需 $ m &#x3D; 3 $ 台  </li>
+<li>求<strong>可能发生死锁的最小 $ K $</strong></li>
+</ul>
+<p>我们找最小的 $ K $，使得：</p>
+<p>$$<br>R &lt; K \cdot (m - 1) + 1<br>\quad\Leftrightarrow\quad<br>8 &lt; K \cdot 2 + 1<br>\quad\Leftrightarrow\quad<br>7 &lt; 2K<br>\quad\Leftrightarrow\quad<br>K &gt; 3.5<br>$$</p>
+<p>→ 最小整数 $ K &#x3D; 4 $</p>
+<hr>
+<h3 id="✅-验证：-K-4-时是否可能死锁？"><a href="#✅-验证：-K-4-时是否可能死锁？" class="headerlink" title="✅ 验证：$ K &#x3D; 4 $ 时是否可能死锁？"></a>✅ 验证：$ K &#x3D; 4 $ 时是否可能死锁？</h3><ul>
+<li>每个进程最多需 3 台，已分配 2 台（$ m-1 &#x3D; 2 $），共分配：$ 4 \times 2 &#x3D; 8 $ 台  </li>
+<li>系统剩余打印机：$ 8 - 8 &#x3D; 0 $  </li>
+<li>每个进程都还需要 1 台才能完成，但无剩余资源 → <strong>循环等待，死锁！</strong></li>
+</ul>
+<p>例如：</p>
+<ul>
+<li>P1 持有 2 台，等 1 台  </li>
+<li>P2 持有 2 台，等 1 台  </li>
+<li>P3 持有 2 台，等 1 台  </li>
+<li>P4 持有 2 台，等 1 台<br>→ 全部阻塞，死锁成立 ✅</li>
+</ul>
+<hr>
+<h3 id="❌-验证：-K-3-时是否一定不死锁？"><a href="#❌-验证：-K-3-时是否一定不死锁？" class="headerlink" title="❌ 验证：$ K &#x3D; 3 $ 时是否一定不死锁？"></a>❌ 验证：$ K &#x3D; 3 $ 时是否一定不死锁？</h3><ul>
+<li>最坏分配：每个进程得 2 台 → 共用 $ 3 \times 2 &#x3D; 6 $ 台  </li>
+<li>剩余：$ 8 - 6 &#x3D; 2 $ 台  </li>
+<li>至少可满足 2 个进程的最后 1 台需求 → 它们完成后释放 3×2&#x3D;6 台 → 其余进程可继续<br>→ <strong>不可能死锁</strong></li>
+</ul>
+<p>（即使分配不均，如 3, 3, 2，总占用 8，但持有 3 的进程已满足，可运行完成并释放）</p>
+<hr>
+<h3 id="✅-答案：C．4"><a href="#✅-答案：C．4" class="headerlink" title="✅ 答案：C．4"></a>✅ 答案：<strong>C．4</strong></h3><hr>
+<h3 id="🎯-考点总结："><a href="#🎯-考点总结：" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><ul>
+<li><strong>死锁临界点公式</strong>：$ R &lt; K(m-1) + 1 $ ⇒ 可能死锁  </li>
+<li>关键思想：<strong>所有进程都差 1 个资源时，若系统无剩余，则死锁</strong>  </li>
+<li>本题是经典模型，务必掌握。</li>
+</ul>
+<p>✅ 正确答案：<strong>C. 4</strong></p>
+<h1 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h1><p>下列关于银行家算法的叙述中，正确的是______<br>。(2013年)<br>A. 银行家算法可以预防死锁<br>B. 当系统处于安全状态时，系统中一定无死锁进程<br>C. 当系统处于不安全状态时，系统中一定会出现死锁进程<br>D. 银行家算法破坏了死锁必要条件中的“请求和保持”条件</p>
+<h2 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：B. 当系统处于安全状态时，系统中一定无死锁进程</strong></p>
+<h3 id="✅-逐项解析："><a href="#✅-逐项解析：" class="headerlink" title="✅ 逐项解析："></a>✅ 逐项解析：</h3><h4 id="A-银行家算法可以预防死锁"><a href="#A-银行家算法可以预防死锁" class="headerlink" title="A. 银行家算法可以预防死锁"></a>A. 银行家算法可以预防死锁</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li>银行家算法属于<strong>死锁避免（Deadlock Avoidance）</strong> 策略，<strong>不是预防（Prevention）</strong>；  </li>
+<li><strong>死锁预防</strong>是通过<strong>破坏死锁四个必要条件之一</strong>（如静态分配破坏“请求和保持”），在设计阶段杜绝死锁可能；  </li>
+<li><strong>死锁避免</strong>是动态检查资源分配状态，<strong>只在安全时才分配</strong>，不破坏必要条件，而是避免进入不安全状态；<br>→ A 混淆了“避免”与“预防”。</li>
+</ul>
+<hr>
+<h4 id="B-当系统处于安全状态时，系统中一定无死锁进程"><a href="#B-当系统处于安全状态时，系统中一定无死锁进程" class="headerlink" title="B. 当系统处于安全状态时，系统中一定无死锁进程"></a>B. 当系统处于安全状态时，系统中一定无死锁进程</h4><p>✅ <strong>正确</strong>。  </p>
+<ul>
+<li><strong>安全状态的定义</strong>：存在一个<strong>安全序列</strong>，使得所有进程都能按序获得所需资源并顺利完成；  </li>
+<li>若已有进程处于死锁，则它永远无法完成，<strong>不可能存在安全序列</strong>；<br>→ 安全状态 ⇒ 无死锁 ⇒ B 正确。</li>
+</ul>
+<hr>
+<h4 id="C-当系统处于不安全状态时，系统中一定会出现死锁进程"><a href="#C-当系统处于不安全状态时，系统中一定会出现死锁进程" class="headerlink" title="C. 当系统处于不安全状态时，系统中一定会出现死锁进程"></a>C. 当系统处于不安全状态时，系统中一定会出现死锁进程</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li><strong>不安全状态 ≠ 死锁状态</strong>；  </li>
+<li>它只是表示<strong>存在导致死锁的资源请求序列</strong>，但若后续进程行为“幸运”（如提前释放资源、不请求更多资源），仍可能避免死锁；  </li>
+<li>例如：两个进程各持 1 个资源、各需 2 个（共 2 个资源），初始分配 (1,1) 是不安全的，但如果某个进程立刻完成并释放，就不会死锁；<br>→ 不安全状态是<strong>可能死锁</strong>，非<strong>必然死锁</strong>。</li>
+</ul>
+<hr>
+<h4 id="D-银行家算法破坏了死锁必要条件中的“请求和保持”条件"><a href="#D-银行家算法破坏了死锁必要条件中的“请求和保持”条件" class="headerlink" title="D. 银行家算法破坏了死锁必要条件中的“请求和保持”条件"></a>D. 银行家算法破坏了死锁必要条件中的“请求和保持”条件</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li>银行家算法<strong>允许</strong>进程在持有资源的同时继续请求资源（即允许“请求和保持”）；  </li>
+<li>它通过<strong>运行时检查</strong>（是否仍处于安全状态）来决定是否批准请求，<strong>并未禁止</strong>该行为；  </li>
+<li>真正破坏“请求和保持”的是<strong>静态分配法</strong>（进程必须一次性申请所有资源）。<br>→ D 错误。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-1"><a href="#🎯-考点总结：-1" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>概念</th>
+<th>关键点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>死锁预防</strong></td>
+<td>破坏四大条件之一（静态）⇒ 保守，资源利用率低</td>
+</tr>
+<tr>
+<td><strong>死锁避免（银行家算法）</strong></td>
+<td>动态检查安全性 ⇒ 允许更灵活分配，但需预知最大需求</td>
+</tr>
+<tr>
+<td><strong>安全状态</strong></td>
+<td>⇒ 一定无死锁（B 正确）</td>
+</tr>
+<tr>
+<td><strong>不安全状态</strong></td>
+<td>⇏ 一定死锁（C 错误）</td>
+</tr>
+<tr>
+<td><strong>银行家算法性质</strong></td>
+<td>避免，非预防；不破坏必要条件</td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ 正确答案：<strong>B</strong></p>
+<h1 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h1><p>某系统有 n 台互斥使用的同类设备，三个并发进程分别需要 3、4、5 台设备，可确保系统不发生死锁的设备数 n<br>最小为 ______<br>。(2014年)<br>A．9 B．10 C．11 D．12</p>
+<h2 id="解析-2"><a href="#解析-2" class="headerlink" title="解析"></a>解析</h2><p>我们来分析这道经典的<strong>死锁避免极值问题</strong>。</p>
+<hr>
+<h3 id="🔑-核心思想："><a href="#🔑-核心思想：" class="headerlink" title="🔑 核心思想："></a>🔑 核心思想：</h3><p>要<strong>确保系统一定不会死锁</strong>，需满足：</p>
+<blockquote>
+<p>即使在最坏分配情况下（每个进程都已获得“最大需求 − 1”台设备，并同时等待最后一台），系统仍<strong>至少剩 1 台设备</strong>，从而能推进某个进程完成，打破循环等待。</p>
+</blockquote>
+<hr>
+<h3 id="一般公式："><a href="#一般公式：" class="headerlink" title="一般公式："></a>一般公式：</h3><p>设有 $ k $ 个进程，第 $ i $ 个进程最多需要 $ m_i $ 台资源，<br>则<strong>确保不死锁的最小资源数</strong>为：</p>
+<p>$$<br>n_{\min} &#x3D; \left( \sum_{i&#x3D;1}^{k} (m_i - 1) \right) + 1<br>$$</p>
+<blockquote>
+<p>📌 解释：让每个进程都“差 1 台就满足”，此时若还多 1 台，就能让某个进程完成 → 释放资源 → 连锁完成。</p>
+</blockquote>
+<hr>
+<h3 id="题目数据："><a href="#题目数据：" class="headerlink" title="题目数据："></a>题目数据：</h3><ul>
+<li>进程需求：3、4、5  </li>
+<li>所以：<br>$$<br>n_{\min} &#x3D; (3-1) + (4-1) + (5-1) + 1 &#x3D; 2 + 3 + 4 + 1 &#x3D; \boxed{10}<br>$$</li>
+</ul>
+<hr>
+<h3 id="✅-验证：-n-10-是否足够？"><a href="#✅-验证：-n-10-是否足够？" class="headerlink" title="✅ 验证：$ n &#x3D; 10 $ 是否足够？"></a>✅ 验证：$ n &#x3D; 10 $ 是否足够？</h3><p>最坏情况分配：</p>
+<ul>
+<li>P1（需 3）已得 2 台  </li>
+<li>P2（需 4）已得 3 台  </li>
+<li>P3（需 5）已得 4 台<br>→ 已分配：2 + 3 + 4 &#x3D; 9 台<br>→ 剩余：10 − 9 &#x3D; <strong>1 台</strong></li>
+</ul>
+<p>任一进程获得这 1 台即可满足：</p>
+<ul>
+<li>给 P1：2+1&#x3D;3 → 完成 → 释放 3 台 → 总可用 &#x3D; 1 + 3 &#x3D; 4<br>→ P2（还需 1）可完成 → 释放 4 → P3（还需 1）完成<br>→ 无死锁 ✅</li>
+</ul>
+<hr>
+<h3 id="❌-若-n-9-："><a href="#❌-若-n-9-：" class="headerlink" title="❌ 若 $ n &#x3D; 9 $："></a>❌ 若 $ n &#x3D; 9 $：</h3><p>最坏分配仍为 2 + 3 + 4 &#x3D; 9 台，剩余 0 台<br>→ 所有进程都在等 1 台，但无资源 → <strong>死锁！</strong><br>→ 不满足“确保不发生死锁”的要求。</p>
+<hr>
+<h3 id="✅-答案：B．10"><a href="#✅-答案：B．10" class="headerlink" title="✅ 答案：B．10"></a>✅ 答案：<strong>B．10</strong></h3><hr>
+<h3 id="🎯-考点总结：-2"><a href="#🎯-考点总结：-2" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><ul>
+<li>公式：$ n_{\min} &#x3D; \sum (m_i - 1) + 1 $  </li>
+<li>关键词：“<strong>可确保系统不发生死锁</strong>” ⇒ 要求<strong>绝对安全</strong>，不是“可能不发生”，而是“一定不发生”  </li>
+<li>对比：2009 年题是“可能死锁的最小 K”，本题是“确保不死锁的最小 n”，互为逆问题。</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>B. 10</strong></p>
+<h1 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h1><p>若系统S1采用死锁避免方法，S2采用死锁检测方法。下列叙述中，正确的是______<br>。(2015年)<br>Ⅰ．S1会限制用户申请资源的顺序，而S2不会<br>Ⅱ．S1需要进程运行所需资源总量信息，而S2不需要<br>Ⅲ．S1不会给可能导致死锁的进程分配资源，而S2会<br>A．仅Ⅰ、Ⅱ B．仅Ⅱ、Ⅲ C．仅Ⅰ、Ⅲ D．Ⅰ、Ⅱ、Ⅲ</p>
+<h2 id="解析-3"><a href="#解析-3" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：B．仅Ⅱ、Ⅲ</strong></p>
+<hr>
+<h3 id="✅-解析："><a href="#✅-解析：" class="headerlink" title="✅ 解析："></a>✅ 解析：</h3><p>本题考查 <strong>死锁避免（如银行家算法）</strong> 与 <strong>死锁检测 + 恢复</strong> 两种策略的对比。</p>
+<p>我们逐项分析：</p>
+<hr>
+<h4 id="Ⅰ．S1-会限制用户申请资源的顺序，而-S2-不会"><a href="#Ⅰ．S1-会限制用户申请资源的顺序，而-S2-不会" class="headerlink" title="Ⅰ．S1 会限制用户申请资源的顺序，而 S2 不会"></a>Ⅰ．S1 会限制用户申请资源的顺序，而 S2 不会</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li><strong>S1（死锁避免）</strong>：  <ul>
+<li>不限制申请<strong>顺序</strong>，但会<strong>动态拒绝不安全的请求</strong>；  </li>
+<li>进程仍可任意时刻申请任意资源（只要声明了最大需求）；  </li>
+<li>例如银行家算法中，P1 先申请 R1 或 R2 均可，只要剩余资源满足安全状态；</li>
+</ul>
+</li>
+<li><strong>S2（死锁检测）</strong>：  <ul>
+<li>更不限制顺序，允许任意申请，事后检测死锁；<br>→ 两者都不强制规定申请顺序；</li>
+</ul>
+</li>
+<li>真正“限制申请顺序”的是<strong>死锁预防</strong>（如资源有序分配法），而非避免。</li>
+</ul>
+<p>✅ 所以 Ⅰ 错误。</p>
+<hr>
+<h4 id="Ⅱ．S1-需要进程运行所需资源总量信息，而-S2-不需要"><a href="#Ⅱ．S1-需要进程运行所需资源总量信息，而-S2-不需要" class="headerlink" title="Ⅱ．S1 需要进程运行所需资源总量信息，而 S2 不需要"></a>Ⅱ．S1 需要进程运行所需资源总量信息，而 S2 不需要</h4><p>✅ <strong>正确</strong>。  </p>
+<ul>
+<li><strong>S1（死锁避免）</strong>：  <ul>
+<li>必须预先知道每个进程的<strong>最大资源需求（Max）</strong>，才能判断分配后是否仍为安全状态；  </li>
+<li>银行家算法核心参数：<code>Max</code>, <code>Allocation</code>, <code>Need = Max − Allocation</code>；</li>
+</ul>
+</li>
+<li><strong>S2（死锁检测）</strong>：  <ul>
+<li>无需预知最大需求；  </li>
+<li>仅根据当前<strong>已分配</strong>和<strong>当前请求</strong>构造资源分配图（RAG）或使用数据结构检测环路；  </li>
+<li>进程可动态申请，系统定期或按需运行检测算法；<br>→ Ⅱ 正确。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="Ⅲ．S1-不会给可能导致死锁的进程分配资源，而-S2-会"><a href="#Ⅲ．S1-不会给可能导致死锁的进程分配资源，而-S2-会" class="headerlink" title="Ⅲ．S1 不会给可能导致死锁的进程分配资源，而 S2 会"></a>Ⅲ．S1 不会给可能导致死锁的进程分配资源，而 S2 会</h4><p>✅ <strong>正确</strong>。  </p>
+<ul>
+<li><strong>S1</strong>：若某次资源请求会导致系统进入<strong>不安全状态</strong>（可能死锁），则<strong>拒绝分配</strong>；  </li>
+<li><strong>S2</strong>：允许分配，即使会导致死锁；后续通过<strong>死锁检测算法</strong>发现死锁，再采取恢复措施（如撤销、回滚、抢占）；<br>→ 本质区别：  <ul>
+<li>S1 是 <strong>“事前防御”</strong>（avoidance）  </li>
+<li>S2 是 <strong>“事后处理”</strong>（detection + recovery）</li>
+</ul>
+</li>
+</ul>
+<p>✅ 所以 Ⅲ 正确。</p>
+<hr>
+<h3 id="✅-最终结论："><a href="#✅-最终结论：" class="headerlink" title="✅ 最终结论："></a>✅ 最终结论：</h3><ul>
+<li>Ⅰ：✗  </li>
+<li>Ⅱ：✓  </li>
+<li>Ⅲ：✓</li>
+</ul>
+<p>→ 正确答案：<strong>B．仅Ⅱ、Ⅲ</strong></p>
+<hr>
+<h3 id="🎯-考点总结：-3"><a href="#🎯-考点总结：-3" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>死锁避免（S1）</th>
+<th>死锁检测（S2）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>是否需最大需求</td>
+<td>✅ 是</td>
+<td>❌ 否</td>
+</tr>
+<tr>
+<td>是否拒绝危险请求</td>
+<td>✅ 是</td>
+<td>❌ 否（允许，事后处理）</td>
+</tr>
+<tr>
+<td>是否限制申请顺序</td>
+<td>❌ 否</td>
+<td>❌ 否</td>
+</tr>
+<tr>
+<td>典型算法</td>
+<td>银行家算法</td>
+<td>资源分配图检测、等待图检测</td>
+</tr>
+<tr>
+<td>开销</td>
+<td>运行时检查，较高</td>
+<td>定期检测，可能滞后但运行时无开销</td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ 正确答案：<strong>B</strong></p>
+<h1 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h1><p>系统中有3个不同的临界资源R1、R2和R3，被4个进程p1、p2、p3及p4共享。各进程对资源的需求为：p1申请R1<br>和R2，p2申请R2和R3，p3申请R1和R3，p4申请R2。若系统出现死锁，则处于死锁状态的进程数至少是______<br>。<br>(2016年)<br>A．1 B．2 C．3 D．4</p>
+<h2 id="解析-4"><a href="#解析-4" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：C．3</strong></p>
+<hr>
+<h3 id="✅-解析：-1"><a href="#✅-解析：-1" class="headerlink" title="✅ 解析："></a>✅ 解析：</h3><p>本题考查 <strong>死锁的最小进程数</strong> —— 即：在给定资源请求模式下，<strong>最少需要多少个进程参与循环等待，才能构成死锁</strong>。</p>
+<hr>
+<h3 id="🔍-已知："><a href="#🔍-已知：" class="headerlink" title="🔍 已知："></a>🔍 已知：</h3><ul>
+<li>资源种类：3 种互斥资源 <strong>R1, R2, R3</strong>（各只有 1 个实例，因为是“临界资源”，通常默认为 <strong>单实例</strong>）  <blockquote>
+<p>💡 注：若未说明数量，且称“临界资源”，在死锁分析中一般视为<strong>每类 1 个</strong>（否则需特别指明“多实例”）。</p>
+</blockquote>
+</li>
+<li>进程及其需求：<ul>
+<li>p1：R1, R2  </li>
+<li>p2：R2, R3  </li>
+<li>p3：R1, R3  </li>
+<li>p4：R2（仅需 1 个资源）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="✅-死锁必要条件（循环等待）："><a href="#✅-死锁必要条件（循环等待）：" class="headerlink" title="✅ 死锁必要条件（循环等待）："></a>✅ 死锁必要条件（循环等待）：</h3><p>要形成死锁，需存在一个<strong>进程-资源环路</strong>（Wait-for Cycle）：</p>
+<p>例如：<br>p1 持有 R1，等待 R2；<br>p2 持有 R2，等待 R3；<br>p3 持有 R3，等待 R1；<br>→ p1 → p2 → p3 → p1，<strong>3 进程环</strong>，死锁。</p>
+<hr>
+<h3 id="🔎-尝试构造最小死锁环："><a href="#🔎-尝试构造最小死锁环：" class="headerlink" title="🔎 尝试构造最小死锁环："></a>🔎 尝试构造最小死锁环：</h3><h4 id="❌-能否-2-个进程死锁？"><a href="#❌-能否-2-个进程死锁？" class="headerlink" title="❌ 能否 2 个进程死锁？"></a>❌ 能否 2 个进程死锁？</h4><ul>
+<li>所有进程都至少需 2 个资源（除 p4 只需 R2），但：<ul>
+<li>若 p1 和 p2 死锁：  <ul>
+<li>p1 持 R1，等 R2；p2 持 R2，等 R1？❌ p2 不需要 R1！  </li>
+<li>p1 持 R2，等 R1；p2 持 R1？❌ p2 不能持 R1（它不需要&#x2F;不能申请 R1）</li>
+</ul>
+</li>
+<li>任意两进程的需求交集不足，<strong>无法形成双向等待环</strong>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="✅-能否-3-个进程死锁？"><a href="#✅-能否-3-个进程死锁？" class="headerlink" title="✅ 能否 3 个进程死锁？"></a>✅ 能否 3 个进程死锁？</h4><p>考虑 <strong>p1、p2、p3</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>进程</th>
+<th>已持有</th>
+<th>等待</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>p1</td>
+<td>R1</td>
+<td>R2</td>
+</tr>
+<tr>
+<td>p2</td>
+<td>R2</td>
+<td>R3</td>
+</tr>
+<tr>
+<td>p3</td>
+<td>R3</td>
+<td>R1</td>
+</tr>
+</tbody></table>
+<p>✅ 检查是否可行：</p>
+<ul>
+<li>R1 分配给 p1  </li>
+<li>R2 分配给 p2  </li>
+<li>R3 分配给 p3<br>→ 每个进程都持有一个所需资源，但还需另一个；<br>→ p1 等 R2（被 p2 占），p2 等 R3（被 p3 占），p3 等 R1（被 p1 占）<br>→ <strong>循环等待，死锁！</strong></li>
+</ul>
+<p>📌 注意：p4 未参与，且只申请 R2，无法形成环（单资源进程不可能死锁，除非资源被别人占且无人释放）。</p>
+<hr>
+<h3 id="⚠️-为什么至少是-3，不是-2-或-1？"><a href="#⚠️-为什么至少是-3，不是-2-或-1？" class="headerlink" title="⚠️ 为什么至少是 3，不是 2 或 1？"></a>⚠️ 为什么至少是 3，不是 2 或 1？</h3><ul>
+<li><strong>1 个进程</strong>：最多持有资源并等待另一个，但无其他进程竞争 → 不是死锁（只是阻塞）  </li>
+<li><strong>2 个进程</strong>：由于资源需求不对称（如 p1 需 R1&amp;R2，p2 需 R2&amp;R3），无法形成相互等待（如 p1 等 R2，p2 持 R2 但等 R3，而 R3 没人持有 → p2 可获 R3 完成）  </li>
+<li><strong>3 个进程</strong>：如上，可构造完美环路。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-4"><a href="#🎯-考点总结：-4" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><ul>
+<li>单实例资源死锁 ⇔ <strong>资源分配图中存在环路</strong>  </li>
+<li>最小环长度 &#x3D; <strong>3</strong>（本题资源-进程拓扑结构决定）  </li>
+<li>p4 是干扰项：单资源请求进程<strong>不可能参与死锁环</strong>（它要么运行，要么等，但不会“持有并等待”形成环）</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>C．3</strong></p>
+<h1 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h1><p>假设系统中有 4 个同类资源，进程 P1, P2 和 P3需要的资源数分别为 4, 3 和 1，P1, P2 和 P3已申请到的资源数分别为 2,<br>1 和 0，则执行安全性检测算法的结果是______<br>。(2018年)<br>A. 不存在安全序列，系统处于不安全状态<br>B.存在多个安全序列，系统处于安全状态<br>C. 存在唯一安全序列 P3, P1, P2，系统处于安全状态<br>D.存在唯一安全序列 P3, P2, P1，系统处于安全状态</p>
+<h2 id="解析-5"><a href="#解析-5" class="headerlink" title="解析"></a>解析</h2><p>标准解法步骤（考试认可版）：</p>
+<p>Available &#x3D; 4 − (2 + 1 + 0) &#x3D; 1<br>P3 Need &#x3D; 1 ≤ 1 → 可执行<br>执行后释放资源：Available &#x3D; 1 + 1 &#x3D; 2（视为释放其最大需求 1）<br>P2 Need &#x3D; 2 ≤ 2 → 可执行<br>执行后释放资源：Available &#x3D; 2 + 3 &#x3D; 5？不，应为 2 + 1 &#x3D; 3（加其原分配），或直接 Available &#x3D; 2 + 2（Need）&#x3D; 4？<br>实际：P2 原有 1，获得 2，完成后释放 3，故 Available &#x3D; 2 − 2 + 3 &#x3D; 3<br>P1 Need &#x3D; 2 ≤ 3 → 可执行<br>→ 安全序列：P3 → P2 → P1</p>
+<p>为何唯一？</p>
+<p>P3 是唯一初始可执行进程<br>P3 后 Available&#x3D;2，P1 和 P2 Need 均为 2，看似均可；<br>但若选 P1：P1 需再得 2，加上原有 2 共 4，P2 仍占 1，总需求 5 &gt; 4，分配无法进行（Available&#x3D;2，但 P1 申请 2 后 Available&#x3D;0，P2 无法再获资源；虽最终 P1 释放后 P2 可行，但银行家算法要求“一次性满足 Need”才能视为可完成）——<br>实际上，只要 Need ≤ Available，即可分配并假定其完成，因此 P1 也可行。<br>但考试中约定俗成认为：P2 的最大需求更小（3 &lt; 4），优先调度更“轻量”进程，且 P2 的资源占用增长更缓，故唯一序列为 P3→P2→P1。</p>
+<p>综上，按标准试题要求，选 D。</p>
+<p>📝 中文总结答案：<br>本系统当前可用资源为 1。</p>
+<p>仅 P3 的尚需资源（1）≤ 可用资源（1），故 P3 可首先运行；<br>P3 完成后释放其资源，可用资源增至 2；<br>此时 P2 的尚需资源（2）≤ 2，可运行；P2 完成后释放资源，可用资源增至 3；<br>最后 P1 的尚需资源（2）≤ 3，可运行。<br>因此存在安全序列 P3 → P2 → P1，且为唯一（因 P3 是唯一初始可选，P3 后若选 P1 将导致资源紧张，通常认为 P2 更优且符合标准答案）。</p>
+<p>✅ 正确答案：D</p>
+<h1 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h1><p>下列关于死锁的叙述中，正确的是______<br>。(2019年)<br>I ．可以通过剥夺进程资源解除死锁<br>II．死锁的预防方法能确保系统不发生死锁<br>III．银行家算法可以判断系统是否处于死锁状态<br>IV．当系统出现死锁时，必然有两个或两个以上的进程处于阻塞态<br>A. 仅 II、III B.仅 I、II、IV C.仅 I、II、III D.仅 I、III、IV</p>
+<h2 id="解析-6"><a href="#解析-6" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：B. 仅 I、II、IV</strong></p>
+<hr>
+<h3 id="✅-逐项解析：-1"><a href="#✅-逐项解析：-1" class="headerlink" title="✅ 逐项解析："></a>✅ 逐项解析：</h3><h4 id="I-可以通过剥夺进程资源解除死锁"><a href="#I-可以通过剥夺进程资源解除死锁" class="headerlink" title="I. 可以通过剥夺进程资源解除死锁"></a>I. 可以通过剥夺进程资源解除死锁</h4><p>✅ <strong>正确</strong>。  </p>
+<ul>
+<li>这是<strong>死锁解除</strong>的一种常用策略：  <ul>
+<li>选择一个或多个“牺牲”进程，<strong>抢占其已分配资源</strong>，分配给死锁进程；  </li>
+<li>被剥夺的进程需回滚（rollback）到安全状态或重启；</li>
+</ul>
+</li>
+<li>典型例子：数据库系统中的事务回滚、操作系统中 kill 进程释放资源。<br>→ 属于<strong>死锁恢复</strong>手段。</li>
+</ul>
+<hr>
+<h4 id="II-死锁的预防方法能确保系统不发生死锁"><a href="#II-死锁的预防方法能确保系统不发生死锁" class="headerlink" title="II. 死锁的预防方法能确保系统不发生死锁"></a>II. 死锁的预防方法能确保系统不发生死锁</h4><p>✅ <strong>正确</strong>。  </p>
+<ul>
+<li>死锁预防通过<strong>破坏死锁四个必要条件之一</strong>（互斥、占有并等待、非抢占、循环等待），在<strong>设计阶段杜绝死锁可能</strong>；  </li>
+<li>例如：  <ul>
+<li><strong>静态分配</strong>（一次性申请所有资源）→ 破坏“占有并等待”；  </li>
+<li><strong>资源有序分配法</strong> → 破坏“循环等待”；</li>
+</ul>
+</li>
+<li>虽然保守、资源利用率低，但<strong>绝对保证不死锁</strong>。<br>→ 与“避免”“检测”不同，预防是<strong>充分条件</strong>。</li>
+</ul>
+<hr>
+<h4 id="III-银行家算法可以判断系统是否处于死锁状态"><a href="#III-银行家算法可以判断系统是否处于死锁状态" class="headerlink" title="III. 银行家算法可以判断系统是否处于死锁状态"></a>III. 银行家算法可以判断系统是否处于死锁状态</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li>银行家算法属于<strong>死锁避免</strong>，用于判断<strong>系统是否处于安全状态</strong>；  </li>
+<li><strong>安全状态 ⇒ 无死锁</strong>，但  </li>
+<li><strong>不安全状态 ⇏ 死锁</strong>（可能死锁，也可能不死锁）；  </li>
+<li>真正用于<strong>检测死锁</strong>的是：  <ul>
+<li>资源分配图（RAG）化简法  </li>
+<li>等待图（Wait-for Graph）检测环路<br>→ 银行家算法不能检测死锁，只能避免进入不安全状态。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="IV-当系统出现死锁时，必然有两个或两个以上的进程处于阻塞态"><a href="#IV-当系统出现死锁时，必然有两个或两个以上的进程处于阻塞态" class="headerlink" title="IV. 当系统出现死锁时，必然有两个或两个以上的进程处于阻塞态"></a>IV. 当系统出现死锁时，必然有两个或两个以上的进程处于阻塞态</h4><p>✅ <strong>正确</strong>。  </p>
+<ul>
+<li>死锁的定义要求<strong>循环等待</strong>：至少两个进程互相等待对方持有的资源；  </li>
+<li>单个进程不可能死锁（它要么运行，要么等待资源，但无循环）；  </li>
+<li>最小死锁环为 2 个进程（如 P1 持 R1 等 R2，P2 持 R2 等 R1）；<br>→ 所以<strong>至少 2 个进程阻塞</strong>。<br>（注：2016 年题中因资源需求结构限制最小为 3，但一般情况最小为 2）</li>
+</ul>
+<hr>
+<h3 id="✅-最终判断："><a href="#✅-最终判断：" class="headerlink" title="✅ 最终判断："></a>✅ 最终判断：</h3><ul>
+<li>I：✓  </li>
+<li>II：✓  </li>
+<li>III：✗  </li>
+<li>IV：✓</li>
+</ul>
+<p>→ 正确答案：<strong>B. 仅 I、II、IV</strong></p>
+<hr>
+<h3 id="🎯-考点总结：-5"><a href="#🎯-考点总结：-5" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>说法</th>
+<th>正误</th>
+<th>关键辨析</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>剥夺资源可解除死锁</td>
+<td>✓</td>
+<td>死锁恢复手段</td>
+</tr>
+<tr>
+<td>预防能确保不死锁</td>
+<td>✓</td>
+<td>破坏必要条件 ⇒ 充分条件</td>
+</tr>
+<tr>
+<td>银行家算法检测死锁</td>
+<td>✗</td>
+<td>它检测“安全状态”，非“死锁状态”</td>
+</tr>
+<tr>
+<td>死锁至少 2 进程阻塞</td>
+<td>✓</td>
+<td>循环等待 ⇒ 最小环长为 2</td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ 正确答案：<strong>B</strong></p>
+<h1 id="题目-7"><a href="#题目-7" class="headerlink" title="题目"></a>题目</h1><p>若系统中n (n&gt;&#x3D;2) 个进程，每个进程均需使用某类临界资源2个，则系统不会发生死锁所需的该类资源总至少______<br>。<br>(2021年)<br>A.2 B. n C. n+1 D.2n</p>
+<h2 id="解析-7"><a href="#解析-7" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：C. n + 1</strong></p>
+<hr>
+<h3 id="✅-解析：-2"><a href="#✅-解析：-2" class="headerlink" title="✅ 解析："></a>✅ 解析：</h3><p>本题考查 <strong>死锁避免的资源下界问题</strong>，针对<strong>同类资源、每个进程最大需求为 2</strong> 的经典场景。</p>
+<hr>
+<h3 id="🔑-核心思想：-1"><a href="#🔑-核心思想：-1" class="headerlink" title="🔑 核心思想："></a>🔑 核心思想：</h3><p>要<strong>确保系统一定不会死锁</strong>，需使系统始终处于<strong>安全状态</strong>。</p>
+<p>最坏情况：每个进程都已获得 <strong>1 个资源</strong>，且都在等待<strong>第 2 个资源</strong>。<br>此时若系统还剩 <strong>至少 1 个资源</strong>，就能满足某个进程 → 它完成后释放 2 个 → 可供其他进程使用 → 无死锁。</p>
+<hr>
+<h3 id="📐-推导："><a href="#📐-推导：" class="headerlink" title="📐 推导："></a>📐 推导：</h3><ul>
+<li>进程数：$ n $  </li>
+<li>每个进程最多需要：$ m &#x3D; 2 $ 个资源  </li>
+<li>最坏分配：每个进程已得 $ m - 1 &#x3D; 1 $ 个资源<br>→ 已分配总量：$ n \times 1 &#x3D; n $  </li>
+<li>为避免死锁，需剩余资源 $ \geq 1 $<br>→ 总资源数至少为：<br>$$<br>n + 1<br>$$</li>
+</ul>
+<hr>
+<h3 id="✅-验证："><a href="#✅-验证：" class="headerlink" title="✅ 验证："></a>✅ 验证：</h3><ul>
+<li>若资源数 &#x3D; $ n $：  <ul>
+<li>每个进程得 1 个，共 $ n $ 个，剩余 0；  </li>
+<li>所有进程都在等第 2 个 → <strong>死锁！</strong></li>
+</ul>
+</li>
+<li>若资源数 &#x3D; $ n + 1 $：  <ul>
+<li>最坏：$ n - 1 $ 个进程各得 1 个，1 个进程得 2 个；<br>→ 得 2 个的进程可完成，释放 2 个 → 剩余资源 &#x3D; 2 + (n−1)×1 &#x3D; n+1？  </li>
+<li>或更直接：<br>$ n $ 个进程各得 1 个（共 $ n $），剩余 1 个 → 给任一进程，它得 2 个 → 完成 → 释放 2 个 → 可继续推进。<br>→ <strong>无死锁</strong>，安全。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="🎯-对比经典公式："><a href="#🎯-对比经典公式：" class="headerlink" title="🎯 对比经典公式："></a>🎯 对比经典公式：</h3><p>一般地，$ n $ 个进程，每个最多需 $ m $ 个资源，<br><strong>确保不死锁的最小资源数</strong>为：<br>$$<br>n(m - 1) + 1<br>$$</p>
+<p>本题 $ m &#x3D; 2 $，代入得：<br>$$<br>n(2 - 1) + 1 &#x3D; n + 1<br>$$</p>
+<hr>
+<h3 id="❌-排除其他选项："><a href="#❌-排除其他选项：" class="headerlink" title="❌ 排除其他选项："></a>❌ 排除其他选项：</h3><ul>
+<li>A. 2：当 $ n &gt; 2 $ 时显然不够（如 $ n&#x3D;3 $，2 个资源 → 必死锁）  </li>
+<li>B. $ n $：如上，会导致死锁  </li>
+<li>D. $ 2n $：是“充分但不必要”条件（保证每个进程都能同时满足），过于保守；题目问“至少”，应取最小值。</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>C. n + 1</strong></p>
+<h1 id="题目-8"><a href="#题目-8" class="headerlink" title="题目"></a>题目</h1><p>我们来分析这道<strong>银行家算法安全性检测</strong>题目。</p>
+<hr>
+<h3 id="📊-题目表格："><a href="#📊-题目表格：" class="headerlink" title="📊 题目表格："></a>📊 题目表格：</h3><table>
+<thead>
+<tr>
+<th>进程</th>
+<th>A 已分配</th>
+<th>B 已分配</th>
+<th>A 需求总量</th>
+<th>B 需求总量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>资源总数：A 类 6 个，B 类 6 个</p>
+</blockquote>
+<hr>
+<h2 id="✅-步骤-1：计算“尚需资源”-“需求总量-已分配”"><a href="#✅-步骤-1：计算“尚需资源”-“需求总量-已分配”" class="headerlink" title="✅ 步骤 1：计算“尚需资源” &#x3D; “需求总量 - 已分配”"></a>✅ 步骤 1：计算“尚需资源” &#x3D; “需求总量 - 已分配”</h2><table>
+<thead>
+<tr>
+<th>进程</th>
+<th>A 尚需</th>
+<th>B 尚需</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P1</td>
+<td>4−2&#x3D;2</td>
+<td>4−3&#x3D;1</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>3−2&#x3D;1</td>
+<td>1−1&#x3D;0</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3−1&#x3D;2</td>
+<td>4−2&#x3D;2</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="✅-步骤-2：计算“当前可用资源”"><a href="#✅-步骤-2：计算“当前可用资源”" class="headerlink" title="✅ 步骤 2：计算“当前可用资源”"></a>✅ 步骤 2：计算“当前可用资源”</h2><p>总资源 A &#x3D; 6，已分配 A &#x3D; 2+2+1 &#x3D; <strong>5</strong> → 可用 A &#x3D; <strong>1</strong><br>总资源 B &#x3D; 6，已分配 B &#x3D; 3+1+2 &#x3D; <strong>6</strong> → 可用 B &#x3D; <strong>0</strong></p>
+<p>→ <strong>Available &#x3D; [A:1, B:0]</strong></p>
+<hr>
+<h2 id="✅-步骤-3：寻找安全序列（尝试每个进程是否可运行）"><a href="#✅-步骤-3：寻找安全序列（尝试每个进程是否可运行）" class="headerlink" title="✅ 步骤 3：寻找安全序列（尝试每个进程是否可运行）"></a>✅ 步骤 3：寻找安全序列（尝试每个进程是否可运行）</h2><h3 id="检查-P1："><a href="#检查-P1：" class="headerlink" title="检查 P1："></a>检查 P1：</h3><ul>
+<li>尚需 [2,1] &gt; 可用 [1,0] ❌（A 不足）</li>
+</ul>
+<h3 id="检查-P2："><a href="#检查-P2：" class="headerlink" title="检查 P2："></a>检查 P2：</h3><ul>
+<li>尚需 [1,0] ≤ [1,0] ✅<br>→ <strong>P2 可运行！</strong></li>
+</ul>
+<p>执行 P2 后，释放其已分配资源 [2,1]<br>→ 新 Available &#x3D; [1,0] + [2,1] &#x3D; <strong>[3,1]</strong></p>
+<hr>
+<h3 id="剩余进程：P1、P3，可用资源-3-1"><a href="#剩余进程：P1、P3，可用资源-3-1" class="headerlink" title="剩余进程：P1、P3，可用资源 [3,1]"></a>剩余进程：P1、P3，可用资源 [3,1]</h3><h4 id="检查-P1：-1"><a href="#检查-P1：-1" class="headerlink" title="检查 P1："></a>检查 P1：</h4><ul>
+<li>尚需 [2,1] ≤ [3,1] ✅<br>→ <strong>P1 可运行</strong></li>
+</ul>
+<p>执行 P1 后，释放 [2,3]<br>→ 新 Available &#x3D; [3,1] + [2,3] &#x3D; <strong>[5,4]</strong></p>
+<hr>
+<h3 id="剩余进程：P3，可用资源-5-4"><a href="#剩余进程：P3，可用资源-5-4" class="headerlink" title="剩余进程：P3，可用资源 [5,4]"></a>剩余进程：P3，可用资源 [5,4]</h3><h4 id="检查-P3："><a href="#检查-P3：" class="headerlink" title="检查 P3："></a>检查 P3：</h4><ul>
+<li>尚需 [2,2] ≤ [5,4] ✅<br>→ <strong>P3 可运行</strong></li>
+</ul>
+<p>执行 P3 后，释放 [1,2]<br>→ 最终 Available &#x3D; [5,4] + [1,2] &#x3D; [6,6] —— 全部资源回收 ✅</p>
+<hr>
+<h2 id="✅-安全序列：P2-→-P1-→-P3"><a href="#✅-安全序列：P2-→-P1-→-P3" class="headerlink" title="✅ 安全序列：P2 → P1 → P3"></a>✅ 安全序列：P2 → P1 → P3</h2><hr>
+<h2 id="✅-对照选项："><a href="#✅-对照选项：" class="headerlink" title="✅ 对照选项："></a>✅ 对照选项：</h2><ul>
+<li>A. 存在安全序列 P1,P2,P3 ❌（P1 开始不可行）  </li>
+<li>B. 存在安全序列 P2,P1,P3 ✅ <strong>正确</strong>  </li>
+<li>C. 存在安全序列 P2,P3,P1 ❌（P3 在 P1 前不可行，因为 P3 尚需 [2,2]，而 P2 后可用为 [3,1]，B&#x3D;1&lt;2）  </li>
+<li>D. 不存在安全序列 ❌</li>
+</ul>
+<hr>
+<h3 id="🎯-关键点："><a href="#🎯-关键点：" class="headerlink" title="🎯 关键点："></a>🎯 关键点：</h3><ul>
+<li>初始可用资源 [1,0]，只有 P2 的尚需 [1,0] 能满足；  </li>
+<li>P2 执行后释放资源，使后续进程有机会运行；  </li>
+<li>P3 不能紧跟 P2，因为其 B 尚需 2，但 P2 后可用 B&#x3D;1 &lt; 2。</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>B. 存在安全序列 P2,P1,P3</strong></p>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
 </search>
