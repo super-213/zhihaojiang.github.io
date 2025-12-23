@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="姜智浩">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+        
+        
+        
+            <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+        
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/2025/12/22/20251222linux操作系统-操作系统基础题目/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux操作系统-操作系统基础题目">
+<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/2025/12/22/20251222Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E9%A2%98%E7%9B%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2025-12-22T03:45:14.000Z">
+<meta property="article:modified_time" content="2025-12-23T01:16:44.400Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://super-213.github.io/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/zhihaojiang.github.io/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/zhihaojiang.github.io/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/zhihaojiang.github.io/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Linux操作系统-操作系统基础题目 | 智浩的Blog
+        
+    </title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fonts/Chillax/chillax.css">
+
+    <!--- Inject Part-->
+    
+
+    <!-- 这里是 Live2D 代码 -->
+    <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/css/style.css">
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/css/build/tailwind.css">
+    
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fonts/GeistMono/geist-mono.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fonts/Geist/geist.css">
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+        <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/anime.min.js" ></script>
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"super-213.github.io","root":"/zhihaojiang.github.io/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/wallhaven-wqery6-light.webp","dark":"/images/wallhaven-wqery6-dark.webp"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/super-213","instagram":null,"zhihu":null,"twitter":null,"email":"jiangzhihaojzh@126.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1"},"mathjax":{"tags":"none","single_dollars":true,"cjk_width":0.9,"normal_width":0.6,"append_css":true,"every_page":true}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/brands.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/solid.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/fontawesome/regular.min.css">
+    
+    
+    
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        智浩的Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({ loop: true })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [20, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                filter: ['blur(5px)', 'blur(0px)'],
+                easing: "easeOutExpo",
+                duration: 1200,
+                delay: (el, i) => 300 + 20 * i,
+            })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [0, -20],
+                opacity: [1, 0],
+                filter: ['blur(0px)', 'blur(5px)'],
+                easing: "easeInExpo",
+                duration: 1000,
+                delay: (el, i) => 15 * i,
+                complete: function() {
+                    hidePreloader();
+                }
+            }, '-=700');
+
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/zhihaojiang.github.io/">
+                
+                智浩的Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    PHOTO
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/zhihaojiang.github.io/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/super-213">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/masonry/"
+                        >
+                            <span>
+                                PHOTO
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/zhihaojiang.github.io/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/super-213">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/bookmarks/"
+                        >
+                            <span>Bookmarks</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/tags/"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/categories/"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">22</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">78</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Linux操作系统-操作系统基础题目</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/zhihaojiang.github.io/images/defaults/IMG_3744.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">姜智浩</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv5</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-12-22 11:45:14</span>
+        <span class="mobile">2025-12-22 11:45:14</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2025-12-23 09:16:44</span>
+            <span class="mobile">2025-12-23 09:16:44</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/zhihaojiang.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>25.6k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>94 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>以下有关操作系统的叙述中，哪一个是不正确的？<br>A. 操作系统管理系统中的各种资源<br>B. 操作系统为用户提供的良好的界面<br>C. 操作系统就是资源的管理者和仲裁者<br>D. 操作系统是计算机系统中的一个应用软件</p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>答案：D. 操作系统是计算机系统中的一个应用软件</p>
+<p>逐项分析：</p>
+<p>A. 操作系统管理系统中的各种资源<br>✅ 正确。<br>操作系统的核心功能之一就是资源管理，包括：</p>
+<p>处理器（CPU 调度）<br>内存（分配、虚拟内存）<br>外设（I&#x2F;O 管理、设备驱动）<br>文件与存储（文件系统）<br>→ 是操作系统的基本职责。<br>B. 操作系统为用户提供良好的界面<br>✅ 正确。<br>无论是命令行界面（CLI，如 bash）还是图形用户界面（GUI，如 GNOME、KDE），都是操作系统提供的人机交互接口，属于其服务功能之一。</p>
+<p>C. 操作系统就是资源的管理者和仲裁者<br>✅ 正确。<br>“管理者”指分配资源，“仲裁者”指在多个进程&#x2F;用户竞争资源时进行协调（如避免死锁、公平调度），这是对操作系统角色的经典定义（参见 Dijkstra、Tanenbaum 等教材）。</p>
+<p>D. 操作系统是计算机系统中的一个应用软件<br>❌ 错误——这是本题的答案。</p>
+<p>操作系统属于系统软件（system software），是最底层、最基础的软件层，直接运行在硬件之上（或 hypervisor 之上）。<br>应用软件（如浏览器、文本编辑器、游戏）是运行在操作系统之上的，依赖 OS 提供的服务（如 open, malloc, fork）。<br>若 OS 是“应用软件”，则它无法管理硬件或为其他软件提供运行环境，逻辑矛盾。<br>📌 类比：<br>硬件 → 操作系统（地基 + 建筑框架） → 系统工具（水电管道） → 应用软件（房间里的家具电器）<br>显然，地基不是家具。</p>
+<p>🎯 考点总结：<br>本题考察 操作系统的本质属性与分类，重点在于：</p>
+<p>区分 系统软件 vs 应用软件<br>掌握操作系统的核心角色：资源管理者、服务提供者、硬件抽象层<br>理解操作系统在软件层次中的底层地位<br>常见干扰项陷阱：将“用户可见”（如桌面环境）误解为“应用软件”，但 GUI 本身仍是 OS 的一部分（或紧密集成组件）。</p>
+<h1 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h1><p>分时操作系统的主要特点是 。<br>A. 个人独占机器资源 B. 自动控制作业运行<br>C. 高可靠性和安全性 D. 多个用户共享计算机资源</p>
+<h2 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h2><p>答案：D. 多个用户共享计算机资源</p>
+<p>✅ 解析：<br>分时操作系统（Time-Sharing Operating System）的核心思想：<br>通过 时间片轮转（time-slicing），使多个用户（或终端）同时交互式地使用同一台计算机，每个用户感觉自己“独占”机器，实则 CPU 时间被快速轮流分配。</p>
+<p>✔️ 关键特征包括：</p>
+<p>多用户（Multi-user）：多个用户通过终端并发登录使用系统（如早期的 UNIX、现代 Linux 的多终端登录）<br>交互性（Interactive）：用户可实时输入命令并获得响应<br>独立性（Independence）：各用户任务彼此隔离，互不干扰<br>及时性（Timeliness）：响应时间较短（通常在秒级内），满足交互需求<br>→ 所有这些都建立在 “多个用户共享计算机资源（CPU、内存、I&#x2F;O 等）” 的基础上。</p>
+<p>❌ 其他选项分析：<br>A. 个人独占机器资源<br>→ 描述的是单道批处理系统或专用系统，与分时系统“共享”本质相悖。<br>✖️ 错误</p>
+<p>B. 自动控制作业运行<br>→ 描述的是批处理系统（如早期 IBM OS&#x2F;360 的 JCL 作业流），用户提交作业后不干预，由系统自动调度执行。分时系统强调交互，而非“自动批处理”。<br>✖️ 错误</p>
+<p>C. 高可靠性和安全性<br>→ 这是实时操作系统（RTOS）（尤其硬实时）或分布式&#x2F;安全操作系统的突出要求，不是分时系统的定义性特征。<br>虽然现代分时系统（如 Linux）也追求高可靠与安全，但它们并非分时概念的“主要特点”。<br>✖️ 非核心特征，不选</p>
+<p>🎯 考点总结：<br>本题考察 不同类型操作系统（批处理、分时、实时）的核心特征辨析。</p>
+<p>系统类型<br>核心目标<br>主要特点<br>批处理系统<br>提高资源利用率<br>自动化、脱机、非交互<br>分时系统<br>提高交互性与响应性<br>多用户、共享资源、时间片轮转<br>实时系统<br>满足截止时间<br>可预测性、高可靠性、低延迟<br>👉 记住关键词：<br>分时 &#x3D; 多用户 + 共享 + 交互 + 时间片</p>
+<h1 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h1><p>用户与操作系统打交道的手段称为 。<br>A. 命令输入 B. 广义指令 C. 通信 D. 用户接口</p>
+<h2 id="解析-2"><a href="#解析-2" class="headerlink" title="解析"></a>解析</h2><p>答案：D. 用户接口</p>
+<p>✅ 解析：<br>题目问的是：用户与操作系统打交道的手段的统称。</p>
+<p>✔️ D. 用户接口（User Interface, UI）<br>这是标准术语，指操作系统提供给用户与其交互的所有方式的总称，包括：</p>
+<p>命令行接口（CLI）：如 bash、zsh，用户输入命令（如 ls, cd）<br>图形用户接口（GUI）：如 GNOME、KDE、Windows 桌面，通过窗口、图标、菜单操作<br>程序接口（API）：应用程序通过系统调用（如 open(), fork()）与 OS 交互（广义上，程序员也是“用户”）<br>作业控制语言（JCL）：在批处理系统中提交作业脚本<br>因此，“用户接口”是最准确、最全面的术语。</p>
+<p>❌ 其他选项分析：<br>A. 命令输入<br>→ 仅描述 CLI 中的一种操作行为，片面。不能涵盖 GUI（如点击图标）、API 调用等。<br>✖️ 范围过窄</p>
+<p>B. 广义指令<br>→ 非标准术语。某些教材可能用“广义指令”指代“系统调用 + 访管指令”，但不用于描述用户交互手段的整体概念；且普通用户不接触“指令”这一底层概念。<br>✖️ 术语不规范，易混淆</p>
+<p>C. 通信<br>→ 太宽泛。进程间通信（IPC）、网络通信都叫“通信”，但题目特指用户 ↔ 操作系统的交互手段。<br>✖️ 不精确</p>
+<p>🎯 考点总结：<br>本题考察 操作系统基本概念中的“用户接口”定义，属于基础识记类题目。</p>
+<p>📌 关键记忆点：</p>
+<p>操作系统为用户提供的交互机制统称为 用户接口（User Interface），是人机交互的桥梁。</p>
+<p>现代操作系统通常提供多种用户接口以适应不同用户需求：</p>
+<p>终端用户 → GUI &#x2F; CLI<br>程序员 → API（系统调用接口）<br>系统管理员 → CLI + 配置工具</p>
+<h1 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h1><p>从用户的观点看，操作系统是 。<br>A. 用户与计算机之间的接口 B. 控制和管理计算机资源的软件<br>C. 合理地组织计算机工作流程的软件 D. 由若干层次的程序按一定的结构组成的有机体</p>
+<h2 id="解析-3"><a href="#解析-3" class="headerlink" title="解析"></a>解析</h2><p>答案：A. 用户与计算机之间的接口</p>
+<p>✅ 解析：<br>题干关键词：“从用户的观点看”<br>→ 强调用户视角（user’s perspective），而非设计者、开发者或系统内部视角。</p>
+<p>✔️ A. 用户与计算机之间的接口<br>✅ 完全匹配用户视角。<br>对普通用户而言，操作系统就是他们操作计算机的“窗口”：</p>
+<p>通过桌面、图标、终端、应用程序等与计算机交互<br>不需要（也不关心）底层如何调度进程、管理内存<br>操作系统屏蔽了硬件复杂性，提供抽象、易用的交互界面<br>这是操作系统最直观、最本质的对外角色。经典教材定义如：</p>
+<p>“An OS is an extended machine — it provides users with an abstract, simplified, and convenient interface to the hardware.”<br>—— Andrew S. Tanenbaum, Modern Operating Systems</p>
+<p>❌ 其他选项分析（虽正确，但不符合“用户观点”）：<br>B. 控制和管理计算机资源的软件<br>→ 描述的是系统设计者&#x2F;内核开发者视角，强调 OS 的内部功能（资源管理）。用户通常不感知这一点。<br>✖️ 属于“系统观点”，非“用户观点”</p>
+<p>C. 合理地组织计算机工作流程的软件<br>→ 偏向批处理&#x2F;作业调度视角，更适用于早期系统或后台服务设计者的理解。普通用户不关心“工作流程如何组织”。<br>✖️ 非用户中心视角</p>
+<p>D. 由若干层次的程序按一定的结构组成的有机体<br>→ 描述的是 OS 的体系结构（如微内核、宏内核、模块化设计），属于实现层面的抽象，是程序员或研究者关注的内容。<br>✖️ 技术实现视角，非用户体验视角</p>
+<p>🎯 考点总结：<br>本题考察 操作系统在不同视角下的定义差异，重点在于区分：</p>
+<p>视角<br>典型定义<br>用户视角<br>用户与计算机之间的接口（强调易用性、抽象性）✅<br>系统视角<br>资源管理者、仲裁者<br>开发者视角<br>层次化&#x2F;模块化的软件系统<br>理论视角<br>虚拟机（Virtual Machine）<br>👉 记住：</p>
+<p>用户看到的是 “界面” → Interface<br>内核看到的是 “调度与资源” → Manager</p>
+<h1 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h1><p>6.操作系统提供给程序员的接口是 。<br>A．进程 B．系统调用 C．库函数 D．B和C</p>
+<h2 id="解析-4"><a href="#解析-4" class="headerlink" title="解析"></a>解析</h2><p>答案：B．系统调用</p>
+<p>✅ 正确答案详解：<br>题干关键词：“操作系统提供给程序员的接口”<br>→ 注意是 操作系统直接提供 的接口，而非第三方或封装层。</p>
+<p>✔️ B. 系统调用（System Call）<br>✅ 正确。</p>
+<p>系统调用是操作系统内核暴露给用户空间程序的唯一正式接口，是程序员（尤其是系统程序员、应用开发者）请求内核服务的唯一合法通道。<br>典型例子：<br>文件操作：open(), read(), write(), close()<br>进程控制：fork(), exec(), exit()<br>内存管理：brk(), mmap()<br>设备 I&#x2F;O：ioctl()<br>实现机制：通过软中断（如 int 0x80）、syscall&#x2F;sysenter 指令等陷入内核态，切换到内核执行。<br>📌 标准定义：<br>“System calls provide the interface between a process and the operating system.”<br>—— Silberschatz, Operating System Concepts</p>
+<p>❌ 其他选项辨析：<br>A. 进程<br>→ 进程是操作系统管理的实体&#x2F;抽象概念，不是“接口”。程序员通过系统调用来创建&#x2F;控制进程（如 fork()），但“进程”本身不是接口。<br>✖️ 概念混淆</p>
+<p>C. 库函数<br>→ 库函数（如 glibc 中的 printf(), malloc()）是用户空间的封装，不是操作系统直接提供的。</p>
+<p>很多库函数内部封装了系统调用（如 printf() → write()），但也有些纯用户态计算（如 sin(), strlen()）。<br>OS 并不“提供”库函数——它们由标准库实现者（如 glibc）提供，运行在用户态。<br>✖️ 属于中间层，非 OS 原生接口<br>D. B和C<br>→ 虽然程序员日常使用库函数，但题目明确问的是 “操作系统提供” 的接口。<br>只有系统调用是 OS 内核直接暴露的接口；库函数是构建在系统调用之上的工具，不属于 OS 本身。<br>✖️ 混淆了“OS 接口”与“编程接口”</p>
+<p>💡 类比：<br>操作系统是“政府”，系统调用是“法律规定的办事窗口”（如户籍科、税务局）；<br>库函数是“代办公司”——它帮你跑腿（调用窗口），但不是政府本身设立的窗口。</p>
+<h1 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h1><p>引入多道程序技术的前提条件之一是系统具有（ ）。<br>A. 分时功能 B. 中断 C. 多CPU技术 D. SPOOLing技术</p>
+<h2 id="解析-5"><a href="#解析-5" class="headerlink" title="解析"></a>解析</h2><p>答案：B. 中断</p>
+<p>✅ 正确答案详解：<br>题干关键：“引入多道程序技术的前提条件之一”<br>我们要找的是——没有它，多道程序就根本无法实现的底层机制。</p>
+<p>✔️ B. 中断（Interrupt）<br>✅ 正确，是核心前提。</p>
+<p>为什么？<br>多道程序设计（Multiprogramming）的核心思想是：</p>
+<p>在内存中同时存放多个作业，当一个作业因 I&#x2F;O 请求、等待事件等原因暂停执行时，CPU 立即切换到另一个就绪作业执行，从而提高 CPU 利用率。</p>
+<p>而实现这种“暂停当前进程 → 切换到另一进程”的关键机制，就是 中断</p>
+<p>❌ 其他选项分析：<br>A. 分时功能<br>→ 分时是多道程序的进一步发展（加上时间片轮转 + 多用户交互），不是前提，而是结果。<br>多道程序最早出现在批处理系统中（如 IBM OS&#x2F;360），早于分时系统（如 CTSS、UNIX）。<br>✖️ 逻辑倒置</p>
+<p>C. 多CPU技术<br>→ 多道程序在单 CPU 上即可实现（通过进程切换模拟并发）。多 CPU 是并行（parallelism） 的前提，而非并发（concurrency） 的前提。<br>✖️ 非必要；多道程序诞生于单核时代</p>
+<p>D. SPOOLing技术<br>→ SPOOLing（Simultaneous Peripheral Operations On-Line）是为解决 I&#x2F;O 瓶颈而提出的假脱机技术，典型用于批处理系统提升吞吐量，但它本身依赖于多道程序（需有进程并发执行输入&#x2F;计算&#x2F;输出）。<br>👉 实际上，多道程序是 SPOOLing 的前提，而非相反。<br>✖️ 因果颠倒</p>
+<p>🎯 考点总结：<br>本题考察 多道程序设计的实现基础，重点在于理解：</p>
+<p>多道程序的核心是 CPU 与 I&#x2F;O 的并行重叠<br>实现“并行重叠”的关键技术支撑是 中断机制<br>中断使操作系统能异步响应事件，从而实现进程调度与切换<br>🔑 关键记忆链：<br>中断 → 异常&#x2F;事件感知 → 内核介入 → 进程状态改变 → 调度切换 → 多道并发</p>
+<h1 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h1><p>执行系统调用的过程包括如下主要操作正确的执行顺序是（ ）。(2017)<br>①返回用户态 ②执行陷入(trap)指令 ③传递系统调用参数 ④执行相应的服务程序<br>A.②→③→①→④ B.②→④→③→①<br>C.③→②→④→① D.③→④→②→①</p>
+<h2 id="解析-6"><a href="#解析-6" class="headerlink" title="解析"></a>解析</h2><p>答案：C. ③→②→④→①</p>
+<p>✅ 正确顺序解析：<br>执行系统调用（system call）是一个用户态 → 内核态 → 用户态的完整过程。我们按实际执行时序逐步分析：</p>
+<p>③ 传递系统调用参数<br>➡️ 最先发生（用户态）</p>
+<p>用户程序（如 C 程序）先将系统调用所需的参数（如文件描述符、缓冲区指针、长度等）准备好，通常通过：<br>寄存器（如 x86-64：rdi, rsi, rdx, r10, r8, r9）<br>或栈（老旧 ABI）<br>例如：read(fd, buf, count) → 先把 fd, buf, count 放入约定位置<br>✅ 这是系统调用发起前的准备动作，必须在陷入前完成。<br>② 执行陷入（trap）指令<br>➡️ 第二步（用户态 → 内核态切换点）</p>
+<p>用户程序执行一条特殊指令触发陷入内核，如：<br>int 0x80（传统 x86）<br>syscall（x86-64 快速路径）<br>svc #0（ARM）<br>CPU 自动：<br>切换到内核态（CPL&#x3D;0）<br>保存用户态上下文（如 RIP, RSP, RFLAGS）<br>跳转到内核的系统调用入口（如 entry_SYSCALL_64）<br>④ 执行相应的服务程序<br>➡️ 第三步（内核态）</p>
+<p>内核根据系统调用号（如 __NR_read &#x3D; 0）查表（sys_call_table），调用对应的服务例程（如 sys_read）<br>在内核态完成实际工作：权限检查、设备驱动调用、数据拷贝等<br>① 返回用户态<br>➡️ 最后一步（内核态 → 用户态）</p>
+<p>内核执行 iret &#x2F; sysret 等指令，恢复用户态寄存器和栈<br>CPU 切回用户态，继续执行 syscall 之后的指令（如检查返回值）</p>
+<h1 id="题目-7"><a href="#题目-7" class="headerlink" title="题目"></a>题目</h1><p>与单道程序系统相比，多道程序系统的优点是（ ）。(2017)<br>Ⅰ.CPU利用率高 Ⅱ.系统开销小 Ⅲ.系统吞吐量大 Ⅳ.I&#x2F;O设备利用率高<br>A.仅Ⅰ、Ⅲ B.仅Ⅰ、Ⅳ C.仅Ⅱ、Ⅲ D.仅Ⅰ、Ⅲ、Ⅳ</p>
+<h2 id="解析-7"><a href="#解析-7" class="headerlink" title="解析"></a>解析</h2><p>答案：D. 仅Ⅰ、Ⅲ、Ⅳ</p>
+<p>✅ 正确选项解析：<br>我们逐项分析多道程序系统（Multiprogramming System）相对于单道程序系统（Single-program System）的优势：</p>
+<p>✅ Ⅰ. CPU利用率高<br>✔️ 正确。</p>
+<p>单道系统：进程一旦发起 I&#x2F;O（如磁盘读写），CPU 空等直到 I&#x2F;O 完成 → 利用率低（可能 &lt; 20%）。<br>多道系统：当一个进程阻塞于 I&#x2F;O 时，CPU 立即调度另一个就绪进程运行 → 重叠 CPU 与 I&#x2F;O 操作，显著提升 CPU 利用率（可达 70%+）。<br>→ 核心优势之一<br>❌ Ⅱ. 系统开销小<br>✖️ 错误。</p>
+<p>多道程序引入了额外开销：<br>进程切换（上下文保存&#x2F;恢复）<br>内存保护与地址映射（如基址&#x2F;界限寄存器、MMU）<br>调度算法执行<br>同步与互斥机制（如信号量）<br>单道系统无进程切换、无需保护，开销极小。<br>→ 多道系统牺牲一定开销换取资源利用率提升，这是典型的“时空权衡”。<br>✅ Ⅲ. 系统吞吐量大<br>✔️ 正确。</p>
+<p>吞吐量（Throughput）：单位时间内完成的作业数。<br>多道系统通过并发执行、减少空闲，在相同时间内完成更多作业。<br>例如：单道时 1 小时完成 5 个作业；多道时可能完成 15 个。<br>→ 直接结果。<br>✅ Ⅳ. I&#x2F;O设备利用率高<br>✔️ 正确。</p>
+<p>单道系统：I&#x2F;O 设备仅在当前作业需要时使用，其余时间闲置。<br>多道系统：多个进程可轮流使用 I&#x2F;O 设备（如一个进程写磁盘时，另一个读网卡），减少 I&#x2F;O 设备空闲时间，提升其利用率。<br>SPOOLing 技术进一步放大该优势（如用磁盘模拟独占设备）。<br>→ 与 CPU 利用率提升相辅相成。</p>
+<h1 id="题目-8"><a href="#题目-8" class="headerlink" title="题目"></a>题目</h1><p>异常是指令执行过程中在处理器内部发生的特殊事件，中断是来自处理器外部的请求事件。下列关于中断或<br>异常悄况的叙述中，错误的是（ ）。(2016 组成原理)<br>A.<br>“访存时缺页”属于中断 B．<br>“整数除以0”属于异常<br>C.<br>“DMA传送结束”属于中断 D．<br>“存储保护错”属于异常</p>
+<h2 id="解析-8"><a href="#解析-8" class="headerlink" title="解析"></a>解析</h2><p>逐项分析：<br>A. “访存时缺页”属于中断<br>❌ 错误（本题答案）</p>
+<p>缺页（Page Fault）发生在CPU 执行一条访存指令（如 mov %rax, (%rbx)）时，MMU 发现页表项无效或未加载 → 触发 #PF 异常（x86 中断向量 14）。<br>它严格与当前指令绑定：哪条指令访问了缺页地址，异常就发生在该指令处，内核处理完后通常重新执行该指令。<br>✅ 正确分类：异常（具体为 fault 子类）<br>B. “整数除以0”属于异常<br>✅ 正确</p>
+<p>由 div &#x2F; idiv 指令引发 #DE 异常（Divide Error），是典型的同步异常。<br>C. “DMA传送结束”属于中断<br>✅ 正确</p>
+<p>DMA 控制器完成数据传输后，向 CPU 发送硬件中断请求（如 IRQ），与 CPU 当前执行的指令无关，属于外部异步事件。<br>D. “存储保护错”属于异常<br>✅ 正确</p>
+<p>如访问只读页写入、用户态访问内核地址等，由 MMU 检测到违反保护机制 → 触发 #GP（General Protection Fault） 或 #PF，属于同步异常。</p>
+<p>🎯 考点总结：<br>区分 中断 vs 异常 的核心：事件来源（内&#x2F;外） + 同步性（是否与指令关联）<br>常见陷阱：误将“由硬件单元（如 MMU）检测”等同于“中断”——MMU 是 CPU 一部分，其报告的错误仍属内部异常<br>缺页、保护错、除零、溢出、无效指令 → 都是 exception<br>外设通知（键盘、网卡、磁盘、DMA、时钟） → 都是 interrupt</p>
+<h1 id="题目-9"><a href="#题目-9" class="headerlink" title="题目"></a>题目</h1><p>下列关于批处理系统的叙述中，正确的是（ ）。(2016)<br>I、批处理系统允许多个用户与计算机直接交互<br>Ⅱ、批处理系统分为单道批处理系统和多道批处理系统<br>III、中断技术使得多道批处理系统和I&#x2F;O设备可与CPU并行工作<br>A.仅Ⅱ，III B.仅II C.仅Ⅰ，Ⅱ D.仅I，Ⅲ</p>
+<h2 id="解析-9"><a href="#解析-9" class="headerlink" title="解析"></a>解析</h2><p>答案：A. 仅Ⅱ，Ⅲ</p>
+<p>✅ 逐项解析：<br>I. 批处理系统允许多个用户与计算机直接交互<br>❌ 错误</p>
+<p>批处理系统（Batch Processing System）的核心特点是：用户提交作业（Job）后脱机等待，不能交互。<br>作业通常以作业控制语言（JCL）写成脚本，一次性提交给系统，由作业调度程序自动运行。<br>交互性是分时系统的特征，与批处理相悖。<br>→ 本项错误。<br>II. 批处理系统分为单道批处理系统和多道批处理系统<br>✅ 正确</p>
+<p>单道批处理（如 IBM OS&#x2F;360 的早期版本）：内存中只驻留一个作业，CPU 等待 I&#x2F;O 时空闲。<br>多道批处理（如 IBM OS&#x2F;MVT）：内存中同时驻留多个作业，利用 I&#x2F;O 等待间隙切换作业，提高资源利用率。<br>→ 这是操作系统发展史上的标准分类。<br>III. 中断技术使得多道批处理系统和 I&#x2F;O 设备可与 CPU 并行工作<br>✅ 正确</p>
+<p>在多道批处理中，当作业 A 发起 I&#x2F;O 请求后：<br>CPU 通过系统调用陷入内核；<br>内核启动 I&#x2F;O（如磁盘读），进程 A 进入阻塞态；<br>I&#x2F;O 设备在后台独立工作；<br>CPU 转而执行作业 B；<br>当 I&#x2F;O 完成时，设备发出中断 → 内核响应，唤醒作业 A。<br>若无中断机制，CPU 将无法得知 I&#x2F;O 完成，也无法实现作业切换 → 无法实现真正的“并行工作”。<br>→ 中断是实现CPU 与 I&#x2F;O 重叠（即宏观并行）的关键支撑技术。<br>✅ 最终判断：<br>I：✗<br>II：✓<br>III：✓<br>→ 正确选项为 A. 仅Ⅱ，Ⅲ<br>🎯 考点总结：<br>本题综合考察 批处理系统特征 + 多道程序实现基础</p>
+<p>📌 记忆口诀：<br>批处理：提交就走，不许插嘴；<br>多道靠中断，CPU 不白等。</p>
+<h1 id="题目-10"><a href="#题目-10" class="headerlink" title="题目"></a>题目</h1><p>某单CPU系统中有输入和输出设备各1台，现有3个并发执行的作业，每个作业的输入、计算和输出时间均分别为<br>2ms、3ms和4ms，且都按输入、计算和输出的顺序执行，则执行完3个作业需要的时间最少是（ ）。(2016)<br>A.15ms B.17ms C.22ms D.27ms</p>
+<h2 id="解析-10"><a href="#解析-10" class="headerlink" title="解析"></a>解析</h2><p>✅ 正确答案：B. 17ms</p>
+<p>我们来分析这道经典的作业调度与资源受限下的并发执行问题。</p>
+<p>🔍 题目已知条件：<br>单 CPU（即计算阶段只能串行执行）<br>输入设备 1 台（输入阶段互斥）<br>输出设备 1 台（输出阶段互斥）<br>3 个作业，每个作业严格按序执行：<br>输入（2ms） → 计算（3ms） → 输出（4ms）<br>共 9ms&#x2F;作业，3 个共 27ms（若完全串行）<br>→ 目标：通过合理重叠（并行）尽可能缩短总时间</p>
+<p>⚠️ 注意：</p>
+<p>各阶段不能并行（必须先输入完才能计算，计算完才能输出）<br>同类设备只能服务一个作业（设备是瓶颈）<br>✅ 检查资源冲突：</p>
+<p>输入设备：J1(0–2), J2(2–4), J3(4–6) → ✅ 无重叠<br>CPU：J1(2–5), J2(5–8), J3(8–11) → ✅ 串行无空闲<br>输出设备：<br>J1 输出最早可在 计算完成后（5ms）开始 → 5–9<br>J2 输出需等 J1 输出完（9ms） → 9–13<br>J3 输出需等 J2 输出完（13ms） → 13–17<br>⚠️ 能否让 J2&#x2F;J3 更早输出？<br>→ 不能！因为输出设备只有 1 台，且 J2 的输出必须等它自己计算完（8ms） + J1 输出完（9ms） → 实际最早 9ms 开始。</p>
+<p>所以 J3 输出结束于：13 + 4 &#x3D; 17ms</p>
+<p>🎯 总时间 &#x3D; 最后一个作业输出完成时间 &#x3D; 17ms<br>❌ 为什么不是 15ms（A）？<br>有人误以为：3 个作业可完全流水线：<br>输入：0–6（3×2）<br>计算：2–11（3×3，重叠）<br>输出：5–17（3×4，重叠）<br>→ 总时间 &#x3D; 6（最后输入完） + 3（最后计算） + 4（最后输出）？ &#x3D; 13？<br>错！输出不能早于对应作业计算完成时间，且设备独占。<br>最短理论下界：<br>输入总时间：3×2 &#x3D; 6ms（必须顺序）<br>计算总时间：3×3 &#x3D; 9ms（必须顺序）<br>输出总时间：3×4 &#x3D; 12ms（必须顺序）<br>→ 但可重叠，总时间 ≥ max(6, 9, 12) &#x3D; 12，但受限于阶段依赖，实际更长。<br>本题最优为 17ms。<br>✅ 答案：B. 17ms<br>🎯 考点总结：<br>资源受限下的作业调度<br>流水线思想 + 阶段依赖约束<br>关键原则：<br>同类设备只能串行使用<br>每个作业的三阶段必须顺序执行（输入→计算→输出）<br>后续阶段最早开始时间 &#x3D; max(前阶段结束时间, 设备空闲时间)<br>📌 类似题目可画甘特图辅助分析。</p>
+<p>✅ 正确答案：B. 17ms</p>
+<h1 id="题目-11"><a href="#题目-11" class="headerlink" title="题目"></a>题目</h1><p>内部异常（内中断）可分为故障（fault）、陷阱（trap）和终止（abort）三类。下列有关内部异常的叙述中，错误<br>的是（ ）。(2015 组成原理)<br>A.内部异常的产生与当前执行指令相关 B.内部异常的检测由CPU内部逻辑实现<br>C.内部异常的响应发生在指令执行过程中 D.内部异常处理后返回到发生异常的指令继续执行</p>
+<h2 id="解析-11"><a href="#解析-11" class="headerlink" title="解析"></a>解析</h2><p>✅ 正确答案：D</p>
+<p>逐项分析选项：<br>A. 内部异常的产生与当前执行指令相关<br>✅ 正确。</p>
+<p>内部异常（内中断）由CPU 在执行指令过程中检测到异常条件而触发（如除零、缺页、非法操作码），是同步事件。<br>与外部中断（如键盘、时钟）的异步性形成对比。<br>B. 内部异常的检测由 CPU 内部逻辑实现<br>✅ 正确。</p>
+<p>如：ALU 检测除零、MMU 检测缺页&#x2F;保护违例、译码器检测非法指令 → 均由 CPU 硬件完成。<br>C. 内部异常的响应发生在指令执行过程中<br>✅ 正确。</p>
+<p>例如：<br>div 指令执行时 → 立即触发 #DE<br>访存指令执行时 MMU 查页表发现缺页 → 触发 #PF<br>→ 属于指令执行周期内的事件（即使 trap 指令 int 也是“执行该指令时”主动陷入）。<br>D. 内部异常处理后返回到发生异常的指令继续执行<br>❌ 错误（本题答案）</p>
+<p>这只适用于 fault 类异常（如缺页），但：<br>Trap 类（如 int 0x80 系统调用）处理完后返回下一条指令（因为 trap 指令本身已执行完毕）；<br>Abort 类根本不返回（直接终止进程）。<br>→ 该说法以偏概全，未区分异常子类，错误。<br>📌 反例：<br>执行 int 0x80（系统调用）→ 进入 trap → 内核处理 → 返回用户态后执行 int 0x80 的下一条指令，而非重新执行 int 0x80（否则会无限循环调用）。</p>
+<p>🎯 考点总结：<br>内部异常 &#x3D; 同步异常 &#x3D; 与指令流强相关<br>三类异常（fault&#x2F;trap&#x2F;abort）的核心区别在于：<br>是否可恢复<br>返回行为（重执行 &#x2F; 下一条 &#x2F; 不返回）<br>命题若用“所有内部异常都……”需警惕——trap 和 abort 不符合 D 描述<br>✅ 正确答案：D</p>
+<h1 id="题目-12"><a href="#题目-12" class="headerlink" title="题目"></a>题目</h1><p>下列指令中，不能在用户态执行的是（ ）。(2014)<br>A．trap 指令 B．跳转指令 C．压栈指令 D．关中断指令</p>
+<h2 id="解析-12"><a href="#解析-12" class="headerlink" title="解析"></a>解析</h2><p>答案：D．关中断指令</p>
+<p>✅ 正确答案解析：<br>本题考察 CPU 特权级（Privilege Level）与指令权限，核心是区分哪些指令只能在内核态（特权态）执行。</p>
+<p>现代 CPU（如 x86、ARM）通常有多个特权级（x86：Ring 0<del>3；ARM：EL0</del>EL3），操作系统运行在最高特权级（如 Ring 0 &#x2F; EL1&#x2F;EL2），用户程序运行在最低特权级（Ring 3 &#x2F; EL0）。<br>某些敏感指令若允许用户随意执行，将导致系统崩溃或安全漏洞，因此被设为特权指令（Privileged Instruction）。</p>
+<p>逐项分析：<br>A. trap 指令<br>✅ 可在用户态执行</p>
+<p>trap 是主动陷入内核的机制，例如：<br>x86：int 0x80、syscall<br>ARM：svc #0（Supervisor Call）<br>这些指令设计目的就是供用户程序发起系统调用，属于非特权指令（用户态可执行，执行后自动切换到内核态）。<br>✅ 合法用户态操作<br>B. 跳转指令（如 jmp, call, ret）<br>✅ 可在用户态执行</p>
+<p>控制流转移是程序基本操作，用户程序大量使用。<br>CPU 会检查目标地址是否在用户空间（通过段&#x2F;页保护），但指令本身非特权。<br>C. 压栈指令（如 push, pop）<br>✅ 可在用户态执行</p>
+<p>栈操作是常规计算行为（函数调用、局部变量），运行于用户栈，无需特权。<br>D. 关中断指令（如 x86 的 cli &#x2F; ARM 的 cpsid i）<br>❌ 不能在用户态执行</p>
+<p>cli（Clear Interrupt Flag）禁止 CPU 响应可屏蔽中断（如键盘、网卡、时钟中断）。<br>若用户程序可随意关中断：<br>系统将无法响应时钟中断 → 调度器失效 → 其他进程永远得不到 CPU（拒绝服务）<br>无法响应设备中断 → I&#x2F;O 停滞、死机<br>因此，cli &#x2F; sti 是典型的特权指令，仅能在 Ring 0（内核态）执行。用户态执行会触发**#GP（General Protection Fault）** 异常。<br>🔍 补充：操作系统在临界区会短暂关中断（如修改调度队列），但这是内核行为；用户程序只能通过系统调用间接请求内核完成同步，不能自行关中断。</p>
+<h1 id="题目-13"><a href="#题目-13" class="headerlink" title="题目"></a>题目</h1><p>下列选项中，会导致用户进程从用户态切换到内核态的操作是（ ） 。(2013)<br>I. 整数除以零 II. sin（）函数调用 III. read 系统调用<br>A. 仅 I、II B. 仅I、III C. 仅 II、III D. I、II 和 III</p>
+<h2 id="解析-13"><a href="#解析-13" class="headerlink" title="解析"></a>解析</h2><p>答案：B. 仅 I、III</p>
+<p>✅ 正确选项解析：<br>我们逐项分析每个操作是否会引起用户态 → 内核态的切换：</p>
+<p>I. 整数除以零<br>➡️ 会触发异常（硬件中断&#x2F;陷阱）：<br>在 x86 等架构中，整数除零会引发 #DE（Divide Error）异常，这是一个同步异常（trap&#x2F;fault），由 CPU 检测到后，通过中断描述符表（IDT）跳转到内核的异常处理程序（如 do_divide_error），从而陷入内核态。<br>➤ 即使最终进程被 SIGFPE 信号终止，也先经过内核态处理。<br>✅ 会导致用户态 → 内核态切换</p>
+<p>II. sin() 函数调用<br>➡️ 纯用户态库函数调用（如 glibc 的 sin()）：</p>
+<p>sin() 是数学库函数（libm），其实现通常基于查表、多项式逼近等算法，不涉及系统调用或硬件异常。<br>它运行在用户空间，由 CPU 直接执行机器指令，无需陷入内核。<br>❌ 不会导致用户态 → 内核态切换<br>📌 注：除非 sin() 内部因浮点异常（如 NaN 输入触发 FE_INVALID 并启用 FE_EXCEPT）而引发信号，但标准情况下 sin() 是“安静”的纯计算函数。</p>
+<p>III. read 系统调用<br>➡️ 明确的系统调用（syscall）：</p>
+<p>read(fd, buf, count) 是 POSIX 标准系统调用，用户进程必须通过软中断（如 int 0x80）、syscall 指令等方式主动陷入内核，由内核的 sys_read 处理 I&#x2F;O 请求（可能涉及设备驱动、缓冲区管理等）。<br>✅ 必然导致用户态 → 核态切换</p>
+<h1 id="题目-14"><a href="#题目-14" class="headerlink" title="题目"></a>题目</h1><p>计算机开机后，操作系统最终被加载到（ ） 。(2013)<br>A. BIOS B. ROM C. EPROM D. RAM</p>
+<h2 id="解析-14"><a href="#解析-14" class="headerlink" title="解析"></a>解析</h2><p>答案：D. RAM</p>
+<p>✅ 正确答案解析：<br>计算机启动过程简要回顾：<br>上电 → BIOS&#x2F;UEFI 固件运行<br>存储在主板上的 ROM（现代多为 Flash ROM，含 BIOS&#x2F;UEFI）中<br>执行 POST（加电自检），初始化硬件<br>BIOS&#x2F;UEFI 加载引导程序（Bootloader）<br>从硬盘&#x2F;SSD&#x2F;USB 的引导扇区（如 MBR 或 EFI 分区）读取 bootloader（如 GRUB、Windows Boot Manager）到 RAM 中并执行<br>Bootloader 加载操作系统内核<br>将 OS 内核（如 vmlinuz、ntoskrnl.exe）从磁盘读入 RAM<br>跳转到内核入口点，开始执行<br>操作系统运行<br>内核初始化，建立页表、调度器、设备驱动等<br>所有代码和数据均在 RAM 中执行（CPU 不能直接从磁盘&#x2F;ROM 执行复杂 OS）</p>
+<p>A. BIOS<br>BIOS 是固件程序本身，不是存储介质；它运行后即退出，不“存放”OS<br>❌ 混淆概念<br>B. ROM<br>存放 BIOS&#x2F;UEFI，只读、容量小、速度慢，无法写入动态 OS；现代 OS 远大于 ROM 容量<br>❌<br>C. EPROM<br>一种可擦写 ROM，仍属非易失性存储器，用于固件，不用于运行 OS<br>❌<br>✅ D. RAM<br>主存（内存）</p>
+<p>🎯 考点总结：<br>理解计算机启动流程（BIOS → Bootloader → OS）<br>区分存储介质角色：<br>ROM&#x2F;Flash：存放固件（BIOS&#x2F;UEFI）<br>Disk：长期存储 OS 映像<br>RAM：运行时加载 OS 并执行的唯一场所<br>📌 类比：</p>
+<p>ROM 是“说明书”，硬盘是“工具箱”，<br>RAM 才是真正干活的“工作台” —— 操作系统必须摆上工作台才能开工！</p>
+<h1 id="题目-15"><a href="#题目-15" class="headerlink" title="题目"></a>题目</h1><p>一个多道批处理系统中仅有P1和P2两个作业，P2比P1晚5ms到达。它们的计算和I&#x2F;O操作顺序如下：<br>P1：计算60ms，I&#x2F;O80ms，计算20ms P2：计算120ms，I&#x2F;O40ms，计算40ms<br>若不考虑调度和切换时间，则完成两个作业需要的时间最少是（ ）。(2012)<br>A.240ms B.260ms C.340ms D.360ms</p>
+<h2 id="解析-15"><a href="#解析-15" class="headerlink" title="解析"></a>解析</h2><p>答案：B. 260ms</p>
+<p>✅ 解题思路（文字叙述，无表格）：<br>我们有两个作业 P1 和 P2，在多道批处理系统中运行。系统具备：</p>
+<p>单 CPU（计算必须串行）<br>单 I&#x2F;O 设备（I&#x2F;O 操作需互斥）<br>关键约束：</p>
+<p>每个作业必须严格按“计算 → I&#x2F;O → 计算”顺序执行；<br>P2 比 P1 晚 5ms 到达；<br>不考虑调度与上下文切换开销；<br>目标是最小化总完成时间（即最后一个作业结束时刻）。<br>时间线推演（最优调度策略）：<br>0ms：P1 到达，立即开始第一段计算（60ms）→ 0~60ms：P1 计算</p>
+<p>5ms：P2 到达，但 CPU 正被 P1 占用，只能等待。</p>
+<p>60ms：P1 第一段计算完成，立即转入 I&#x2F;O（80ms），占用 I&#x2F;O 设备 → 60<del>140ms：P1 I&#x2F;O<br>与此同时，CPU 空闲 5ms（60</del>65）？不！应立刻调度 P2：</p>
+<p>⚠️ 注意：P2 在 5ms 已到达，60ms 时 CPU 空出，P2 立即开始计算（120ms）→<br>60~180ms：P2 计算</p>
+<p>此时：</p>
+<p>P1 在 60<del>140ms 做 I&#x2F;O<br>P2 在 60</del>180ms 做 CPU<br>→ CPU 与 I&#x2F;O 并行，理想重叠<br>140ms：P1 的 I&#x2F;O 完成，但它需要进行第二段计算（20ms）。<br>但此时 CPU 正被 P2 占用（直到 180ms），所以 P1 进入就绪队列等待。</p>
+<p>180ms：P2 计算完成，立即进入 I&#x2F;O（40ms）→ 180<del>220ms：P2 I&#x2F;O<br>同时，CPU 空出 → P1 立即开始第二段计算（20ms） → 180</del>200ms：P1 计算</p>
+<p>200ms：P1 全部完成（计算结束）。</p>
+<p>220ms：P2 I&#x2F;O 完成，进入最后一段计算（40ms）→ 220~260ms：P2 计算</p>
+<p>260ms：P2 完成，全部作业结束。</p>
+<p>验证资源冲突：<br>CPU 使用：P1(0–60) → P2(60–180) → P1(180–200) → P2(220–260)<br>注意：200–220ms CPU 空闲？看似空闲，但无法避免——因为 P2 此时仍在做 I&#x2F;O（到 220ms 才结束），且 P1 已完成。<br>若强行让 P2 先做 I&#x2F;O 再让 P1 计算？不可行——P2 必须先完成计算才能进入 I&#x2F;O（顺序约束）。<br>I&#x2F;O 使用：P1(60–140) → P2(180–220)，中间 140–180ms I&#x2F;O 空闲，但无作业需要 I&#x2F;O（P2 还在计算），合理。<br>为何不是 240ms（A）？<br>有人误以为完全重叠：<br>60（P1算）+ max(80,120)（P1 I&#x2F;O 与 P2 算）+ 20（P1算）+ max(0,40)（P2 I&#x2F;O）+ 40（P2算）？<br>但忽略了：</p>
+<p>P1 第二段计算需等 P2 第一段计算结束（180ms）<br>P2 最后一段计算需等自身 I&#x2F;O 结束（220ms）<br>→ 关键路径：0 → 60 → 180 → 220 → 260<br>✅ 最终答案：B. 260ms</p>
+<h1 id="题目-16"><a href="#题目-16" class="headerlink" title="题目"></a>题目</h1><p>下列选项中，不可能在用户态发生的事件是（ ） 。(2012)<br>A．系统调用 B．外部中断 C．进程切换 D．缺页</p>
+<h2 id="解析-16"><a href="#解析-16" class="headerlink" title="解析"></a>解析</h2><p>答案：C．进程切换</p>
+<p>✅ 解析：<br>题目问：不可能在用户态发生的事件。<br>关键是：该事件的发生时刻或执行主体是否可能处于用户态。</p>
+<p>我们逐项分析：</p>
+<p>A．系统调用<br>➡️ 可以在用户态“发起”。</p>
+<p>用户程序在用户态执行 syscall 或 int 0x80 指令，触发系统调用；<br>虽然处理过程在内核态，但事件的起始点（即系统调用的发生）是在用户态代码中主动发起的。<br>✅ 可能在用户态发生（作为起因）<br>B．外部中断<br>➡️ 可以发生在用户态执行期间。</p>
+<p>外部中断（如时钟中断、键盘输入、网卡就绪）是异步事件，可在 CPU 执行任何用户态指令时到来；<br>中断发生时，若当前正在运行用户进程，则 CPU 处于用户态，随后切换到内核态处理。<br>✅ 可能在用户态时发生（中断请求的到达时刻）<br>C．进程切换<br>➡️ 不可能在用户态发生。</p>
+<p>进程切换（上下文切换）包括：<br>保存当前进程的 CPU 状态（寄存器、PC 等）<br>更新调度数据结构（如就绪队列）<br>加载新进程的上下文<br>切换页表（CR3）<br>这些操作涉及修改内核关键数据结构和特权寄存器（如 CR3），必须在内核态下执行；<br>用户态无权访问 TCB、调度队列，也不能直接修改内核栈或页表。<br>即使调度由时钟中断触发，实际的 switch_to() 代码总是在内核态执行（如 Linux 的 schedule() 函数）。<br>❌ 不可能在用户态发生 → 正确答案<br>D．缺页<br>➡️ 可以由用户态指令触发。</p>
+<p>缺页异常（Page Fault）发生在用户程序执行访存指令时（如 mov (%rax), %rbx），MMU 发现页未加载；<br>此时 CPU 处于用户态，随后陷入内核处理；<br>事件的触发点在用户态。<br>✅ 可能在用户态发生<br>🎯 考点总结：<br>区分 “事件触发” vs “事件处理”：<br>系统调用、缺页、中断：触发于用户态，处理于内核态<br>进程切换：触发可能源于用户态事件（如系统调用阻塞、时钟中断），但切换动作本身只能在内核态执行<br>进程切换是内核的核心操作，涉及特权指令与敏感数据，用户态无法完成。<br>💡 类比：<br>用户可以“按电梯按钮”（触发事件），但“电梯换层”（切换）只能由电梯控制系统（内核）完成。</p>
+<h1 id="题目-17"><a href="#题目-17" class="headerlink" title="题目"></a>题目</h1><p>中断处理和子程序调用都需要压栈以保护现场，中断处理一定会保存而子程序调用不需要保存其内容的是<br>（ ） 。(2012)<br>A．程序计数器 B．程序状态字寄存器 C．通用数据寄存器 D．通用地址寄存器</p>
+<h2 id="解析-17"><a href="#解析-17" class="headerlink" title="解析"></a>解析</h2><p>答案：B．程序状态字寄存器</p>
+<p>✅ 解析：<br>本题考察 中断处理与子程序调用在“保护现场”上的关键区别。</p>
+<p>两者都会进行压栈（保存上下文），但保存的内容有差异，核心在于：</p>
+<p>子程序调用 是程序主动、预期的控制转移，发生在当前特权级内（如同在用户态调用函数）；<br>中断处理 是异步、非预期的控制转移，可能跨特权级（如用户态 → 内核态），且中断发生时 CPU 状态（尤其是标志位）对后续恢复至关重要。<br>各选项分析：<br>A．程序计数器（PC &#x2F; RIP &#x2F; EIP）<br>✅ 子程序调用需保存：call 指令会自动将返回地址（下一条指令地址）压栈；<br>✅ 中断也需保存：CPU 硬件自动将断点地址压栈；<br>→ 两者都保存，不是区别点。<br>B．程序状态字寄存器（PSW，如 x86 的 RFLAGS &#x2F; EFLAGS）<br>✅ 中断处理一定会保存：<br>PSW 包含关键标志位：IF（中断允许）、TF（单步）、ZF&#x2F;SF&#x2F;CF 等；<br>中断发生时，必须保存 当时的 FLAGS，以便返回后恢复精确的执行环境；<br>x86 中，int&#x2F;异常&#x2F;中断发生时，CPU 硬件自动将 RFLAGS 压栈；<br>❌ 子程序调用通常不需要保存：<br>call&#x2F;ret 指令不保存 FLAGS；<br>普通函数调用约定（如 System V ABI）不负责保护标志寄存器——由调用者或被调用者按需用 pushf&#x2F;popf 显式保存（非常规）；<br>大多数计算类函数不会改变&#x2F;依赖 FLAGS，故默认不保存。<br>✅ 这是中断处理“一定会保存”，而子程序调用“通常不需要保存”的关键项。</p>
+<p>C．通用数据寄存器（如 RAX, RBX…）<br>两者都不一定由硬件自动保存；通常由软件约定：<br>子程序调用：调用者&#x2F;被调用者按 ABI 协议决定是否保存（如 RBX, RBP 是 callee-saved）；<br>中断处理：内核中断服务程序（ISR）开头会显式保存用到的通用寄存器；<br>→ 非硬件强制差异。<br>D．通用地址寄存器（如 RSI, RDI…）<br>同上，属于通用寄存器子集，保存策略同 C，无本质区别。<br>🎯 核心考点：<br>中断是异步事件，必须完整保存整个处理器状态（含 PSW），以保证透明恢复；<br>子程序调用是同步控制流，仅需保存返回地址和按需保存部分寄存器，标志位常被忽略；<br>PSW 中的 IF（中断允许位）尤为关键：中断处理前需关中断（CLI），但返回前必须恢复原 IF 状态——这依赖于对 PSW 的保存与还原。<br>🔔 x86 实例：<br>执行 int 0x80 时，CPU 自动压栈：SS, RSP, RFLAGS, CS, RIP<br>而 call func 只压栈：RIP（返回地址）</p>
+<h1 id="题目-18"><a href="#题目-18" class="headerlink" title="题目"></a>题目</h1><p>下列与中断相关的操作中，由操作系统完成的是（ ）。(2020)<br>I. 保存被中断程序的中断点 II. 提供中断服务<br>III. 初始化中断向量表 IV. 保存中断屏蔽字<br>A. I，II B. I，II，IV C. III，IV D. II，III，IV</p>
+<h2 id="解析-18"><a href="#解析-18" class="headerlink" title="解析"></a>解析</h2><p>答案：D. II，III，IV</p>
+<p>✅ 正确解析：<br>本题考察 中断处理过程中软硬件分工，关键是区分哪些由 硬件自动完成，哪些由 操作系统（软件）负责。</p>
+<p>我们逐项分析：</p>
+<p>I. 保存被中断程序的中断点<br>❌ 由硬件自动完成，不是操作系统做的。</p>
+<p>“中断点”指被中断指令的下一条指令地址（返回地址）。<br>当中断&#x2F;异常发生时，CPU 硬件自动将程序计数器（PC&#x2F;EIP&#x2F;RIP）压入栈（用户栈或内核栈，取决于特权级切换）；<br>例如 x86 在中断时自动压栈：RIP, CS, RFLAGS 等。<br>→ OS 无需也不应该干预此过程。<br>II. 提供中断服务<br>✅ 由操作系统完成。</p>
+<p>中断服务程序（ISR, Interrupt Service Routine）是操作系统编写并注册的内核函数，如：<br>时钟中断处理函数（更新 jiffies、调度 tick）<br>键盘中断处理（读扫描码、放入输入缓冲区）<br>网卡中断（收包、软中断触发）<br>硬件只负责跳转到 ISR 入口，具体服务逻辑完全由 OS 实现。<br>III. 初始化中断向量表<br>✅ 由操作系统完成。</p>
+<p>中断向量表（Interrupt Vector Table, IVT）或中断描述符表（IDT，在保护模式下）存储各中断号对应的处理程序入口地址；<br>BIOS&#x2F;UEFI 只提供初始简单设置（如实模式 IVT），进入保护&#x2F;长模式后，OS 启动早期（如 setup_idt()）必须重新初始化 IDT，填入自己的 ISR 地址；<br>若 OS 不做此工作，中断将跳转到错误地址或默认 BIOS 处理器，无法支持现代功能。<br>IV. 保存中断屏蔽字<br>✅ 由操作系统在中断处理中完成。</p>
+<p>“中断屏蔽字”指控制哪些中断被屏蔽的寄存器状态，如 x86 的 EFLAGS.IF 位，或中断控制器（如 APIC&#x2F;8259A）的屏蔽寄存器（IMR）；<br>硬件在进入中断时会自动清 IF（关中断），但：<br>OS 在调度临界区、嵌套中断管理时，需显式保存&#x2F;恢复中断屏蔽状态；<br>例如 Linux 的 local_irq_save(flags) 会保存 flags（含 IF），之后 local_irq_restore(flags) 恢复；<br>对于可屏蔽中断控制器（如 8259A），OS 也可能动态修改 IMR，并需保存上下文。<br>→ 属于操作系统为实现正确中断嵌套与同步而做的软件管理。<br>🎯 考点总结：<br>硬件负责：中断检测、特权级切换、自动保存关键寄存器（PC、PSW、栈指针等）<br>操作系统负责：<br>建立中断响应框架（初始化 IDT&#x2F;IVT）<br>编写具体中断服务逻辑<br>管理中断屏蔽与嵌套（软件层面的状态保存与恢复）<br>易错点：误以为“保存中断点”是 OS 做的——实际是 CPU 微码硬连线行为。</p>
+<h1 id="题目-19"><a href="#题目-19" class="headerlink" title="题目"></a>题目</h1><p>下列关于系统调用的叙述中，正确的是（ ）。(2019)<br>I.在执行系统调用服务程序的过程中，CPU处于内核态<br>Ⅱ.操作系统通过提供系统调用避免用户程序直接访问外设<br>Ⅲ.不同的操作系统为应用程序提供了统一的系统调用接口<br>IV.系统调用是操作系统内核为应用程序提供服务的接口<br>A.仅I、IV B.仅II、III C.仅I、Ⅱ、IV D.仅I、Ⅲ、Ⅳ</p>
+<h2 id="解析-19"><a href="#解析-19" class="headerlink" title="解析"></a>解析</h2><p>答案：C. 仅 I、Ⅱ、IV</p>
+<p>✅ 逐项解析：<br>I. 在执行系统调用服务程序的过程中，CPU 处于内核态<br>✅ 正确。</p>
+<p>系统调用通过 syscall &#x2F; int 0x80 等指令触发陷入（trap），CPU 自动切换到内核态；<br>内核的系统调用分发器（如 entry_SYSCALL_64）随后调用对应的服务例程（如 sys_read），整个过程在内核态执行；<br>返回用户态前（如 sysret）才切换回去。<br>II. 操作系统通过提供系统调用避免用户程序直接访问外设<br>✅ 正确。</p>
+<p>直接访问外设（如 in&#x2F;out 指令、MMIO 地址）是特权操作，用户态执行会触发保护异常；<br>所有设备访问必须通过系统调用（如 read&#x2F;write&#x2F;ioctl）进入内核，由驱动程序代为操作；<br>这保障了安全性（防恶意程序破坏硬件）、稳定性（防冲突访问）、可移植性（抽象设备差异）。<br>III. 不同的操作系统为应用程序提供了统一的系统调用接口<br>❌ 错误。</p>
+<p>系统调用接口高度依赖具体 OS 实现：<br>Linux 使用 sys_call_table，调用号如 __NR_read &#x3D; 0<br>Windows 使用 ntdll.dll → syscall → 内核 NtReadFile<br>macOS（BSD 层）系统调用号与 Linux 不同<br>即使同属 POSIX，系统调用编号、参数传递方式、内部行为也可能不同；<br>“统一接口”是库层面（如 glibc 实现 POSIX API）的努力，非系统调用本身统一。<br>→ 本项错误。<br>IV. 系统调用是操作系统内核为应用程序提供服务的接口<br>✅ 正确。</p>
+<p>这是系统调用的标准定义：<br>“System calls are the fundamental interface between a process and the kernel.”<br>—— Operating System Concepts (Silberschatz)</p>
+<p>应用程序通过系统调用请求内核服务：文件操作、进程控制、通信、时间等。<br>✅ 正确项：I、II、IV<br>→ 对应选项 C</p>
+<p>🎯 考点总结：<br>系统调用的核心特征：内核态执行、安全隔离、内核服务入口<br>区分 系统调用（syscall） 与 API（如 POSIX）：<br>系统调用是 OS 特定的底层机制；<br>API 是标准化的编程接口，可跨平台（通过不同 syscall 实现）；<br>“统一接口”是库&#x2F;标准（如 POSIX、C 标准库）的目标，非 syscall 本身的属性。<br>✅ 正确答案：C. 仅 I、Ⅱ、IV</p>
+<h1 id="题目-20"><a href="#题目-20" class="headerlink" title="题目"></a>题目</h1><p>下列关于多任务操作系统的叙述中，正确的（ ）。(2018)<br>Ⅰ.具有并发和并行的特点 Ⅱ.需要实现对共享资源的保护 Ⅲ.需要运行在多CPU的硬件平台上<br>A.仅Ⅰ B.仅Ⅱ C.仅Ⅰ、Ⅱ D.Ⅰ、Ⅱ、Ⅲ</p>
+<h2 id="解析-20"><a href="#解析-20" class="headerlink" title="解析"></a>解析</h2><p>答案：C. 仅Ⅰ、Ⅱ</p>
+<p>✅ 逐项解析：<br>Ⅰ. 具有并发和并行的特点<br>✅ 正确（需注意术语区分）：</p>
+<p>并发（Concurrency）：指宏观上多个任务“同时推进”，微观上可能交替执行（单 CPU 通过时间片轮转实现）；<br>并行（Parallelism）：指微观上多个任务真正同时执行（需多核&#x2F;多 CPU）；<br>多任务操作系统一定支持并发；若运行在多核平台上，也能支持并行；<br>题干说“具有并发和并行的特点”，应理解为“具备支持两者的能力”，而非“必须同时发生”。现代多任务 OS（如 Linux、Windows）设计上同时支持并发与并行，故此项正确。<br>📌 注：即使在单核机器上，系统仍具备并行能力（只要换到多核平台即可发挥），这属于 OS 的设计特性。</p>
+<p>Ⅱ. 需要实现对共享资源的保护<br>✅ 正确。</p>
+<p>多任务环境下，多个进程&#x2F;线程可能同时访问共享资源（如内存、文件、设备、全局变量）；<br>若无保护，会导致竞态条件（Race Condition）、数据不一致、死锁等问题；<br>OS 必须提供同步机制：如互斥锁（mutex）、信号量（semaphore）、临界区等；<br>这是多任务系统正确性与稳定性的基石。<br>Ⅲ. 需要运行在多CPU的硬件平台上<br>❌ 错误。</p>
+<p>多任务操作系统最早诞生于单 CPU 系统（如 UNIX V6、MS-DOS 的多任务扩展、Windows 3.x 增强模式）；<br>通过时间片轮转 + 中断 + 进程切换，单 CPU 也能实现多任务（即并发）；<br>多 CPU 是提升性能（实现并行）的可选硬件支撑，非必要前提。<br>→ 本项明显错误。<br>🎯 考点总结：<br>并发 ≠ 并行：并发是逻辑概念（任务交错推进），并行是物理概念（真正同时执行）；<br>多任务 OS 的核心在于：<br>调度（实现并发）<br>同步与保护（保障共享正确性）<br>硬件平台是实现手段，非定义约束——多任务是软件能力，可在单核上运行。</p>
+<h1 id="题目-21"><a href="#题目-21" class="headerlink" title="题目"></a>题目</h1><p>处理外部中断时，应该由操作系统保存的是（ ）。 (2015)<br>A.程序计数器(PC)的内容 B.通用寄存器的内容 C.快表(TLB)中的内容 D.Cache中的内容</p>
+<h2 id="解析-21"><a href="#解析-21" class="headerlink" title="解析"></a>解析</h2><p>答案：B. 通用寄存器的内容</p>
+<p>✅ 解析：<br>本题考察 中断处理过程中，软硬件对“现场保存”的分工。</p>
+<p>当中断发生时，硬件和操作系统协同完成上下文保存，但职责不同：</p>
+<p>A. 程序计数器（PC）的内容<br>❌ 由硬件自动保存，非操作系统负责。</p>
+<p>中断&#x2F;异常触发时，CPU 硬件电路会自动将当前 PC（即下一条指令地址，断点）压入栈（内核栈或当前栈）；<br>例如 x86 中，int&#x2F;中断发生时，CPU 自动压栈：RIP、CS、RFLAGS 等；<br>→ OS 无需、也不应干预此过程。<br>B. 通用寄存器的内容<br>✅ 由操作系统（软件）保存。</p>
+<p>硬件不会自动保存通用寄存器（如 RAX, RBX, RCX…）；<br>中断服务程序（ISR）运行前，若需要使用这些寄存器，必须由 OS 的中断处理入口代码显式保存（如 push %rax; push %rbx; …）；<br>恢复时再弹出，以保证被中断程序的寄存器状态透明；<br>这是 OS 编写 ISR 时的标准操作（如 Linux 的 SAVE_ALL 宏保存通用寄存器）。<br>C. 快表（TLB）中的内容<br>❌ 通常不需要保存，且 OS 不负责“保存 TLB 内容”。</p>
+<p>TLB 是 MMU 的高速缓存，存储虚拟页号 → 物理页帧号的映射；<br>中断本身不改变页表，TLB 内容仍然有效；<br>若中断导致进程切换（如时钟中断后调度），OS 会刷新或切换地址空间（如 mov %cr3, %rax），此时 TLB 自动失效或部分失效，但不是“保存 TLB 内容”；<br>TLB 是硬件缓存，内容不可直接读写（无指令可 dump TLB），故无法“保存”。<br>D. Cache 中的内容<br>❌ 由硬件透明管理，OS 不保存。</p>
+<p>Cache（L1&#x2F;L2&#x2F;L3）是 CPU 透明缓存，内容随内存访问自动更新；<br>中断不改变内存语义，Cache 一致性由硬件协议（如 MESI）维护；<br>OS 无法也不需要保存 cache 内容。</p>
+<h1 id="题目-22"><a href="#题目-22" class="headerlink" title="题目"></a>题目</h1><p>下列选项中，在用户态执行的是（ ）。 (2011)<br>A.命令解释程序 B.缺页处理程序 C.进程调度程序 D.时钟中断处理程序</p>
+<h2 id="解析-22"><a href="#解析-22" class="headerlink" title="解析"></a>解析</h2><p>答案：A. 命令解释程序</p>
+<p>✅ 解析：<br>题目问：哪个程序在用户态执行？<br>关键在于判断各模块的运行特权级。</p>
+<p>A. 命令解释程序（Command Interpreter）<br>✅ 在用户态执行。</p>
+<p>即 Shell（如 bash、zsh、cmd.exe、PowerShell）；<br>它是普通用户进程，由操作系统启动，运行在用户态；<br>功能：读取用户命令 → 解析 → 调用系统调用（如 fork + exec）启动新程序；<br>虽然它发起系统调用进入内核，但自身代码执行始终在用户态。<br>B. 缺页处理程序<br>❌ 在内核态执行。</p>
+<p>缺页异常（Page Fault）触发后，CPU 陷入内核；<br>由内核的 page_fault() 处理函数（如 Linux 的 do_page_fault）响应，涉及页表修改、磁盘 I&#x2F;O 调度、内存分配等特权操作；<br>用户态无法访问页表或分配物理页。<br>C. 进程调度程序<br>❌ 在内核态执行。</p>
+<p>调度器（如 Linux 的 schedule()）负责选择下一个运行进程、切换上下文、更新 TCB&#x2F;运行队列；<br>涉及修改内核关键数据结构和特权寄存器（如 CR3 切换地址空间），必须在内核态。<br>D. 时钟中断处理程序<br>❌ 在内核态执行。</p>
+<p>时钟中断是硬件中断，发生时 CPU 自动切换到内核态；<br>中断服务程序（如 Linux 的 timer_interrupt）更新系统时间、触发调度 tick、处理定时器等，均为内核逻辑。<br>🎯 考点总结：<br>用户态程序：所有普通应用程序、Shell、库函数等；<br>内核态程序：中断处理、异常处理、系统调用服务例程、调度器、内存管理、设备驱动等；<br>Shell 是典型的用户态系统程序——它是用户与 OS 的桥梁，但本身不是 OS 内核的一部分。<br>📌 记忆口诀：<br>“Shell 是用户雇的秘书，内核才是公司 CEO”<br>秘书（Shell）跑腿传话（调用 syscall），但决策（调度、缺页、中断）全由 CEO（内核）在高管层（内核态）完成。</p>
+<h1 id="题目-23"><a href="#题目-23" class="headerlink" title="题目"></a>题目</h1><p>响应外部中断的过程中，中断隐指令完成的操作，除保护断点外，还包括<br>______。(2012 组成原理)<br>Ⅰ．关中断 Ⅱ．保存通用寄存器的内容 Ⅲ．形成中断服务程序入口地址并送 PC<br>A．仅Ⅰ、Ⅱ B．仅Ⅰ、Ⅲ C．仅Ⅱ、Ⅲ D．Ⅰ、Ⅱ、Ⅲ</p>
+<h2 id="解析-23"><a href="#解析-23" class="headerlink" title="解析"></a>解析</h2><p>答案：B．仅Ⅰ、Ⅲ</p>
+<p>✅ 解析：<br>本题考察 “中断隐指令”（Interrupt Implicit Instruction） 的概念——它不是一条真实指令，而是 CPU 响应中断时硬件自动完成的一系列微操作的统称，对程序员透明。</p>
+<p>这些操作由 硬件电路自动完成，发生在中断响应周期，典型的包括：</p>
+<p>Ⅰ．关中断<br>✅ 是中断隐指令的操作。</p>
+<p>为防止中断嵌套导致栈溢出或处理混乱，大多数体系结构在进入中断服务前硬件自动关闭可屏蔽中断（如 x86 清除 EFLAGS.IF 位）；<br>注意：非屏蔽中断（NMI）仍可响应；<br>这是硬件行为，属于中断隐指令的一部分。<br>Ⅱ．保存通用寄存器的内容<br>❌ 不是中断隐指令的操作。</p>
+<p>通用寄存器（如 RAX, RBX, RCX…）的保存由中断服务程序的软件入口代码完成（如 push %rax; push %rbx; …）；<br>硬件不会自动保存通用寄存器——那样开销太大，且未必所有 ISR 都需要；<br>是否保存、保存哪些，由 OS 编程决定。<br>Ⅲ．形成中断服务程序入口地址并送 PC<br>✅ 是中断隐指令的核心操作。</p>
+<p>CPU 根据中断类型号（如 IRQ0&#x3D;32），查中断向量表（IVT） 或 中断描述符表（IDT），取出对应 ISR 的入口地址；<br>将该地址装入 程序计数器（PC &#x2F; RIP），从而跳转到中断服务程序开始执行；<br>整个查表 + 跳转由硬件完成，属于中断隐指令。<br>✅ 额外补充：中断隐指令通常包括（硬件自动）：<br>保护断点：将 PC（及 CS、PSW）压栈<br>关中断（针对可屏蔽中断）<br>查中断向量表 → 获取 ISR 入口地址 → 装入 PC<br>而以下由软件（OS）完成：</p>
+<p>保存通用寄存器、浮点寄存器等<br>执行具体的中断服务逻辑<br>恢复现场（弹出寄存器、开中断、iret）<br>🎯 考点总结：<br>中断隐指令 &#x3D; 硬件自动完成的操作<br>关键三步：保护断点、关中断、跳转到 ISR<br>保存通用寄存器是软件责任，非硬件隐指令</p>
+<h1 id="题目-24"><a href="#题目-24" class="headerlink" title="题目"></a>题目</h1><p>下列选项中，通过系统调用完成的操作是( )。 (2021.32)<br>A．页置换 B．进程调度 C．创建新进程 D．生成随机整数</p>
+<h2 id="解析-24"><a href="#解析-24" class="headerlink" title="解析"></a>解析</h2><p>答案：C．创建新进程</p>
+<p>✅ 解析：<br>题目问：哪个操作是“通过系统调用完成”的？<br>即：应用程序必须通过系统调用请求内核执行该操作。</p>
+<p>我们逐项分析：</p>
+<p>A．页置换<br>❌ 由操作系统内核在缺页异常处理中自动完成，不需要也不允许用户程序主动发起。</p>
+<p>当发生缺页时，CPU 陷入内核 → 内核的缺页处理程序决定是否需要页置换（选择牺牲页、写回磁盘、加载新页等）；<br>整个过程对用户透明，无对应系统调用；<br>用户无法也不应干预物理内存管理。<br>B．进程调度<br>❌ 由操作系统内核自主完成，非系统调用触发。</p>
+<p>调度发生在：<br>时钟中断（时间片到期）<br>系统调用中进程主动阻塞（如 read 等待 I&#x2F;O）<br>进程退出、唤醒等事件<br>应用程序不能直接调用“调度”；它只能通过系统调用间接影响调度（如 sleep()、yield()），但调度决策本身是内核行为；<br>无 schedule() 系统调用。<br>C．创建新进程<br>✅ 通过系统调用完成。</p>
+<p>典型系统调用：<br>UNIX&#x2F;Linux：fork(), vfork(), clone()<br>进一步配合 exec() 系列加载新程序<br>用户程序必须调用这些系统调用，才能请求内核为其创建新进程（分配 PCB、复制页表、设置上下文等）；<br>这是用户主动发起、内核执行的典型系统调用场景。<br>D．生成随机整数<br>❌ 通常在用户态完成，不一定需要系统调用。</p>
+<p>普通伪随机数（如 rand()）由 glibc 等库在用户态实现，基于线性同余等算法，不涉及内核；<br>若需要真随机数（如加密用途），可读 &#x2F;dev&#x2F;random 或 &#x2F;dev&#x2F;urandom，此时通过 read() 系统调用间接获取；但：<br>read() 是通用 I&#x2F;O 系统调用，“生成随机数”本身不是系统调用；<br>题干问的是“通过系统调用完成的操作”，而“生成”动作实质在内核的 random.c 驱动中，但选项 D 描述模糊，且通常场景下不依赖 syscall；<br>相比之下，C 是明确、直接、必须通过系统调用完成的操作。<br>🎯 考点总结：<br>系统调用是 用户程序 ↔ 内核 的唯一受控接口；<br>只有需要内核特权或全局资源的操作才通过系统调用：<br>进程控制（fork, exit, wait）<br>文件 I&#x2F;O（open, read, write）<br>设备控制（ioctl）<br>通信（pipe, socket）<br>而页置换、调度等属于内核自主管理行为，对用户透明；<br>库函数（如 rand()、malloc()）≠ 系统调用。</p>
+<h1 id="题目-25"><a href="#题目-25" class="headerlink" title="题目"></a>题目</h1><p>下列关于“自陷”（Trap，也称陷阱）的叙述中，错误的是（ ）。(2020 组成原理)<br>A. 自陷是通过陷阱指令预先设定的一类外部中断事件<br>B. 自陷可用于实现程序调试时的断点设置和单步跟踪<br>C. 自陷发生后CPU将转去执行操作系统内核相应程序<br>D. 自陷处理完成后返回到陷阱指令的下一条指令执行</p>
+<h2 id="解析-25"><a href="#解析-25" class="headerlink" title="解析"></a>解析</h2><p>答案：A. 自陷是通过陷阱指令预先设定的一类外部中断事件</p>
+<p>✅ 解析：<br>本题考查对 自陷（Trap） 的本质理解，关键在于区分：</p>
+<p>Trap 是内部异常（内中断），不是外部中断；<br>它由程序主动执行特定指令（如 int 3、syscall）引发，同步、可预期；<br>与硬件异步触发的外部中断（如键盘、时钟）有根本区别。<br>逐项分析：<br>A. 自陷是通过陷阱指令预先设定的一类外部中断事件<br>❌ 错误（本题答案）</p>
+<p>Trap 属于内部异常（内中断），由 CPU 在执行指令过程中检测到特定条件（如执行 int 指令）而触发；<br>外部中断来自 CPU 外部设备（如 I&#x2F;O 控制器），与当前指令流无关（异步）；<br>Trap 是同步事件，与指令强关联；外部中断是异步事件。<br>→ 将 Trap 归为“外部中断”是概念性错误。<br>B. 自陷可用于实现程序调试时的断点设置和单步跟踪<br>✅ 正确</p>
+<p>断点：调试器将目标地址指令替换为 int 3（x86）触发 Trap，内核捕获后通知调试器；<br>单步跟踪：设置 EFLAGS.TF &#x3D; 1（陷阱标志），每条指令后触发单步 Trap（#DB 异常）；<br>→ Trap 是调试支持的核心机制。<br>C. 自陷发生后 CPU 将转去执行操作系统内核相应程序<br>✅ 正确</p>
+<p>Trap 触发后，CPU 根据中断向量（如 int 3 → 向量 3）查 IDT，跳转到内核注册的处理程序（如 do_int3）；<br>所有 Trap 最终由内核统一接管（即使是用户态调试，也需内核转发信号）。<br>D. 自陷处理完成后返回到陷阱指令的下一条指令执行<br>✅ 正确（针对典型的 Trap 类异常）</p>
+<p>Trap 的特点是：陷阱指令本身已执行完毕，返回时应继续执行下一条指令；<br>对比：Fault（如缺页）返回时重执行引发异常的指令；<br>例子：<br>int 0x80（系统调用）执行后，返回用户态执行 int 0x80 的下一条指令；<br>int 3 断点触发后，调试器恢复原指令并继续执行下一条。</p>
+<h1 id="题目-26"><a href="#题目-26" class="headerlink" title="题目"></a>题目</h1><p>下列事件中，属于外部中断事件的是（）。(2020)<br>Ⅰ. 访存时缺页 Ⅱ. 定时器到时 Ⅲ. 网络数据包到达<br>A. 仅Ⅰ、Ⅱ B. 仅Ⅰ、Ⅲ C. 仅Ⅱ、Ⅲ D. Ⅰ、Ⅱ和Ⅲ</p>
+<h2 id="解析-26"><a href="#解析-26" class="headerlink" title="解析"></a>解析</h2><p>答案：C. 仅Ⅱ、Ⅲ</p>
+<p>✅ 解析：<br>题目要求选出 属于外部中断事件 的选项。</p>
+<p>首先明确概念：<br>外部中断（External Interrupt）：<br>由 CPU 外部硬件设备 发起的异步信号，与当前执行的指令无关，通过中断控制器（如 APIC、8259A）向 CPU 发出中断请求（INTR）。<br>典型来源：时钟、键盘、鼠标、磁盘、网卡等 I&#x2F;O 设备。<br>内部异常（Internal Exception）：<br>由 CPU 执行指令过程中检测到的事件 引起，与当前指令强相关（同步），如除零、缺页、非法指令等。<br>逐项判断：<br>Ⅰ. 访存时缺页<br>❌ 不属于外部中断，而是内部异常（具体为 fault）。</p>
+<p>缺页由 MMU（内存管理单元，CPU 内部组件）在执行访存指令时检测到页表项无效或未驻留而触发；<br>属于同步异常，中断向量通常为 #PF（Page Fault）；<br>→ 是内中断，非外部中断。<br>Ⅱ. 定时器到时<br>✅ 属于外部中断。</p>
+<p>系统时钟定时器（如 HPET、APIC Timer）是独立硬件模块，定时产生脉冲信号，通过中断控制器向 CPU 发出中断请求（如 IRQ0 &#x2F; Local APIC LVT Timer）；<br>虽然用于系统调度等，但其触发源是外部硬件，与 CPU 当前执行的指令无关；<br>→ 是典型的可屏蔽外部中断。<br>Ⅲ. 网络数据包到达<br>✅ 属于外部中断。</p>
+<p>网卡（NIC）收到数据包后，若配置为中断模式，会通过 PCIe 向中断控制器发送中断请求（如 MSI&#x2F;MSI-X）；<br>CPU 收到后暂停当前任务，转去执行网卡驱动的 ISR；<br>显然来自外部设备，是标准外部中断。<br>✅ 结论：<br>Ⅰ：❌ 内部异常<br>Ⅱ：✅ 外部中断<br>Ⅲ：✅ 外部中断<br>→ 正确选项为 C. 仅Ⅱ、Ⅲ<br>🎯 考点总结：<br>区分中断来源：<br>外部：设备（时钟、网卡、磁盘控制器 …）<br>内部：CPU 执行指令引发（缺页、除零、INT 指令 …）<br>缺页常被误认为“设备导致”，但触发机制在 CPU 内部（MMU），属异常；<br>现代系统中，为减少中断开销，网卡常使用轮询（如 NAPI），但**“数据包到达可引发中断”仍是其基本工作模式之一**，题干未限定实现方式，默认按经典中断模型理解。</p>
+<h1 id="题目-27"><a href="#题目-27" class="headerlink" title="题目"></a>题目</h1><p>外部中断包括不可屏蔽中断（NMI）和可屏蔽中断。下列关于外部中断的叙述中，错误的是（ ）。(2020 组成原理)<br>A. CPU处于关中断状态时，也能响应NMI请求<br>B. 一旦可屏蔽中断请求信号有效，CPU将立即响应<br>C. 不可屏蔽中断的优先级比可屏蔽中断的优先级高<br>D. 可通过中断屏蔽字改变可屏蔽中断的处理优先级</p>
+<h2 id="解析-27"><a href="#解析-27" class="headerlink" title="解析"></a>解析</h2><p>答案：B. 一旦可屏蔽中断请求信号有效，CPU将立即响应</p>
+<p>✅ 解析：<br>本题考查 外部中断（特别是可屏蔽中断）的响应条件与机制。我们逐项分析：</p>
+<p>A. CPU 处于关中断状态时，也能响应 NMI 请求<br>✅ 正确。</p>
+<p>NMI（Non-Maskable Interrupt）是不可屏蔽中断，设计用于处理严重硬件事件（如电源故障、内存奇偶校验错）；<br>其触发不受 EFLAGS.IF 位（中断允许标志）控制，即使执行了 cli（关中断），NMI 仍可被响应；<br>这是 NMI 的核心特性。<br>B. 一旦可屏蔽中断请求信号有效，CPU 将立即响应<br>❌ 错误（本题答案）</p>
+<p>可屏蔽中断（如 IRQ0~15）的响应需同时满足多个条件：<br>中断请求线有效（INTR &#x3D; 1）<br>CPU 处于开中断状态（IF &#x3D; 1）<br>当前指令执行完毕（CPU 只在指令边界响应中断）<br>无更高优先级中断&#x2F;异常正在处理<br>若 CPU 正在执行关中断代码（IF &#x3D; 0），或处于原子指令（如 lock inc）、中断服务中，即使 INTR 有效，也不会立即响应；<br>中断是异步但非即时的，需等待合适的响应点。<br>C. 不可屏蔽中断的优先级比可屏蔽中断的优先级高<br>✅ 正确。</p>
+<p>硬件设计上，NMI 的优先级通常高于所有可屏蔽中断；<br>例如 x86 中，NMI 向量号为 2，高于 IRQ0（通常映射为 32+），且不受屏蔽影响；<br>这确保关键故障能被及时处理。<br>D. 可通过中断屏蔽字改变可屏蔽中断的处理优先级<br>✅ 正确。</p>
+<p>中断屏蔽字（Interrupt Mask Register, IMR）是中断控制器（如 8259A、APIC）中的寄存器，用于禁止某些 IRQ 线；<br>通过编程 IMR（如 outb(0x21, mask)），可动态屏蔽低优先级中断，从而间接提升其他中断的相对优先级；<br>现代 APIC 还支持优先级寄存器（TPR），更精细地控制中断抢占。<br>🎯 考点总结：<br>中断响应 ≠ 中断请求有效：受 IF 标志、指令边界、当前状态制约；<br>“立即响应”是常见误解：CPU 必须完成当前指令（甚至微码序列）后才采样中断；<br>实时系统中，为减少延迟，会：<br>使用 NMI 处理紧急事件<br>缩短临界区（减少关中断时间）<br>采用中断嵌套与优先级管理</p>
+<h1 id="题目-28"><a href="#题目-28" class="headerlink" title="题目"></a>题目</h1><p>异常事件在当前指令执行过程中进行检测，中断请求则在当前指令执行后进行检测。下列事件中。下列事<br>件中，相应处理程序执行后，必须回到当前指令重新执行的是（ ）。(2021)<br>A. 系统调用 B. 页缺失 C. DMA传送结束 D. 打印机缺纸</p>
+<h2 id="解析-28"><a href="#解析-28" class="headerlink" title="解析"></a>解析</h2><p>答案：B. 页缺失</p>
+<p>✅ 解析：<br>题干关键句：</p>
+<p>“异常事件在当前指令执行过程中检测，中断请求在当前指令执行后检测”<br>→ 问：处理完后必须回到 当前指令 重新执行 的是哪个？</p>
+<p>这指向异常中的 Fault（故障） 类事件——其特点是：引发异常的指令尚未完成，修复后需重试该指令。</p>
+<p>我们逐项分析：</p>
+<p>A. 系统调用<br>→ 属于 Trap（陷阱） 类异常。</p>
+<p>由 syscall &#x2F; int 0x80 等指令主动触发，且该指令本身已执行完毕；<br>处理完成后，返回到该 trap 指令的下一条指令继续执行；<br>❌ 不需重执行当前指令。<br>B. 页缺失（即缺页异常，Page Fault）<br>→ 属于 Fault（故障） 类异常。</p>
+<p>发生在 CPU 执行某条访存指令（如 mov (%rax), %rbx）过程中，MMU 发现页不在内存；<br>此时，该访存指令尚未完成（数据未读入）；<br>内核处理缺页：分配物理页、从磁盘加载、更新页表；<br>处理完成后，必须重新执行原访存指令，才能正确完成数据访问；<br>✅ 必须回到当前指令重新执行 —— 正确答案。<br>C. DMA 传送结束<br>→ 属于 外部中断。</p>
+<p>DMA 控制器完成后向 CPU 发中断，与当前指令无关（异步）；<br>中断处理完后，返回到被中断的下一条指令继续执行；<br>❌ 不涉及重执行当前指令。<br>D. 打印机缺纸<br>→ 通常由设备通过外部中断或轮询检测发现，属于 I&#x2F;O 异常；</p>
+<p>若通过中断上报（如并口中断），同 C，返回下一条指令；<br>若由系统调用（如 write）内部检测到，则 write 返回错误码（如 EIO），用户程序自行处理，不自动重试；<br>❌ 无“必须重执行当前指令”的语义。</p>
+<h1 id="题目-29"><a href="#题目-29" class="headerlink" title="题目"></a>题目</h1><p>下列指令中，只能在内核态执行的是( )。(2021)<br>A、trap 指令 B、I&#x2F;O 指令 C、数据传送指令 D、设置断点指令</p>
+<h2 id="解析-29"><a href="#解析-29" class="headerlink" title="解析"></a>解析</h2><p>答案：B、I&#x2F;O 指令</p>
+<p>✅ 解析：<br>题目问：只能在内核态（特权态）执行的指令。<br>我们逐项分析各选项的特权级要求（以 x86 为例，其他架构原则类似）：</p>
+<p>A. trap 指令<br>❌ 可在用户态执行。</p>
+<p>泛指主动陷入内核的指令，如：<br>x86：int n（如 int 0x80）、syscall<br>ARM：svc #0（Supervisor Call）<br>这些指令设计目的就是供用户程序发起系统调用，属于非特权指令；<br>执行后自动切换到内核态，但发起点在用户态。<br>✅ 用户态可用。<br>B. I&#x2F;O 指令<br>✅ 只能在内核态执行。</p>
+<p>典型如 x86 的 in &#x2F; out 指令（端口 I&#x2F;O），或对 MMIO 地址的直接访问（虽无专用指令，但地址访问受页保护限制）；<br>出于安全与稳定性考虑，直接硬件 I&#x2F;O 是特权操作：<br>若用户程序随意读写设备寄存器，可导致设备混乱、系统崩溃、信息泄露；<br>x86 中，执行 in&#x2F;out 时若 CPL &gt; IOPL（I&#x2F;O Privilege Level），触发 #GP（General Protection Fault）；<br>现代 OS 将 IOPL 设为 0（仅内核可 I&#x2F;O）；<br>用户程序必须通过 read&#x2F;write&#x2F;ioctl 等系统调用间接访问设备。<br>✅ 仅内核态可执行 → 正确答案。<br>C. 数据传送指令<br>❌ 可在用户态执行。</p>
+<p>如 mov, push, pop, lea 等通用数据移动指令；<br>是程序基础操作，用户程序大量使用；<br>只要不访问内核地址空间（受页保护限制），完全可在用户态运行。<br>✅ 非特权指令。<br>D. 设置断点指令<br>❌ 可在用户态执行。</p>
+<p>通常指 int 3（x86 断点指令），或调试器写入的软断点；<br>int 3 是一条合法的 trap 指令，用户态可执行；<br>执行后陷入内核（由调试子系统处理），但指令本身非特权；<br>硬件断点（DR0~DR7）的设置才是特权操作，但“设置断点指令”一般指 int 3。<br>✅ 用户态可用。</p>
+<h1 id="题目-30"><a href="#题目-30" class="headerlink" title="题目"></a>题目</h1><p>下列关于多道程序系统的叙述中，不正确的是 ( ) (2022)<br>A.支持进程的并发执行 B.不必支持虚拟存储管理<br>C.需要实现对共享资源的管理 D.进程数越多CPU 利用率越高</p>
+<h2 id="解析-30"><a href="#解析-30" class="headerlink" title="解析"></a>解析</h2><p>答案：D. 进程数越多 CPU 利用率越高</p>
+<p>✅ 解析：<br>题目要求选出 不正确的叙述。我们逐项分析：</p>
+<p>A. 支持进程的并发执行<br>✅ 正确。<br>多道程序系统的核心目标就是通过进程并发（宏观并行）提高资源利用率。多个进程交替或并行执行是其基本特征。</p>
+<p>B. 不必支持虚拟存储管理<br>✅ 正确（即此项不是错误叙述）。</p>
+<p>早期多道程序系统（如 IBM OS&#x2F;MVT）运行在无虚拟内存的硬件上，使用覆盖（Overlay） 或交换（Swapping） 技术管理内存；<br>虚拟存储（分页&#x2F;分段）是后续发展，并非多道程序的必要条件；<br>只要内存足够容纳多个作业，或配合交换区，即可实现多道程序。<br>→ 所以“不必支持”是事实陈述，正确。<br>C. 需要实现对共享资源的管理<br>✅ 正确。<br>并发进程可能竞争 CPU、内存、I&#x2F;O 设备、文件等资源，必须通过同步机制（互斥锁、信号量等）避免竞态条件，这是多道系统的基本要求。</p>
+<p>D. 进程数越多 CPU 利用率越高<br>❌ 错误（本题答案）。</p>
+<p>CPU 利用率并非随进程数无限增长：<br>当进程数较少时，增加进程可减少 CPU 空闲（如一个进程 I&#x2F;O 时另一个计算），提升利用率；<br>但当进程数超过系统承载能力后：<br>调度开销（上下文切换）剧增；<br>缓存&#x2F;TLB 失效率上升；<br>内存压力导致频繁缺页或交换（thrashing）；<br>实际 CPU 用于“干活”的比例反而下降；<br>存在一个最优进程数，使 CPU 利用率最高；过多会导致性能下降。<br>→ 该说法忽略了系统开销与资源瓶颈，是典型的片面认识。<br>🎯 考点总结：<br>多道程序 ≠ 无限进程；<br>性能与并发度呈倒 U 型关系：太少 → 资源闲置；太多 → 调度&#x2F;换页开销主导；<br>虚拟存储是增强手段，非多道程序的前提（历史事实：多道早于虚拟内存）。</p>
+<h1 id="题目-31"><a href="#题目-31" class="headerlink" title="题目"></a>题目</h1><p>下列选项中，需要在操作系统进行初始化过程中创建的是( ) (2022)<br>A.中断向量表 B.文件系统的根目录<br>C.硬盘分区表 D.文件系统的索引节点表</p>
+<h2 id="解析-31"><a href="#解析-31" class="headerlink" title="解析"></a>解析</h2><p>答案：A. 中断向量表</p>
+<p>✅ 解析：<br>题目问：需要在操作系统初始化过程中创建的是哪个？<br>强调“操作系统初始化时主动创建&#x2F;设置”，而非硬件固有或用户空间后期构建的内容。</p>
+<p>我们逐项分析：</p>
+<p>A. 中断向量表（Interrupt Vector Table, IVT）或中断描述符表（IDT）<br>✅ 正确。</p>
+<p>在实模式下，IVT 固定位于内存 0x0 处（由 BIOS 初始化），但进入保护模式&#x2F;长模式后，操作系统必须重新建立自己的中断描述符表（IDT）；<br>OS 启动早期（如 Linux 的 setup_idt()、trap_init()）会：<br>分配 IDT 内存；<br>填充各中断&#x2F;异常的处理程序入口（如 divide_error, page_fault, system_call）；<br>执行 lidt 指令加载 IDTR 寄存器；<br>这是 OS 初始化的关键步骤，否则无法响应中断和异常。<br>→ 必须由 OS 初始化时创建。<br>B. 文件系统的根目录<br>❌ 不一定由 OS 初始化时创建。</p>
+<p>根目录是文件系统结构的一部分，通常在格式化磁盘时创建（如 mkfs.ext4）；<br>OS 启动时只是挂载（mount）已存在的根文件系统，不负责“创建”它；<br>即使是 initramfs 或 live 系统，根目录也是由构建工具预先生成，非 OS 运行时创建。<br>→ 属于存储介质预置内容，非 OS 初始化动作。<br>C. 硬盘分区表<br>❌ 由磁盘分区工具创建（如 fdisk, parted），非操作系统初始化过程。</p>
+<p>分区表（MBR 或 GPT）位于磁盘最前端，是持久化存储结构；<br>OS 启动时读取分区表以定位分区，但不创建它；<br>若分区表损坏，OS 无法正常引导，需用外部工具修复。<br>→ 属于磁盘级元数据，非 OS 初始化职责。<br>D. 文件系统的索引节点表（inode 表）<br>❌ 在格式化文件系统时创建，非 OS 初始化时动态创建。</p>
+<p>如 ext4 的 inode 表在 mkfs.ext4 时分配并初始化；<br>OS 挂载后使用它，但不负责首次创建；<br>运行时可能动态分配新 inode（当文件创建时），但“索引节点表”的总体结构是静态预分配的。<br>→ 不属于“OS 初始化过程创建”的核心数据结构。</p>
+<h1 id="题目-32"><a href="#题目-32" class="headerlink" title="题目"></a>题目</h1><p>下列关于CPU 模式的叙述中，正确的是( ) (2022)<br>A. CPU 处于用户态时只能执行特权指令<br>B. CPU 处于内核态时只能执行特权指令<br>C. CPU 处于用户态时只能执行非特权指令<br>D. CPU 处于内核态时只能执行非特权指令</p>
+<h2 id="解析-32"><a href="#解析-32" class="headerlink" title="解析"></a>解析</h2><p>答案：C. CPU 处于用户态时只能执行非特权指令</p>
+<p>✅ 解析：<br>本题考察 CPU 特权级（运行模式）与指令权限的关系。</p>
+<p>现代 CPU（如 x86、ARM）支持多特权级：</p>
+<p>内核态（Kernel Mode &#x2F; Ring 0 &#x2F; EL1+）：可执行所有指令（特权 + 非特权）<br>用户态（User Mode &#x2F; Ring 3 &#x2F; EL0）：只能执行非特权指令；若尝试执行特权指令，触发保护异常（如 x86 的 #GP）<br>逐项分析：<br>A. CPU 处于用户态时只能执行特权指令<br>❌ 错误。</p>
+<p>用户态禁止执行特权指令；<br>若执行 cli、in、mov cr3, %rax 等，CPU 会触发异常，终止进程。<br>B. CPU 处于内核态时只能执行特权指令<br>❌ 错误。</p>
+<p>内核代码中大量使用非特权指令：<br>mov, add, call, push 等通用计算&#x2F;控制指令；<br>甚至可调用 glibc 函数（如内存操作）；<br>内核态是权限更高，不是“只能做特权事”。<br>C. CPU 处于用户态时只能执行非特权指令<br>✅ 正确。</p>
+<p>这是 CPU 保护机制的核心设计：<br>非特权指令：常规运算、访存（用户空间）、控制转移等；<br>特权指令：关中断、访问控制寄存器、I&#x2F;O 指令、修改页表等；<br>用户程序被限制在“安全沙箱”内，保障系统稳定与安全。<br>D. CPU 处于内核态时只能执行非特权指令<br>❌ 错误。</p>
+<p>内核必须执行特权指令才能管理工作：<br>sti&#x2F;cli 控制中断<br>mov %cr3, %rax 切换地址空间<br>wrmsr 写模型特定寄存器<br>in&#x2F;out 操作设备（虽现代驱动多用 MMIO，但仍需特权访问）<br>→ 若内核不能执行特权指令，操作系统根本无法运行</p>
+<h1 id="题目-33"><a href="#题目-33" class="headerlink" title="题目"></a>题目</h1><p>执行系统调用的过程涉及下列操作，其中由操作系统完成的是( ) (2022)<br>I.保存断点和程序状态字 Ⅱ.保存通用寄存器的内容<br>Ⅲ.执行系统调用服务例程 IV.将CPU 模式改为内核态<br>A.仅I、Ⅲ B.仅Ⅱ、Ⅲ C 仅Ⅱ、IV D.仅Ⅱ、Ⅲ、IV</p>
+<h2 id="解析-33"><a href="#解析-33" class="headerlink" title="解析"></a>解析</h2><p>答案：B. 仅Ⅱ、Ⅲ</p>
+<p>✅ 解析：<br>本题考查 系统调用执行过程中软硬件的分工。关键在于区分哪些操作由 硬件自动完成，哪些由 操作系统（软件）完成。</p>
+<p>我们逐项分析：</p>
+<p>I. 保存断点和程序状态字（PSW）<br>❌ 由硬件自动完成，非操作系统。</p>
+<p>执行 syscall &#x2F; int 0x80 等陷入指令时，CPU 硬件电路自动：<br>将返回地址（断点，即下一条指令地址）压栈；<br>将当前 RFLAGS（PSW）压栈；<br>切换栈指针（如从用户栈切换到内核栈）；<br>例如 x86-64 syscall 指令会自动保存 RIP → RCX，RFLAGS → R11，并加载内核 CS&#x2F;RIP；<br>→ 操作系统不参与也不控制此过程。<br>II. 保存通用寄存器的内容<br>✅ 由操作系统完成。</p>
+<p>硬件不会自动保存通用寄存器（如 RAX, RBX, RCX…）；<br>为保证被中断的用户进程状态透明，内核的系统调用入口代码必须显式保存这些寄存器；<br>例如 Linux 的 entry_SYSCALL_64 中调用 SWAPGS 后，会执行 SAVE_C_REGS &#x2F; SAVE_EXTRA_REGS 宏保存寄存器；<br>→ 属于 OS 的软件现场保护。<br>III. 执行系统调用服务例程<br>✅ 由操作系统完成。</p>
+<p>如 sys_read, sys_write, sys_fork 等，是 OS 内核实现的具体功能函数；<br>硬件只负责跳转到系统调用分发器（如查 sys_call_table），具体服务逻辑完全由 OS 编写。<br>IV. 将 CPU 模式改为内核态<br>❌ 由硬件自动完成。</p>
+<p>syscall &#x2F; int 指令执行时，CPU 自动切换特权级（如 x86 设置 CPL&#x3D;0，ARM 切换到 EL1）；<br>这是陷入机制的固有行为，由指令微码实现，OS 无法也不需干预；<br>→ 属于硬件特权级切换。<br>🎯 考点总结：<br>硬件负责：模式切换、断点&#x2F;PSW 保存、向量查表跳转（中断隐指令范畴）；<br>操作系统负责：<br>通用寄存器等扩展现场保存；<br>参数提取、权限检查、具体服务执行；<br>恢复现场与返回；<br>易错点：误以为“切换内核态”是 OS 做的——实为指令触发的硬件行为。</p>
+<h1 id="题目-34"><a href="#题目-34" class="headerlink" title="题目"></a>题目</h1><p>与宏内核操作系统相比，下列特征中微内核操作系统具有的是( ) (2023)<br>I.较好的性能Ⅱ.较高的可靠性 Ⅲ.较高的安全性 IV.较强的可扩展性<br>A.仅Ⅱ、IV B.仅I 、Ⅱ、IV C.仅I 、 Ⅲ 、IV D.仅Ⅱ、Ⅲ、IV</p>
+<h2 id="解析-34"><a href="#解析-34" class="headerlink" title="解析"></a>解析</h2><p>正确选项：D. 仅Ⅱ、Ⅲ、IV<br>逐项判断：<br>I. 较好的性能<br>❌ 错误（微内核通常性能较低）</p>
+<p>微内核因大量功能移到用户态，服务调用需多次进程间通信（IPC）和上下文切换；<br>例如读文件：用户程序 → IPC → 文件服务 → IPC → 设备驱动 → 硬件；<br>相比宏内核的直接系统调用，IPC 开销显著；<br>尽管现代微内核（如 L4）通过优化 IPC 大幅提升性能，但总体仍逊于高度优化的宏内核（如 Linux）；<br>→ 宏内核性能更好，I 不属于微内核优势。<br>II. 较高的可靠性<br>✅ 正确</p>
+<p>微内核中，文件系统、驱动等运行在用户态；<br>若某个驱动崩溃（如显卡驱动 bug），仅该服务进程终止，内核和其他服务不受影响，系统可重启该服务；<br>宏内核中，驱动崩溃 &#x3D; 内核崩溃 &#x3D; 系统宕机（Kernel Panic &#x2F; BSOD）；<br>→ 微内核通过隔离故障域提升可靠性。<br>III. 较高的安全性<br>✅ 正确</p>
+<p>用户态服务受 MMU 保护，权限最小化（Principle of Least Privilege）；<br>攻击者即使攻破一个驱动，也无法直接获得内核权限（需额外提权漏洞）；<br>宏内核中，任何模块漏洞都可能导致整个内核被接管；<br>seL4 微内核甚至通过形式化验证证明其安全属性。<br>IV. 较强的可扩展性<br>✅ 正确</p>
+<p>新增功能（如新文件系统、新协议栈）只需添加用户态服务进程，无需修改&#x2F;重编译内核；<br>支持动态加载&#x2F;卸载服务；<br>宏内核扩展常需重新编译内核或加载内核模块（仍运行在内核态，风险高）；<br>→ 微内核更易定制、维护、更新。<br>✅ 结论：<br>I（性能）：❌ 微内核劣势<br>II（可靠性）：✅<br>III（安全性）：✅<br>IV（可扩展性）：✅<br>→ 正确选项：D. 仅Ⅱ、Ⅲ、IV</p>
+<h1 id="题目-35"><a href="#题目-35" class="headerlink" title="题目"></a>题目</h1><p>在操作系统内核中，中断向量表适合采用的数据结构是( ) (2023)<br>A.数组 B.队列 C.单向链表 D.双向链表</p>
+<h2 id="解析-35"><a href="#解析-35" class="headerlink" title="解析"></a>解析</h2><p>答案：A. 数组</p>
+<p>✅ 解析：<br>中断向量表（Interrupt Vector Table, IVT）或中断描述符表（Interrupt Descriptor Table, IDT） 是操作系统用于将中断&#x2F;异常号映射到对应处理程序入口地址的关键数据结构。</p>
+<p>我们分析为何 数组（Array）是最适合的数据结构：</p>
+<ol>
+<li>访问模式：按中断号随机、直接访问<br>中断&#x2F;异常发生时，CPU 根据中断类型号（如时钟中断 IRQ0 → 向量 32，缺页 → 向量 14）直接索引查找处理程序入口；<br>要求 O(1) 时间复杂度的随机访问；<br>→ 数组天然支持通过下标（中断号）直接寻址，完美匹配。</li>
+<li>其他选项为何不合适：<br>B. 队列<br>适用于先进先出（FIFO）顺序处理（如任务调度、打印队列）；<br>中断处理不要求顺序，而是按类型号并行、独立响应；<br>无法通过中断号快速定位入口。<br>C. 单向链表 &#x2F; D. 双向链表<br>查找需遍历，时间复杂度 O(n)，无法满足中断处理低延迟、高确定性要求；<br>中断向量表大小固定（如 x86 有 256 个向量），无需动态增删；<br>链表额外指针开销无必要。</li>
+<li>实际系统实现佐证：<br>x86 实模式：IVT 是位于物理地址 0x0 的 256 项数组，每项 4 字节（CS:IP）；<br>x86 保护&#x2F;长模式：IDT 是由 lidt 加载的连续内存数组，每项为门描述符（16 字节）；<br>Linux 内核中：gate_desc idt_table[256] 是静态数组；<br>ARM 异常向量表：固定偏移的跳转指令块（本质也是数组式布局）。<br>🎯 考点总结：<br>中断向量表核心需求：按中断号快速索引 → O(1) 随机访问；<br>数组是唯一满足该需求的线性结构；<br>系统设计讲究“用最简单结构满足关键性能需求”，此处数组最优。</li>
+</ol>
+<h1 id="题目-36"><a href="#题目-36" class="headerlink" title="题目"></a>题目</h1><p>下列操作完成时，导致 CPU 从内核态转为用户态的是( ) (2023)<br>A.阻塞过程 B.执行 CPU 调度 C.唤醒进程 D.执行系统调用</p>
+<h2 id="解析-36"><a href="#解析-36" class="headerlink" title="解析"></a>解析</h2><p>最终答案（按考试惯例）：D. 执行系统调用<br>✅ 正确答案应为：系统调用返回（即系统调用完成时），但选项 D 写的是 “执行系统调用”，而非“系统调用返回”。<br>题干：“下列操作 完成时，导致 CPU 从内核态转为用户态的是”</p>
+<p>我们逐项严格分析（注意“完成时”这个时间点）：</p>
+<p>A. 阻塞进程<br>❌ 不会转回用户态。</p>
+<p>进程在内核中执行系统调用（如 read）时发现需等待 I&#x2F;O → 主动调用 schedule() 让出 CPU；<br>当前进程进入阻塞态，CPU 切换到另一个进程（可能仍是内核态的其他进程，或用户进程）；<br>若调度到的是另一个用户进程，则 CPU 会转为用户态——但这归因于进程切换 + 新进程是用户进程，而非“阻塞操作本身导致转用户态”；<br>更关键的是：执行阻塞操作的进程自己并未回到用户态（它被挂起了）。<br>→ 不符合“操作完成时，CPU 转为用户态”（对当前上下文而言）。<br>B. 执行 CPU 调度<br>❌ 调度本身在内核态完成，不改变当前 CPU 模式。</p>
+<p>schedule() 函数全程运行在内核态；<br>调度结果可能是切换到：<br>另一个内核线程（仍内核态）<br>一个用户进程（此时后续 iret&#x2F;sysret 会切回用户态）<br>但调度完成瞬间，CPU 仍在内核态；真正切换到用户态发生在上下文恢复 + 执行 iret 之后；<br>→ 调度 ≠ 模式切换。<br>C. 唤醒进程<br>❌ 唤醒操作在内核态完成，被唤醒进程只是进入就绪队列，并未立即运行，更未切换到用户态。</p>
+<p>例如中断处理中唤醒等待 I&#x2F;O 的进程：调用 wake_up()，仅修改其状态为 TASK_RUNNING；<br>实际运行需等后续调度；<br>→ 唤醒完成时，CPU 仍处于中断&#x2F;系统调用上下文（内核态）。<br>D. 执行系统调用<br>❌ 执行系统调用时，CPU 从用户态 进入 内核态；</p>
+<p>“执行系统调用”是一个过程，其开始时陷入内核，结束时返回用户态；<br>但题干问的是“操作完成时”，若理解为“系统调用服务例程执行完毕”，则紧接着会：<br>恢复寄存器<br>执行 sysret &#x2F; iret<br>CPU 切回用户态<br>→ 表面看，D 似乎合理。<br>⚠️ 问题在于表述歧义：</p>
+<p>“执行系统调用”通常指发起并进入内核的过程（即陷入阶段），而非返回阶段；<br>严格说，“系统调用返回”才是切回用户态的时刻，但选项未写“返回”。<br>🔍 真实场景回顾（以 read 为例）：<br>text<br>1234567891011<br>→ 系统调用 返回 时，CPU 从内核态 → 用户态。</p>
+<p>因此，若选项 D 是 “系统调用返回”，则正确；但题干写的是 “执行系统调用”，易被理解为“调用过程中”，属常见命题瑕疵。</p>
+<p>📌 结论（结合历年真题惯例）：<br>在历年考研题中，类似题目的标准答案通常是：<br>✅ 系统调用返回 是唯一导致 CPU 从内核态回到用户态的常规路径。</p>
+<p>而四个选项中，D 是唯一与“用户-内核切换”直接相关的操作，尽管表述不够精准，但命题人极可能预期选 D。</p>
+<p>但严格技术意义上：</p>
+<p>A、B、C 均不导致当前 CPU 切回用户态；<br>D 若理解为“系统调用整个过程（含返回）”，则其完成时确实会切回用户态。<br>✅ 最终答案（按考试惯例）：D. 执行系统调用<br>📝 注：此题存在表述瑕疵，理想选项应为“系统调用返回”或“从中断&#x2F;异常返回”。但在给定选项中，D 是唯一合理选择。</p>
+<h1 id="题目-37"><a href="#题目-37" class="headerlink" title="题目"></a>题目</h1><p>下面关于中断、异常和系统调用的叙述中，错误的是( ) (2024)<br>A. 中断或异常发生时，CPU 处于内核态<br>B. 每个系统调用都有对应的内核服务例程<br>C. 中断处理程序开始执行时，CPU 处于内核态<br>D. 系统添加新类型设备时，需注册相应的中断服务例程</p>
+<h2 id="解析-37"><a href="#解析-37" class="headerlink" title="解析"></a>解析</h2><p>答案：A. 中断或异常发生时，CPU 处于内核态</p>
+<p>✅ 解析：<br>本题考查对中断、异常、系统调用执行时机与 CPU 模式关系的理解。关键在于区分 “发生时” 与 “处理时” 的状态。</p>
+<p>A. 中断或异常发生时，CPU 处于内核态<br>❌ 错误（本题答案）</p>
+<p>中断&#x2F;异常可以发生在用户态或内核态：<br>若当前正在运行用户进程，此时发生时钟中断、缺页异常、除零等，CPU 当时处于用户态；<br>随后硬件自动切换到内核态去处理；<br>“发生时”指的是事件触发的瞬间，即中断请求到达或异常指令执行的那一刻，CPU 所处的原始模式；<br>例如：用户程序执行 div 指令 → 用户态下发生除零异常 → 然后陷入内核处理；<br>→ 本项将“发生时”等同于“处理时”，混淆了时间点，是典型错误。<br>B. 每个系统调用都有对应的内核服务例程<br>✅ 正确。</p>
+<p>系统调用号（如 __NR_read &#x3D; 0）对应内核中的服务函数（如 sys_read）；<br>内核通过系统调用表（sys_call_table）实现映射；<br>无对应例程的调用号会返回 -ENOSYS，但合法系统调用必有服务例程。<br>C. 中断处理程序开始执行时，CPU 处于内核态<br>✅ 正确。</p>
+<p>无论是中断还是异常，CPU 在跳转到处理程序前，硬件已自动完成模式切换（如设置 CPL&#x3D;0）；<br>因此 ISR 第一行代码执行时，CPU 已在内核态。<br>D. 系统添加新类型设备时，需注册相应的中断服务例程<br>✅ 正确。</p>
+<p>新设备（如新网卡）可能产生中断（如数据到达）；<br>驱动程序需通过内核 API（如 request_irq）注册其中断号与 ISR；<br>否则中断发生时无对应处理程序，可能导致系统挂起或丢失事件。</p>
+<h1 id="题目-38"><a href="#题目-38" class="headerlink" title="题目"></a>题目</h1><p>系统调用的作用是（ ）。（北京交通大学2018）<br>A. 申请系统资源 B.终止系统服务 C.释放系统资源 D.请求系统服务</p>
+<h2 id="解析-38"><a href="#解析-38" class="headerlink" title="解析"></a>解析</h2><p>答案：D. 请求系统服务</p>
+<p>✅ 解析：<br>系统调用（System Call）是用户程序与操作系统内核交互的唯一受控接口，其根本作用是：</p>
+<p>让用户程序请求内核代表它完成特权操作或访问受保护资源。</p>
+<p>我们逐项分析选项：</p>
+<p>A. 申请系统资源<br>⚠️ 片面。</p>
+<p>申请资源（如内存 brk、文件描述符 open）确实是系统调用的功能之一；<br>但系统调用远不止“申请”，还包括：<br>释放资源（close, munmap）<br>使用资源（read, write, send）<br>控制进程（fork, exec, exit）<br>获取信息（getpid, time）<br>→ “申请”仅是子集，不全面。<br>B. 终止系统服务<br>❌ 错误。</p>
+<p>用户程序无法“终止系统服务”；<br>exit 是终止自身进程，而非系统服务；<br>系统服务（如 systemd 服务）需特权命令（如 systemctl stop），底层仍通过系统调用实现，但目的不是“终止系统服务”。<br>C. 释放系统资源<br>⚠️ 片面，同 A，只是反向操作，仍不完整。</p>
+<p>D. 请求系统服务<br>✅ 正确且全面。</p>
+<p>“系统服务”泛指内核提供的所有功能：<br>资源管理（分配&#x2F;回收内存、CPU、I&#x2F;O）<br>进程控制<br>通信与同步<br>安全与保护<br>用户程序通过系统调用请求这些服务，内核验证后执行；<br>这是对系统调用本质的准确概括。<br>🎯 考点总结：<br>系统调用 ≠ 仅资源申请&#x2F;释放，而是全部内核功能的访问门户；</p>
+<h1 id="题目-39"><a href="#题目-39" class="headerlink" title="题目"></a>题目</h1><p>操作系统中的并发性是指（ ）。（北京交通大学2018）<br>A. 若干事件在同一时刻发生 B.事件驱动 C.事件随机发生 D.若干事件在同一时间间隔内发生</p>
+<h2 id="解析-39"><a href="#解析-39" class="headerlink" title="解析"></a>解析</h2><p>答案：D. 若干事件在同一时间间隔内发生</p>
+<p>✅ 解析：<br>本题考查 “并发性（Concurrency）” 的准确定义，需与 “并行性（Parallelism）” 严格区分。</p>
+<p>关键概念辨析：<br>✅ 并发性（Concurrency）<br>指 多个事件在同一个时间间隔内发生（宏观上“同时”进行）；<br>在单处理机系统中，通过时间片轮转、快速切换实现；<br>微观上，任一时刻只有一个进程运行，但切换速度足够快，使用户感觉多个任务“同时”推进；<br>例如：一边下载文件（I&#x2F;O 等待中），一边编辑文档（CPU 计算）——交替执行，宏观并发。<br>❌ 并行性（Parallelism）<br>指 多个事件在同一时刻（同一瞬间）真正同时发生；<br>必须依赖多处理机或多核 CPU；<br>微观上多个任务同时执行；<br>对应选项 A：“若干事件在同一时刻发生” —— 描述的是并行，不是并发。<br>其他选项：<br>B. 事件驱动<br>→ 是一种编程模型（如 GUI、网络服务器），与并发性无直接等价关系。</p>
+<p>C. 事件随机发生<br>→ 错误。并发是受控调度的结果，不是随机的；中断虽异步，但并发执行是 OS 主动管理的行为。</p>
+<p>📌 经典表述（汤小丹《计算机操作系统》）：</p>
+<p>“并发性是指两个或多个事件在同一时间间隔内发生；并行性是指两个或多个事件在同一时刻发生。”</p>
+<h1 id="题目-40"><a href="#题目-40" class="headerlink" title="题目"></a>题目</h1><p>有一台计算机，具有1MB内存，操作系统占用200KB，每个进程各占用200KB。<br>如果用户进程等待I&#x2F;O的时间为80%，若增加1MB内存，则CPU的利用率提高多少？</p>
+<h2 id="解析-40"><a href="#解析-40" class="headerlink" title="解析"></a>解析</h2><p>已知条件</p>
+<ul>
+<li>总内存：  <ul>
+<li>初始：$1,\text{MB} &#x3D; 1024,\text{KB}$  </li>
+<li>增加后：$2,\text{MB} &#x3D; 2048,\text{KB}$</li>
+</ul>
+</li>
+<li>操作系统占用：$200,\text{KB}$  </li>
+<li>每个进程内存需求：$200,\text{KB}$  </li>
+<li>进程 I&#x2F;O 等待比例：$p &#x3D; 80% &#x3D; 0.8$<br>→ 单个进程的 <strong>CPU 使用比例</strong> 为 $1 - p &#x3D; 0.2$</li>
+</ul>
+<hr>
+<p>✅ 关键模型：多道程序下的 CPU 利用率</p>
+<p>当系统中有 $n$ 个进程并发运行，且每个进程独立地以概率 $p$ 处于 I&#x2F;O 等待状态时：</p>
+<ul>
+<li>所有进程同时等待 I&#x2F;O 的概率为：$p^n$  </li>
+<li>此时 CPU 空闲；其余时间至少有一个进程在使用 CPU  </li>
+<li>因此，<strong>CPU 利用率为</strong>：</li>
+</ul>
+<p>$$<br>U(n) &#x3D; 1 - p^n<br>$$</p>
+<hr>
+<p>第一步：原始内存下最多可运行进程数</p>
+<p>可用内存：</p>
+<p>$$<br>1024,\text{KB} - 200,\text{KB} &#x3D; 824,\text{KB}<br>$$</p>
+<p>每个进程需 200 KB：</p>
+<p>$$<br>n_1 &#x3D; \left\lfloor \frac{824}{200} \right\rfloor &#x3D; 4<br>$$</p>
+<p>（$4 \times 200 &#x3D; 800 \leq 824$，余 24 KB 不足一进程）</p>
+<p>CPU 利用率：</p>
+<p>$$<br>U_1 &#x3D; 1 - 0.8^4 &#x3D; 1 - 0.4096 &#x3D; 0.5904 &#x3D; 59.04%<br>$$</p>
+<hr>
+<p>第二步：增加 1 MB 内存后</p>
+<p>总内存：$2048,\text{KB}$<br>可用内存：</p>
+<p>$$<br>2048 - 200 &#x3D; 1848,\text{KB}<br>$$</p>
+<p>最多进程数：</p>
+<p>$$<br>n_2 &#x3D; \left\lfloor \frac{1848}{200} \right\rfloor &#x3D; 9<br>$$</p>
+<p>（$9 \times 200 &#x3D; 1800 \leq 1848$）</p>
+<p>CPU 利用率：</p>
+<p>$$<br>U_2 &#x3D; 1 - 0.8^9<br>$$</p>
+<p>计算：</p>
+<p>$$<br>0.8^4 &#x3D; 0.4096,\quad 0.8^8 &#x3D; (0.4096)^2 &#x3D; 0.16777216<br>$$<br>$$<br>0.8^9 &#x3D; 0.8^8 \times 0.8 &#x3D; 0.16777216 \times 0.8 &#x3D; 0.134217728<br>$$<br>$$<br>U_2 &#x3D; 1 - 0.134217728 &#x3D; 0.865782272 \approx 86.58%<br>$$</p>
+<hr>
+<p>第三步：利用率提升值</p>
+<p>$$<br>\Delta U &#x3D; U_2 - U_1 &#x3D; 86.58% - 59.04% &#x3D; 27.54%<br>$$</p>
+<hr>
+<p>✅ 最终答案：</p>
+<blockquote>
+<p><strong>CPU 利用率提高约 $27.5%$</strong>（即提升 <strong>27.5 个百分点</strong>）</p>
+</blockquote>
+<hr>
+<p>📌 附注</p>
+<ul>
+<li>本模型假设：  <ul>
+<li>进程行为独立、I&#x2F;O 比例恒定；  </li>
+<li>内存是唯一限制因素；  </li>
+<li>无调度开销、无换页（即所有进程常驻内存）。</li>
+</ul>
+</li>
+<li>实际系统中，过度增加进程可能导致 thrashing 或调度开销上升，但本题按理想多道程序模型求解。</li>
+</ul>
+<h1 id="题目-41"><a href="#题目-41" class="headerlink" title="题目"></a>题目</h1><p>某个计算机系统有一台输入机和一台打印机，现有两道程序投入运行，且程序A先开始运行，<br>程序B后开始运行。<br>程序A的运行轨迹为：计算50ms、打印100ms、再计算50ms、打印100ms，结束。<br>程序B的运行轨迹为：计算50ms、输入80ms、再计算100ms，结束。<br>试说明：</p>
+<ol>
+<li>两道程序运行时，CPU是否存在空闲等待？若是，在哪段时间内等待？为什么等待？</li>
+<li>程序A、B是否有等待CPU的情况？若有，指出发生等待的时刻。</li>
+</ol>
+<h2 id="解析-41"><a href="#解析-41" class="headerlink" title="解析"></a>解析</h2><p>我们来分析这个经典的 <strong>多道程序并发执行 + 资源竞争</strong> 问题。</p>
+<p>🔧 系统资源与约束：</p>
+<ul>
+<li>✅ <strong>1 个 CPU</strong>：计算必须串行  </li>
+<li>✅ <strong>1 台输入机</strong>：程序 B 的“输入”阶段独占  </li>
+<li>✅ <strong>1 台打印机</strong>：程序 A 的“打印”阶段独占  </li>
+<li>程序 A 先到，程序 B 后到（假设 B 在 A 启动后 <strong>立即到达</strong>，即 $ t &#x3D; 0^+ $，常见默认；若未说明延迟，按 <strong>B 紧随 A 启动</strong>处理）</li>
+</ul>
+<hr>
+<p>📋 程序行为：</p>
+<table>
+<thead>
+<tr>
+<th>程序</th>
+<th>阶段顺序</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>A</strong></td>
+<td>计算 50ms → 打印 100ms → 计算 50ms → 打印 100ms （共 300ms）</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>计算 50ms → 输入 80ms → 计算 100ms （共 230ms）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>✅ 各阶段<strong>顺序执行，不可重排</strong>；同类设备<strong>互斥使用</strong>。</p>
+</blockquote>
+<hr>
+<p>✅ 最优调度时间线分析（争取最小总时间，避免 CPU 空闲）</p>
+<p>我们按时间推进模拟最优并发执行：</p>
+<hr>
+<p><strong>0–50 ms</strong>  </p>
+<ul>
+<li>A 先到，立即开始 <strong>计算 50ms</strong>（占用 CPU）  </li>
+<li>B 已到达，<strong>等待 CPU</strong></li>
+</ul>
+<p><strong>50–100 ms</strong>  </p>
+<ul>
+<li>A 计算结束，转入 <strong>打印 100ms</strong>（占用打印机）  </li>
+<li><strong>CPU 空出 → B 立即开始计算 50ms</strong>（50–100 ms）</li>
+</ul>
+<blockquote>
+<p>✔️ CPU 与打印机并行：A 打印，B 计算</p>
+</blockquote>
+<p><strong>100–150 ms</strong>  </p>
+<ul>
+<li>B 计算结束（100 ms），转入 <strong>输入 80ms</strong>（占用输入机，100–180 ms）  </li>
+<li>A 打印仍在进行（50–150 ms），<strong>150 ms 打印结束</strong>  </li>
+<li><strong>150 ms 时，A 需要 CPU 进行第二段计算，但 CPU 正空闲</strong> → A 立即开始 <strong>计算 50ms（150–200 ms）</strong></li>
+</ul>
+<blockquote>
+<p>✔️ 此时：  </p>
+<ul>
+<li>A：计算（CPU）  </li>
+<li>B：输入（输入机）<br>→ <strong>完美并行</strong></li>
+</ul>
+</blockquote>
+<p><strong>180 ms</strong>  </p>
+<ul>
+<li>B 输入结束（100–180 ms）  </li>
+<li>但 B 的下一段是<strong>计算 100ms</strong>，需等 CPU  </li>
+<li>当前 CPU 被 A 占用（150–200 ms）</li>
+</ul>
+<p><strong>200 ms</strong>  </p>
+<ul>
+<li>A 第二段计算结束（150–200 ms）  </li>
+<li>A 立即转入 <strong>第二次打印 100ms（200–300 ms）</strong>（占用打印机）  </li>
+<li><strong>CPU 空出 → B 立即开始计算 100ms（200–300 ms）</strong></li>
+</ul>
+<blockquote>
+<p>✔️ A 打印 &amp; B 计算并行</p>
+</blockquote>
+<p><strong>300 ms</strong>  </p>
+<ul>
+<li>A 打印结束，A 完成  </li>
+<li>B 计算结束（200–300 ms），B 完成</li>
+</ul>
+<hr>
+<p>最终时间线汇总：</p>
+<table>
+<thead>
+<tr>
+<th>时间段</th>
+<th>CPU 活动</th>
+<th>打印机</th>
+<th>输入机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0–50 ms</td>
+<td>A 计算</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>50–100 ms</td>
+<td><strong>B 计算</strong></td>
+<td>A 打印</td>
+<td>—</td>
+</tr>
+<tr>
+<td>100–150 ms</td>
+<td>—</td>
+<td>A 打印</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>⚠️ 100–150 ms：CPU 空闲 50ms</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>150–200 ms</td>
+<td>A 计算</td>
+<td>—</td>
+<td>B 输入</td>
+</tr>
+<tr>
+<td>200–300 ms</td>
+<td>B 计算</td>
+<td>A 打印</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<p>Wait — 上面 <strong>100–150 ms CPU 空闲？</strong><br>但仔细看：  </p>
+<ul>
+<li>A 在 50–150 ms 打印（100ms）  </li>
+<li>B 在 50–100 ms 计算（50ms），100 ms 就结束了  </li>
+<li>B 的下一段是<strong>输入 80ms（100–180 ms）</strong>，不需 CPU<br>→ 所以 <strong>100–150 ms：A 在打印，B 在输入，CPU 无人用 → 确实空闲！</strong></li>
+</ul>
+<p>但能否优化？<br>→ 若让 B <strong>延迟开始计算</strong>，把计算挪到后面？<br>❌ 不行！B 必须先计算 50ms 才能输入（顺序约束），且 A 先占 CPU，B 只能 50ms 后开始计算。</p>
+<p>✅ 所以 <strong>100–150 ms 的 CPU 空闲不可避免</strong>。</p>
+<hr>
+<p>✅ 回答问题：</p>
+<ol>
+<li>CPU 是否存在空闲等待？若是，在哪段时间内等待？为什么？</li>
+</ol>
+<p><strong>答</strong>：<br>✅ <strong>存在 CPU 空闲</strong>，发生在 <strong>100 ms 到 150 ms</strong>（共 50 ms）。<br><strong>原因</strong>：  </p>
+<ul>
+<li>50–100 ms：B 在使用 CPU 计算；  </li>
+<li>100 ms 时，B 计算结束，转入 <strong>输入阶段（100–180 ms）</strong>，不再需要 CPU；  </li>
+<li>A 此时（50–150 ms）正在使用<strong>打印机</strong>，尚未完成第一段打印，无法进入第二段计算；  </li>
+<li>因此，100–150 ms 期间，<strong>A 等打印机，B 等输入设备</strong>，CPU 无进程可调度，处于空闲。</li>
+</ul>
+<blockquote>
+<p>🔔 关键：A 和 B 同时处于 I&#x2F;O 阶段（A 打印、B 输入），无进程就绪 → CPU 空转。</p>
+</blockquote>
+<hr>
+<ol start="2">
+<li>程序 A、B 是否有等待 CPU 的情况？若有，指出发生等待的时刻。</li>
+</ol>
+<p><strong>答</strong>：</p>
+<ul>
+<li><p><strong>程序 A</strong>：<br>✅ 有等待 CPU。  </p>
+<ul>
+<li><strong>等待时刻：0 ms</strong><br>→ A 先启动，<strong>立即获得 CPU</strong>，<strong>无等待</strong>；  </li>
+<li><strong>150 ms 时</strong>：A 打印结束，立即获得 CPU → <strong>无等待</strong>；<br>→ <strong>A 从未等待 CPU</strong>。</li>
+</ul>
+</li>
+<li><p><strong>程序 B</strong>：<br>✅ 有等待 CPU。  </p>
+<ul>
+<li><strong>等待时刻：0–50 ms</strong><br>→ B 虽在 A 后立即到达，但 A 正占用 CPU，B 需等待 A 的第一段计算结束；  </li>
+<li>50 ms 时获得 CPU，开始计算；  </li>
+<li>后续：100 ms 输入结束 → 需计算，但 CPU 被 A 占用（150–200 ms）→<br><strong>等待时刻：180–200 ms</strong>（20 ms）  <blockquote>
+<p>B 在 180 ms 输入结束，想计算，但 A 正在 150–200 ms 计算，故 B 等待 20 ms（180–200），200 ms 获得 CPU。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<p>✅ 所以 B 共两次等待 CPU：</p>
+<ul>
+<li><strong>0–50 ms</strong>（50 ms）  </li>
+<li><strong>180–200 ms</strong>（20 ms）</li>
+</ul>
+<hr>
+<p>补充：甘特图（文字版）</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">时间:  0        50       100      150      200      250      300 (ms)</span><br><span class="line">       |--------|--------|--------|--------|--------|--------|</span><br><span class="line">CPU:   A计算    B计算    [空闲]   A计算    B计算</span><br><span class="line">              (50)    (50ms)    (50ms)   (50ms)   (100ms)</span><br><span class="line"></span><br><span class="line">Printer:       A打印--------------A打印------------------------</span><br><span class="line">               (100ms)          (100ms)</span><br><span class="line"></span><br><span class="line">Input:                  B输入-------------------</span><br><span class="line">                        (80ms)</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<p>最终答案：</p>
+<ol>
+<li><p><strong>CPU 存在空闲等待</strong>，时间为 <strong>100 ms ~ 150 ms</strong>（50 ms），<br>原因：A 正在打印、B 正在输入，<strong>无进程处于就绪态</strong>，CPU 无任务可执行。</p>
+</li>
+<li><ul>
+<li><strong>程序 A</strong>：<strong>无等待 CPU</strong>（始终在 I&#x2F;O 结束后立即获得 CPU）；  </li>
+<li><strong>程序 B</strong>：  <ul>
+<li><strong>0–50 ms</strong>：等待 A 释放 CPU；  </li>
+<li><strong>180–200 ms</strong>：等待 A 完成第二段计算后释放 CPU。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> Linux操作系统-操作系统基础题目</li>
+        <li><strong>Author:</strong> 姜智浩</li>
+        <li><strong>Created at
+                :</strong> 2025-12-22 11:45:14</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2025-12-23 09:16:44
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2025/12/22/20251222Linux操作系统-操作系统基础题目/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">#计算机科学</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">#操作系统</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/zhihaojiang.github.io/2025/12/19/20251219%E5%9F%BA%E4%BA%8E%E4%BE%9B%E5%BA%94%E9%93%BE%E6%95%B0%E6%8D%AE%E5%8D%8F%E5%90%8C%E7%9A%84%E6%9C%8D%E8%A3%85%E5%A4%96%E8%B4%B8%E4%BC%81%E4%B8%9A%E5%87%86%E4%BA%A4%E7%8E%87%E4%BC%98%E5%8C%96%E7%A0%94%E7%A9%B6/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">基于供应链数据协同的服装外贸企业准交率优化研究</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">Linux操作系统-操作系统基础题目</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-1"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-1"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-2"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-2"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-3"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-3"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-4"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-4"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-5"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-5"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-6"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-6"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-7"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-7"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-8"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-8"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-9"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-9"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-10"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-10"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-11"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-11"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-12"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-12"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-13"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-13"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-14"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-14"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-15"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-15"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-16"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-16"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-17"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-17"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-18"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-18"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-19"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-19"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-20"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-20"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-21"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-21"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-22"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-22"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-23"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-23"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-24"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-24"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-25"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-25"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-26"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-26"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-27"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-27"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-28"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-28"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-29"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-29"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-30"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-30"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-31"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-31"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-32"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-32"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-33"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-33"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-34"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-34"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-35"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-35"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-36"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-36"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-37"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-37"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-38"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-38"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-39"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-39"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-40"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-40"><span class="nav-text">解析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-41"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-41"><span class="nav-text">解析</span></a></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2025&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/zhihaojiang.github.io/">姜智浩</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        78 posts in total
+                    </span>
+                    
+                        <span>
+                            207.9k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/Swup.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupSlideTheme.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupScriptsPlugin.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupProgressPlugin.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupScrollPlugin.min.js" ></script><script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/SwupPreloadPlugin.min.js" ></script>
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	<script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/imageViewer.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/utils.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/main.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/navbarShrink.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/scrollTopBottom.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/lightDarkSwitch.js" ></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/categoryList.js" ></script>
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/localSearch.js" ></script>
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/codeBlock.js" ></script>
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/lazyload.js" ></script>
+
+
+
+    <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/runtime.js" ></script>
+    <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/odometer.min.js" ></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/assets/odometer-theme-minimal.css">
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/Typed.min.js" ></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/typed.js" ></script>
+
+
+
+
+
+    <script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/minimasonry.min.js" ></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/masonry.js" ></script>
+
+
+
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/tools/tocToggle.js" data-swup-reload-script></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/toc.js" data-swup-reload-script></script><script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/tabs.js" data-swup-reload-script></script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/moment-with-locales.min.js" data-swup-reload-script></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/essays.js" data-swup-reload-script></script>
+
+
+
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/layouts/bookmarkNav.js" ></script>
+
+	
+	<div id="aplayer"></div>
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/libs/APlayer.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/hexo-theme-redefine@2.8.2/source/js/build/plugins/aplayer.js" ></script>
+
+	
+</body>
+
+</html>
