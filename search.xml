@@ -16107,4 +16107,912 @@ accuracy                           0.96       216
         <tag>操作系统</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Linux操作系统-同步互斥</title>
+    <url>/zhihaojiang.github.io/2025/12/24/20251224Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>在下列同步机制中，可以实现让权等待的是<br>A . Peterson 方法<br>B. swap 指令<br>C. 信号量方法<br>D. TestAndSet 指令</p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：C. 信号量方法</strong></p>
+<p>本题考查同步机制是否满足 <strong>“让权等待”（Wait &amp; Yield）</strong> 原则。</p>
+<h4 id="🔹-什么是“让权等待”？"><a href="#🔹-什么是“让权等待”？" class="headerlink" title="🔹 什么是“让权等待”？"></a>🔹 什么是“让权等待”？</h4><ul>
+<li>当进程申请临界资源失败（如进入区失败）时，<strong>主动放弃 CPU（阻塞自己）</strong>，进入等待队列，不占用处理机空转；  </li>
+<li>与之相对的是 <strong>“忙等待（Busy Waiting）”</strong>：进程循环测试条件，持续占用 CPU，浪费资源。</li>
+</ul>
+<hr>
+<h3 id="逐项分析："><a href="#逐项分析：" class="headerlink" title="逐项分析："></a>逐项分析：</h3><h4 id="A-Peterson-方法"><a href="#A-Peterson-方法" class="headerlink" title="A. Peterson 方法"></a>A. Peterson 方法</h4><p>❌ <strong>忙等待</strong>  </p>
+<ul>
+<li>纯软件算法，通过 <code>flag[]</code> 和 <code>turn</code> 变量实现互斥；  </li>
+<li>进入临界区前循环检查条件：<code>while (flag[j] &amp;&amp; turn == j);</code>  </li>
+<li><strong>持续占用 CPU</strong>，不释放处理器 → 不满足让权等待。</li>
+</ul>
+<h4 id="B-swap-指令"><a href="#B-swap-指令" class="headerlink" title="B. swap 指令"></a>B. swap 指令</h4><p>❌ <strong>忙等待</strong>  </p>
+<ul>
+<li><code>swap</code> 是原子交换指令，常用于实现<strong>自旋锁（Spinlock）</strong>；  </li>
+<li>典型用法：<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (swap(&amp;lock, <span class="number">1</span>) == <span class="number">1</span>); <span class="comment">// 忙等</span></span><br></pre></td></tr></table></figure></div></li>
+<li>同样<strong>循环测试，不放弃 CPU</strong> → 忙等待。</li>
+</ul>
+<h4 id="C-信号量方法"><a href="#C-信号量方法" class="headerlink" title="C. 信号量方法"></a>C. 信号量方法</h4><p>✅ <strong>让权等待</strong>  </p>
+<ul>
+<li>信号量（Semaphore）由 Dijkstra 提出，标准实现包含：<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">wait</span>(S) &#123;</span><br><span class="line">    S.value--;</span><br><span class="line">    <span class="keyword">if</span> (S.value &lt; 0) &#123;</span><br><span class="line">        block();   // 阻塞当前进程，放入等待队列</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">signal(S) &#123;</span><br><span class="line">    S.value++;</span><br><span class="line">    <span class="keyword">if</span> (S.value &lt;= 0) &#123;</span><br><span class="line">        wakeup();  // 唤醒一个等待进程</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></li>
+<li>当 <code>S.value &lt; 0</code> 时，进程<strong>主动阻塞（放弃 CPU）</strong>，由 OS 调度器切换到其他进程；  </li>
+<li>恢复由其他进程 <code>signal()</code> 时唤醒；<br>→ <strong>满足让权等待</strong>。</li>
+</ul>
+<h4 id="D-TestAndSet-指令"><a href="#D-TestAndSet-指令" class="headerlink" title="D. TestAndSet 指令"></a>D. TestAndSet 指令</h4><p>❌ <strong>忙等待</strong>  </p>
+<ul>
+<li>硬件原子指令，用于实现自旋锁：<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (TestAndSet(&amp;lock)); <span class="comment">// 循环测试，直到为0</span></span><br></pre></td></tr></table></figure></div></li>
+<li>典型用于多核系统短临界区，但仍是<strong>忙等待</strong>；  </li>
+<li>不涉及进程阻塞&#x2F;唤醒机制。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结："><a href="#🎯-考点总结：" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>同步机制</th>
+<th>是否让权等待</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Peterson</td>
+<td>❌</td>
+<td>纯软件忙等</td>
+</tr>
+<tr>
+<td>swap &#x2F; TAS</td>
+<td>❌</td>
+<td>自旋锁，忙等</td>
+</tr>
+<tr>
+<td><strong>信号量</strong></td>
+<td>✅</td>
+<td>失败时 <code>block()</code>，进入阻塞态</td>
+</tr>
+<tr>
+<td>管程（Monitor）</td>
+<td>✅</td>
+<td>条件变量 <code>wait()</code> 会阻塞</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ 注意：信号量的<strong>具体实现</strong>可能有差异，但<strong>标准定义和教学语境下</strong>，信号量是支持让权等待的典型机制。</p>
+</blockquote>
+<hr>
+<p>✅ 正确答案：<strong>C. 信号量方法</strong></p>
+<h1 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h1><p>下列准则中实现临界区互斥机制必须遵循的是</p>
+<hr>
+<p>I、 两个进程不能同时进入临界区<br>II、 允许进程访问空闲的临界资源<br>III、 进程等待进入临界区的时间是有限的<br>IV、 不能进入临界区的执行态进程立即放弃 CPU<br>A. 仅Ⅰ、Ⅳ B. 仅Ⅱ、Ⅲ C. 仅Ⅰ、Ⅱ、Ⅲ D. 仅Ⅰ、Ⅲ、Ⅳ</p>
+<h2 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：C. 仅Ⅰ、Ⅱ、Ⅲ</strong></p>
+<p>本题考查 <strong>临界区互斥机制必须满足的基本准则</strong>（也称 Petri 准则或并发控制四原则）。</p>
+<p>标准四条准则为：</p>
+<ol>
+<li><strong>互斥（Mutual Exclusion）</strong>：不能有两个或以上进程同时在临界区内；  </li>
+<li><strong>有空让进（Progress）</strong>：若无进程在临界区，且有进程希望进入，则<strong>不应无限推迟</strong>其进入；  </li>
+<li><strong>有限等待（Bounded Waiting）</strong>：任一进程从提出请求到进入临界区的<strong>等待时间有上界</strong>；  </li>
+<li><strong>让权等待（可选，非必须）</strong>：等待进程应释放 CPU（阻塞），避免忙等待 —— 这是<strong>性能&#x2F;实现要求，非正确性必要条件</strong>。</li>
+</ol>
+<hr>
+<h3 id="逐项对应题干："><a href="#逐项对应题干：" class="headerlink" title="逐项对应题干："></a>逐项对应题干：</h3><h4 id="I-两个进程不能同时进入临界区"><a href="#I-两个进程不能同时进入临界区" class="headerlink" title="I. 两个进程不能同时进入临界区"></a>I. 两个进程不能同时进入临界区</h4><p>✅ <strong>必须遵循</strong> —— 对应 <strong>互斥原则</strong>，是临界区定义的核心。</p>
+<h4 id="II-允许进程访问空闲的临界资源"><a href="#II-允许进程访问空闲的临界资源" class="headerlink" title="II. 允许进程访问空闲的临界资源"></a>II. 允许进程访问空闲的临界资源</h4><p>✅ <strong>必须遵循</strong> —— 对应 <strong>有空让进（Progress）</strong>：若临界区空闲，不应阻止进程进入（即不能因调度策略导致“假死”）。</p>
+<h4 id="III-进程等待进入临界区的时间是有限的"><a href="#III-进程等待进入临界区的时间是有限的" class="headerlink" title="III. 进程等待进入临界区的时间是有限的"></a>III. 进程等待进入临界区的时间是有限的</h4><p>✅ <strong>必须遵循</strong> —— 对应 <strong>有限等待</strong>：防止饥饿（Starvation），确保公平性；若等待可无限长，则系统可能活锁或不公平。</p>
+<h4 id="IV-不能进入临界区的执行态进程立即放弃-CPU"><a href="#IV-不能进入临界区的执行态进程立即放弃-CPU" class="headerlink" title="IV. 不能进入临界区的执行态进程立即放弃 CPU"></a>IV. 不能进入临界区的执行态进程立即放弃 CPU</h4><p>❌ <strong>非必须遵循</strong>  </p>
+<ul>
+<li>这是 <strong>“让权等待”</strong> 的要求，属于<strong>实现优化</strong>，非正确性前提；  </li>
+<li>例如 <strong>Peterson 算法、TestAndSet 自旋锁</strong> 都是<strong>忙等待</strong>（不放弃 CPU），但仍能<strong>正确实现互斥</strong>；  </li>
+<li>在单处理机系统或短临界区场景下，忙等待可接受；  </li>
+<li>是否让权，取决于 OS 设计，<strong>不影响互斥机制的逻辑正确性</strong>。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-1"><a href="#🎯-考点总结：-1" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>准则</th>
+<th>是否必须</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>互斥（I）</td>
+<td>✅ 是</td>
+<td>核心要求</td>
+</tr>
+<tr>
+<td>有空让进（II）</td>
+<td>✅ 是</td>
+<td>避免无谓阻塞</td>
+</tr>
+<tr>
+<td>有限等待（III）</td>
+<td>✅ 是</td>
+<td>防止饥饿</td>
+</tr>
+<tr>
+<td>让权等待（IV）</td>
+<td>❌ 否</td>
+<td>属于性能&#x2F;实现策略</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>📚 参考：《操作系统概念》（Silberschatz）—— 临界区问题的三条件：Mutual Exclusion, Progress, Bounded Waiting<br>（注意：书中明确指出，<strong>忙等待算法可满足前三者，但违反“非忙等待”这一额外期望</strong>）</p>
+</blockquote>
+<hr>
+<p>✅ 正确答案：<strong>C. 仅Ⅰ、Ⅱ、Ⅲ</strong></p>
+<h1 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h1><p>设与某资源关联的信号量初值为 3，当前值为 1。若 M 表示该资源的可用个数，N 表示等待该资源的进程<br>数，则 M、N 分别是</p>
+<hr>
+<p>。(2010)<br>A．0、1 B．1、0 C．1、2 D．2、0</p>
+<h2 id="解析-2"><a href="#解析-2" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：B．1、0</strong></p>
+<p>本题考查 <strong>信号量物理意义的理解</strong>。</p>
+<p>设某类资源有 <strong>多个实例</strong>（如打印机、缓冲区），用<strong>计数信号量（Counting Semaphore）</strong> 管理。</p>
+<ul>
+<li><strong>信号量的值 <code>S</code> 表示：当前可用资源数（若 <code>S ≥ 0</code>）；<br>若 <code>S &lt; 0</code>，则 <code>|S|</code> 表示等待该资源的进程数</strong>。</li>
+</ul>
+<p>更精确地说：</p>
+<p>$$<br>\begin{cases}<br>S &gt; 0 &amp;\Rightarrow \text{有 } S \text{ 个资源空闲}，\text{无进程等待} \<br>S &#x3D; 0 &amp;\Rightarrow \text{资源刚好用完}，\text{无进程等待} \<br>S &lt; 0 &amp;\Rightarrow \text{无空闲资源}，\text{有 } |S| \text{ 个进程阻塞等待}<br>\end{cases}<br>$$</p>
+<hr>
+<h3 id="题目条件："><a href="#题目条件：" class="headerlink" title="题目条件："></a>题目条件：</h3><ul>
+<li>信号量初值 &#x3D; 3 → 系统共有 <strong>3 个该类资源</strong>  </li>
+<li>当前值 &#x3D; 1</li>
+</ul>
+<p>→ 因为 <strong>1 &gt; 0</strong>，所以：  </p>
+<ul>
+<li><strong>可用资源数 M &#x3D; 1</strong>  </li>
+<li><strong>等待进程数 N &#x3D; 0</strong></li>
+</ul>
+<hr>
+<h3 id="🔍-验证过程："><a href="#🔍-验证过程：" class="headerlink" title="🔍 验证过程："></a>🔍 验证过程：</h3><ul>
+<li>初始：S &#x3D; 3（3 个空闲资源）  </li>
+<li>某进程执行 <code>wait()</code>（P 操作）：S &#x3D; 2  </li>
+<li>再一个 <code>wait()</code>：S &#x3D; 1<br>→ 此时 2 个资源已被占用，1 个空闲，无等待进程。</li>
+</ul>
+<p>即：  </p>
+<ul>
+<li>已分配资源数 &#x3D; 初值 − 当前值 &#x3D; 3 − 1 &#x3D; 2  </li>
+<li>可用资源 M &#x3D; 当前值 &#x3D; <strong>1</strong>（因 S &gt; 0）  </li>
+<li>等待进程 N &#x3D; max(0, −S) &#x3D; 0</li>
+</ul>
+<hr>
+<h3 id="❌-排除干扰选项："><a href="#❌-排除干扰选项：" class="headerlink" title="❌ 排除干扰选项："></a>❌ 排除干扰选项：</h3><ul>
+<li>A（0,1）：对应 S &#x3D; −1（1 个等待，0 个空闲）  </li>
+<li>C（1,2）：矛盾（有 1 个空闲，怎会 2 个等待？）  </li>
+<li>D（2,0）：对应 S &#x3D; 2</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-2"><a href="#🎯-考点总结：-2" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><ul>
+<li>信号量值 &#x3D; 可用资源数（当 ≥ 0）  </li>
+<li>等待进程数 &#x3D; <code>max(0, −S)</code>  </li>
+<li>资源总数 &#x3D; 初值 &#x3D; 可用 + 已分配  </li>
+<li>已分配 &#x3D; 初值 − max(S, 0)</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>B．1、0</strong></p>
+<h1 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h1><p>使用TSL(Test and Set Lock)指令实现进程互斥的伪代码如下所示。<br>do {<br>……<br>while(TSL(&amp;lock))；<br>critical section；<br>lock&#x3D;FALSE；<br>……<br>} while(TRUE)；<br>下列与该实现机制相关的叙述中，正确的是</p>
+<hr>
+<p>A．退出临界区的进程负责唤醒阻塞态进程<br>B．等待进入临界区的进程不会主动放弃CPU<br>C．上述伪代码满足“让权等待”的同步准则<br>D．while(TSL(&amp;lock))语句应在关中断状态下执行</p>
+<h2 id="解析-3"><a href="#解析-3" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：B．等待进入临界区的进程不会主动放弃CPU</strong></p>
+<p>本题考查 <strong>TSL（Test-and-Set Lock）指令实现的互斥机制特性</strong>。</p>
+<p>给出的伪代码是典型的<strong>自旋锁（Spinlock）</strong> 实现：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">while</span> (TSL(&amp;lock));   <span class="comment">// 忙等待：反复测试并设置 lock</span></span><br><span class="line">    critical section;</span><br><span class="line">    lock = FALSE;         <span class="comment">// 退出临界区，释放锁</span></span><br><span class="line">    ...</span><br><span class="line">&#125; <span class="keyword">while</span> (TRUE);</span><br></pre></td></tr></table></figure></div>
+
+<p>其中 <code>TSL(&amp;lock)</code> 是原子操作，等价于：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">TSL</span><span class="params">(<span class="type">bool</span> *lock)</span> &#123;</span><br><span class="line">    <span class="type">bool</span> old = *lock;</span><br><span class="line">    *lock = TRUE;</span><br><span class="line">    <span class="keyword">return</span> old;   <span class="comment">// 返回原值：若原为 FALSE（未锁），返回 FALSE，退出循环</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>即：<strong>只有当 lock 原为 FALSE 时，TSL 返回 FALSE，循环结束，进程进入临界区</strong>。</p>
+<hr>
+<h3 id="逐项分析选项："><a href="#逐项分析选项：" class="headerlink" title="逐项分析选项："></a>逐项分析选项：</h3><h4 id="A．退出临界区的进程负责唤醒阻塞态进程"><a href="#A．退出临界区的进程负责唤醒阻塞态进程" class="headerlink" title="A．退出临界区的进程负责唤醒阻塞态进程"></a>A．退出临界区的进程负责唤醒阻塞态进程</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li>TSL 实现的是<strong>忙等待</strong>，等待进程处于<strong>运行态（就绪&#x2F;执行）</strong>，<strong>并非阻塞态</strong>；  </li>
+<li>它们在 <code>while</code> 循环中不断执行 TSL，<strong>持续占用 CPU</strong>；  </li>
+<li>退出时只需 <code>lock = FALSE</code>，<strong>无需唤醒操作</strong>（无进程在等待队列中）；  </li>
+<li>唤醒机制存在于<strong>信号量、管程等阻塞式同步机制</strong>中，<strong>TSL 不具备</strong>。</li>
+</ul>
+<h4 id="B．等待进入临界区的进程不会主动放弃CPU"><a href="#B．等待进入临界区的进程不会主动放弃CPU" class="headerlink" title="B．等待进入临界区的进程不会主动放弃CPU"></a>B．等待进入临界区的进程不会主动放弃CPU</h4><p>✅ <strong>正确</strong>。  </p>
+<ul>
+<li><code>while (TSL(&amp;lock));</code> 是一个<strong>空循环</strong>，进程反复测试 lock 状态；  </li>
+<li>只要 lock &#x3D;&#x3D; TRUE，就继续循环，<strong>不调用 sleep、yield 或 block</strong>；  </li>
+<li>因此，<strong>CPU 一直被该进程占用</strong>，属于典型的<strong>忙等待（Busy Waiting）</strong>；<br>→ 符合 TSL&#x2F;自旋锁的本质特征。</li>
+</ul>
+<h4 id="C．上述伪代码满足“让权等待”的同步准则"><a href="#C．上述伪代码满足“让权等待”的同步准则" class="headerlink" title="C．上述伪代码满足“让权等待”的同步准则"></a>C．上述伪代码满足“让权等待”的同步准则</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li>“让权等待”要求：<strong>进程等待时主动释放 CPU（进入阻塞态）</strong>；  </li>
+<li>而本代码是忙等待，<strong>违反让权等待</strong>；  </li>
+<li>满足“让权等待”的是信号量、条件变量等机制。</li>
+</ul>
+<h4 id="D．while-TSL-lock-语句应在关中断状态下执行"><a href="#D．while-TSL-lock-语句应在关中断状态下执行" class="headerlink" title="D．while(TSL(&amp;lock))语句应在关中断状态下执行"></a>D．<code>while(TSL(&amp;lock))</code>语句应在关中断状态下执行</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li>TSL 是<strong>硬件提供的原子指令</strong>，其执行本身是不可中断的（原子性由 CPU 保证）；  </li>
+<li>不需要关中断；  </li>
+<li><strong>关中断</strong>用于保护<strong>临界区本身</strong>（如修改内核数据结构），而非用于 TSL 测试；  </li>
+<li>若关中断执行长时间忙等待，会导致<strong>系统无法响应时钟中断</strong>，丢失调度，极其危险！</li>
+</ul>
+<blockquote>
+<p>✅ 正确做法：TSL 本身是原子的，可开中断执行；但临界区若涉及内核数据，需关中断或使用更高级同步。</p>
+</blockquote>
+<hr>
+<h3 id="🎯-考点总结：-3"><a href="#🎯-考点总结：-3" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>机制</th>
+<th>是否忙等待</th>
+<th>是否让权等待</th>
+<th>是否需唤醒</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>TSL &#x2F; TAS &#x2F; Swap</strong></td>
+<td>✅ 是</td>
+<td>❌ 否</td>
+<td>❌ 否</td>
+<td>多核短临界区、内核自旋锁</td>
+</tr>
+<tr>
+<td><strong>信号量（block&#x2F;wakeup）</strong></td>
+<td>❌ 否</td>
+<td>✅ 是</td>
+<td>✅ 是</td>
+<td>用户态长临界区</td>
+</tr>
+<tr>
+<td><strong>Peterson 算法</strong></td>
+<td>✅ 是</td>
+<td>❌ 否</td>
+<td>❌ 否</td>
+<td>单处理机软件互斥</td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ 正确答案：<strong>B</strong></p>
+<h1 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h1><p>下列关于管程的叙述中，错误的是______<br>。(2016)<br>A．管程只能用于实现进程的互斥<br>B．管程是由编程语言支持的进程同步机制<br>C．任何时候只能有一个进程在管程中执行<br>D．管程中定义的变量只能被管程内的过程访问</p>
+<h2 id="解析-4"><a href="#解析-4" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：A．管程只能用于实现进程的互斥</strong></p>
+<p>本题考查对 <strong>管程（Monitor）</strong> 概念的理解。</p>
+<p>管程是一种<strong>高级同步机制</strong>，由 Hoare 和 Brinch Hansen 提出，广泛用于操作系统和编程语言（如 Java 的 <code>synchronized</code> 基于管程思想）。</p>
+<p>我们逐项分析：</p>
+<hr>
+<h4 id="A．管程只能用于实现进程的互斥"><a href="#A．管程只能用于实现进程的互斥" class="headerlink" title="A．管程只能用于实现进程的互斥"></a>A．管程只能用于实现进程的互斥</h4><p>❌ <strong>错误</strong>（本题答案）  </p>
+<ul>
+<li>管程不仅能实现<strong>互斥</strong>，更能实现<strong>进程同步（协作）</strong>；  </li>
+<li>关键在于 <strong>条件变量（condition variable）</strong>：  <ul>
+<li><code>wait(cv)</code>：释放管程锁 + 阻塞进程  </li>
+<li><code>signal(cv)</code> &#x2F; <code>notify(cv)</code>：唤醒等待进程</li>
+</ul>
+</li>
+<li>典型应用：  <ul>
+<li>生产者-消费者问题  </li>
+<li>读者-写者问题  </li>
+<li>哲学家进餐问题<br>→ 管程是<strong>互斥 + 同步</strong>的统一机制，<strong>A 说法片面，错误</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="B．管程是由编程语言支持的进程同步机制"><a href="#B．管程是由编程语言支持的进程同步机制" class="headerlink" title="B．管程是由编程语言支持的进程同步机制"></a>B．管程是由编程语言支持的进程同步机制</h4><p>✅ <strong>正确</strong>  </p>
+<ul>
+<li>管程通常由<strong>语言层面提供语法支持</strong>：  <ul>
+<li>Pascal 的 <code>monitor</code> 关键字（早期）  </li>
+<li>Java 的 <code>synchronized</code> 方法&#x2F;块 + <code>wait()/notify()</code>  </li>
+<li>C# 的 <code>lock</code> + <code>Monitor</code> 类</li>
+</ul>
+</li>
+<li>编译器&#x2F;运行时负责生成进入&#x2F;退出管程的同步代码；<br>→ 不同于信号量（需程序员手动调用 P&#x2F;V），管程是<strong>语言级抽象</strong>。</li>
+</ul>
+<hr>
+<h4 id="C．任何时候只能有一个进程在管程中执行"><a href="#C．任何时候只能有一个进程在管程中执行" class="headerlink" title="C．任何时候只能有一个进程在管程中执行"></a>C．任何时候只能有一个进程在管程中执行</h4><p>✅ <strong>正确</strong>  </p>
+<ul>
+<li>管程的<strong>核心语义</strong>：  <blockquote>
+<p>“At most one process can be active in the monitor at a time.”  </p>
+</blockquote>
+</li>
+<li>管程自带一个<strong>隐式互斥锁（mutex）</strong>：  <ul>
+<li>进程进入管程内任何过程前，必须先获得锁；  </li>
+<li>退出时自动释放锁；</li>
+</ul>
+</li>
+<li>即使有多个条件变量，也<strong>只允许一个进程在管程内执行代码</strong>（调用 <code>wait()</code> 时会临时释放锁，但不算“执行中”）。</li>
+</ul>
+<hr>
+<h4 id="D．管程中定义的变量只能被管程内的过程访问"><a href="#D．管程中定义的变量只能被管程内的过程访问" class="headerlink" title="D．管程中定义的变量只能被管程内的过程访问"></a>D．管程中定义的变量只能被管程内的过程访问</h4><p>✅ <strong>正确</strong>  </p>
+<ul>
+<li>这是管程的<strong>封装性（Encapsulation）</strong> 特征；  </li>
+<li>管程内部的共享变量（如 buffer、count）是<strong>私有（private）</strong> 的；  </li>
+<li>外部进程只能通过管程提供的<strong>入口过程（entry procedure）</strong> 间接访问；<br>→ 避免了竞争条件，保证数据一致性。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-4"><a href="#🎯-考点总结：-4" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>功能</strong></td>
+<td>互斥 + 同步（A 错在“只能互斥”）</td>
+</tr>
+<tr>
+<td><strong>实现层级</strong></td>
+<td>语言支持（B 正确）</td>
+</tr>
+<tr>
+<td><strong>并发控制</strong></td>
+<td>任一时刻最多一个进程活跃（C 正确）</td>
+</tr>
+<tr>
+<td><strong>数据封装</strong></td>
+<td>内部变量私有，仅通过过程访问（D 正确）</td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ 正确答案：<strong>A</strong></p>
+<h1 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h1><p>.进程P1和P2均包含并发执行的线程，部分伪代码描述如下所示。<br>下列选项中，需要互斥执行的操作是______<br>。(2016)<br>A．a&#x3D;1与a&#x3D;2 B．a&#x3D;x与b&#x3D;x<br>C．x+&#x3D;1与x+&#x3D;2 D．x+&#x3D;1与x+&#x3D;3</p>
+<h3 id="伪代码："><a href="#伪代码：" class="headerlink" title="伪代码："></a>伪代码：</h3><p><strong>进程 P1：</strong></p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x=<span class="number">0</span>;</span><br><span class="line">Thread1() &#123;</span><br><span class="line">    <span class="type">int</span> a;</span><br><span class="line">    a=<span class="number">1</span>;  x+=<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">Thread2() &#123;</span><br><span class="line">    <span class="type">int</span> a;</span><br><span class="line">    a=<span class="number">2</span>;  x+=<span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>进程 P2：</strong></p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x=<span class="number">0</span>;</span><br><span class="line">Thread3() &#123;</span><br><span class="line">    <span class="type">int</span> a;</span><br><span class="line">    a=x;  x+=<span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line">Thread4() &#123;</span><br><span class="line">    <span class="type">int</span> b;</span><br><span class="line">    b=x;  x+=<span class="number">4</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="解析-5"><a href="#解析-5" class="headerlink" title="解析"></a>解析</h2><blockquote>
+<p>注意：x 是<strong>全局共享变量</strong>（每个进程内定义一个 x，但 P1 和 P2 的 x 不共享；但在每个进程中，多个线程共享该进程内的 x）。</p>
+</blockquote>
+<hr>
+<h3 id="题目问：“需要互斥执行的操作”-——-即哪些操作对共享变量-x-的访问可能产生竞态条件（Race-Condition），需加锁保护。"><a href="#题目问：“需要互斥执行的操作”-——-即哪些操作对共享变量-x-的访问可能产生竞态条件（Race-Condition），需加锁保护。" class="headerlink" title="题目问：“需要互斥执行的操作” —— 即哪些操作对共享变量 x 的访问可能产生竞态条件（Race Condition），需加锁保护。"></a>题目问：“需要互斥执行的操作” —— 即哪些操作对共享变量 x 的访问<strong>可能产生竞态条件（Race Condition）</strong>，需加锁保护。</h3><p>我们看每个选项：</p>
+<h4 id="A-a-1-与-a-2"><a href="#A-a-1-与-a-2" class="headerlink" title="A. a=1 与 a=2"></a>A. <code>a=1</code> 与 <code>a=2</code></h4><ul>
+<li>a 是局部变量，每个线程有自己的栈空间 → <strong>不共享</strong><br>→ 无竞争 → ❌ 不需要互斥</li>
+</ul>
+<h4 id="B-a-x-与-b-x"><a href="#B-a-x-与-b-x" class="headerlink" title="B. a=x 与 b=x"></a>B. <code>a=x</code> 与 <code>b=x</code></h4><ul>
+<li>在 P2 中：<ul>
+<li>Thread3: <code>a = x</code> （读 x）</li>
+<li>Thread4: <code>b = x</code> （读 x）</li>
+</ul>
+</li>
+<li>两个都是<strong>读操作</strong>，即使并发执行，也不会破坏数据一致性（只要没有写入）<br>→ <strong>无竞态</strong> → ❌ 不需要互斥</li>
+</ul>
+<h4 id="C-x-1-与-x-2"><a href="#C-x-1-与-x-2" class="headerlink" title="C. x+=1 与 x+=2"></a>C. <code>x+=1</code> 与 <code>x+=2</code></h4><ul>
+<li>在 P1 中：<ul>
+<li>Thread1: <code>x += 1</code>  </li>
+<li>Thread2: <code>x += 2</code></li>
+</ul>
+</li>
+<li><code>x += n</code> 是<strong>复合操作</strong>（读取 x → 计算 x+n → 写回 x），<strong>非原子操作</strong>  </li>
+<li>若并发执行，可能发生：<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">Thread1: 读 x=0 → 计算 0+1=1 → 写回 x=1</span><br><span class="line">Thread2: 读 x=0 → 计算 0+2=2 → 写回 x=2   ← 覆盖了 Thread1 的结果！</span><br></pre></td></tr></table></figure></div>
+→ 最终 x &#x3D; 2，而不是期望的 3 → <strong>竞态条件</strong><br>✅ <strong>需要互斥</strong></li>
+</ul>
+<h4 id="D-x-1-与-x-3"><a href="#D-x-1-与-x-3" class="headerlink" title="D. x+=1 与 x+=3"></a>D. <code>x+=1</code> 与 <code>x+=3</code></h4><ul>
+<li><code>x+=1</code> 在 P1，<code>x+=3</code> 在 P2  </li>
+<li>P1 和 P2 是<strong>不同进程</strong>，各自有独立的 <code>x</code> 变量（进程间内存隔离）<br>→ <strong>不共享同一个 x</strong> → 无竞争<br>❌ 不需要互斥</li>
+</ul>
+<hr>
+<h3 id="✅-正确答案：C-x-1-与-x-2"><a href="#✅-正确答案：C-x-1-与-x-2" class="headerlink" title="✅ 正确答案：C. x+&#x3D;1 与 x+&#x3D;2"></a>✅ 正确答案：<strong>C. x+&#x3D;1 与 x+&#x3D;2</strong></h3><h1 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h1><p>属于同一进程的两个线程 thread1 和 thread2 并发执行，共享初值为 0 的全局变量 x。 thread1 和 thread2 实现对全局变量 x 加 1 的机器级代<br>码描述如下,在所有可能的指令执行序列中，使 x 的值为 2 的序列个数是______<br>。(2018)<br>A. 1 B. 2 C.3 D.4</p>
+<h2 id="解析-6"><a href="#解析-6" class="headerlink" title="解析"></a>解析</h2><p>我们来分析这道经典的<strong>并发线程竞态条件</strong>题目。</p>
+<hr>
+<h3 id="📜-题目描述："><a href="#📜-题目描述：" class="headerlink" title="📜 题目描述："></a>📜 题目描述：</h3><ul>
+<li>同一进程内有两个线程：<code>thread1</code> 和 <code>thread2</code>  </li>
+<li>共享全局变量 <code>x</code>，初始值为 0  </li>
+<li>每个线程执行“对 x 加 1”的操作，用机器级指令实现：<ul>
+<li><code>mov R, x</code> → 将 x 的值读入寄存器  </li>
+<li><code>inc R</code> → 寄存器值加 1  </li>
+<li><code>mov x, R</code> → 将寄存器值写回 x</li>
+</ul>
+</li>
+</ul>
+<p>目标：在所有可能的指令交错序列中，<strong>有多少种序列最终使 x &#x3D; 2</strong>？</p>
+<hr>
+<h2 id="✅-关键点："><a href="#✅-关键点：" class="headerlink" title="✅ 关键点："></a>✅ 关键点：</h2><p>虽然每个线程都在做“x++”，但由于是<strong>非原子操作</strong>（三步），若两个线程交错执行，可能导致<strong>丢失更新</strong>，最终 x 可能为 1 或 2。</p>
+<p>我们需要枚举所有可能的<strong>指令交错序列</strong>，并统计哪些最终得到 <code>x = 2</code>。</p>
+<hr>
+<h2 id="🔢-总指令数："><a href="#🔢-总指令数：" class="headerlink" title="🔢 总指令数："></a>🔢 总指令数：</h2><ul>
+<li>thread1：3 条指令（记为 A1, A2, A3）  </li>
+<li>thread2：3 条指令（记为 B1, B2, B3）<br>→ 总共 6 条指令，从中选 3 个位置给 thread1，其余给 thread2 → 总序列数 &#x3D; $ \binom{6}{3} &#x3D; 20 $ 种</li>
+</ul>
+<p>但并非所有 20 种都导致不同结果 —— 我们只需关注<strong>最终 x 的值</strong>。</p>
+<hr>
+<h2 id="✅-正确结果：x-2-当且仅当-两个线程的写操作没有覆盖对方的结果"><a href="#✅-正确结果：x-2-当且仅当-两个线程的写操作没有覆盖对方的结果" class="headerlink" title="✅ 正确结果：x&#x3D;2 当且仅当 两个线程的写操作没有覆盖对方的结果"></a>✅ 正确结果：x&#x3D;2 当且仅当 <strong>两个线程的写操作没有覆盖对方的结果</strong></h2><p>即：<strong>两个线程都成功将自己计算后的值写回 x，且没有被对方覆盖</strong>。</p>
+<p>这要求：<strong>两个线程的“写回”指令（A3 和 B3）必须发生在对方“读取”之后、或不干扰彼此</strong>。</p>
+<hr>
+<h3 id="🧩-枚举关键情况："><a href="#🧩-枚举关键情况：" class="headerlink" title="🧩 枚举关键情况："></a>🧩 枚举关键情况：</h3><p>我们用简写表示：</p>
+<ul>
+<li>A1: mov R1, x  </li>
+<li>A2: inc R1  </li>
+<li>A3: mov x, R1  </li>
+<li>B1: mov R2, x  </li>
+<li>B2: inc R2  </li>
+<li>B3: mov x, R2</li>
+</ul>
+<p>我们要找的是：<strong>最终 x&#x3D;2</strong> 的序列。</p>
+<hr>
+<h3 id="🎯-情况-1：无交错（完全串行）"><a href="#🎯-情况-1：无交错（完全串行）" class="headerlink" title="🎯 情况 1：无交错（完全串行）"></a>🎯 情况 1：无交错（完全串行）</h3><h4 id="1-A1→A2→A3→B1→B2→B3"><a href="#1-A1→A2→A3→B1→B2→B3" class="headerlink" title="1. A1→A2→A3→B1→B2→B3"></a>1. A1→A2→A3→B1→B2→B3</h4><ul>
+<li>A 读 0 → 加 1 → 写 1  </li>
+<li>B 读 1 → 加 1 → 写 2<br>→ x&#x3D;2 ✅</li>
+</ul>
+<h4 id="2-B1→B2→B3→A1→A2→A3"><a href="#2-B1→B2→B3→A1→A2→A3" class="headerlink" title="2. B1→B2→B3→A1→A2→A3"></a>2. B1→B2→B3→A1→A2→A3</h4><ul>
+<li>B 读 0 → 加 1 → 写 1  </li>
+<li>A 读 1 → 加 1 → 写 2<br>→ x&#x3D;2 ✅</li>
+</ul>
+<p>→ <strong>2 种序列</strong></p>
+<hr>
+<h3 id="🎯-情况-2：部分交错，但写操作未被覆盖"><a href="#🎯-情况-2：部分交错，但写操作未被覆盖" class="headerlink" title="🎯 情况 2：部分交错，但写操作未被覆盖"></a>🎯 情况 2：部分交错，但写操作未被覆盖</h3><h4 id="3-A1→B1→A2→B2→A3→B3"><a href="#3-A1→B1→A2→B2→A3→B3" class="headerlink" title="3. A1→B1→A2→B2→A3→B3"></a>3. A1→B1→A2→B2→A3→B3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>A 加 1 → R1&#x3D;1  </li>
+<li>B 加 1 → R2&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1 ❌ → 最终 x&#x3D;1</li>
+</ul>
+<h4 id="4-A1→B1→A2→A3→B2→B3"><a href="#4-A1→B1→A2→A3→B2→B3" class="headerlink" title="4. A1→B1→A2→A3→B2→B3"></a>4. A1→B1→A2→A3→B2→B3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>A 加 1 → R1&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1  </li>
+<li>B 加 1 → R2&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<h4 id="5-A1→B1→B2→A2→A3→B3"><a href="#5-A1→B1→B2→A2→A3→B3" class="headerlink" title="5. A1→B1→B2→A2→A3→B3"></a>5. A1→B1→B2→A2→A3→B3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>B 加 1 → R2&#x3D;1  </li>
+<li>A 加 1 → R1&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<h4 id="6-A1→A2→B1→B2→A3→B3"><a href="#6-A1→A2→B1→B2→A3→B3" class="headerlink" title="6. A1→A2→B1→B2→A3→B3"></a>6. A1→A2→B1→B2→A3→B3</h4><ul>
+<li>A 读 0 → 加 1 → R1&#x3D;1  </li>
+<li>B 读 0 → 加 1 → R2&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<h4 id="7-A1→A2→B1→A3→B2→B3"><a href="#7-A1→A2→B1→A3→B2→B3" class="headerlink" title="7. A1→A2→B1→A3→B2→B3"></a>7. A1→A2→B1→A3→B2→B3</h4><ul>
+<li>A 读 0 → 加 1 → R1&#x3D;1  </li>
+<li>B 读 0 → R2&#x3D;0  </li>
+<li>A 写 1 → x&#x3D;1  </li>
+<li>B 加 1 → R2&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<h4 id="8-B1→A1→B2→A2→B3→A3"><a href="#8-B1→A1→B2→A2→B3→A3" class="headerlink" title="8. B1→A1→B2→A2→B3→A3"></a>8. B1→A1→B2→A2→B3→A3</h4><ul>
+<li>B 读 0  </li>
+<li>A 读 0  </li>
+<li>B 加 1 → R2&#x3D;1  </li>
+<li>A 加 1 → R1&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<h4 id="9-B1→A1→B2→B3→A2→A3"><a href="#9-B1→A1→B2→B3→A2→A3" class="headerlink" title="9. B1→A1→B2→B3→A2→A3"></a>9. B1→A1→B2→B3→A2→A3</h4><ul>
+<li>B 读 0  </li>
+<li>A 读 0  </li>
+<li>B 加 1 → R2&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1  </li>
+<li>A 加 1 → R1&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<h4 id="10-B1→B2→A1→A2→B3→A3"><a href="#10-B1→B2→A1→A2→B3→A3" class="headerlink" title="10. B1→B2→A1→A2→B3→A3"></a>10. B1→B2→A1→A2→B3→A3</h4><ul>
+<li>B 读 0 → 加 1 → R2&#x3D;1  </li>
+<li>A 读 0 → 加 1 → R1&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<hr>
+<h3 id="🎯-唯一能使-x-2-的情况："><a href="#🎯-唯一能使-x-2-的情况：" class="headerlink" title="🎯 唯一能使 x&#x3D;2 的情况："></a>🎯 唯一能使 x&#x3D;2 的情况：</h3><p>只有当<strong>一个线程写完后，另一个线程再读取该值</strong>，才能叠加。</p>
+<p>即：</p>
+<h4 id="✅-序列-1：A1→A2→A3→B1→B2→B3"><a href="#✅-序列-1：A1→A2→A3→B1→B2→B3" class="headerlink" title="✅ 序列 1：A1→A2→A3→B1→B2→B3"></a>✅ 序列 1：A1→A2→A3→B1→B2→B3</h4><ul>
+<li>A 写 1 → B 读 1 → 加 1 → 写 2</li>
+</ul>
+<h4 id="✅-序列-2：B1→B2→B3→A1→A2→A3"><a href="#✅-序列-2：B1→B2→B3→A1→A2→A3" class="headerlink" title="✅ 序列 2：B1→B2→B3→A1→A2→A3"></a>✅ 序列 2：B1→B2→B3→A1→A2→A3</h4><ul>
+<li>B 写 1 → A 读 1 → 加 1 → 写 2</li>
+</ul>
+<h4 id="✅-序列-3：A1→B1→B2→B3→A2→A3"><a href="#✅-序列-3：A1→B1→B2→B3→A2→A3" class="headerlink" title="✅ 序列 3：A1→B1→B2→B3→A2→A3"></a>✅ 序列 3：A1→B1→B2→B3→A2→A3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0 → 加 1 → 写 1  </li>
+<li>A 加 1 → R1&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<p>等等 —— 等等！有没有第三种？</p>
+<p>让我们思考：</p>
+<p>如果线程1先读 x&#x3D;0，然后线程2完成全部操作（读0→加1→写1），然后线程1再加1→写1 → x&#x3D;1 ❌</p>
+<p>除非线程1在写之前，线程2已经写过，但线程1仍保留旧值。</p>
+<p>所以唯一能让 x&#x3D;2 的是：</p>
+<blockquote>
+<p><strong>两个线程的“读取”操作发生在不同的时间点，且后写的线程读到了前一个线程写入的值。</strong></p>
+</blockquote>
+<p>也就是说：</p>
+<ul>
+<li>要么 A 先写，B 后读；  </li>
+<li>要么 B 先写，A 后读。</li>
+</ul>
+<p>但注意：<strong>只要有一个线程在另一个线程写入后读取，就能得到 2</strong>。</p>
+<hr>
+<h3 id="🧠-正确方法：枚举所有-20-种序列，统计-x-2-的数量"><a href="#🧠-正确方法：枚举所有-20-种序列，统计-x-2-的数量" class="headerlink" title="🧠 正确方法：枚举所有 20 种序列，统计 x&#x3D;2 的数量"></a>🧠 正确方法：枚举所有 20 种序列，统计 x&#x3D;2 的数量</h3><p>我们用更系统的方法：</p>
+<p>最终 x&#x3D;2 的充要条件是：<strong>两个线程的写操作都没有被覆盖</strong>，即：</p>
+<ul>
+<li>两个线程都成功将“自己的 +1 结果”写回 x，且没有被对方覆盖。</li>
+</ul>
+<p>这要求：<strong>两个写操作（A3 和 B3）之间，不能有“读取+写入”的完整序列覆盖</strong>。</p>
+<p>实际上，只有两种情况满足：</p>
+<ol>
+<li>A 完整执行完毕（A1→A2→A3），然后 B 执行（B1→B2→B3）  </li>
+<li>B 完整执行完毕（B1→B2→B3），然后 A 执行（A1→A2→A3）</li>
+</ol>
+<p>→ 这就是我们之前说的 2 种。</p>
+<p>但等等 —— 还有一种可能：</p>
+<h4 id="✅-序列-3：A1→A2→B1→B2→B3→A3"><a href="#✅-序列-3：A1→A2→B1→B2→B3→A3" class="headerlink" title="✅ 序列 3：A1→A2→B1→B2→B3→A3"></a>✅ 序列 3：A1→A2→B1→B2→B3→A3</h4><ul>
+<li>A 读 0 → 加 1 → R1&#x3D;1  </li>
+<li>B 读 0 → 加 1 → R2&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<p>不行。</p>
+<h4 id="✅-序列-4：A1→B1→A2→B2→B3→A3"><a href="#✅-序列-4：A1→B1→A2→B2→B3→A3" class="headerlink" title="✅ 序列 4：A1→B1→A2→B2→B3→A3"></a>✅ 序列 4：A1→B1→A2→B2→B3→A3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>A 加 1 → R1&#x3D;1  </li>
+<li>B 加 1 → R2&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<p>还是 1。</p>
+<hr>
+<h3 id="🚫-有没有第三种？"><a href="#🚫-有没有第三种？" class="headerlink" title="🚫 有没有第三种？"></a>🚫 有没有第三种？</h3><p>考虑：</p>
+<h4 id="✅-序列：A1→B1→B2→A2→B3→A3"><a href="#✅-序列：A1→B1→B2→A2→B3→A3" class="headerlink" title="✅ 序列：A1→B1→B2→A2→B3→A3"></a>✅ 序列：A1→B1→B2→A2→B3→A3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>B 加 1 → R2&#x3D;1  </li>
+<li>A 加 1 → R1&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<p>还是 1。</p>
+<hr>
+<h3 id="💡-突破点："><a href="#💡-突破点：" class="headerlink" title="💡 突破点："></a>💡 突破点：</h3><p>其实，只有当<strong>一个线程的写操作发生在另一个线程的读操作之后</strong>，并且<strong>该读操作读到了前一个线程写入的值</strong>，才能叠加。</p>
+<p>例如：</p>
+<h4 id="✅-序列：A1→A2→A3→B1→B2→B3-→-x-2"><a href="#✅-序列：A1→A2→A3→B1→B2→B3-→-x-2" class="headerlink" title="✅ 序列：A1→A2→A3→B1→B2→B3 → x&#x3D;2"></a>✅ 序列：A1→A2→A3→B1→B2→B3 → x&#x3D;2</h4><h4 id="✅-序列：B1→B2→B3→A1→A2→A3-→-x-2"><a href="#✅-序列：B1→B2→B3→A1→A2→A3-→-x-2" class="headerlink" title="✅ 序列：B1→B2→B3→A1→A2→A3 → x&#x3D;2"></a>✅ 序列：B1→B2→B3→A1→A2→A3 → x&#x3D;2</h4><h4 id="✅-序列：A1→B1→B2→B3→A2→A3-→-x-1-❌"><a href="#✅-序列：A1→B1→B2→B3→A2→A3-→-x-1-❌" class="headerlink" title="✅ 序列：A1→B1→B2→B3→A2→A3 → x&#x3D;1 ❌"></a>✅ 序列：A1→B1→B2→B3→A2→A3 → x&#x3D;1 ❌</h4><h4 id="✅-序列：B1→A1→A2→A3→B2→B3-→-x-1-❌"><a href="#✅-序列：B1→A1→A2→A3→B2→B3-→-x-1-❌" class="headerlink" title="✅ 序列：B1→A1→A2→A3→B2→B3 → x&#x3D;1 ❌"></a>✅ 序列：B1→A1→A2→A3→B2→B3 → x&#x3D;1 ❌</h4><p>等等。</p>
+<p>我们发现：<strong>只有完全串行的两种情况能得到 x&#x3D;2</strong>。</p>
+<p>但等等！看这个：</p>
+<h4 id="✅-序列：A1→B1→A2→B2→A3→B3"><a href="#✅-序列：A1→B1→A2→B2→A3→B3" class="headerlink" title="✅ 序列：A1→B1→A2→B2→A3→B3"></a>✅ 序列：A1→B1→A2→B2→A3→B3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>A 加 1 → R1&#x3D;1  </li>
+<li>B 加 1 → R2&#x3D;1  </li>
+<li>A 写 1 → x&#x3D;1  </li>
+<li>B 写 1 → x&#x3D;1 ❌</li>
+</ul>
+<p>还是 1。</p>
+<hr>
+<h3 id="📊-实际答案（参考标准解答）："><a href="#📊-实际答案（参考标准解答）：" class="headerlink" title="📊 实际答案（参考标准解答）："></a>📊 实际答案（参考标准解答）：</h3><p>在所有 20 种可能的指令交错中，<strong>只有 2 种序列能得到 x&#x3D;2</strong>：</p>
+<ol>
+<li>A1→A2→A3→B1→B2→B3  </li>
+<li>B1→B2→B3→A1→A2→A3</li>
+</ol>
+<p>其他 18 种都会导致 x&#x3D;1。</p>
+<hr>
+<h3 id="✅-正确答案：B-2"><a href="#✅-正确答案：B-2" class="headerlink" title="✅ 正确答案：B. 2"></a>✅ 正确答案：<strong>B. 2</strong></h3><hr>
+<h3 id="🎯-考点总结：-5"><a href="#🎯-考点总结：-5" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><ul>
+<li>“x++” 不是原子操作 → 并发时易发生<strong>丢失更新</strong>；  </li>
+<li>最终 x&#x3D;2 仅当两个线程的写操作<strong>不互相覆盖</strong>，即<strong>一个线程写入后，另一个线程读到该值再写入</strong>；  </li>
+<li>这在指令交错中只发生在<strong>完全串行</strong>的情况下（2 种）。</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>B. 2</strong></p>
+<h1 id="题目-7"><a href="#题目-7" class="headerlink" title="题目"></a>题目</h1><p>若 x 是管程内的条件变量，则当进程执行 x.wait() 时所做的工作是______<br>。(2018)<br>A. 实现对变量 x 的互斥访问<br>B. 唤醒一个在 x 上阻塞的进程<br>C. 根据 x 的值判断该进程是否进人阻塞状态<br>D. 阻塞该进程，并将之插入 x 的阻塞队列中</p>
+<h2 id="解析-7"><a href="#解析-7" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：D. 阻塞该进程，并将之插入 x 的阻塞队列中</strong></p>
+<p>本题考查 <strong>管程中条件变量 <code>wait()</code> 操作的语义</strong>。</p>
+<p>在管程（Monitor）中：</p>
+<ul>
+<li>管程本身保证<strong>任一时刻最多一个进程在管程中执行</strong>（通过隐式互斥锁）；  </li>
+<li><strong>条件变量（condition variable）</strong> 用于实现<strong>进程同步与协作</strong>（非互斥），典型如：  <ul>
+<li><code>x.wait()</code>：当前进程<strong>暂时放弃管程所有权</strong>，进入等待状态；  </li>
+<li><code>x.signal()</code> &#x2F; <code>x.notify()</code>：唤醒一个在 <code>x</code> 上等待的进程。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="x-wait-的标准行为（以-Hoare-管程为例）："><a href="#x-wait-的标准行为（以-Hoare-管程为例）：" class="headerlink" title="x.wait() 的标准行为（以 Hoare 管程为例）："></a><code>x.wait()</code> 的标准行为（以 Hoare 管程为例）：</h3><p>当一个进程在管程内执行 <code>x.wait()</code> 时，系统会：</p>
+<ol>
+<li><strong>释放管程的互斥锁</strong>（以便其他进程可进入管程）；  </li>
+<li><strong>将当前进程阻塞</strong>（从运行态转为阻塞态）；  </li>
+<li><strong>将该进程放入条件变量 <code>x</code> 的阻塞队列（等待队列）中</strong>；  </li>
+<li>调度器切换到其他就绪进程。</li>
+</ol>
+<blockquote>
+<p>📌 注意：<code>wait()</code> <strong>不检查 <code>x</code> 的值</strong>（条件变量本身没有“值”，它只是一个同步对象）；<br>判断是否等待应由<strong>程序员在 <code>wait()</code> 前用 while 循环检查条件</strong>，如：</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (buffer.isEmpty()) &#123;</span><br><span class="line">    notEmpty.wait();   <span class="comment">// 进入等待</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div></blockquote>
+<hr>
+<h3 id="逐项排除："><a href="#逐项排除：" class="headerlink" title="逐项排除："></a>逐项排除：</h3><h4 id="A-实现对变量-x-的互斥访问"><a href="#A-实现对变量-x-的互斥访问" class="headerlink" title="A. 实现对变量 x 的互斥访问"></a>A. 实现对变量 x 的互斥访问</h4><p>❌ 错误。  </p>
+<ul>
+<li>互斥由<strong>管程本身</strong>保证（进入管程过程时自动加锁）；  </li>
+<li>条件变量 <code>x</code> <strong>不提供互斥</strong>，只用于同步；  </li>
+<li>多个进程可同时在不同条件变量上等待，互不冲突。</li>
+</ul>
+<h4 id="B-唤醒一个在-x-上阻塞的进程"><a href="#B-唤醒一个在-x-上阻塞的进程" class="headerlink" title="B. 唤醒一个在 x 上阻塞的进程"></a>B. 唤醒一个在 x 上阻塞的进程</h4><p>❌ 错误。  </p>
+<ul>
+<li>这是 <code>x.signal()</code> 或 <code>x.notify()</code> 的功能；  </li>
+<li><code>wait()</code> 是<strong>自己去等待</strong>，不是唤醒别人。</li>
+</ul>
+<h4 id="C-根据-x-的值判断该进程是否进入阻塞状态"><a href="#C-根据-x-的值判断该进程是否进入阻塞状态" class="headerlink" title="C. 根据 x 的值判断该进程是否进入阻塞状态"></a>C. 根据 x 的值判断该进程是否进入阻塞状态</h4><p>❌ 错误。  </p>
+<ul>
+<li>条件变量 <code>x</code> <strong>没有数值属性</strong>，它只是一个同步机制；  </li>
+<li>是否等待由程序员逻辑决定（如 <code>while (!condition) x.wait()</code>）；  </li>
+<li><code>wait()</code> 一旦调用，<strong>必然阻塞</strong>（除非信号量实现特殊优化，但标准语义是阻塞）。</li>
+</ul>
+<h4 id="D-阻塞该进程，并将之插入-x-的阻塞队列中"><a href="#D-阻塞该进程，并将之插入-x-的阻塞队列中" class="headerlink" title="D. 阻塞该进程，并将之插入 x 的阻塞队列中"></a>D. 阻塞该进程，并将之插入 x 的阻塞队列中</h4><p>✅ <strong>正确</strong>。  </p>
+<ul>
+<li>完整描述了 <code>wait()</code> 的核心行为；  </li>
+<li>是管程条件变量的标准定义。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-6"><a href="#🎯-考点总结：-6" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>x.wait()</code></td>
+<td>阻塞自己，入队 <code>x</code> 的等待队列，释放管程锁</td>
+</tr>
+<tr>
+<td><code>x.signal()</code></td>
+<td>唤醒一个在 <code>x</code> 上等待的进程（若无则忽略）</td>
+</tr>
+<tr>
+<td><code>x.broadcast()</code></td>
+<td>唤醒所有在 <code>x</code> 上等待的进程</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>📚 参考：《操作系统概念》—— “A condition variable allows a process to suspend execution until some condition is satisfied.”</p>
+</blockquote>
+<hr>
+<p>✅ 正确答案：<strong>D</strong></p>
+<h1 id="题目-8"><a href="#题目-8" class="headerlink" title="题目"></a>题目</h1><p>和尚打水问题（辽宁大学2016年计算机专硕）<br>寺庙中有小和尚和老和尚若干,有一个水缸,由小和尚提水入缸供老和尚饮用.<br>水缸可以容纳10桶水,水取自同一口井中,由于水井口窄,每次只能容纳一个<br>水桶取水，水桶总数为3个。每次入水、取水仅为一桶,且不可同时进行。<br>试给出有关取水、入水的PV算法描述。</p>
+<h2 id="解析-8"><a href="#解析-8" class="headerlink" title="解析"></a>解析</h2><p>我们来系统分析并设计 <strong>和尚打水问题</strong> 的 PV（信号量）同步算法。</p>
+<hr>
+<h2 id="🔍-问题建模"><a href="#🔍-问题建模" class="headerlink" title="🔍 问题建模"></a>🔍 问题建模</h2><h3 id="🧍-角色与资源："><a href="#🧍-角色与资源：" class="headerlink" title="🧍 角色与资源："></a>🧍 角色与资源：</h3><table>
+<thead>
+<tr>
+<th>实体</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>小和尚</strong></td>
+<td>负责从井中打水 → 倒入水缸（<strong>生产者</strong>）</td>
+</tr>
+<tr>
+<td><strong>老和尚</strong></td>
+<td>从水缸中取水饮用（<strong>消费者</strong>）</td>
+</tr>
+<tr>
+<td><strong>水缸</strong></td>
+<td>容量为 10 桶水，缓冲区</td>
+</tr>
+<tr>
+<td><strong>水井</strong></td>
+<td>临界资源，<strong>每次仅允 1 个水桶取水</strong>（互斥）</td>
+</tr>
+<tr>
+<td><strong>水桶</strong></td>
+<td>共 3 个，<strong>有限资源</strong>（提水需先获得空桶）</td>
+</tr>
+</tbody></table>
+<h3 id="⏳-操作流程："><a href="#⏳-操作流程：" class="headerlink" title="⏳ 操作流程："></a>⏳ 操作流程：</h3><ol>
+<li>小和尚：<br><code>拿空桶</code> → <code>到井边打水</code>（互斥）→ <code>提水到缸边</code> → <code>倒水入缸</code>（互斥）→ <code>放回空桶</code>  </li>
+<li>老和尚：<br><code>拿水桶</code>（从缸取水需用水桶？题目未明确，但按常理：取水也需水桶）→<br><code>从缸取水</code>（互斥）→ <code>饮用</code> → <code>放回空桶</code></li>
+</ol>
+<blockquote>
+<p>📌 <strong>关键</strong>：题目说“水桶总数为 3 个”，且“每次入水、取水仅为一桶”，说明<strong>水桶是共用的临界资源</strong>，无论打水还是取水都需使用水桶。</p>
+</blockquote>
+<p>但更合理的理解是：</p>
+<ul>
+<li>小和尚用桶打水（1 桶&#x2F;次），倒入缸后桶空闲；  </li>
+<li>老和尚直接从缸舀水饮用（<strong>不一定用水桶</strong>），题目未说老和尚需要桶；  </li>
+<li><strong>水桶仅用于“从井打水”环节</strong>（因井口窄，需用桶打水）；</li>
+</ul>
+<p>✅ 采用<strong>主流解法理解</strong>：</p>
+<ul>
+<li><strong>水桶</strong>是有限资源（3 个），仅小和尚打水时需要；  </li>
+<li>老和尚从水缸取水 <strong>不占用水桶</strong>（如用碗、直接饮），只消耗水缸中的水；  </li>
+<li>水缸本身是临界区（倒水&#x2F;取水需互斥）；  </li>
+<li>井是临界资源（打水需互斥）。</li>
+</ul>
+<hr>
+<h2 id="✅-信号量设计"><a href="#✅-信号量设计" class="headerlink" title="✅ 信号量设计"></a>✅ 信号量设计</h2><table>
+<thead>
+<tr>
+<th>信号量</th>
+<th>初值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>mutex_jing</code></td>
+<td>1</td>
+<td>保护水井，互斥打水</td>
+</tr>
+<tr>
+<td><code>mutex_gang</code></td>
+<td>1</td>
+<td>保护水缸，互斥倒水&#x2F;取水</td>
+</tr>
+<tr>
+<td><code>empty</code></td>
+<td>10</td>
+<td>水缸中<strong>空位数</strong>（可倒入的桶数）</td>
+</tr>
+<tr>
+<td><code>full</code></td>
+<td>0</td>
+<td>水缸中<strong>水量</strong>（可取用的桶数）</td>
+</tr>
+<tr>
+<td><code>buckets</code></td>
+<td>3</td>
+<td><strong>空水桶数量</strong>（小和尚打水前需申请）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>📝 注：<code>empty</code> 和 <code>full</code> 是典型的生产者-消费者信号量；<br><code>buckets</code> 是额外资源限制（类似“有限缓冲区”的桶资源）。</p>
+</blockquote>
+<hr>
+<h2 id="✅-进程描述（伪代码）"><a href="#✅-进程描述（伪代码）" class="headerlink" title="✅ 进程描述（伪代码）"></a>✅ 进程描述（伪代码）</h2><h3 id="小和尚（生产者）："><a href="#小和尚（生产者）：" class="headerlink" title="小和尚（生产者）："></a>小和尚（生产者）：</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line">semaphore mutex_jing = <span class="number">1</span>;   <span class="comment">// 井互斥</span></span><br><span class="line">semaphore mutex_gang = <span class="number">1</span>;   <span class="comment">// 缸互斥</span></span><br><span class="line">semaphore empty = <span class="number">10</span>;       <span class="comment">// 水缸空位</span></span><br><span class="line">semaphore full = <span class="number">0</span>;         <span class="comment">// 水缸水量</span></span><br><span class="line">semaphore buckets = <span class="number">3</span>;      <span class="comment">// 空桶数</span></span><br><span class="line"></span><br><span class="line">process 小和尚() &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        P(buckets);         <span class="comment">// 1. 申请一个空桶</span></span><br><span class="line">        P(empty);           <span class="comment">// 2. 等待水缸有空位</span></span><br><span class="line">        P(mutex_jing);      <span class="comment">// 3. 互斥访问水井</span></span><br><span class="line">            <span class="comment">// 从井中打一桶水（临界区）</span></span><br><span class="line">        V(mutex_jing);      <span class="comment">//   释放井</span></span><br><span class="line">        </span><br><span class="line">        P(mutex_gang);      <span class="comment">// 4. 互斥访问水缸</span></span><br><span class="line">            <span class="comment">// 将水倒入水缸（1桶）</span></span><br><span class="line">        V(mutex_gang);      <span class="comment">//   释放水缸</span></span><br><span class="line">        </span><br><span class="line">        V(full);            <span class="comment">// 5. 水量 +1</span></span><br><span class="line">        V(buckets);         <span class="comment">// 6. 归还空桶（倒完后桶空闲）</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="老和尚（消费者）："><a href="#老和尚（消费者）：" class="headerlink" title="老和尚（消费者）："></a>老和尚（消费者）：</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line">process 老和尚() &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        P(full);            <span class="comment">// 1. 等待水缸有水</span></span><br><span class="line">        P(mutex_gang);      <span class="comment">// 2. 互斥访问水缸</span></span><br><span class="line">            <span class="comment">// 从水缸取一桶水饮用</span></span><br><span class="line">        V(mutex_gang);      <span class="comment">//   释放水缸</span></span><br><span class="line">        </span><br><span class="line">        V(empty);           <span class="comment">// 3. 水缸空位 +1</span></span><br><span class="line">        <span class="comment">// 老和尚不占用水桶，无需操作 buckets</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="✅-关键点说明"><a href="#✅-关键点说明" class="headerlink" title="✅ 关键点说明"></a>✅ 关键点说明</h2><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>为什么需要？</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>P(buckets)</code> 在 <code>P(empty)</code> 前？</td>
+<td>✅ 合理：先拿桶，再看缸有没有空位；若顺序反过来，可能占着空位却没桶，降低并发性</td>
+</tr>
+<tr>
+<td>井和缸分别加锁？</td>
+<td>✅ 是：井（打水）和缸（倒&#x2F;取）是两个不同临界资源，应独立互斥</td>
+</tr>
+<tr>
+<td>老和尚不操作 <code>buckets</code>？</td>
+<td>✅ 合理：题目中水桶用于“提水”，老和尚“饮用”不涉及提水，故无需桶；若题目明确老和尚也用水桶，则需在 <code>P(full)</code> 后加 <code>P(buckets)</code>，饮用后 <code>V(buckets)</code>，但题干未说明，按常规省略</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🎯 若严格按“水桶总数为 3 个，每次入水、取水仅为一桶”理解：  </p>
+<ul>
+<li>“取水”也用水桶 → 老和尚需 <code>P(buckets)</code>；<br>可补充如下：</li>
+</ul>
+</blockquote>
+<h3 id="（可选）若老和尚也需用水桶："><a href="#（可选）若老和尚也需用水桶：" class="headerlink" title="（可选）若老和尚也需用水桶："></a>（可选）若老和尚也需用水桶：</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line">process 老和尚() &#123;</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        P(full);</span><br><span class="line">        P(buckets);         <span class="comment">// 取水也需用水桶</span></span><br><span class="line">        P(mutex_gang);</span><br><span class="line">            <span class="comment">// 取水</span></span><br><span class="line">        V(mutex_gang);</span><br><span class="line">        V(empty);</span><br><span class="line">        V(buckets);         <span class="comment">// 归还桶</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<p>但<strong>主流解法和考题惯例中，水桶仅用于“打水”环节</strong>，故推荐第一种。</p>
+<hr>
+<h2 id="✅-答案总结（标准-PV-描述）"><a href="#✅-答案总结（标准-PV-描述）" class="headerlink" title="✅ 答案总结（标准 PV 描述）"></a>✅ 答案总结（标准 PV 描述）</h2><p><strong>信号量定义：</strong></p>
+<ul>
+<li><code>mutex_jing = 1</code>：互斥使用水井  </li>
+<li><code>mutex_gang = 1</code>：互斥使用水缸  </li>
+<li><code>empty = 10</code>：水缸空位数  </li>
+<li><code>full = 0</code>：水缸水量  </li>
+<li><code>buckets = 3</code>：空水桶数</li>
+</ul>
+<p><strong>小和尚：</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">P(buckets);</span><br><span class="line">P(empty);</span><br><span class="line">P(mutex_jing); 打水; V(mutex_jing);</span><br><span class="line">P(mutex_gang); 倒水; V(mutex_gang);</span><br><span class="line">V(full);</span><br><span class="line">V(buckets);</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>老和尚：</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">P(full);</span><br><span class="line">P(mutex_gang); 取水; V(mutex_gang);</span><br><span class="line">V(empty);</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<p>✅ 完整、无死锁、无饥饿、满足题目所有约束。</p>
+<h1 id="题目-9"><a href="#题目-9" class="headerlink" title="题目"></a>题目</h1><p>试画出下面四条语句的前趋图，并用wait和<br>signal原语描述前趋图<br>S1: x:&#x3D;a+b<br>S2: y:&#x3D;c+d<br>S3: z:&#x3D;x*y<br>S4: w&#x3D;z2<br>（注：a,b,c,d为常量）</p>
+<h2 id="解析-9"><a href="#解析-9" class="headerlink" title="解析"></a>解析</h2><p>我们来逐步分析并画出这四条语句的<strong>前趋图（Precedence Graph）</strong>，并用 <strong><code>wait</code> &#x2F; <code>signal</code></strong> 原语（即 P&#x2F;V 操作）实现同步。</p>
+<hr>
+<h2 id="🔍-一、分析语句间的数据依赖关系"><a href="#🔍-一、分析语句间的数据依赖关系" class="headerlink" title="🔍 一、分析语句间的数据依赖关系"></a>🔍 一、分析语句间的数据依赖关系</h2><p>给定语句：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">S1: x := a + b</span><br><span class="line">S2: y := c + d</span><br><span class="line">S3: z := x * y</span><br><span class="line">S4: w := z * 2   （注：z2 应为 z*2）</span><br></pre></td></tr></table></figure></div>
+
+<p>分析读写变量：</p>
+<table>
+<thead>
+<tr>
+<th>语句</th>
+<th>写入变量</th>
+<th>读取变量</th>
+<th>依赖关系</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S1</td>
+<td>x</td>
+<td>a, b</td>
+<td>无输入依赖（a,b 为常量）</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>y</td>
+<td>c, d</td>
+<td>无输入依赖</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>z</td>
+<td>x, y</td>
+<td>依赖 S1（需 x）、依赖 S2（需 y）</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>w</td>
+<td>z</td>
+<td>依赖 S3（需 z）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="✅-二、前趋图（依赖图）"><a href="#✅-二、前趋图（依赖图）" class="headerlink" title="✅ 二、前趋图（依赖图）"></a>✅ 二、前趋图（依赖图）</h2><p>前趋图是有向无环图（DAG），节点为语句，边 $ A \to B $ 表示 A 必须先于 B 执行。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">S1        S2</span><br><span class="line"> \       /</span><br><span class="line">  \     /</span><br><span class="line">   \   /</span><br><span class="line">    S3</span><br><span class="line">    |</span><br><span class="line">    |</span><br><span class="line">    S4</span><br></pre></td></tr></table></figure></div>
+
+<p>即：</p>
+<ul>
+<li>S1 → S3  </li>
+<li>S2 → S3  </li>
+<li>S3 → S4</li>
+</ul>
+<p>S1 与 S2 无依赖，可并发执行。</p>
+<hr>
+<h2 id="✅-三、用-wait-signal-原语实现同步"><a href="#✅-三、用-wait-signal-原语实现同步" class="headerlink" title="✅ 三、用 wait &#x2F; signal 原语实现同步"></a>✅ 三、用 wait &#x2F; signal 原语实现同步</h2><h3 id="🧩-思路："><a href="#🧩-思路：" class="headerlink" title="🧩 思路："></a>🧩 思路：</h3><ul>
+<li>为每条依赖边设置一个<strong>同步信号量</strong>（初值为 0）；  </li>
+<li>前驱执行完后 <code>signal</code>，后继执行前 <code>wait</code>。</li>
+</ul>
+<h3 id="📌-信号量设计："><a href="#📌-信号量设计：" class="headerlink" title="📌 信号量设计："></a>📌 信号量设计：</h3><table>
+<thead>
+<tr>
+<th>信号量</th>
+<th>含义</th>
+<th>初值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>s1_done</code></td>
+<td>S1 是否完成</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>s2_done</code></td>
+<td>S2 是否完成</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>s3_done</code></td>
+<td>S3 是否完成</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注意：S3 需等待 S1 和 S2 都完成，因此需两个 <code>wait</code>。</p>
+</blockquote>
+<hr>
+<h3 id="✅-同步代码（用-P-V-表示，P-wait-V-signal）："><a href="#✅-同步代码（用-P-V-表示，P-wait-V-signal）：" class="headerlink" title="✅ 同步代码（用 P&#x2F;V 表示，P &#x3D; wait, V &#x3D; signal）："></a>✅ 同步代码（用 P&#x2F;V 表示，P &#x3D; wait, V &#x3D; signal）：</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 初始化信号量</span></span><br><span class="line">semaphore s1_done = <span class="number">0</span>;</span><br><span class="line">semaphore s2_done = <span class="number">0</span>;</span><br><span class="line">semaphore s3_done = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 进程/线程并发执行以下代码：</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// S1</span></span><br><span class="line">x := a + b;</span><br><span class="line">V(s1_done);        <span class="comment">// 通知 S3：S1 已完成</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// S2</span></span><br><span class="line">y := c + d;</span><br><span class="line">V(s2_done);        <span class="comment">// 通知 S3：S2 已完成</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// S3</span></span><br><span class="line">P(s1_done);        <span class="comment">// 等待 S1 完成</span></span><br><span class="line">P(s2_done);        <span class="comment">// 等待 S2 完成</span></span><br><span class="line">z := x * y;</span><br><span class="line">V(s3_done);        <span class="comment">// 通知 S4：S3 已完成</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// S4</span></span><br><span class="line">P(s3_done);        <span class="comment">// 等待 S3 完成</span></span><br><span class="line">w := z * <span class="number">2</span>;</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="✅-四、正确性说明"><a href="#✅-四、正确性说明" class="headerlink" title="✅ 四、正确性说明"></a>✅ 四、正确性说明</h2><ul>
+<li>S1、S2 可并行执行（无同步约束）；  </li>
+<li>S3 在 <code>P(s1_done)</code> 和 <code>P(s2_done)</code> 后才执行，保证 <code>x</code> 和 <code>y</code> 已计算；  </li>
+<li>S4 在 <code>P(s3_done)</code> 后执行，保证 <code>z</code> 已计算；  </li>
+<li>所有数据依赖均被满足，无竞态条件。</li>
+</ul>
+<hr>
+<h2 id="📌-补充：若用四个线程分别执行-S1-S4"><a href="#📌-补充：若用四个线程分别执行-S1-S4" class="headerlink" title="📌 补充：若用四个线程分别执行 S1~S4"></a>📌 补充：若用四个线程分别执行 S1~S4</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 主程序初始化信号量后创建 4 个线程：</span></span><br><span class="line"></span><br><span class="line">Thread1() &#123; x = a+b; V(s1_done); &#125;</span><br><span class="line">Thread2() &#123; y = c+d; V(s2_done); &#125;</span><br><span class="line">Thread3() &#123; P(s1_done); P(s2_done); z = x*y; V(s3_done); &#125;</span><br><span class="line">Thread4() &#123; P(s3_done); w = z*<span class="number">2</span>; &#125;</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h3 id="✅-最终答案："><a href="#✅-最终答案：" class="headerlink" title="✅ 最终答案："></a>✅ 最终答案：</h3><h4 id="1-前趋图："><a href="#1-前趋图：" class="headerlink" title="1. 前趋图："></a>1. 前趋图：</h4><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">S1 ───┐</span><br><span class="line">      ├─→ S3 ──→ S4</span><br><span class="line">S2 ───┘</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="2-wait-signal-描述："><a href="#2-wait-signal-描述：" class="headerlink" title="2. wait&#x2F;signal 描述："></a>2. wait&#x2F;signal 描述：</h4><ul>
+<li>信号量：<code>s1_done = 0, s2_done = 0, s3_done = 0</code>  </li>
+<li>S1 后：<code>signal(s1_done)</code>  </li>
+<li>S2 后：<code>signal(s2_done)</code>  </li>
+<li>S3 前：<code>wait(s1_done); wait(s2_done)</code>；后：<code>signal(s3_done)</code>  </li>
+<li>S4 前：<code>wait(s3_done)</code></li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>操作系统</tag>
+      </tags>
+  </entry>
 </search>
