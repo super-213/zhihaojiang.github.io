@@ -17015,4 +17015,581 @@ accuracy                           0.96       216
         <tag>操作系统</tag>
       </tags>
   </entry>
+  <entry>
+    <title>数据采集与处理--相关习题</title>
+    <url>/zhihaojiang.github.io/2025/12/29/20251229%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E4%B8%8E%E5%A4%84%E7%90%86--%E7%9B%B8%E5%85%B3%E4%B9%A0%E9%A2%98/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>什么是主题爬虫 其主要是用在哪些场合</p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p><strong>主题爬虫</strong>（Focused Crawler &#x2F; Topic-specific Crawler）是一种<strong>有目标导向的网络爬虫</strong>，与通用爬虫（如 Googlebot）不同，它不追求覆盖整个互联网，而是<strong>只抓取与特定主题高度相关</strong>的网页。</p>
+<p>其核心思想是：<br>在爬取过程中，<strong>动态评估</strong>网页内容与预设主题的相关性，据此决定是否下载该页面、是否将其链接加入待爬队列，从而<strong>提高爬取效率与数据质量</strong>，减少无关页面的抓取与存储开销。</p>
+<hr>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><p><strong>定义</strong>：<br>主题爬虫（Focused Crawler）是一种根据用户指定主题（如“人工智能”“新冠疫情”“新能源汽车政策”），在爬取过程中结合<strong>链接分析</strong>与<strong>内容相关性预测</strong>，优先抓取并保留与主题高度相关的网页，过滤无关内容的智能网络爬虫系统。</p>
+<p><strong>关键技术环节</strong>：</p>
+<ol>
+<li><strong>主题建模</strong>：用关键词集合、主题词典、分类器（如SVM、BERT）或主题向量（如LDA、Sentence-BERT）表示目标主题。</li>
+<li><strong>相关性评估</strong>：<ul>
+<li>对已下载页面：提取文本 → 特征表示（TF-IDF、词嵌入等）→ 计算与主题的相似度。</li>
+<li>对待爬链接（URL&#x2F;锚文本&#x2F;上下文）：通过<strong>链接上下文</strong>（如锚文本、父页面主题）预测目标页相关性（“预测式爬取”）。</li>
+</ul>
+</li>
+<li><strong>优先级调度</strong>：根据相关性得分动态调整URL队列的抓取顺序（如Best-First策略）。</li>
+</ol>
+<hr>
+<h2 id="主要应用场景"><a href="#主要应用场景" class="headerlink" title="主要应用场景"></a>主要应用场景</h2><table>
+<thead>
+<tr>
+<th>应用场景</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>垂直搜索引擎构建</strong></td>
+<td>如“医学文献搜索引擎”“法律案例检索系统”，需精准采集特定领域网页。</td>
+</tr>
+<tr>
+<td><strong>舆情监测与热点追踪</strong></td>
+<td>围绕“某企业”“某政策”“某突发事件”持续抓取相关新闻、社交媒体、论坛讨论。</td>
+</tr>
+<tr>
+<td><strong>学术资源采集</strong></td>
+<td>聚焦某研究方向（如“联邦学习”“图神经网络”），从arXiv、会议网站、机构库中采集论文。</td>
+</tr>
+<tr>
+<td><strong>电商竞品监控</strong></td>
+<td>抓取特定品类（如“无线蓝牙耳机”）的商品详情、价格、评论，用于比价或市场分析。</td>
+</tr>
+<tr>
+<td><strong>政府&#x2F;企业知识库建设</strong></td>
+<td>持续采集政策文件、行业报告、标准规范等结构化&#x2F;半结构化数据。</td>
+</tr>
+<tr>
+<td><strong>训练大模型的领域数据收集</strong></td>
+<td>为微调领域大模型（如医疗、金融LLM），需高质量、高相关性的语料，主题爬虫可高效构建数据集。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p> 实际系统中常结合：  </p>
+<ul>
+<li><strong>增量爬取</strong>（定期更新）  </li>
+<li><strong>去重与质量过滤</strong>（正文提取、广告过滤）  </li>
+<li><strong>反爬应对</strong>（User-Agent轮换、请求限速、验证码识别）</li>
+</ul>
+</blockquote>
+<h2 id="核心考点总结"><a href="#核心考点总结" class="headerlink" title="核心考点总结"></a>核心考点总结</h2><table>
+<thead>
+<tr>
+<th>考点类别</th>
+<th>具体内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>📌 <strong>概念辨析</strong></td>
+<td>主题爬虫 vs 通用爬虫 vs 增量爬虫</td>
+</tr>
+<tr>
+<td>📌 <strong>核心技术</strong></td>
+<td>主题表示方法、相关性预测模型（基于内容&#x2F;链接&#x2F;URL）、优先级调度策略</td>
+</tr>
+<tr>
+<td><strong>评估指标</strong></td>
+<td>查全率（Recall）、查准率（Precision）、 harvest rate（收获率 &#x3D; 相关页面数 &#x2F; 总抓取数）</td>
+</tr>
+<tr>
+<td><strong>挑战</strong></td>
+<td>主题漂移、语义鸿沟（URL&#x2F;锚文本与内容不一致）、动态网页渲染（需结合Selenium&#x2F;Playwright）</td>
+</tr>
+<tr>
+<td><strong>扩展知识</strong></td>
+<td>与<strong>主动学习</strong>结合（人机协同标注提升模型）；与<strong>图神经网络</strong>结合（利用网页链接图结构提升预测）</td>
+</tr>
+</tbody></table>
+<h1 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h1><p>什么是Deep Web？它与普通的Web页面有什么差异？</p>
+<h2 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h2><p>“Deep Web”（深网）是一个常被误解的概念——它<strong>不等于暗网</strong>（Dark Web），也不代表“非法内容”。理解其本质，关键在于区分<strong>内容可访问性</strong>与<strong>搜索引擎可索引性</strong>。</p>
+<hr>
+<h2 id="解答-1"><a href="#解答-1" class="headerlink" title="解答"></a>解答</h2><h3 id="一、什么是-Deep-Web（深网）？"><a href="#一、什么是-Deep-Web（深网）？" class="headerlink" title="一、什么是 Deep Web（深网）？"></a>一、什么是 Deep Web（深网）？</h3><p><strong>Deep Web</strong> 是指<strong>无法被传统搜索引擎</strong>（如 Google、Bing）通过常规爬虫自动发现和索引的<strong>互联网内容集合</strong>。<br>这类内容<strong>真实存在、合法可访问</strong>，但因其访问机制限制，未被纳入搜索引擎数据库。</p>
+<blockquote>
+<p> 核心特征：<strong>不可被通用爬虫自动发现</strong>（not <em>inaccessible</em>，而是 <em>unindexed</em>）。</p>
+</blockquote>
+<h3 id="二、Deep-Web-与-Surface-Web（表层网络）的差异"><a href="#二、Deep-Web-与-Surface-Web（表层网络）的差异" class="headerlink" title="二、Deep Web 与 Surface Web（表层网络）的差异"></a>二、Deep Web 与 Surface Web（表层网络）的差异</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Surface Web（表层网络）</th>
+<th>Deep Web（深网）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>可索引性</strong></td>
+<td>可被搜索引擎爬虫抓取并建立索引（如新闻、博客、公开企业官网）</td>
+<td><strong>不可被通用爬虫自动索引</strong></td>
+</tr>
+<tr>
+<td><strong>访问方式</strong></td>
+<td>直接通过 URL 或搜索结果访问</td>
+<td>通常需：<strong>登录认证</strong>、<strong>表单提交</strong>、<strong>数据库查询</strong>、<strong>API 调用</strong> 等交互操作</td>
+</tr>
+<tr>
+<td><strong>内容形式</strong></td>
+<td>静态 HTML 页面为主</td>
+<td>动态生成内容（如数据库查询结果）、私有资源、需权限内容</td>
+</tr>
+<tr>
+<td><strong>规模占比</strong></td>
+<td>仅占互联网内容 <strong>约 4%~10%</strong></td>
+<td>占互联网内容 <strong>90% 以上</strong>（主流估计）</td>
+</tr>
+<tr>
+<td><strong>典型例子</strong></td>
+<td>Wikipedia、知乎公开文章、GitHub 公开仓库</td>
+<td>见下表</td>
+</tr>
+</tbody></table>
+<h3 id="三、Deep-Web-的典型例子（合法常见场景）"><a href="#三、Deep-Web-的典型例子（合法常见场景）" class="headerlink" title="三、Deep Web 的典型例子（合法常见场景）"></a>三、Deep Web 的典型例子（合法常见场景）</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>需登录的私有内容</strong></td>
+<td>个人邮箱（Gmail）、网银后台、学校教务系统、企业内网、付费数据库（CNKI、IEEE Xplore）</td>
+</tr>
+<tr>
+<td><strong>表单驱动的内容</strong></td>
+<td>12306 车票查询结果、天气预报按城市查询的页面、招聘网站的“搜索职位”结果页</td>
+</tr>
+<tr>
+<td><strong>数据库查询结果</strong></td>
+<td>医院挂号系统返回的可预约号源、图书馆馆藏检索结果</td>
+</tr>
+<tr>
+<td><strong>API 返回的数据</strong></td>
+<td>微信小程序后台数据、App 从服务器拉取的 JSON 内容（未做 SSR 的前端页面）</td>
+</tr>
+<tr>
+<td><strong>非 HTML 资源</strong></td>
+<td>PDF 报告、PPT、Excel 表格（若未被搜索引擎收录）</td>
+</tr>
+<tr>
+<td><strong>动态渲染内容</strong>（部分）</td>
+<td>依赖 JavaScript 渲染且未做服务端渲染（SSR）或预渲染（Prerender）的 SPA 页面（如早期 React 应用）——现代搜索引擎已部分支持，但仍有盲区</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p> <strong>注意</strong>：  </p>
+<ul>
+<li><strong>Dark Web</strong>（暗网）是 Deep Web 的<strong>极小一部分</strong>，特指通过特殊工具（如 Tor、I2P）访问的<strong>匿名隐藏服务</strong>（<code>.onion</code> 域名），其中可能包含非法内容，但也有合法用途（如记者匿名信道）。  </li>
+<li><strong>绝大多数 Deep Web 是日常使用的合法系统</strong>，绝非“危险地带”。</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="核心考点总结-1"><a href="#核心考点总结-1" class="headerlink" title="核心考点总结"></a>核心考点总结</h2><table>
+<thead>
+<tr>
+<th>考点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>定义核心</strong></td>
+<td>Deep Web &#x3D; <strong>未被搜索引擎索引的内容</strong>（≠ 不可访问，≠ 非法）</td>
+</tr>
+<tr>
+<td><strong>对比理解</strong></td>
+<td>Surface Web（可索引） vs Deep Web（不可索引） vs Dark Web（匿名隐藏服务）</td>
+</tr>
+<tr>
+<td><strong>规模认知</strong></td>
+<td>Deep Web 占互联网主体（&gt;90%），表层网络只是“冰山一角”</td>
+</tr>
+<tr>
+<td><strong>技术成因</strong></td>
+<td>动态内容生成、访问控制（登录&#x2F;权限）、缺乏入站链接、robots.txt 限制、JavaScript 依赖等</td>
+</tr>
+<tr>
+<td><strong>数据采集挑战</strong></td>
+<td>普通爬虫无法直接抓取 Deep Web；需模拟登录、提交表单、调用 API、处理验证码（如你关注的 <code>tesserocr</code> 即用于此类场景）——这正是<strong>数据采集与处理课程的重点难点</strong></td>
+</tr>
+</tbody></table>
+<h1 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h1><p>Web服务器有哪些检测爬虫请求的方法？</p>
+<p>这是一个<strong>数据采集与处理</strong>中的核心对抗与反爬考点。Web 服务器检测爬虫的手段日趋智能化，理解这些机制是设计<strong>高鲁棒性爬虫</strong>（或评估采集可行性）的前提。</p>
+<hr>
+<h2 id="解析-2"><a href="#解析-2" class="headerlink" title="解析"></a>解析</h2><p>Web 服务器通过<strong>请求特征分析</strong> + <strong>行为模式识别</strong> + <strong>资源访问异常检测</strong>等多维度手段识别非人类流量。检测目的包括：  </p>
+<ul>
+<li>保护数据资产（如防内容盗用）  </li>
+<li>防止服务过载（如防 DDoS）  </li>
+<li>维护业务公平性（如防抢票&#x2F;秒杀脚本）</li>
+</ul>
+<h2 id="解答：Web-服务器检测爬虫的主要方法"><a href="#解答：Web-服务器检测爬虫的主要方法" class="headerlink" title="解答：Web 服务器检测爬虫的主要方法"></a>解答：Web 服务器检测爬虫的主要方法</h2><h3 id="一、请求头（Request-Headers）层面检测"><a href="#一、请求头（Request-Headers）层面检测" class="headerlink" title="一、请求头（Request Headers）层面检测"></a>一、<strong>请求头（Request Headers）层面检测</strong></h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>原理</th>
+<th>典型特征</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong><code>User-Agent</code> 异常</strong></td>
+<td>检查 UA 是否为空、伪造常见浏览器、或为已知爬虫标识（如 <code>python-requests/2.28.1</code>）</td>
+<td>缺失 UA；含 <code>bot</code>&#x2F;<code>spider</code>&#x2F;<code>crawler</code>；Python 默认 UA</td>
+</tr>
+<tr>
+<td><strong>缺失关键 Header</strong></td>
+<td>正常浏览器会自动携带 <code>Accept</code>, <code>Accept-Language</code>, <code>Accept-Encoding</code>, <code>Referer</code>, <code>Sec-Fetch-*</code> 等</td>
+<td>爬虫常只带 <code>User-Agent</code>，缺少 <code>Sec-Fetch-Mode: navigate</code> 等安全头</td>
+</tr>
+<tr>
+<td><strong>Header 顺序&#x2F;格式异常</strong></td>
+<td>浏览器发送 Header 有固定顺序和格式；爬虫拼接易出错</td>
+<td>如 <code>Connection: keep-alive</code> 位置异常；无 <code>Upgrade-Insecure-Requests</code></td>
+</tr>
+</tbody></table>
+<h3 id="二、访问行为模式检测"><a href="#二、访问行为模式检测" class="headerlink" title="二、访问行为模式检测"></a>二、<strong>访问行为模式检测</strong></h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>原理</th>
+<th>爬虫典型破绽</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>访问频率过高&#x2F;匀速</strong></td>
+<td>人类操作有随机延迟、停顿、回退；爬虫常匀速高频请求</td>
+<td>每秒固定 N 次请求；无鼠标轨迹&#x2F;滚动行为</td>
+</tr>
+<tr>
+<td><strong>无页面资源加载</strong></td>
+<td>浏览器会加载 CSS&#x2F;JS&#x2F;图片；爬虫常只请求 HTML</td>
+<td>仅请求 <code>/article/123</code>，但不请求 <code>/static/main.css</code> 或 <code>/img/banner.jpg</code></td>
+</tr>
+<tr>
+<td><strong>无 Cookie 交互</strong></td>
+<td>服务器设 <code>Set-Cookie</code> 后，浏览器应携带回传；爬虫若忽略则暴露</td>
+<td>首次访问给 <code>sessionid=abc</code>，后续请求无该 Cookie</td>
+</tr>
+<tr>
+<td><strong>缺失 JS 渲染行为</strong></td>
+<td>现代网站常要求执行 JS 生成 Token 或验证环境</td>
+<td>爬虫直接 POST 表单，但未携带由 JS 生成的 <code>csrf_token</code> 或 <code>__RequestVerificationToken</code></td>
+</tr>
+</tbody></table>
+<h3 id="三、JavaScript-挑战与环境检测（前端反爬）"><a href="#三、JavaScript-挑战与环境检测（前端反爬）" class="headerlink" title="三、JavaScript 挑战与环境检测（前端反爬）"></a>三、<strong>JavaScript 挑战与环境检测（前端反爬）</strong></h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>举例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>浏览器环境指纹检测</strong></td>
+<td>通过 JS 检测 <code>navigator.webdriver</code>、<code>window.chrome</code>、插件列表、屏幕分辨率等</td>
+<td>Selenium 默认会暴露 <code>navigator.webdriver = true</code></td>
+</tr>
+<tr>
+<td><strong>Canvas&#x2F;WebGL 指纹</strong></td>
+<td>利用硬件渲染差异生成唯一指纹</td>
+<td>真实设备指纹稳定，爬虫环境（如无头浏览器）易一致或异常</td>
+</tr>
+<tr>
+<td><strong>行为验证</strong>（CAPTCHA）</td>
+<td>reCAPTCHA v2&#x2F;v3、极验、阿里云验证码</td>
+<td>v3 通过用户行为打分（score &lt; 0.5 视为机器人）；v2 要求点选&#x2F;滑动</td>
+</tr>
+<tr>
+<td><strong>动态 Token 注入</strong></td>
+<td>关键请求参数（如 <code>sign</code>, <code>token</code>）由 JS 计算生成</td>
+<td>如 <code>sign = md5(url + timestamp + salt)</code>，爬虫无法预测</td>
+</tr>
+</tbody></table>
+<h3 id="四、IP-与网络层检测"><a href="#四、IP-与网络层检测" class="headerlink" title="四、IP 与网络层检测"></a>四、<strong>IP 与网络层检测</strong></h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>原理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>IP 访问频次&#x2F;并发量</strong></td>
+<td>单 IP 短时大量请求 → 触发限流或封禁</td>
+</tr>
+<tr>
+<td><strong>IP 地理位置异常</strong></td>
+<td>如用户账号常驻北京，突然从数据中心 IP（如 AWS us-east-1）访问</td>
+</tr>
+<tr>
+<td><strong>IP 黑名单匹配</strong></td>
+<td>使用公开爬虫 IP 库（如已知 Tor 出口节点、云服务器段）</td>
+</tr>
+<tr>
+<td><strong>HTTP&#x2F;2 + TLS 指纹</strong></td>
+<td>真实浏览器 TLS 握手有固定 Cipher Suites 顺序；爬虫库（如 requests）指纹单一</td>
+</tr>
+</tbody></table>
+<h3 id="五、服务端逻辑检测"><a href="#五、服务端逻辑检测" class="headerlink" title="五、服务端逻辑检测"></a>五、<strong>服务端逻辑检测</strong></h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>蜜罐陷阱</strong>（Honeypot）</td>
+<td>页面隐藏 <code>&lt;a href=&quot;/trap/secret-path&quot; style=&quot;display:none&quot;&gt;</code>，真实用户看不到，爬虫会跟爬</td>
+</tr>
+<tr>
+<td><strong>时间戳&#x2F;逻辑校验</strong></td>
+<td>表单含隐藏字段 <code>&lt;input name=&quot;stime&quot; value=&quot;1717020000&quot;&gt;</code>，提交时校验停留时间是否合理（如 &lt;1s 视为机器）</td>
+</tr>
+<tr>
+<td><strong>请求路径异常</strong></td>
+<td>用户正常路径：<code>首页 → 分类 → 列表 → 详情</code>；爬虫直接跳 <code>/product/999999</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="应对策略概览（延伸知识，常考简答-设计题）"><a href="#应对策略概览（延伸知识，常考简答-设计题）" class="headerlink" title="应对策略概览（延伸知识，常考简答&#x2F;设计题）"></a>应对策略概览（延伸知识，常考简答&#x2F;设计题）</h2><table>
+<thead>
+<tr>
+<th>检测手段</th>
+<th>可行应对措施</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>UA&#x2F;Header 异常</td>
+<td>用 <code>fake-useragent</code> + 完整 Header 模板；使用 <code>curl-impersonate</code> 模拟真实浏览器指纹</td>
+</tr>
+<tr>
+<td>行为模式</td>
+<td>随机延时（<code>time.sleep(random.uniform(1,3))</code>）；模拟滚动&#x2F;鼠标移动（Playwright&#x2F;Selenium）</td>
+</tr>
+<tr>
+<td>JS 挑战</td>
+<td>用无头浏览器（Playwright &gt; Puppeteer &gt; Selenium）；逆向 JS 算法（AST 解析 + Python 重写）</td>
+</tr>
+<tr>
+<td>验证码</td>
+<td>OCR（如 <code>tesserocr</code> 处理简单验证码）、打码平台、绕过（如用第三方 API）</td>
+</tr>
+<tr>
+<td>IP 封禁</td>
+<td>代理 IP 池轮换（住宅代理 &gt; 数据中心代理）；降低并发</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>重要提醒</strong>：<br>所有反爬绕过需遵守《网络安全法》及网站 <code>robots.txt</code> 和服务条款。<strong>技术用于学习与合法数据采集，严禁用于攻击或侵犯隐私</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="核心考点总结-2"><a href="#核心考点总结-2" class="headerlink" title="核心考点总结"></a>核心考点总结</h2><table>
+<thead>
+<tr>
+<th>考点类型</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>概念辨析</strong></td>
+<td>区分“检测” vs “防御”；“特征检测” vs “行为检测”</td>
+</tr>
+<tr>
+<td><strong>分类记忆</strong></td>
+<td>按请求层、行为层、JS 层、网络层、服务层分类掌握检测方法</td>
+</tr>
+<tr>
+<td><strong>典型指标</strong></td>
+<td>UA、Referer、Cookie、请求频率、资源加载完整性、TLS&#x2F;JA3 指纹</td>
+</tr>
+<tr>
+<td><strong>前沿趋势</strong></td>
+<td>从规则匹配 → 机器学习模型（如 LSTM 行为序列建模）检测异常流量</td>
+</tr>
+<tr>
+<td><strong>工程实践</strong></td>
+<td>在 <code>requests</code> + <code>BeautifulSoup</code> 基础上，进阶需掌握 <code>Selenium</code>&#x2F;<code>Playwright</code> + 代理 + 逆向能力</td>
+</tr>
+</tbody></table>
+<h1 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h1><p>简述文本分类的一般流程</p>
+<h2 id="解析-3"><a href="#解析-3" class="headerlink" title="解析"></a>解析</h2><p>文本分类是<strong>自然语言处理</strong>（NLP）的基础任务，也是数据采集后处理（如爬虫结果打标、舆情分析）的关键环节。其流程体现了“<strong>数据 → 特征 → 模型 → 应用</strong>”的典型机器学习 pipeline，需兼顾<strong>文本特性</strong>（高维、稀疏、语义复杂）与<strong>工程落地</strong>。</p>
+<h2 id="解答：文本分类的一般流程"><a href="#解答：文本分类的一般流程" class="headerlink" title="解答：文本分类的一般流程"></a>解答：文本分类的一般流程</h2><h3 id="数据获取与预处理"><a href="#数据获取与预处理" class="headerlink" title="数据获取与预处理"></a><strong>数据获取与预处理</strong></h3><p><strong>目的</strong>：清洗噪声、统一格式、为后续处理做准备<br><strong>关键操作</strong>：</p>
+<ul>
+<li><strong>文本清洗</strong>：去 HTML 标签、特殊符号、广告语、无关字符  </li>
+<li><strong>分词</strong>（中文必需）：使用 <code>jieba</code>、<code>pkuseg</code>、<code>LTP</code> 等（英文按空格&#x2F;标点切分）  </li>
+<li><strong>去停用词</strong>：过滤“的”“是”“and”“the”等高频无意义词（可用哈工大&#x2F;百度停用词表）  </li>
+<li><strong>词干化&#x2F;词形还原</strong>（英文）：<code>running</code> → <code>run</code>（<code>nltk.stem.PorterStemmer</code>）  </li>
+<li><strong>大小写统一</strong>：<code>Apple</code> → <code>apple</code>（中文一般无需）</li>
+</ul>
+<h3 id="特征表示"><a href="#特征表示" class="headerlink" title="特征表示"></a><strong>特征表示</strong></h3><p><strong>目的</strong>：将文本转化为模型可计算的数值向量<br><strong>主流方法演进</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>方法</th>
+<th>特点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>传统统计特征</strong></td>
+<td>- <strong>词袋模型</strong>（BoW）<br>- <strong>TF-IDF</strong>（词频-逆文档频率）</td>
+<td>简单高效；忽略语序；高维稀疏</td>
+<td>小数据集、基线模型、可解释性要求高</td>
+</tr>
+<tr>
+<td><strong>词嵌入</strong>（Word-Level）</td>
+<td>- <code>Word2Vec</code><br>- <code>GloVe</code><br>- <code>FastText</code></td>
+<td>捕获语义相似性（如 king - man + woman ≈ queen）；需预训练</td>
+<td>中等规模数据；支持迁移学习</td>
+</tr>
+<tr>
+<td><strong>上下文嵌入</strong>（Contextual）</td>
+<td>- <strong>BERT &#x2F; RoBERTa</strong><br>- <strong>Sentence-BERT</strong>（SBERT）</td>
+<td>动态表征（“苹果”在水果&#x2F;公司语境不同）；SOTA 性能</td>
+<td>高精度需求；有 GPU 资源；支持微调</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p> <em>当前主流</em>：<strong>预训练语言模型微调</strong>（如用 <code>transformers</code> 库加载 <code>bert-base-chinese</code> + 分类头）</p>
+</blockquote>
+<hr>
+<h3 id="模型选择与训练"><a href="#模型选择与训练" class="headerlink" title="模型选择与训练"></a><strong>模型选择与训练</strong></h3><p><strong>常用模型对比</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>优点</th>
+<th>缺点</th>
+<th>典型工具</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>朴素贝叶斯</strong>（NB）</td>
+<td>计算快；小样本有效；理论清晰</td>
+<td>假设特征独立（实际不成立）</td>
+<td><code>sklearn.naive_bayes.MultinomialNB</code></td>
+</tr>
+<tr>
+<td><strong>SVM</strong></td>
+<td>高维有效；小样本强；核技巧灵活</td>
+<td>训练慢（尤其大数据）；难输出概率</td>
+<td><code>sklearn.svm.SVC</code>（线性核常用）</td>
+</tr>
+<tr>
+<td><strong>逻辑回归</strong>（LR）</td>
+<td>可解释；支持在线学习；常作 baseline</td>
+<td>线性模型，捕捉非线性能力弱</td>
+<td><code>sklearn.linear_model.LogisticRegression</code></td>
+</tr>
+<tr>
+<td><strong>深度学习</strong><br>（CNN&#x2F;RNN）</td>
+<td>自动提取特征；捕捉局部&#x2F;序列模式</td>
+<td>需大数据；训练慢；调参复杂</td>
+<td><code>TensorFlow/Keras</code>, <code>PyTorch</code></td>
+</tr>
+<tr>
+<td><strong>预训练模型微调</strong><br>（BERT 等）</td>
+<td>SOTA 效果；迁移学习强大</td>
+<td>资源消耗大；推理慢</td>
+<td><code>HuggingFace Transformers</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><em>流程中关键步骤</em>：  </p>
+<ul>
+<li>划分 <strong>训练集 &#x2F; 验证集 &#x2F; 测试集</strong>（如 7:1:2）  </li>
+<li>交叉验证（如 5-fold）调参  </li>
+<li>设置早停（Early Stopping）防过拟合</li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a><strong>模型评估</strong></h3><p><strong>核心指标</strong>（多分类场景）：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>公式&#x2F;说明</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>准确率</strong>（Accuracy）</td>
+<td>$ \frac{TP+TN}{TP+TN+FP+FN} $</td>
+<td>类别均衡时可用</td>
+</tr>
+<tr>
+<td><strong>精确率</strong>（Precision）</td>
+<td>$ \frac{TP}{TP+FP} $</td>
+<td>关注“预测为正的有多少真”（如垃圾邮件过滤）</td>
+</tr>
+<tr>
+<td><strong>召回率</strong>（Recall）</td>
+<td>$ \frac{TP}{TP+FN} $</td>
+<td>关注“真正的正例有多少被找出”（如疾病诊断）</td>
+</tr>
+<tr>
+<td><strong>F1-Score</strong></td>
+<td>$ 2 \times \frac{Precision \times Recall}{Precision + Recall} $</td>
+<td>Precision 与 Recall 的调和平均，<strong>最常用</strong></td>
+</tr>
+<tr>
+<td><strong>宏&#x2F;微平均</strong>（Macro&#x2F;Micro-F1）</td>
+<td>宏：各类 F1 平均；微：全局 TP&#x2F;FP&#x2F;FN 计算</td>
+<td>多分类不平衡时必看</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>还需：<strong>混淆矩阵</strong>、<strong>PR 曲线</strong>、<strong>ROC-AUC</strong>（二分类）</p>
+</blockquote>
+<hr>
+<h3 id="模型优化与调参"><a href="#模型优化与调参" class="headerlink" title="模型优化与调参"></a><strong>模型优化与调参</strong></h3><ul>
+<li><strong>特征工程</strong>：n-gram（如 bigram）、词性标注、实体识别作为特征  </li>
+<li><strong>超参调优</strong>：网格搜索（GridSearch）、贝叶斯优化（<code>optuna</code>）  </li>
+<li><strong>集成学习</strong>：投票法（Voting）、堆叠（Stacking）  </li>
+<li><strong>处理不平衡</strong>：过采样（SMOTE）、欠采样、代价敏感学习（class_weight）</li>
+</ul>
+<hr>
+<h3 id="部署与应用"><a href="#部署与应用" class="headerlink" title="部署与应用"></a><strong>部署与应用</strong></h3><ul>
+<li><strong>轻量化</strong>：模型蒸馏（DistilBERT）、量化（ONNX Runtime）  </li>
+<li><strong>API 封装</strong>：用 Flask&#x2F;FastAPI 提供分类接口  </li>
+<li><strong>持续监控</strong>：数据漂移检测（如 PSI 指标）、在线学习更新</li>
+</ul>
+<blockquote>
+<p>💡 <em>你的实践延伸</em>：你用 Cloudflare Workers 部署 AI 服务，可将训练好的轻量模型（如 <code>tf-lite</code> 或 <code>ONNX</code>）嵌入 Worker，实现低延迟文本分类 API。</p>
+</blockquote>
+<hr>
+<h2 id="核心考点总结-3"><a href="#核心考点总结-3" class="headerlink" title="核心考点总结"></a>核心考点总结</h2><table>
+<thead>
+<tr>
+<th>考点层级</th>
+<th>关键内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>流程顺序</strong></td>
+<td>预处理 → 特征表示 → 建模 → 评估 → 优化 → 部署（必须按逻辑顺序答）</td>
+</tr>
+<tr>
+<td><strong>特征表示演进</strong></td>
+<td>BoW&#x2F;TF-IDF → Word2Vec → BERT（体现技术发展）</td>
+</tr>
+<tr>
+<td><strong>评估指标选择</strong></td>
+<td>多分类必须提 <strong>F1 &#x2F; Macro-F1</strong>；强调<strong>不能只用准确率</strong>（尤其不平衡时）</td>
+</tr>
+<tr>
+<td><strong>中英文差异</strong></td>
+<td>中文<strong>必须分词</strong>；英文需词干化；停用词表不同</td>
+</tr>
+<tr>
+<td><strong>工程陷阱</strong></td>
+<td>数据泄露（如在分词前统一去停用词导致测试集信息泄露）</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数据采集</tag>
+      </tags>
+  </entry>
 </search>
