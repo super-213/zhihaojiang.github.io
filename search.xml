@@ -18202,4 +18202,539 @@ accuracy                           0.96       216
         <tag>多元统计</tag>
       </tags>
   </entry>
+  <entry>
+    <title>数值分析与算法设计--显式欧拉法</title>
+    <url>/zhihaojiang.github.io/2026/01/17/20260117/</url>
+    <content><![CDATA[<h1 id="显式欧拉法"><a href="#显式欧拉法" class="headerlink" title="显式欧拉法"></a>显式欧拉法</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>使用<strong>显式欧拉法</strong>求解初值问题：</p>
+<p>$$<br>\begin{cases}<br>y’ &#x3D; f(x, y) &#x3D; 3x + 2y, \<br>y(0) &#x3D; 1, \<br>0 \le x \le 0.3, \quad h &#x3D; 0.1<br>\end{cases}<br>$$</p>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><details>
+<summary><b>点击查看答案</b></summary>
+
+<h3 id="显式欧拉公式回顾："><a href="#显式欧拉公式回顾：" class="headerlink" title="显式欧拉公式回顾："></a>显式欧拉公式回顾：</h3><p>$$<br>y_{n+1} &#x3D; y_n + h \cdot f(x_n, y_n)<br>$$<br>其中：</p>
+<ul>
+<li>$ x_n &#x3D; x_0 + n h $</li>
+<li>$ y_0 &#x3D; y(x_0) $ 已知</li>
+</ul>
+<hr>
+<h3 id="给定参数："><a href="#给定参数：" class="headerlink" title="给定参数："></a>给定参数：</h3><ul>
+<li>$ x_0 &#x3D; 0 $</li>
+<li>$ y_0 &#x3D; 1 $</li>
+<li>$ h &#x3D; 0.1 $</li>
+<li>需计算到 $ x &#x3D; 0.3 $ ⇒ 共 3 步：$ n &#x3D; 0,1,2 $</li>
+</ul>
+<hr>
+<h3 id="逐步计算："><a href="#逐步计算：" class="headerlink" title="逐步计算："></a>逐步计算：</h3><h4 id="第-0-步：-n-0"><a href="#第-0-步：-n-0" class="headerlink" title="第 0 步：$ n &#x3D; 0 $"></a>第 0 步：$ n &#x3D; 0 $</h4><ul>
+<li>$ x_0 &#x3D; 0 $</li>
+<li>$ y_0 &#x3D; 1 $</li>
+<li>$ f(x_0, y_0) &#x3D; 3(0) + 2(1) &#x3D; 2 $</li>
+<li>$ y_1 &#x3D; y_0 + h \cdot f(x_0, y_0) &#x3D; 1 + 0.1 \times 2 &#x3D; 1 + 0.2 &#x3D; \boxed{1.2} $</li>
+<li>$ x_1 &#x3D; 0.1 $</li>
+</ul>
+<h4 id="第-1-步：-n-1"><a href="#第-1-步：-n-1" class="headerlink" title="第 1 步：$ n &#x3D; 1 $"></a>第 1 步：$ n &#x3D; 1 $</h4><ul>
+<li>$ x_1 &#x3D; 0.1 $</li>
+<li>$ y_1 &#x3D; 1.2 $</li>
+<li>$ f(x_1, y_1) &#x3D; 3(0.1) + 2(1.2) &#x3D; 0.3 + 2.4 &#x3D; 2.7 $</li>
+<li>$ y_2 &#x3D; y_1 + h \cdot f &#x3D; 1.2 + 0.1 \times 2.7 &#x3D; 1.2 + 0.27 &#x3D; \boxed{1.47} $</li>
+<li>$ x_2 &#x3D; 0.2 $</li>
+</ul>
+<h4 id="第-2-步：-n-2"><a href="#第-2-步：-n-2" class="headerlink" title="第 2 步：$ n &#x3D; 2 $"></a>第 2 步：$ n &#x3D; 2 $</h4><ul>
+<li>$ x_2 &#x3D; 0.2 $</li>
+<li>$ y_2 &#x3D; 1.47 $</li>
+<li>$ f(x_2, y_2) &#x3D; 3(0.2) + 2(1.47) &#x3D; 0.6 + 2.94 &#x3D; 3.54 $</li>
+<li>$ y_3 &#x3D; y_2 + h \cdot f &#x3D; 1.47 + 0.1 \times 3.54 &#x3D; 1.47 + 0.354 &#x3D; \boxed{1.824} $</li>
+<li>$ x_3 &#x3D; 0.3 $</li>
+</ul>
+<hr>
+<h3 id="结果汇总表："><a href="#结果汇总表：" class="headerlink" title="结果汇总表："></a>结果汇总表：</h3><table>
+<thead>
+<tr>
+<th>$ n $</th>
+<th>$ x_n $</th>
+<th>$ y_n $ (Euler)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.0</td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.1</td>
+<td>1.200</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.2</td>
+<td>1.470</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.3</td>
+<td><strong>1.824</strong></td>
+</tr>
+</tbody></table>
+<h3 id="考点总结"><a href="#考点总结" class="headerlink" title="考点总结"></a>考点总结</h3><table>
+<thead>
+<tr>
+<th>考点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>显式欧拉公式</strong></td>
+<td>$ y_{n+1} &#x3D; y_n + h f(x_n, y_n) $，<strong>单步、显式、一阶精度</strong></td>
+</tr>
+<tr>
+<td><strong>局部截断误差</strong></td>
+<td>$ O(h^2) $，<strong>全局误差</strong> $ O(h) $</td>
+</tr>
+<tr>
+<td><strong>稳定性</strong></td>
+<td>对刚性方程不稳定；本例 $ \lambda &#x3D; 2 &gt; 0 $，虽非刚性，但误差仍累积</td>
+</tr>
+<tr>
+<td><strong>与隐式欧拉对比</strong></td>
+<td>隐式 $ y_{n+1} &#x3D; y_n + h f(x_{n+1}, y_{n+1}) $，需解方程，但更稳定</td>
+</tr>
+<tr>
+<td><strong>改进方法</strong></td>
+<td>改进欧拉（Heun）、RK2、RK4 可显著提高精度</td>
+</tr>
+</tbody></table>
+</details>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>算法设计</tag>
+        <tag>数值分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数值分析与算法设计--拉格朗日线性插值</title>
+    <url>/zhihaojiang.github.io/2026/01/17/20260117%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1--%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC/</url>
+    <content><![CDATA[<h1 id="拉格朗日线性插值"><a href="#拉格朗日线性插值" class="headerlink" title="拉格朗日线性插值"></a>拉格朗日线性插值</h1><h2 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h2><p>当只有两个数据点 $(x_0, y_0)$ 和 $(x_1, y_1)$ 时，拉格朗日插值多项式为一次多项式（直线）：<br>$$<br>P_1(x) &#x3D; y_0 \cdot \frac{x - x_1}{x_0 - x_1} + y_1 \cdot \frac{x - x_0}{x_1 - x_0}<br>$$<br>这等价于两点式直线方程。</p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>已知：</p>
+<ul>
+<li>$x_0 &#x3D; 100,\ y_0 &#x3D; \sqrt{100} &#x3D; 10$</li>
+<li>$x_1 &#x3D; 121,\ y_1 &#x3D; \sqrt{121} &#x3D; 11$</li>
+<li>要求：$x &#x3D; 115$ 时的 $y \approx P_1(115)$</li>
+</ul>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><details>
+<summary><b>点击查看答案</b></summary>
+代入公式：
+
+<p>$$<br>P_1(115) &#x3D; 10 \cdot \frac{115 - 121}{100 - 121} + 11 \cdot \frac{115 - 100}{121 - 100}<br>$$</p>
+<p>计算各部分：</p>
+<ul>
+<li>$115 - 121 &#x3D; -6$</li>
+<li>$100 - 121 &#x3D; -21$</li>
+<li>$115 - 100 &#x3D; 15$</li>
+<li>$121 - 100 &#x3D; 21$</li>
+</ul>
+<p>所以：</p>
+<p>$$<br>P_1(115) &#x3D; 10 \cdot \frac{-6}{-21} + 11 \cdot \frac{15}{21}<br>&#x3D; 10 \cdot \frac{6}{21} + 11 \cdot \frac{15}{21}<br>$$</p>
+<p>化简分数：</p>
+<ul>
+<li>$\frac{6}{21} &#x3D; \frac{2}{7}$</li>
+<li>$\frac{15}{21} &#x3D; \frac{5}{7}$</li>
+</ul>
+<p>因此：</p>
+<p>$$<br>P_1(115) &#x3D; 10 \cdot \frac{2}{7} + 11 \cdot \frac{5}{7}<br>&#x3D; \frac{20}{7} + \frac{55}{7}<br>&#x3D; \frac{75}{7}<br>\approx 10.7142857<br>$$</p>
+<h2 id="与真实值比较"><a href="#与真实值比较" class="headerlink" title="与真实值比较"></a>与真实值比较</h2><p>真实值：<br>$$<br>\sqrt{115} \approx 10.7238053<br>$$</p>
+<p>插值结果：<br>$$<br>P_1(115) \approx 10.7143<br>$$</p>
+<p><strong>误差</strong> ≈ $10.7238 - 10.7143 &#x3D; 0.0095$，相对误差约 <strong>0.09%</strong>，效果不错！</p>
+</details>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>算法设计</tag>
+        <tag>数值分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数值分析与算法设计--牛顿插值</title>
+    <url>/zhihaojiang.github.io/2026/01/17/20260117%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1--%E7%89%9B%E9%A1%BF%E6%8F%92%E5%80%BC/</url>
+    <content><![CDATA[<h1 id="牛顿插值"><a href="#牛顿插值" class="headerlink" title="牛顿插值"></a>牛顿插值</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>已知函数 $ f(x) $ 的部分取值如下表：</p>
+<table>
+<thead>
+<tr>
+<th>$ x_i $</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$ f(x_i) $</td>
+<td>1</td>
+<td>3</td>
+<td>2</td>
+<td>6</td>
+</tr>
+</tbody></table>
+<ol>
+<li>构造<strong>差商表</strong>（一阶、二阶、三阶差商）；  </li>
+<li>写出以 $ x_0&#x3D;0 $ 为基点的<strong>三次牛顿插值多项式</strong> $ N_3(x) $；  </li>
+<li>用 $ N_3(x) $ 估计 $ f(1.5) $ 的近似值；  </li>
+<li>（选做&#x2F;拓展）若已知 $ f(x) &#x3D; \ln(x+1) + x^2 - x + 1 $，求插值余项 $ R_3(1.5) $ 的理论表达式与上界估计（提示：用余项公式）。</li>
+</ol>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><details>
+<summary><b>点击查看答案</b></summary>
+###  一、构造差商表
+
+<p>已知数据点：</p>
+<table>
+<thead>
+<tr>
+<th>$ i $</th>
+<th>$ x_i $</th>
+<th>$ f(x_i) $</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>6</td>
+</tr>
+</tbody></table>
+<p>我们按定义逐阶计算差商（记 $ f[x_i, x_{i+1}, \dots, x_{i+k}] $ 为 $ k $ 阶差商）。</p>
+<h3 id="0-阶差商（即函数值）："><a href="#0-阶差商（即函数值）：" class="headerlink" title="0 阶差商（即函数值）："></a>0 阶差商（即函数值）：</h3><p>$$<br>\begin{aligned}<br>f[x_0] &amp;&#x3D; f(0) &#x3D; 1 \<br>f[x_1] &amp;&#x3D; f(1) &#x3D; 3 \<br>f[x_2] &amp;&#x3D; f(2) &#x3D; 2 \<br>f[x_3] &amp;&#x3D; f(4) &#x3D; 6<br>\end{aligned}<br>$$</p>
+<h3 id="一阶差商："><a href="#一阶差商：" class="headerlink" title="一阶差商："></a>一阶差商：</h3><p>$$<br>\begin{aligned}<br>f[x_0,x_1] &amp;&#x3D; \frac{f[x_1] - f[x_0]}{x_1 - x_0} &#x3D; \frac{3 - 1}{1 - 0} &#x3D; 2 \<br>f[x_1,x_2] &amp;&#x3D; \frac{2 - 3}{2 - 1} &#x3D; -1 \<br>f[x_2,x_3] &amp;&#x3D; \frac{6 - 2}{4 - 2} &#x3D; \frac{4}{2} &#x3D; 2<br>\end{aligned}<br>$$</p>
+<h3 id="二阶差商："><a href="#二阶差商：" class="headerlink" title="二阶差商："></a>二阶差商：</h3><p>$$<br>\begin{aligned}<br>f[x_0,x_1,x_2] &amp;&#x3D; \frac{f[x_1,x_2] - f[x_0,x_1]}{x_2 - x_0} &#x3D; \frac{-1 - 2}{2 - 0} &#x3D; \frac{-3}{2} &#x3D; -1.5 \<br>f[x_1,x_2,x_3] &amp;&#x3D; \frac{f[x_2,x_3] - f[x_1,x_2]}{x_3 - x_1} &#x3D; \frac{2 - (-1)}{4 - 1} &#x3D; \frac{3}{3} &#x3D; 1<br>\end{aligned}<br>$$</p>
+<h3 id="三阶差商："><a href="#三阶差商：" class="headerlink" title="三阶差商："></a>三阶差商：</h3><p>$$<br>f[x_0,x_1,x_2,x_3] &#x3D; \frac{f[x_1,x_2,x_3] - f[x_0,x_1,x_2]}{x_3 - x_0} &#x3D; \frac{1 - (-1.5)}{4 - 0} &#x3D; \frac{2.5}{4} &#x3D; \frac{5}{8} &#x3D; 0.625<br>$$</p>
+<h3 id="差商表整理如下："><a href="#差商表整理如下：" class="headerlink" title="差商表整理如下："></a>差商表整理如下：</h3><table>
+<thead>
+<tr>
+<th>$ i $</th>
+<th>$ x_i $</th>
+<th>$ f[x_i] $</th>
+<th>$ f[x_i,x_{i+1}] $</th>
+<th>$ f[x_i,x_{i+1},x_{i+2}] $</th>
+<th>$ f[x_i,x_{i+1},x_{i+2},x_{i+3}] $</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>2</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td></td>
+<td><strong>−1.5</strong></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>−1</strong></td>
+<td></td>
+<td><strong>0.625</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td></td>
+<td><strong>1</strong></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td><strong>2</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+<td>6</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>考点提醒</strong>：  </p>
+<ul>
+<li>差商具有<strong>对称性</strong>（与节点顺序无关），但表中通常按<strong>左对齐递推</strong>计算；  </li>
+<li>若等距节点，可联系<strong>差分</strong>（forward&#x2F;backward difference），但本题节点不等距（0,1,2,4），<strong>必须用差商</strong>；  </li>
+<li>差商是牛顿插值系数的核心来源。</li>
+</ul>
+</blockquote>
+<h3 id="写出三次牛顿插值多项式-N-3-x"><a href="#写出三次牛顿插值多项式-N-3-x" class="headerlink" title="写出三次牛顿插值多项式 $ N_3(x) $"></a>写出三次牛顿插值多项式 $ N_3(x) $</h3><p>牛顿插值公式（以 $ x_0 &#x3D; 0 $ 为起点）为：</p>
+<p>$$<br>\begin{aligned}<br>N_3(x) &amp;&#x3D; f[x_0] \<br>&amp;\quad + f[x_0,x_1](x - x_0) \<br>&amp;\quad + f[x_0,x_1,x_2](x - x_0)(x - x_1) \<br>&amp;\quad + f[x_0,x_1,x_2,x_3](x - x_0)(x - x_1)(x - x_2)<br>\end{aligned}<br>$$</p>
+<p>代入已算得的差商值：</p>
+<p>$$<br>\begin{aligned}<br>N_3(x) &amp;&#x3D; 1 \<br>&amp;\quad + 2(x - 0) \<br>&amp;\quad + (-1.5)(x - 0)(x - 1) \<br>&amp;\quad + 0.625(x - 0)(x - 1)(x - 2)<br>\end{aligned}<br>$$</p>
+<p>即：</p>
+<p>$$<br>\boxed{<br>N_3(x) &#x3D; 1 + 2x - \frac{3}{2}x(x-1) + \frac{5}{8}x(x-1)(x-2)<br>}<br>$$</p>
+<p>（保留分数形式更精确，避免浮点误差）</p>
+<blockquote>
+<p> <strong>考点提醒</strong>：  </p>
+<ul>
+<li>牛顿插值是<strong>增量式构造</strong>，比拉格朗日插值更易增加新节点（只需加一项）；  </li>
+<li>多项式<strong>无需展开</strong>即可用于计算（推荐用嵌套&#x2F;Horner 形式，见下文）；  </li>
+<li>注意：插值多项式唯一，牛顿与拉格朗日形式等价，但牛顿形式<strong>计算效率更高</strong>，尤其适合变节点情形。</li>
+</ul>
+</blockquote>
+</details>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>算法设计</tag>
+        <tag>数值分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数值分析与算法设计--改进欧拉法</title>
+    <url>/zhihaojiang.github.io/2026/01/17/20260117%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1--%E6%94%B9%E8%BF%9B%E6%AC%A7%E6%8B%89%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="改进欧拉法"><a href="#改进欧拉法" class="headerlink" title="改进欧拉法"></a>改进欧拉法</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>用 <strong>改进欧拉法</strong>求解初值问题：</p>
+<p>$$<br>\begin{cases}<br>y’ &#x3D; f(x, y) &#x3D; 3x + 2y \<br>y(0) &#x3D; 1 \<br>0 \le x \le 0.3,\quad h &#x3D; 0.1<br>\end{cases}<br>$$</p>
+<hr>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><details>
+<summary><b>点击查看答案</b></summary>
+
+<h3 id="改进欧拉法公式"><a href="#改进欧拉法公式" class="headerlink" title="改进欧拉法公式"></a>改进欧拉法公式</h3><p>对每一步 $ n &#x3D; 0,1,2,\dots $：</p>
+<ol>
+<li><strong>预测（显式欧拉一步）</strong>：<br>$$<br>\tilde{y}_{n+1} &#x3D; y_n + h , f(x_n, y_n)<br>$$</li>
+<li><strong>校正（梯形公式）</strong>：<br>$$<br>y_{n+1} &#x3D; y_n + \frac{h}{2} \left[ f(x_n, y_n) + f(x_{n+1}, \tilde{y}_{n+1}) \right]<br>$$</li>
+</ol>
+<blockquote>
+<p>本质：用区间端点的斜率平均值代替单点斜率，提高精度。<br>精度：<strong>二阶方法</strong>，全局误差 $ O(h^2) $，比显式欧拉更准。</p>
+</blockquote>
+<hr>
+<h3 id="已知："><a href="#已知：" class="headerlink" title="已知："></a>已知：</h3><ul>
+<li>$ x_0 &#x3D; 0 $, $ y_0 &#x3D; 1 $</li>
+<li>$ h &#x3D; 0.1 $</li>
+<li>$ f(x, y) &#x3D; 3x + 2y $</li>
+</ul>
+<p>我们计算到 $ x &#x3D; 0.3 $，共 3 步。</p>
+<hr>
+<h2 id="逐步计算："><a href="#逐步计算：" class="headerlink" title="逐步计算："></a>逐步计算：</h2><hr>
+<h3 id="▶-第-0-步：-n-0-x-0-0-y-0-1"><a href="#▶-第-0-步：-n-0-x-0-0-y-0-1" class="headerlink" title="▶ 第 0 步：$ n &#x3D; 0 $, $ x_0 &#x3D; 0 $, $ y_0 &#x3D; 1 $"></a>▶ 第 0 步：$ n &#x3D; 0 $, $ x_0 &#x3D; 0 $, $ y_0 &#x3D; 1 $</h3><ol>
+<li><p><strong>预测</strong>：<br>$$<br>\tilde{y}_1 &#x3D; y_0 + h f(x_0, y_0) &#x3D; 1 + 0.1 \cdot (3\cdot0 + 2\cdot1) &#x3D; 1 + 0.1 \cdot 2 &#x3D; 1.2<br>$$</p>
+</li>
+<li><p><strong>计算校正所需斜率</strong>：</p>
+<ul>
+<li>$ f(x_0, y_0) &#x3D; 2 $ （已算）</li>
+<li>$ f(x_1, \tilde{y}_1) &#x3D; f(0.1, 1.2) &#x3D; 3(0.1) + 2(1.2) &#x3D; 0.3 + 2.4 &#x3D; 2.7 $</li>
+</ul>
+</li>
+<li><p><strong>校正</strong>：<br>$$<br>y_1 &#x3D; y_0 + \frac{h}{2} \left[ f(x_0, y_0) + f(x_1, \tilde{y}_1) \right]<br>&#x3D; 1 + \frac{0.1}{2} (2 + 2.7) &#x3D; 1 + 0.05 \times 4.7 &#x3D; 1 + 0.235 &#x3D; \boxed{1.235}<br>$$</p>
+</li>
+</ol>
+<p>→ $ x_1 &#x3D; 0.1 $, $ y_1 &#x3D; 1.235 $</p>
+<hr>
+<h3 id="▶-第-1-步：-n-1-x-1-0-1-y-1-1-235"><a href="#▶-第-1-步：-n-1-x-1-0-1-y-1-1-235" class="headerlink" title="▶ 第 1 步：$ n &#x3D; 1 $, $ x_1 &#x3D; 0.1 $, $ y_1 &#x3D; 1.235 $"></a>▶ 第 1 步：$ n &#x3D; 1 $, $ x_1 &#x3D; 0.1 $, $ y_1 &#x3D; 1.235 $</h3><ol>
+<li><p><strong>预测</strong>：<br>$$<br>\tilde{y}_2 &#x3D; y_1 + h f(x_1, y_1)<br>&#x3D; 1.235 + 0.1 \cdot \big[ 3(0.1) + 2(1.235) \big]<br>&#x3D; 1.235 + 0.1 \cdot (0.3 + 2.47) &#x3D; 1.235 + 0.1 \cdot 2.77 &#x3D; 1.235 + 0.277 &#x3D; 1.512<br>$$</p>
+</li>
+<li><p><strong>斜率</strong>：</p>
+<ul>
+<li>$ f(x_1, y_1) &#x3D; 2.77 $ （已算）</li>
+<li>$ f(x_2, \tilde{y}_2) &#x3D; f(0.2, 1.512) &#x3D; 3(0.2) + 2(1.512) &#x3D; 0.6 + 3.024 &#x3D; 3.624 $</li>
+</ul>
+</li>
+<li><p><strong>校正</strong>：<br>$$<br>y_2 &#x3D; y_1 + \frac{h}{2} \big[ f(x_1, y_1) + f(x_2, \tilde{y}_2) \big]<br>&#x3D; 1.235 + 0.05 \cdot (2.77 + 3.624) &#x3D; 1.235 + 0.05 \cdot 6.394 &#x3D; 1.235 + 0.3197 &#x3D; \boxed{1.5547}<br>$$</p>
+</li>
+</ol>
+<p>→ $ x_2 &#x3D; 0.2 $, $ y_2 &#x3D; 1.5547 $</p>
+<p>（保留4位小数，后续一致）</p>
+<hr>
+<h3 id="▶-第-2-步：-n-2-x-2-0-2-y-2-1-5547"><a href="#▶-第-2-步：-n-2-x-2-0-2-y-2-1-5547" class="headerlink" title="▶ 第 2 步：$ n &#x3D; 2 $, $ x_2 &#x3D; 0.2 $, $ y_2 &#x3D; 1.5547 $"></a>▶ 第 2 步：$ n &#x3D; 2 $, $ x_2 &#x3D; 0.2 $, $ y_2 &#x3D; 1.5547 $</h3><ol>
+<li><p><strong>预测</strong>：<br>$$<br>\tilde{y}_3 &#x3D; y_2 + h f(x_2, y_2)<br>&#x3D; 1.5547 + 0.1 \cdot \big[ 3(0.2) + 2(1.5547) \big]<br>&#x3D; 1.5547 + 0.1 \cdot (0.6 + 3.1094) &#x3D; 1.5547 + 0.1 \cdot 3.7094 &#x3D; 1.5547 + 0.37094 &#x3D; 1.92564<br>$$</p>
+</li>
+<li><p><strong>斜率</strong>：</p>
+<ul>
+<li>$ f(x_2, y_2) &#x3D; 3.7094 $</li>
+<li>$ f(x_3, \tilde{y}_3) &#x3D; f(0.3, 1.92564) &#x3D; 3(0.3) + 2(1.92564) &#x3D; 0.9 + 3.85128 &#x3D; 4.75128 $</li>
+</ul>
+</li>
+<li><p><strong>校正</strong>：<br>$$<br>y_3 &#x3D; y_2 + \frac{h}{2} \big[ f(x_2, y_2) + f(x_3, \tilde{y}_3) \big]<br>&#x3D; 1.5547 + 0.05 \cdot (3.7094 + 4.75128)<br>&#x3D; 1.5547 + 0.05 \cdot 8.46068 &#x3D; 1.5547 + 0.423034 &#x3D; \boxed{1.977734}<br>$$</p>
+</li>
+</ol>
+<p>→ $ x_3 &#x3D; 0.3 $, $ y_3 \approx 1.9777 $</p>
+<p>（四舍五入到6位：1.977734）</p>
+<hr>
+<h3 id="✅-改进欧拉法结果汇总："><a href="#✅-改进欧拉法结果汇总：" class="headerlink" title="✅ 改进欧拉法结果汇总："></a>✅ 改进欧拉法结果汇总：</h3><table>
+<thead>
+<tr>
+<th>$ n $</th>
+<th>$ x_n $</th>
+<th>预测 $ \tilde{y}_{n+1} $</th>
+<th>校正 $ y_{n+1} $</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0.0</td>
+<td>1.2000</td>
+<td><strong>1.2350</strong></td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.1</td>
+<td>1.5120</td>
+<td><strong>1.5547</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.2</td>
+<td>1.9256</td>
+<td><strong>1.9777</strong></td>
+</tr>
+</tbody></table>
+<p>最终近似解：<br>$$<br>\boxed{y(0.3) \approx 1.9777}<br>$$</p>
+</details>
+
+
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>算法设计</tag>
+        <tag>数值分析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数值分析与算法设计--高斯列主元消去法</title>
+    <url>/zhihaojiang.github.io/2026/01/17/20260117%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1--%E9%AB%98%E6%96%AF%E5%88%97%E4%B8%BB%E5%85%83%E6%B6%88%E5%8E%BB%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="高斯列主元消去法"><a href="#高斯列主元消去法" class="headerlink" title="高斯列主元消去法"></a>高斯列主元消去法</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>使用 <strong>高斯列主元消去法</strong>求解如下线性方程组：</p>
+<p>$$<br>\begin{cases}<br>12x_1 - 3x_2 + 3x_3 &#x3D; 15 \quad \text{(1)}\<br>-18x_1 + 3x_2 - x_3 &#x3D; -15 \quad \text{(2)}\<br>x_1 + x_2 + x_3 &#x3D; 6 \quad \text{(3)}<br>\end{cases}<br>$$</p>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><details>
+<summary><b>点击查看答案</b></summary>
+
+<h3 id="写出增广矩阵"><a href="#写出增广矩阵" class="headerlink" title="写出增广矩阵"></a>写出增广矩阵</h3><p>$$<br>\left[<br>\begin{array}{ccc|c}<br>12 &amp; -3 &amp; 3 &amp; 15 \<br>-18 &amp; 3 &amp; -1 &amp; -15 \<br>1 &amp; 1 &amp; 1 &amp; 6<br>\end{array}<br>\right]<br>$$</p>
+<h3 id="第1列选主元"><a href="#第1列选主元" class="headerlink" title="第1列选主元"></a>第1列选主元</h3><p>第1列元素绝对值：<br>|12| &#x3D; 12,<br>|−18| &#x3D; <strong>18</strong> ← 最大，<br>|1| &#x3D; 1  </p>
+<p><strong>主元为 −18</strong>，位于第2行 → 将第1行与第2行交换：</p>
+<p>$$<br>\left[<br>\begin{array}{ccc|c}<br>-18 &amp; 3 &amp; -1 &amp; -15 \quad \text{(R1)}\<br>12 &amp; -3 &amp; 3 &amp; 15 \quad \text{(R2)}\<br>1 &amp; 1 &amp; 1 &amp; 6 \quad \text{(R3)}<br>\end{array}<br>\right]<br>$$</p>
+<blockquote>
+<p>注：列主元只在当前列下方（含当前行）找最大，不考虑符号，取绝对值最大者。</p>
+</blockquote>
+<hr>
+<h3 id="消去第1列下方元素"><a href="#消去第1列下方元素" class="headerlink" title="消去第1列下方元素"></a>消去第1列下方元素</h3><h4 id="计算乘子："><a href="#计算乘子：" class="headerlink" title="计算乘子："></a>计算乘子：</h4><ul>
+<li>$ m_{21} &#x3D; \frac{a_{21}}{a_{11}} &#x3D; \frac{12}{-18} &#x3D; -\frac{2}{3} $</li>
+<li>$ m_{31} &#x3D; \frac{1}{-18} &#x3D; -\frac{1}{18} $</li>
+</ul>
+<h4 id="行变换："><a href="#行变换：" class="headerlink" title="行变换："></a>行变换：</h4><ul>
+<li>$ R_2 \leftarrow R_2 - m_{21} R_1 &#x3D; R_2 + \frac{2}{3} R_1 $  </li>
+<li>$ R_3 \leftarrow R_3 - m_{31} R_1 &#x3D; R_3 + \frac{1}{18} R_1 $</li>
+</ul>
+<p>计算新 R₂：<br>$$<br>\begin{aligned}<br>R_2 &amp;: [12,\ -3,\ 3\ |\ 15] \<br>+\frac{2}{3}R_1 &amp;: +\frac{2}{3}[-18,\ 3,\ -1\ |\ -15] &#x3D; [-12,\ 2,\ -\frac{2}{3}\ |\ -10] \<br>\Rightarrow R_2’ &amp;: [0,\ -1,\ \frac{7}{3}\ |\ 5]<br>\end{aligned}<br>$$</p>
+<p>计算新 R₃：<br>$$<br>\begin{aligned}<br>R_3 &amp;: [1,\ 1,\ 1\ |\ 6] \<br>+\frac{1}{18}R_1 &amp;: +\frac{1}{18}[-18,\ 3,\ -1\ |\ -15] &#x3D; [-1,\ \frac{1}{6},\ -\frac{1}{18}\ |\ -\frac{5}{6}] \<br>\Rightarrow R_3’ &amp;: [0,\ \frac{7}{6},\ \frac{17}{18}\ |\ \frac{31}{6}]<br>\end{aligned}<br>$$</p>
+<p>当前矩阵为：</p>
+<p>$$<br>\left[<br>\begin{array}{ccc|c}<br>-18 &amp; 3 &amp; -1 &amp; -15 \<br>0 &amp; -1 &amp; \frac{7}{3} &amp; 5 \<br>0 &amp; \frac{7}{6} &amp; \frac{17}{18} &amp; \frac{31}{6}<br>\end{array}<br>\right]<br>$$</p>
+<hr>
+<h3 id="第2列选主元"><a href="#第2列选主元" class="headerlink" title="第2列选主元"></a>第2列选主元</h3><p>第2列下方元素（从第2行开始）：</p>
+<ul>
+<li>$ |a_{22}| &#x3D; |-1| &#x3D; 1 $  </li>
+<li>$ |a_{32}| &#x3D; \left|\frac{7}{6}\right| \approx 1.1667 $ ← 更大！</li>
+</ul>
+<p>→ 主元为 $ \frac{7}{6} $，在第3行 → <strong>交换第2行和第3行</strong></p>
+<p>$$<br>\left[<br>\begin{array}{ccc|c}<br>-18 &amp; 3 &amp; -1 &amp; -15 \quad \text{(R1)}\<br>0 &amp; \frac{7}{6} &amp; \frac{17}{18} &amp; \frac{31}{6} \quad \text{(R2)}\<br>0 &amp; -1 &amp; \frac{7}{3} &amp; 5 \quad \text{(R3)}<br>\end{array}<br>\right]<br>$$</p>
+<hr>
+<h3 id="消去第2列下方元素"><a href="#消去第2列下方元素" class="headerlink" title="消去第2列下方元素"></a>消去第2列下方元素</h3><p>计算乘子：<br>$$<br>m_{32} &#x3D; \frac{a_{32}}{a_{22}} &#x3D; \frac{-1}{7&#x2F;6} &#x3D; -\frac{6}{7}<br>$$</p>
+<p>行变换：<br>$$<br>R_3 \leftarrow R_3 - m_{32} R_2 &#x3D; R_3 + \frac{6}{7} R_2<br>$$</p>
+<p>先算 $ \frac{6}{7} R_2 $:<br>$$<br>\frac{6}{7} \cdot \left[0,\ \frac{7}{6},\ \frac{17}{18},\ \frac{31}{6}\right]<br>&#x3D; \left[0,\ 1,\ \frac{6}{7} \cdot \frac{17}{18},\ \frac{6}{7} \cdot \frac{31}{6} \right]<br>&#x3D; \left[0,\ 1,\ \frac{102}{126} &#x3D; \frac{17}{21},\ \frac{31}{7} \right]<br>$$</p>
+<p>加到 R₃ 上：</p>
+<p>R₃ 原为：$ [0,\ -1,\ \frac{7}{3},\ 5] $</p>
+<p>$$<br>\begin{aligned}<br>\text{新 } R_3 &amp;: [0,\ -1+1,\ \frac{7}{3} + \frac{17}{21},\ 5 + \frac{31}{7}] \<br>&amp;&#x3D; [0,\ 0,\ \frac{49}{21} + \frac{17}{21},\ \frac{35}{7} + \frac{31}{7}] \<br>&amp;&#x3D; [0,\ 0,\ \frac{66}{21} &#x3D; \frac{22}{7},\ \frac{66}{7}]<br>\end{aligned}<br>$$</p>
+<p>得到上三角矩阵：</p>
+<p>$$<br>\left[<br>\begin{array}{ccc|c}<br>-18 &amp; 3 &amp; -1 &amp; -15 \<br>0 &amp; \frac{7}{6} &amp; \frac{17}{18} &amp; \frac{31}{6} \<br>0 &amp; 0 &amp; \frac{22}{7} &amp; \frac{66}{7}<br>\end{array}<br>\right]<br>$$</p>
+<h3 id="回代求解"><a href="#回代求解" class="headerlink" title="回代求解"></a>回代求解</h3><p>从最后一行开始：</p>
+<h4 id="第3行："><a href="#第3行：" class="headerlink" title="第3行："></a>第3行：</h4><p>$$<br>\frac{22}{7} x_3 &#x3D; \frac{66}{7} \Rightarrow x_3 &#x3D; \frac{66&#x2F;7}{22&#x2F;7} &#x3D; \frac{66}{22} &#x3D; 3<br>$$</p>
+<h4 id="第2行："><a href="#第2行：" class="headerlink" title="第2行："></a>第2行：</h4><p>$$<br>\frac{7}{6} x_2 + \frac{17}{18} x_3 &#x3D; \frac{31}{6}<br>\Rightarrow \frac{7}{6} x_2 + \frac{17}{18} \cdot 3 &#x3D; \frac{31}{6}<br>\Rightarrow \frac{7}{6} x_2 + \frac{51}{18} &#x3D; \frac{31}{6}<br>$$</p>
+<p>化简：$ \frac{51}{18} &#x3D; \frac{17}{6} $，右边 $ \frac{31}{6} $</p>
+<p>$$<br>\frac{7}{6} x_2 &#x3D; \frac{31}{6} - \frac{17}{6} &#x3D; \frac{14}{6} &#x3D; \frac{7}{3}<br>\Rightarrow x_2 &#x3D; \frac{7}{3} \cdot \frac{6}{7} &#x3D; 2<br>$$</p>
+<h4 id="第1行："><a href="#第1行：" class="headerlink" title="第1行："></a>第1行：</h4><p>$$<br>-18 x_1 + 3 x_2 - x_3 &#x3D; -15<br>\Rightarrow -18 x_1 + 3 \cdot 2 - 3 &#x3D; -15<br>\Rightarrow -18 x_1 + 6 - 3 &#x3D; -15<br>\Rightarrow -18 x_1 + 3 &#x3D; -15<br>\Rightarrow -18 x_1 &#x3D; -18<br>\Rightarrow x_1 &#x3D; 1<br>$$</p>
+<h3 id="最终解："><a href="#最终解：" class="headerlink" title="最终解："></a>最终解：</h3><p>$$<br>\boxed{<br>x_1 &#x3D; 1,\quad x_2 &#x3D; 2,\quad x_3 &#x3D; 3<br>}<br>$$</p>
+<h3 id="验算（代入原方程）："><a href="#验算（代入原方程）：" class="headerlink" title="验算（代入原方程）："></a>验算（代入原方程）：</h3><ol>
+<li>$ 12(1) - 3(2) + 3(3) &#x3D; 12 - 6 + 9 &#x3D; 15 $   </li>
+<li>$ -18(1) + 3(2) - 1(3) &#x3D; -18 + 6 - 3 &#x3D; -15 $   </li>
+<li>$ 1 + 2 + 3 &#x3D; 6 $</li>
+</ol>
+<hr>
+<h3 id="考点总结（高斯列主元消去法）"><a href="#考点总结（高斯列主元消去法）" class="headerlink" title="考点总结（高斯列主元消去法）"></a>考点总结（高斯列主元消去法）</h3><table>
+<thead>
+<tr>
+<th>考点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>列主元选取</strong></td>
+<td>每步在当前列（从对角元开始往下）选<strong>绝对值最大</strong>元素所在行，与当前行交换，避免小主元导致的数值不稳定</td>
+</tr>
+<tr>
+<td><strong>乘子计算</strong></td>
+<td>$ m_{ij} &#x3D; a_{ij}^{(k)} &#x2F; a_{kk}^{(k)} $，用于消元</td>
+</tr>
+<tr>
+<td><strong>行变换</strong></td>
+<td>$ R_i \leftarrow R_i - m_{ij} R_k $，仅修改下方行</td>
+</tr>
+<tr>
+<td><strong>上三角回代</strong></td>
+<td>从最后一行向上代入，注意分数运算或用小数保留精度</td>
+</tr>
+<tr>
+<td><strong>复杂度</strong></td>
+<td>$ O(n^3) $，适用于中小规模稠密系统</td>
+</tr>
+<tr>
+<td><strong>与全主元区别</strong></td>
+<td>全主元在右下子矩阵中找最大元（行列都可交换），更稳定但开销大；<strong>列主元更常用</strong></td>
+</tr>
+</tbody></table>
+</details>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>算法设计</tag>
+        <tag>数值分析</tag>
+      </tags>
+  </entry>
 </search>

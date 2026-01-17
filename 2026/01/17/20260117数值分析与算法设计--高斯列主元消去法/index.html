@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="姜智浩">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/2026/01/17/20260117数值分析与算法设计--高斯列主元消去法/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数值分析与算法设计--高斯列主元消去法">
+<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/2026/01/17/20260117%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1--%E9%AB%98%E6%96%AF%E5%88%97%E4%B8%BB%E5%85%83%E6%B6%88%E5%8E%BB%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-01-17T03:45:14.000Z">
+<meta property="article:modified_time" content="2026-01-17T05:42:25.570Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="算法设计">
+<meta property="article:tag" content="数值分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://super-213.github.io/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/zhihaojiang.github.io/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/zhihaojiang.github.io/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/zhihaojiang.github.io/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            数值分析与算法设计--高斯列主元消去法 | 智浩的Blog
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    <!-- 这里是 Live2D 代码 -->
+    <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/zhihaojiang.github.io/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+        
+<script src="/zhihaojiang.github.io/js/build/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"super-213.github.io","root":"/zhihaojiang.github.io/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/defaults/bear.PNG","dark":"/images/defaults/bear.PNG"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/super-213","instagram":null,"zhihu":null,"twitter":null,"email":"jiangzhihaojzh@126.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1"},"mathjax":{"tags":"none","single_dollars":true,"cjk_width":0.9,"normal_width":0.6,"append_css":true,"every_page":true}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Portfolio":"/portfolio/","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"shuoshuo":{"icon":"fa-solid fa-bookmark","path":"/essays/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        智浩的Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({ loop: true })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [20, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                filter: ['blur(5px)', 'blur(0px)'],
+                easing: "easeOutExpo",
+                duration: 1200,
+                delay: (el, i) => 300 + 20 * i,
+            })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [0, -20],
+                opacity: [1, 0],
+                filter: ['blur(0px)', 'blur(5px)'],
+                easing: "easeInExpo",
+                duration: 1000,
+                delay: (el, i) => 15 * i,
+                complete: function() {
+                    hidePreloader();
+                }
+            }, '-=700');
+
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/zhihaojiang.github.io/">
+                
+                智浩的Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    PHOTO
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/zhihaojiang.github.io/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/zhihaojiang.github.io/portfolio/">
+                                                    PORTFOLIO
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/super-213">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/masonry/"
+                        >
+                            <span>
+                                PHOTO
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/zhihaojiang.github.io/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/zhihaojiang.github.io/portfolio/">PORTFOLIO</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/super-213">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/bookmarks/"
+                        >
+                            <span>Bookmarks</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/essays/"
+                        >
+                            <span>Shuoshuo</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/tags/"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/categories/"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">25</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">88</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">数值分析与算法设计--高斯列主元消去法</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/zhihaojiang.github.io/images/defaults/IMG_3744.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">姜智浩</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv5</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-01-17 11:45:14</span>
+        <span class="mobile">2026-01-17 11:45:14</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-01-17 13:42:25</span>
+            <span class="mobile">2026-01-17 13:42:25</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/zhihaojiang.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/">算法设计</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.1k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>5 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="高斯列主元消去法"><a href="#高斯列主元消去法" class="headerlink" title="高斯列主元消去法"></a>高斯列主元消去法</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>使用 <strong>高斯列主元消去法</strong>求解如下线性方程组：</p>
+<p>$$<br>\begin{cases}<br>12x_1 - 3x_2 + 3x_3 &#x3D; 15 \quad \text{(1)}\<br>-18x_1 + 3x_2 - x_3 &#x3D; -15 \quad \text{(2)}\<br>x_1 + x_2 + x_3 &#x3D; 6 \quad \text{(3)}<br>\end{cases}<br>$$</p>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><details>
+<summary><b>点击查看答案</b></summary>
+
+<h3 id="写出增广矩阵"><a href="#写出增广矩阵" class="headerlink" title="写出增广矩阵"></a>写出增广矩阵</h3><p>$$<br>\left[<br>\begin{array}{ccc|c}<br>12 &amp; -3 &amp; 3 &amp; 15 \<br>-18 &amp; 3 &amp; -1 &amp; -15 \<br>1 &amp; 1 &amp; 1 &amp; 6<br>\end{array}<br>\right]<br>$$</p>
+<h3 id="第1列选主元"><a href="#第1列选主元" class="headerlink" title="第1列选主元"></a>第1列选主元</h3><p>第1列元素绝对值：<br>|12| &#x3D; 12,<br>|−18| &#x3D; <strong>18</strong> ← 最大，<br>|1| &#x3D; 1  </p>
+<p><strong>主元为 −18</strong>，位于第2行 → 将第1行与第2行交换：</p>
+<p>$$<br>\left[<br>\begin{array}{ccc|c}<br>-18 &amp; 3 &amp; -1 &amp; -15 \quad \text{(R1)}\<br>12 &amp; -3 &amp; 3 &amp; 15 \quad \text{(R2)}\<br>1 &amp; 1 &amp; 1 &amp; 6 \quad \text{(R3)}<br>\end{array}<br>\right]<br>$$</p>
+<blockquote>
+<p>注：列主元只在当前列下方（含当前行）找最大，不考虑符号，取绝对值最大者。</p>
+</blockquote>
+<hr>
+<h3 id="消去第1列下方元素"><a href="#消去第1列下方元素" class="headerlink" title="消去第1列下方元素"></a>消去第1列下方元素</h3><h4 id="计算乘子："><a href="#计算乘子：" class="headerlink" title="计算乘子："></a>计算乘子：</h4><ul>
+<li>$ m_{21} &#x3D; \frac{a_{21}}{a_{11}} &#x3D; \frac{12}{-18} &#x3D; -\frac{2}{3} $</li>
+<li>$ m_{31} &#x3D; \frac{1}{-18} &#x3D; -\frac{1}{18} $</li>
+</ul>
+<h4 id="行变换："><a href="#行变换：" class="headerlink" title="行变换："></a>行变换：</h4><ul>
+<li>$ R_2 \leftarrow R_2 - m_{21} R_1 &#x3D; R_2 + \frac{2}{3} R_1 $  </li>
+<li>$ R_3 \leftarrow R_3 - m_{31} R_1 &#x3D; R_3 + \frac{1}{18} R_1 $</li>
+</ul>
+<p>计算新 R₂：<br>$$<br>\begin{aligned}<br>R_2 &amp;: [12,\ -3,\ 3\ |\ 15] \<br>+\frac{2}{3}R_1 &amp;: +\frac{2}{3}[-18,\ 3,\ -1\ |\ -15] &#x3D; [-12,\ 2,\ -\frac{2}{3}\ |\ -10] \<br>\Rightarrow R_2’ &amp;: [0,\ -1,\ \frac{7}{3}\ |\ 5]<br>\end{aligned}<br>$$</p>
+<p>计算新 R₃：<br>$$<br>\begin{aligned}<br>R_3 &amp;: [1,\ 1,\ 1\ |\ 6] \<br>+\frac{1}{18}R_1 &amp;: +\frac{1}{18}[-18,\ 3,\ -1\ |\ -15] &#x3D; [-1,\ \frac{1}{6},\ -\frac{1}{18}\ |\ -\frac{5}{6}] \<br>\Rightarrow R_3’ &amp;: [0,\ \frac{7}{6},\ \frac{17}{18}\ |\ \frac{31}{6}]<br>\end{aligned}<br>$$</p>
+<p>当前矩阵为：</p>
+<p>$$<br>\left[<br>\begin{array}{ccc|c}<br>-18 &amp; 3 &amp; -1 &amp; -15 \<br>0 &amp; -1 &amp; \frac{7}{3} &amp; 5 \<br>0 &amp; \frac{7}{6} &amp; \frac{17}{18} &amp; \frac{31}{6}<br>\end{array}<br>\right]<br>$$</p>
+<hr>
+<h3 id="第2列选主元"><a href="#第2列选主元" class="headerlink" title="第2列选主元"></a>第2列选主元</h3><p>第2列下方元素（从第2行开始）：</p>
+<ul>
+<li>$ |a_{22}| &#x3D; |-1| &#x3D; 1 $  </li>
+<li>$ |a_{32}| &#x3D; \left|\frac{7}{6}\right| \approx 1.1667 $ ← 更大！</li>
+</ul>
+<p>→ 主元为 $ \frac{7}{6} $，在第3行 → <strong>交换第2行和第3行</strong></p>
+<p>$$<br>\left[<br>\begin{array}{ccc|c}<br>-18 &amp; 3 &amp; -1 &amp; -15 \quad \text{(R1)}\<br>0 &amp; \frac{7}{6} &amp; \frac{17}{18} &amp; \frac{31}{6} \quad \text{(R2)}\<br>0 &amp; -1 &amp; \frac{7}{3} &amp; 5 \quad \text{(R3)}<br>\end{array}<br>\right]<br>$$</p>
+<hr>
+<h3 id="消去第2列下方元素"><a href="#消去第2列下方元素" class="headerlink" title="消去第2列下方元素"></a>消去第2列下方元素</h3><p>计算乘子：<br>$$<br>m_{32} &#x3D; \frac{a_{32}}{a_{22}} &#x3D; \frac{-1}{7&#x2F;6} &#x3D; -\frac{6}{7}<br>$$</p>
+<p>行变换：<br>$$<br>R_3 \leftarrow R_3 - m_{32} R_2 &#x3D; R_3 + \frac{6}{7} R_2<br>$$</p>
+<p>先算 $ \frac{6}{7} R_2 $:<br>$$<br>\frac{6}{7} \cdot \left[0,\ \frac{7}{6},\ \frac{17}{18},\ \frac{31}{6}\right]<br>&#x3D; \left[0,\ 1,\ \frac{6}{7} \cdot \frac{17}{18},\ \frac{6}{7} \cdot \frac{31}{6} \right]<br>&#x3D; \left[0,\ 1,\ \frac{102}{126} &#x3D; \frac{17}{21},\ \frac{31}{7} \right]<br>$$</p>
+<p>加到 R₃ 上：</p>
+<p>R₃ 原为：$ [0,\ -1,\ \frac{7}{3},\ 5] $</p>
+<p>$$<br>\begin{aligned}<br>\text{新 } R_3 &amp;: [0,\ -1+1,\ \frac{7}{3} + \frac{17}{21},\ 5 + \frac{31}{7}] \<br>&amp;&#x3D; [0,\ 0,\ \frac{49}{21} + \frac{17}{21},\ \frac{35}{7} + \frac{31}{7}] \<br>&amp;&#x3D; [0,\ 0,\ \frac{66}{21} &#x3D; \frac{22}{7},\ \frac{66}{7}]<br>\end{aligned}<br>$$</p>
+<p>得到上三角矩阵：</p>
+<p>$$<br>\left[<br>\begin{array}{ccc|c}<br>-18 &amp; 3 &amp; -1 &amp; -15 \<br>0 &amp; \frac{7}{6} &amp; \frac{17}{18} &amp; \frac{31}{6} \<br>0 &amp; 0 &amp; \frac{22}{7} &amp; \frac{66}{7}<br>\end{array}<br>\right]<br>$$</p>
+<h3 id="回代求解"><a href="#回代求解" class="headerlink" title="回代求解"></a>回代求解</h3><p>从最后一行开始：</p>
+<h4 id="第3行："><a href="#第3行：" class="headerlink" title="第3行："></a>第3行：</h4><p>$$<br>\frac{22}{7} x_3 &#x3D; \frac{66}{7} \Rightarrow x_3 &#x3D; \frac{66&#x2F;7}{22&#x2F;7} &#x3D; \frac{66}{22} &#x3D; 3<br>$$</p>
+<h4 id="第2行："><a href="#第2行：" class="headerlink" title="第2行："></a>第2行：</h4><p>$$<br>\frac{7}{6} x_2 + \frac{17}{18} x_3 &#x3D; \frac{31}{6}<br>\Rightarrow \frac{7}{6} x_2 + \frac{17}{18} \cdot 3 &#x3D; \frac{31}{6}<br>\Rightarrow \frac{7}{6} x_2 + \frac{51}{18} &#x3D; \frac{31}{6}<br>$$</p>
+<p>化简：$ \frac{51}{18} &#x3D; \frac{17}{6} $，右边 $ \frac{31}{6} $</p>
+<p>$$<br>\frac{7}{6} x_2 &#x3D; \frac{31}{6} - \frac{17}{6} &#x3D; \frac{14}{6} &#x3D; \frac{7}{3}<br>\Rightarrow x_2 &#x3D; \frac{7}{3} \cdot \frac{6}{7} &#x3D; 2<br>$$</p>
+<h4 id="第1行："><a href="#第1行：" class="headerlink" title="第1行："></a>第1行：</h4><p>$$<br>-18 x_1 + 3 x_2 - x_3 &#x3D; -15<br>\Rightarrow -18 x_1 + 3 \cdot 2 - 3 &#x3D; -15<br>\Rightarrow -18 x_1 + 6 - 3 &#x3D; -15<br>\Rightarrow -18 x_1 + 3 &#x3D; -15<br>\Rightarrow -18 x_1 &#x3D; -18<br>\Rightarrow x_1 &#x3D; 1<br>$$</p>
+<h3 id="最终解："><a href="#最终解：" class="headerlink" title="最终解："></a>最终解：</h3><p>$$<br>\boxed{<br>x_1 &#x3D; 1,\quad x_2 &#x3D; 2,\quad x_3 &#x3D; 3<br>}<br>$$</p>
+<h3 id="验算（代入原方程）："><a href="#验算（代入原方程）：" class="headerlink" title="验算（代入原方程）："></a>验算（代入原方程）：</h3><ol>
+<li>$ 12(1) - 3(2) + 3(3) &#x3D; 12 - 6 + 9 &#x3D; 15 $   </li>
+<li>$ -18(1) + 3(2) - 1(3) &#x3D; -18 + 6 - 3 &#x3D; -15 $   </li>
+<li>$ 1 + 2 + 3 &#x3D; 6 $</li>
+</ol>
+<hr>
+<h3 id="考点总结（高斯列主元消去法）"><a href="#考点总结（高斯列主元消去法）" class="headerlink" title="考点总结（高斯列主元消去法）"></a>考点总结（高斯列主元消去法）</h3><table>
+<thead>
+<tr>
+<th>考点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>列主元选取</strong></td>
+<td>每步在当前列（从对角元开始往下）选<strong>绝对值最大</strong>元素所在行，与当前行交换，避免小主元导致的数值不稳定</td>
+</tr>
+<tr>
+<td><strong>乘子计算</strong></td>
+<td>$ m_{ij} &#x3D; a_{ij}^{(k)} &#x2F; a_{kk}^{(k)} $，用于消元</td>
+</tr>
+<tr>
+<td><strong>行变换</strong></td>
+<td>$ R_i \leftarrow R_i - m_{ij} R_k $，仅修改下方行</td>
+</tr>
+<tr>
+<td><strong>上三角回代</strong></td>
+<td>从最后一行向上代入，注意分数运算或用小数保留精度</td>
+</tr>
+<tr>
+<td><strong>复杂度</strong></td>
+<td>$ O(n^3) $，适用于中小规模稠密系统</td>
+</tr>
+<tr>
+<td><strong>与全主元区别</strong></td>
+<td>全主元在右下子矩阵中找最大元（行列都可交换），更稳定但开销大；<strong>列主元更常用</strong></td>
+</tr>
+</tbody></table>
+</details>
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 数值分析与算法设计--高斯列主元消去法</li>
+        <li><strong>Author:</strong> 姜智浩</li>
+        <li><strong>Created at
+                :</strong> 2026-01-17 11:45:14</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-01-17 13:42:25
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2026/01/17/20260117数值分析与算法设计--高斯列主元消去法/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">#计算机科学</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/">#算法设计</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">#数值分析</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/zhihaojiang.github.io/2026/01/17/20260117%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90%E4%B8%8E%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1--%E6%94%B9%E8%BF%9B%E6%AC%A7%E6%8B%89%E6%B3%95/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">数值分析与算法设计--改进欧拉法</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/zhihaojiang.github.io/2025/12/29/20251229%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E4%B8%8E%E5%A4%84%E7%90%86--%E7%9B%B8%E5%85%B3%E4%B9%A0%E9%A2%98/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">数据采集与处理--相关习题</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">数值分析与算法设计--高斯列主元消去法</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E5%88%97%E4%B8%BB%E5%85%83%E6%B6%88%E5%8E%BB%E6%B3%95"><span class="nav-text">高斯列主元消去法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E7%AD%94"><span class="nav-text">解答</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%87%BA%E5%A2%9E%E5%B9%BF%E7%9F%A9%E9%98%B5"><span class="nav-text">写出增广矩阵</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC1%E5%88%97%E9%80%89%E4%B8%BB%E5%85%83"><span class="nav-text">第1列选主元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E5%8E%BB%E7%AC%AC1%E5%88%97%E4%B8%8B%E6%96%B9%E5%85%83%E7%B4%A0"><span class="nav-text">消去第1列下方元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC2%E5%88%97%E9%80%89%E4%B8%BB%E5%85%83"><span class="nav-text">第2列选主元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%88%E5%8E%BB%E7%AC%AC2%E5%88%97%E4%B8%8B%E6%96%B9%E5%85%83%E7%B4%A0"><span class="nav-text">消去第2列下方元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E4%BB%A3%E6%B1%82%E8%A7%A3"><span class="nav-text">回代求解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E8%A7%A3%EF%BC%9A"><span class="nav-text">最终解：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E7%AE%97%EF%BC%88%E4%BB%A3%E5%85%A5%E5%8E%9F%E6%96%B9%E7%A8%8B%EF%BC%89%EF%BC%9A"><span class="nav-text">验算（代入原方程）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%88%E9%AB%98%E6%96%AF%E5%88%97%E4%B8%BB%E5%85%83%E6%B6%88%E5%8E%BB%E6%B3%95%EF%BC%89"><span class="nav-text">考点总结（高斯列主元消去法）</span></a></li></ol></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/zhihaojiang.github.io/">姜智浩</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        88 posts in total
+                    </span>
+                    
+                        <span>
+                            234.8k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/zhihaojiang.github.io/js/build/libs/Swup.min.js"></script>
+
+<script src="/zhihaojiang.github.io/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/zhihaojiang.github.io/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/zhihaojiang.github.io/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/zhihaojiang.github.io/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/zhihaojiang.github.io/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/zhihaojiang.github.io/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/utils.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/main.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/tools/runtime.js"></script>
+
+    
+<script src="/zhihaojiang.github.io/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/zhihaojiang.github.io/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/zhihaojiang.github.io/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/libs/minimasonry.min.js"></script>
+
+    
+<script src="/zhihaojiang.github.io/js/build/plugins/masonry.js" type="module"></script>
+
+
+
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/zhihaojiang.github.io/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/zhihaojiang.github.io/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/zhihaojiang.github.io/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/zhihaojiang.github.io/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/layouts/bookmarkNav.js" type="module"></script>
+
+
+	
+	<div id="aplayer"></div>
+
+<script src="/zhihaojiang.github.io/js/build/libs/APlayer.min.js"></script>
+
+
+<script src="/zhihaojiang.github.io/js/build/plugins/aplayer.js"></script>
+
+
+	
+</body>
+
+</html>
