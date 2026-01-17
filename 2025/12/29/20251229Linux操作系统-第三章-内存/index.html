@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    <meta name="author" content="姜智浩">
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://super-213.github.io/zhihaojiang.github.io/2025/12/29/20251229linux操作系统-第三章-内存/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux操作系统-第三章-内存">
+<meta property="og:url" content="https://super-213.github.io/zhihaojiang.github.io/2025/12/29/20251229Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%86%85%E5%AD%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://super-213.github.io/images/redefine-og.webp">
+<meta property="article:published_time" content="2025-12-29T03:45:14.000Z">
+<meta property="article:modified_time" content="2026-01-15T00:50:14.770Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://super-213.github.io/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/zhihaojiang.github.io/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/zhihaojiang.github.io/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/zhihaojiang.github.io/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Linux操作系统-第三章-内存 | 智浩的Blog
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    <!-- 这里是 Live2D 代码 -->
+    <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/zhihaojiang.github.io/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+        
+<script src="/zhihaojiang.github.io/js/build/libs/anime.min.js"></script>
+
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"super-213.github.io","root":"/zhihaojiang.github.io/","language":"en","path":"search.xml"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/defaults/bear.PNG","dark":"/images/defaults/bear.PNG"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/super-213","instagram":null,"zhihu":null,"twitter":null,"email":"jiangzhihaojzh@126.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1"},"mathjax":{"tags":"none","single_dollars":true,"cjk_width":0.9,"normal_width":0.6,"append_css":true,"every_page":true}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Portfolio":"/portfolio/","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"shuoshuo":{"icon":"fa-solid fa-bookmark","path":"/essays/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/fontawesome/regular.min.css">
+
+    
+    
+    
+    
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<style>
+    :root {
+        --preloader-background-color: #fff;
+        --preloader-text-color: #000;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --preloader-background-color: #202124;
+            --preloader-text-color: #fff;
+        }
+    }
+
+    @media (prefers-color-scheme: light) {
+        :root {
+            --preloader-background-color: #fff;
+            --preloader-text-color: #000;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .ml13 {
+            font-size: 2.6rem !important; /* Adjust this value as needed */
+        }
+    }
+
+    .preloader {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem; /* Tailwind 'gap-4' is 1rem */
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        padding: 12px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh; /* 'h-screen' is 100% of the viewport height */
+        background-color: var(--preloader-background-color);
+        z-index: 1100; /* 'z-[1100]' sets the z-index */
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    .ml13 {
+        font-size: 3.2rem;
+        /* text-transform: uppercase; */
+        color: var(--preloader-text-color);
+        letter-spacing: -1px;
+        font-weight: 500;
+        font-family: 'Chillax-Variable', sans-serif;
+        text-align: center;
+    }
+
+    .ml13 .word {
+        display: inline-flex;
+        flex-wrap: wrap;
+        white-space: nowrap;
+    }
+
+    .ml13 .letter {
+        display: inline-block;
+        line-height: 1em;
+    }
+</style>
+
+<div class="preloader">
+    <h2 class="ml13">
+        智浩的Blog
+    </h2>
+    <script>
+        var textWrapper = document.querySelector('.ml13');
+        // Split text into words
+        var words = textWrapper.textContent.trim().split(' ');
+
+        // Clear the existing content
+        textWrapper.innerHTML = '';
+
+        // Wrap each word and its letters in spans
+        words.forEach(function(word) {
+            var wordSpan = document.createElement('span');
+            wordSpan.classList.add('word');
+            wordSpan.innerHTML = word.replace(/\S/g, "<span class='letter'>$&</span>");
+            textWrapper.appendChild(wordSpan);
+            textWrapper.appendChild(document.createTextNode(' ')); // Add space between words
+        });
+
+        var animation = anime.timeline({ loop: true })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [20, 0],
+                translateZ: 0,
+                opacity: [0, 1],
+                filter: ['blur(5px)', 'blur(0px)'],
+                easing: "easeOutExpo",
+                duration: 1200,
+                delay: (el, i) => 300 + 20 * i,
+            })
+            .add({
+                targets: '.ml13 .letter',
+                translateY: [0, -20],
+                opacity: [1, 0],
+                filter: ['blur(0px)', 'blur(5px)'],
+                easing: "easeInExpo",
+                duration: 1000,
+                delay: (el, i) => 15 * i,
+                complete: function() {
+                    hidePreloader();
+                }
+            }, '-=700');
+
+
+        let themeStatus = JSON.parse(localStorage.getItem('REDEFINE-THEME-STATUS'))?.isDark;
+
+        // If the theme status is not found in local storage, check the preferred color scheme
+        if (themeStatus === undefined || themeStatus === null) {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                themeStatus = 'dark';
+            } else {
+                themeStatus = 'light';
+            }
+        }
+
+        // Now you can use the themeStatus variable in your code
+        if (themeStatus) {
+            document.documentElement.style.setProperty('--preloader-background-color', '#202124');
+            document.documentElement.style.setProperty('--preloader-text-color', '#fff');
+        } else {
+            document.documentElement.style.setProperty('--preloader-background-color', '#fff');
+            document.documentElement.style.setProperty('--preloader-text-color', '#000');
+        }
+
+        window.addEventListener('load', function () {
+            setTimeout(hidePreloader, 5000); // Call hidePreloader after 5000 milliseconds if not already called by animation
+        });
+
+        function hidePreloader() {
+            var preloader = document.querySelector('.preloader');
+            preloader.style.opacity = '0';
+            setTimeout(function () {
+                preloader.style.display = 'none';
+            }, 200);
+        }
+    </script>
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/zhihaojiang.github.io/">
+                
+                智浩的Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    PHOTO
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/zhihaojiang.github.io/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/zhihaojiang.github.io/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/zhihaojiang.github.io/portfolio/">
+                                                    PORTFOLIO
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/super-213">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/masonry/"
+                        >
+                            <span>
+                                PHOTO
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/zhihaojiang.github.io/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/zhihaojiang.github.io/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/zhihaojiang.github.io/portfolio/">PORTFOLIO</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/super-213">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/bookmarks/"
+                        >
+                            <span>Bookmarks</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/essays/"
+                        >
+                            <span>Shuoshuo</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/tags/"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/zhihaojiang.github.io/categories/"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">24</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/zhihaojiang.github.io/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">83</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Linux操作系统-第三章-内存</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+				<img src="/zhihaojiang.github.io/images/defaults/IMG_3744.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">姜智浩</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv5</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-12-29 11:45:14</span>
+        <span class="mobile">2025-12-29 11:45:14</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-01-15 08:50:14</span>
+            <span class="mobile">2026-01-15 08:50:14</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/zhihaojiang.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/zhihaojiang.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>4.3k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>16 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>某计算机采用二级页表的分页存储管理方式，按字节编址，页大小为 210 字节，页表项大<br>小为2 字节，逻辑地址结构为：页目录号 | 页号 | 页内偏移量<br>逻辑地址空间大小为 216 页，则表示整个逻辑地址空间的页目录表中包含表项的个数至少是</p>
+<hr>
+<p>。(2010)<br>A． 64 B． 128 C． 256 D． 512</p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><h2 id="📊-题目条件："><a href="#📊-题目条件：" class="headerlink" title="📊 题目条件："></a>📊 题目条件：</h2><ul>
+<li>采用 <strong>二级页表</strong> 管理方式  </li>
+<li>按 <strong>字节编址</strong>  </li>
+<li><strong>页大小 &#x3D; $2^{10}$ 字节</strong> → 即 1 KB  </li>
+<li><strong>页表项大小 &#x3D; 2 字节</strong>  </li>
+<li><strong>逻辑地址空间大小 &#x3D; $2^{16}$ 页</strong></li>
+</ul>
+<blockquote>
+<p>✅ 注意：题目说“逻辑地址空间大小为 $2^{16}$ 页”，即总共有 $2^{16}$ 个页，而不是 $2^{16}$ 字节！</p>
+</blockquote>
+<hr>
+<h2 id="🔍-目标："><a href="#🔍-目标：" class="headerlink" title="🔍 目标："></a>🔍 目标：</h2><p>求：<strong>页目录表（第一级页表）中至少包含多少个表项？</strong></p>
+<hr>
+<h2 id="✅-解题思路："><a href="#✅-解题思路：" class="headerlink" title="✅ 解题思路："></a>✅ 解题思路：</h2><p>在二级页表中：</p>
+<ul>
+<li>逻辑地址分为三部分：<strong>页目录号 | 页号 | 页内偏移量</strong>  </li>
+<li>页目录表（Page Directory）的每个表项指向一个<strong>页表（Page Table）</strong>  </li>
+<li>每个页表包含若干页表项，每个页表项对应一个物理页帧</li>
+</ul>
+<p>由于逻辑地址空间有 $2^{16}$ 个页，而每个页表能管理多少页？</p>
+<p>→ 由<strong>页表大小决定</strong>。</p>
+<hr>
+<h3 id="步骤-1：计算一个页表能容纳多少个页表项"><a href="#步骤-1：计算一个页表能容纳多少个页表项" class="headerlink" title="步骤 1：计算一个页表能容纳多少个页表项"></a>步骤 1：计算一个页表能容纳多少个页表项</h3><ul>
+<li>页大小 &#x3D; $2^{10}$ 字节  </li>
+<li>页表项大小 &#x3D; 2 字节<br>→ 一个页表最多可容纳：<br>$$<br>\frac{2^{10}}{2} &#x3D; 2^9 &#x3D; 512 \text{ 个页表项}<br>$$</li>
+</ul>
+<p>也就是说，<strong>每个页表可以映射 512 个页</strong>。</p>
+<hr>
+<h3 id="步骤-2：计算需要多少个页表"><a href="#步骤-2：计算需要多少个页表" class="headerlink" title="步骤 2：计算需要多少个页表"></a>步骤 2：计算需要多少个页表</h3><p>总页数 &#x3D; $2^{16}$<br>每个页表管理 512 页 &#x3D; $2^9$ 页<br>→ 所需页表个数 &#x3D;<br>$$<br>\frac{2^{16}}{2^9} &#x3D; 2^{7} &#x3D; 128<br>$$</p>
+<hr>
+<h3 id="步骤-3：页目录表中表项个数-页表个数"><a href="#步骤-3：页目录表中表项个数-页表个数" class="headerlink" title="步骤 3：页目录表中表项个数 &#x3D; 页表个数"></a>步骤 3：页目录表中表项个数 &#x3D; 页表个数</h3><p>因为页目录表的每个表项指向一个页表，所以：</p>
+<blockquote>
+<p><strong>页目录表至少需要 128 个表项</strong></p>
+</blockquote>
+<hr>
+<h2 id="✅-最终答案：B-128"><a href="#✅-最终答案：B-128" class="headerlink" title="✅ 最终答案：B. 128"></a>✅ 最终答案：<strong>B. 128</strong></h2><hr>
+<h3 id="🎯-验证逻辑："><a href="#🎯-验证逻辑：" class="headerlink" title="🎯 验证逻辑："></a>🎯 验证逻辑：</h3><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>含义</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>页目录表项数</td>
+<td>指向页表的数量</td>
+<td>128 &#x3D; $2^7$</td>
+</tr>
+<tr>
+<td>每个页表项数</td>
+<td>映射页的数量</td>
+<td>512 &#x3D; $2^9$</td>
+</tr>
+<tr>
+<td>总页数</td>
+<td>$2^7 \times 2^9 &#x3D; 2^{16}$ ✅</td>
+<td></td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ 正确答案：<strong>B. 128</strong></p>
+<h1 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h1><p>某系统采用改进型CLOCK置换算法，页表项中字段A为访问位，M为修改位。A&#x3D;0表示页<br>最近没有被访问，A&#x3D;1表示页最近被访问过。M&#x3D;0表示页没有被修改过，M&#x3D;1表示页被修<br>改过。按(A，M)所有可能的取值，将页分为四类：(0，0)、(1，0)、(0，1)和(1，1)，则该<br>算法淘汰页的次序为</p>
+<hr>
+<p>。(2016)<br>A．(0，0)，(0，1)，(1，0)，(1，1)<br>B．(0，0)，(1，0)，(0，1)，(1，1)<br>C．(0，0)，(0，1)，(1，1)，(1，0)<br>D．(0，0)，(1，1)，(0，1)，(1，0)</p>
+<h2 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：A. (0, 0), (0, 1), (1, 0), (1, 1)</strong></p>
+<p>本题考查 <strong>改进型 CLOCK 置换算法（Enhanced Clock Algorithm）</strong> 的淘汰次序。</p>
+<hr>
+<h2 id="🔍-改进型-CLOCK-算法原理："><a href="#🔍-改进型-CLOCK-算法原理：" class="headerlink" title="🔍 改进型 CLOCK 算法原理："></a>🔍 改进型 CLOCK 算法原理：</h2><p>在基本 CLOCK 算法基础上，增加对 <strong>访问位 A</strong> 和 <strong>修改位 M</strong> 的判断，将页面分为四类：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>(A, M)</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>(0, 0)</td>
+<td>最近未访问、未修改 → 最优淘汰对象</td>
+</tr>
+<tr>
+<td>2</td>
+<td>(0, 1)</td>
+<td>最近未访问、但被修改过 → 需写回磁盘，代价较高</td>
+</tr>
+<tr>
+<td>3</td>
+<td>(1, 0)</td>
+<td>最近被访问过、未修改 → 可能还会被访问，保留</td>
+</tr>
+<tr>
+<td>4</td>
+<td>(1, 1)</td>
+<td>最近被访问过、且被修改 → 最重要，应保留</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="📌-淘汰优先级（从高到低）："><a href="#📌-淘汰优先级（从高到低）：" class="headerlink" title="📌 淘汰优先级（从高到低）："></a>📌 淘汰优先级（从高到低）：</h2><blockquote>
+<p><strong>按 (A, M) 组合的“价值”排序，越不重要越先淘汰</strong></p>
+</blockquote>
+<p>标准顺序是：</p>
+<ol>
+<li><strong>(0, 0)</strong> —— 既没访问也没修改 → 最安全，直接淘汰  </li>
+<li><strong>(0, 1)</strong> —— 未访问但修改过 → 需写回，代价大，但比“被访问过的”优先淘汰  </li>
+<li><strong>(1, 0)</strong> —— 被访问过但未修改 → 说明可能还会用，尽量保留  </li>
+<li><strong>(1, 1)</strong> —— 被访问过且修改过 → 最重要，最后淘汰</li>
+</ol>
+<p>→ 所以淘汰次序为：<strong>(0,0) → (0,1) → (1,0) → (1,1)</strong></p>
+<hr>
+<h2 id="✅-对照选项："><a href="#✅-对照选项：" class="headerlink" title="✅ 对照选项："></a>✅ 对照选项：</h2><p>A. (0,0), (0,1), (1,0), (1,1) ✅ 正确<br>B. (0,0), (1,0), (0,1), (1,1) ❌ 错误（(1,0) 不该在 (0,1) 前）<br>C. (0,0), (0,1), (1,1), (1,0) ❌ 错误（(1,1) 不该在 (1,0) 前）<br>D. (0,0), (1,1), (0,1), (1,0) ❌ 错误（(1,1) 是最重要的）</p>
+<hr>
+<h3 id="🎯-考点总结："><a href="#🎯-考点总结：" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><ul>
+<li>改进型 CLOCK 算法通过 (A,M) 四元组分类页面；  </li>
+<li>淘汰时优先选择 <strong>A&#x3D;0</strong> 的页（未被访问），再考虑 M 值；  </li>
+<li>目标：<strong>减少 I&#x2F;O 开销</strong>（避免淘汰需写回的页）和 <strong>保留活跃页</strong>。</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>A. (0, 0), (0, 1), (1, 0), (1, 1)</strong></p>
+<h1 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h1><p>系统为某进程分配了4个页框，该进程已访问的页号序列为2，0，2，9，3，4，2，8，<br>2，4，8，4，5。若进程要访问的下一页的页号为7，依据LRU算法，应淘汰页的页号是</p>
+<hr>
+<p>。(2015)<br>A．2 B．3 C．4 D．8</p>
+<h2 id="解析-2"><a href="#解析-2" class="headerlink" title="解析"></a>解析</h2><p>我们来分析这道经典的 <strong>LRU（Least Recently Used）页面置换算法</strong> 题目。</p>
+<hr>
+<h2 id="📊-题目条件：-1"><a href="#📊-题目条件：-1" class="headerlink" title="📊 题目条件："></a>📊 题目条件：</h2><ul>
+<li>进程被分配 <strong>4 个页框</strong>（物理内存帧）  </li>
+<li>已访问的页号序列：<code>2, 0, 2, 9, 3, 4, 2, 8, 2, 4, 8, 4, 5</code>  </li>
+<li>下一个要访问的页是：<strong>7</strong> → 此时内存已满，需淘汰一页（LRU 策略）<br>→ 问：<strong>应淘汰哪个页？</strong></li>
+</ul>
+<hr>
+<h2 id="✅-解题思路：-1"><a href="#✅-解题思路：-1" class="headerlink" title="✅ 解题思路："></a>✅ 解题思路：</h2><p>我们需要根据 <strong>LRU 算法</strong>，找出当前内存中<strong>最近最少使用</strong>的页。</p>
+<p>LRU 的核心思想：<strong>淘汰最近最久未被访问的页</strong>。</p>
+<p>我们从头开始模拟访问过程，记录每个时刻内存中的页，并标记其“最后访问时间”或“访问顺序”。</p>
+<hr>
+<h3 id="🧩-模拟过程（维护一个“访问历史”列表，越靠左越久未用）"><a href="#🧩-模拟过程（维护一个“访问历史”列表，越靠左越久未用）" class="headerlink" title="🧩 模拟过程（维护一个“访问历史”列表，越靠左越久未用）"></a>🧩 模拟过程（维护一个“访问历史”列表，越靠左越久未用）</h3><p>初始：内存空</p>
+<hr>
+<h4 id="访问-2"><a href="#访问-2" class="headerlink" title="访问 2"></a>访问 2</h4><ul>
+<li>内存：[2] （未满）</li>
+</ul>
+<h4 id="访问-0"><a href="#访问-0" class="headerlink" title="访问 0"></a>访问 0</h4><ul>
+<li>内存：[2, 0]</li>
+</ul>
+<h4 id="访问-2-1"><a href="#访问-2-1" class="headerlink" title="访问 2"></a>访问 2</h4><ul>
+<li>命中 → 更新顺序：将 2 移到最右 → [0, 2]</li>
+</ul>
+<h4 id="访问-9"><a href="#访问-9" class="headerlink" title="访问 9"></a>访问 9</h4><ul>
+<li>缺页 → 加入 9 → [0, 2, 9]</li>
+</ul>
+<h4 id="访问-3"><a href="#访问-3" class="headerlink" title="访问 3"></a>访问 3</h4><ul>
+<li>缺页 → 加入 3 → [0, 2, 9, 3] ← 已满！</li>
+</ul>
+<h4 id="访问-4"><a href="#访问-4" class="headerlink" title="访问 4"></a>访问 4</h4><ul>
+<li>缺页 → 需淘汰 LRU（最左：0）→ 淘汰 0 → 加入 4 → [2, 9, 3, 4]</li>
+</ul>
+<h4 id="访问-2-2"><a href="#访问-2-2" class="headerlink" title="访问 2"></a>访问 2</h4><ul>
+<li>命中 → 将 2 移到最右 → [9, 3, 4, 2]</li>
+</ul>
+<h4 id="访问-8"><a href="#访问-8" class="headerlink" title="访问 8"></a>访问 8</h4><ul>
+<li>缺页 → 淘汰 LRU（最左：9）→ 加入 8 → [3, 4, 2, 8]</li>
+</ul>
+<h4 id="访问-2-3"><a href="#访问-2-3" class="headerlink" title="访问 2"></a>访问 2</h4><ul>
+<li>命中 → 将 2 移到最右 → [3, 4, 8, 2]</li>
+</ul>
+<h4 id="访问-4-1"><a href="#访问-4-1" class="headerlink" title="访问 4"></a>访问 4</h4><ul>
+<li>命中 → 将 4 移到最右 → [3, 8, 2, 4]</li>
+</ul>
+<h4 id="访问-8-1"><a href="#访问-8-1" class="headerlink" title="访问 8"></a>访问 8</h4><ul>
+<li>命中 → 将 8 移到最右 → [3, 2, 4, 8]</li>
+</ul>
+<h4 id="访问-4-2"><a href="#访问-4-2" class="headerlink" title="访问 4"></a>访问 4</h4><ul>
+<li>命中 → 将 4 移到最右 → [3, 2, 8, 4]</li>
+</ul>
+<h4 id="访问-5"><a href="#访问-5" class="headerlink" title="访问 5"></a>访问 5</h4><ul>
+<li>缺页 → 淘汰 LRU（最左：3）→ 加入 5 → [2, 8, 4, 5]</li>
+</ul>
+<hr>
+<h3 id="✅-当前内存状态（在访问-5-后）："><a href="#✅-当前内存状态（在访问-5-后）：" class="headerlink" title="✅ 当前内存状态（在访问 5 后）："></a>✅ 当前内存状态（在访问 5 后）：</h3><p>内存中的页：<strong>2, 8, 4, 5</strong></p>
+<p>访问顺序（从左到右：最近最少使用 → 最近使用）：</p>
+<ul>
+<li>最左：2（上次访问较早）  </li>
+<li>然后：8  </li>
+<li>然后：4  </li>
+<li>最右：5（最新访问）</li>
+</ul>
+<blockquote>
+<p>注意：虽然 2 在序列中出现多次，但最后一次访问是在访问 8 之前，之后没有再访问，所以它现在是“最近最少使用”的。</p>
+</blockquote>
+<hr>
+<h3 id="🔍-下一步：访问-7"><a href="#🔍-下一步：访问-7" class="headerlink" title="🔍 下一步：访问 7"></a>🔍 下一步：访问 7</h3><ul>
+<li>7 不在内存 → 缺页 → 需淘汰一页  </li>
+<li>根据 LRU，淘汰 <strong>最左边的页</strong> → 即 <strong>2</strong></li>
+</ul>
+<hr>
+<h2 id="✅-正确答案：A-2"><a href="#✅-正确答案：A-2" class="headerlink" title="✅ 正确答案：A. 2"></a>✅ 正确答案：<strong>A. 2</strong></h2><hr>
+<h3 id="🎯-关键点总结："><a href="#🎯-关键点总结：" class="headerlink" title="🎯 关键点总结："></a>🎯 关键点总结：</h3><ul>
+<li>LRU 维护的是“访问时间顺序”，不是“访问频率”；  </li>
+<li>“最近最少使用” &#x3D; “在当前时刻，距离上次访问时间最长的页”；  </li>
+<li>本题中，虽然 2 出现频繁，但最后一次访问是在访问 8 之前，之后没有更新，因此被淘汰。</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>A. 2</strong></p>
+<h1 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h1><p>.在分段存储管理系统中，用共享段表描述所有被共享的段。若进程P1和P2 共享段S，下列<br>叙述中，错误的是</p>
+<hr>
+<p>。(2019)<br>A．在物理内存中仅保存一份段S 的内容<br>B．段S 在P1和P2中应该具有相同的段号<br>C．P1 和P2 共享段S 在共享段表中的段表项<br>D．P1和P2都不再使用段S 时才回收段S 所占的内存空间</p>
+<h2 id="解析-3"><a href="#解析-3" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：B. 段 S 在 P1 和 P2 中应该具有相同的段号</strong></p>
+<hr>
+<h3 id="✅-解析："><a href="#✅-解析：" class="headerlink" title="✅ 解析："></a>✅ 解析：</h3><p>本题考查 <strong>分段存储系统中共享段的实现机制</strong>，与 2019 年第 7 题完全相同（重复题）。</p>
+<p>我们逐项分析：</p>
+<hr>
+<h4 id="A-在物理内存中仅保存一份段-S-的内容"><a href="#A-在物理内存中仅保存一份段-S-的内容" class="headerlink" title="A. 在物理内存中仅保存一份段 S 的内容"></a>A. 在物理内存中仅保存一份段 S 的内容</h4><p>✅ 正确。  </p>
+<ul>
+<li>共享段的核心目的就是节省内存 —— 多个进程访问同一段时，<strong>物理内存只保留一份副本</strong>；  </li>
+<li>通过各自的段表项指向同一个物理地址实现共享。</li>
+</ul>
+<hr>
+<h4 id="B-段-S-在-P1-和-P2-中应该具有相同的段号"><a href="#B-段-S-在-P1-和-P2-中应该具有相同的段号" class="headerlink" title="B. 段 S 在 P1 和 P2 中应该具有相同的段号"></a>B. 段 S 在 P1 和 P2 中应该具有相同的段号</h4><p>❌ <strong>错误（本题答案）</strong>  </p>
+<ul>
+<li><strong>段号是进程私有的</strong>！每个进程有自己的段表，段号是该进程内部的索引；  </li>
+<li>P1 可以把共享段 S 放在段号 3，P2 可以放在段号 5 —— 只要它们的段表项都指向共享段表中的同一个段描述符即可；  </li>
+<li><strong>段号无需相同</strong>，只要逻辑上能映射到同一物理段就行。</li>
+</ul>
+<blockquote>
+<p>📌 类比：两个程序都调用 <code>printf</code>，但一个程序中 <code>printf</code> 在段号 2，另一个在段号 4 —— 只要都指向同一个共享代码段，就可正常运行。</p>
+</blockquote>
+<hr>
+<h4 id="C-P1-和-P2-共享段-S-在共享段表中的段表项"><a href="#C-P1-和-P2-共享段-S-在共享段表中的段表项" class="headerlink" title="C. P1 和 P2 共享段 S 在共享段表中的段表项"></a>C. P1 和 P2 共享段 S 在共享段表中的段表项</h4><p>✅ 正确。  </p>
+<ul>
+<li>系统维护一个<strong>共享段表</strong>，记录所有被共享的段；  </li>
+<li>当 P1 和 P2 都共享段 S 时，它们的段表项会指向<strong>共享段表中的同一个条目</strong>（包含物理起始地址、长度、权限等）；<br>→ 实现“多对一”映射。</li>
+</ul>
+<hr>
+<h4 id="D-P1-和-P2-都不再使用段-S-时才回收段-S-所占的内存空间"><a href="#D-P1-和-P2-都不再使用段-S-时才回收段-S-所占的内存空间" class="headerlink" title="D. P1 和 P2 都不再使用段 S 时才回收段 S 所占的内存空间"></a>D. P1 和 P2 都不再使用段 S 时才回收段 S 所占的内存空间</h4><p>✅ 正确。  </p>
+<ul>
+<li>这是共享资源的典型管理策略：<strong>引用计数（Reference Count）</strong>；  </li>
+<li>共享段表中通常有一个“引用计数”字段，每增加一个进程共享，计数 +1；减少一个，计数 -1；  </li>
+<li>计数为 0 时，才释放物理内存。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-1"><a href="#🎯-考点总结：-1" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>是否正确</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>✅</td>
+<td>共享段节省内存</td>
+</tr>
+<tr>
+<td>B</td>
+<td>❌</td>
+<td>段号是进程私有，无需一致</td>
+</tr>
+<tr>
+<td>C</td>
+<td>✅</td>
+<td>共享段表统一管理</td>
+</tr>
+<tr>
+<td>D</td>
+<td>✅</td>
+<td>引用计数机制</td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ 正确答案：<strong>B. 段 S 在 P1 和 P2 中应该具有相同的段号</strong></p>
+<h1 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h1><p>.某进程访问的页b 不在内存中，导致产生缺页异常，改缺页异常处理过程中不一定包含的操<br>作是( ) (2022)<br>A.淘汰内存中的页 B.建立页号与页框号的对应关系<br>C.将页b 从外存读入内存 D.修改页表中页b 对应的存在位</p>
+<h2 id="解析-4"><a href="#解析-4" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：A. 淘汰内存中的页</strong></p>
+<p>本题考查 <strong>缺页异常处理过程</strong> 中哪些操作是“不一定包含”的。</p>
+<hr>
+<h2 id="📌-缺页异常处理流程（标准步骤）："><a href="#📌-缺页异常处理流程（标准步骤）：" class="headerlink" title="📌 缺页异常处理流程（标准步骤）："></a>📌 缺页异常处理流程（标准步骤）：</h2><p>当进程访问的页 <code>b</code> 不在内存中时，触发缺页中断，操作系统执行以下操作：</p>
+<ol>
+<li><p><strong>检查是否有空闲页框</strong>  </p>
+<ul>
+<li>若有 → 直接分配，无需淘汰；  </li>
+<li>若无 → 执行页面置换算法，<strong>淘汰一个页</strong>（如 LRU、Clock 等）；</li>
+</ul>
+</li>
+<li><p><strong>将页 b 从外存读入内存</strong>（磁盘 I&#x2F;O）  </p>
+</li>
+<li><p><strong>建立页号与页框号的对应关系</strong>（更新页表）  </p>
+</li>
+<li><p><strong>修改页表中页 b 对应的存在位为 1</strong>  </p>
+</li>
+<li><p><strong>恢复进程执行</strong>（重新执行引发缺页的指令）</p>
+</li>
+</ol>
+<hr>
+<h2 id="逐项分析："><a href="#逐项分析：" class="headerlink" title="逐项分析："></a>逐项分析：</h2><h4 id="A-淘汰内存中的页"><a href="#A-淘汰内存中的页" class="headerlink" title="A. 淘汰内存中的页"></a>A. 淘汰内存中的页</h4><p>❌ <strong>不一定包含</strong> —— 只有当<strong>内存已满</strong>时才需要淘汰；  </p>
+<ul>
+<li>如果系统有空闲页框，直接分配即可，无需淘汰；<br>→ 是“可能”发生，非“一定”发生。</li>
+</ul>
+<h4 id="B-建立页号与页框号的对应关系"><a href="#B-建立页号与页框号的对应关系" class="headerlink" title="B. 建立页号与页框号的对应关系"></a>B. 建立页号与页框号的对应关系</h4><p>✅ <strong>一定包含</strong> —— 这是地址映射的核心，必须更新页表。</p>
+<h4 id="C-将页-b-从外存读入内存"><a href="#C-将页-b-从外存读入内存" class="headerlink" title="C. 将页 b 从外存读入内存"></a>C. 将页 b 从外存读入内存</h4><p>✅ <strong>一定包含</strong> —— 因为页 b 不在内存，必须从磁盘加载。</p>
+<h4 id="D-修改页表中页-b-对应的存在位"><a href="#D-修改页表中页-b-对应的存在位" class="headerlink" title="D. 修改页表中页 b 对应的存在位"></a>D. 修改页表中页 b 对应的存在位</h4><p>✅ <strong>一定包含</strong> —— 存在位从 0 改为 1，表示该页已在内存。</p>
+<hr>
+<h3 id="🎯-考点总结：-2"><a href="#🎯-考点总结：-2" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>是否一定包含</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A. 淘汰内存中的页</td>
+<td>❌ 否</td>
+<td>仅当无空闲页框时发生</td>
+</tr>
+<tr>
+<td>B. 建立页号与页框号对应</td>
+<td>✅ 是</td>
+<td>必须更新页表</td>
+</tr>
+<tr>
+<td>C. 从外存读入页 b</td>
+<td>✅ 是</td>
+<td>缺页的本质是页不在内存</td>
+</tr>
+<tr>
+<td>D. 修改存在位</td>
+<td>✅ 是</td>
+<td>标记页已驻留</td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ 正确答案：<strong>A. 淘汰内存中的页</strong></p>
+<hr>
+<p>📌 记忆口诀：  </p>
+<blockquote>
+<p>“缺页处理四步走：<strong>读入、建表、改位、可选淘汰</strong>”<br>—— 淘汰是“可选”，其余是“必做”。</p>
+</blockquote>
+<hr>
+<p>✅ 最终答案：<strong>A</strong></p>
+<h1 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h1><p>下列因素,影响请求分页系统有效（平均）访存时间的是<br>I、 缺页率<br>II、 磁盘读写时间<br>III、内存访问时间<br>IV 、执行缺页处理程序的 CPU 时间<br>A、II,III B、I,IV C、I,III,IV D、I,II,III,IV</p>
+<h2 id="解析-5"><a href="#解析-5" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：D. I, II, III, IV</strong></p>
+<p>本题考查 <strong>请求分页系统中，影响“有效（平均）访存时间”（Effective Memory Access Time, EMAT）的因素</strong>。</p>
+<p>在请求分页系统中，<strong>一次内存访问可能触发缺页中断</strong>，导致：</p>
+<ul>
+<li>访问内存 → 若命中 → 时间 &#x3D; 内存访问时间  </li>
+<li>若缺页 → 需执行缺页处理程序 → 包括：  <ul>
+<li>CPU 处理缺页异常（CPU 时间）  </li>
+<li>磁盘读取页面（磁盘读写时间）  </li>
+<li>将页面装入内存后重新执行指令</li>
+</ul>
+</li>
+</ul>
+<p>因此，<strong>平均访存时间是命中与缺页情况的加权平均</strong>。</p>
+<hr>
+<h3 id="📊-有效访存时间公式："><a href="#📊-有效访存时间公式：" class="headerlink" title="📊 有效访存时间公式："></a>📊 有效访存时间公式：</h3><p>设：</p>
+<ul>
+<li>$ p $ &#x3D; 缺页率（Page Fault Rate）  </li>
+<li>$ m $ &#x3D; 内存访问时间（Memory Access Time）  </li>
+<li>$ d $ &#x3D; 缺页处理时间（包括 CPU 处理 + 磁盘 I&#x2F;O）</li>
+</ul>
+<p>则：</p>
+<p>$$<br>\text{EMAT} &#x3D; (1 - p) \cdot m + p \cdot d<br>$$</p>
+<p>而 $ d $ 本身包含：</p>
+<ul>
+<li>执行缺页处理程序的 CPU 时间  </li>
+<li>磁盘读写时间</li>
+</ul>
+<p>→ 所以，<strong>所有四个因素都直接影响 EMAT</strong>。</p>
+<hr>
+<h3 id="逐项分析：-1"><a href="#逐项分析：-1" class="headerlink" title="逐项分析："></a>逐项分析：</h3><h4 id="I-缺页率"><a href="#I-缺页率" class="headerlink" title="I. 缺页率"></a>I. 缺页率</h4><p>✅ <strong>影响</strong> —— 是公式中的核心变量 $ p $，缺页率越高，EMAT 越长。</p>
+<h4 id="II-磁盘读写时间"><a href="#II-磁盘读写时间" class="headerlink" title="II. 磁盘读写时间"></a>II. 磁盘读写时间</h4><p>✅ <strong>影响</strong> —— 是缺页处理时间 $ d $ 的主要部分，磁盘慢则 $ d $ 大，EMAT 增大。</p>
+<h4 id="III-内存访问时间"><a href="#III-内存访问时间" class="headerlink" title="III. 内存访问时间"></a>III. 内存访问时间</h4><p>✅ <strong>影响</strong> —— 是命中时的时间 $ m $，即使缺页率低，若内存访问慢，EMAT 也会高。</p>
+<h4 id="IV-执行缺页处理程序的-CPU-时间"><a href="#IV-执行缺页处理程序的-CPU-时间" class="headerlink" title="IV. 执行缺页处理程序的 CPU 时间"></a>IV. 执行缺页处理程序的 CPU 时间</h4><p>✅ <strong>影响</strong> —— 是缺页处理时间 $ d $ 的一部分，CPU 处理开销大，$ d $ 增大 → EMAT 增大。</p>
+<hr>
+<h3 id="🎯-结论："><a href="#🎯-结论：" class="headerlink" title="🎯 结论："></a>🎯 结论：</h3><p>所有四项均影响请求分页系统的有效访存时间。</p>
+<hr>
+<p>✅ 正确答案：<strong>D. I, II, III, IV</strong></p>
+<hr>
+<h3 id="💡-补充说明："><a href="#💡-补充说明：" class="headerlink" title="💡 补充说明："></a>💡 补充说明：</h3><p>这是操作系统性能评估的核心内容。实际系统中，为降低 EMAT，常采用：</p>
+<ul>
+<li>提高命中率（增加物理内存、优化置换算法）  </li>
+<li>使用高速缓存（TLB）减少缺页次数  </li>
+<li>使用 SSD 替代 HDD 降低磁盘读写时间  </li>
+<li>优化缺页处理程序减少 CPU 开销</li>
+</ul>
+<hr>
+<p>✅ 最终答案：<strong>D</strong></p>
+<h1 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h1><p>给出某进程访问页面的序列：<br>…, 1, 3, 4, 5, 6, 0, 3, 2, 3, 2, ↑t, 0, 4, 0, 3, 2, 9, 2, 1, …<br>工作集窗口大小 &#x3D; 6<br>问：在 t 时刻 的工作集是什么？</p>
+<h2 id="解析-6"><a href="#解析-6" class="headerlink" title="解析"></a>解析</h2><p>我们来分析这道关于 <strong>工作集（Working Set）</strong> 的题目。</p>
+<hr>
+<h3 id="📊-题目条件：-2"><a href="#📊-题目条件：-2" class="headerlink" title="📊 题目条件："></a>📊 题目条件：</h3><ul>
+<li>给出某进程访问页面的序列：<br><code>…, 1, 3, 4, 5, 6, 0, 3, 2, 3, 2, ↑t, 0, 4, 0, 3, 2, 9, 2, 1, …</code>  </li>
+<li>工作集窗口大小 &#x3D; 6  </li>
+<li>问：在 <strong>t 时刻</strong> 的工作集是什么？</li>
+</ul>
+<hr>
+<h3 id="✅-工作集定义："><a href="#✅-工作集定义：" class="headerlink" title="✅ 工作集定义："></a>✅ 工作集定义：</h3><blockquote>
+<p><strong>工作集（Working Set）</strong> 是指：<strong>在最近 k 次内存访问中，所访问到的不同页面的集合</strong>。  </p>
+<ul>
+<li>k 是“窗口大小”（本题为 6）  </li>
+<li>从当前时刻 t 往前数 k 个访问记录（包含 t 时刻的访问），取其中出现的所有不同页号组成集合。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>⚠️ 注意：工作集是“最近访问过的页面”，不是“当前内存中的页面”；它反映的是程序的局部性行为。</p>
+</blockquote>
+<hr>
+<h3 id="🔍-解题步骤："><a href="#🔍-解题步骤：" class="headerlink" title="🔍 解题步骤："></a>🔍 解题步骤：</h3><h4 id="Step-1：确定-t-时刻之前的-6-个访问记录"><a href="#Step-1：确定-t-时刻之前的-6-个访问记录" class="headerlink" title="Step 1：确定 t 时刻之前的 6 个访问记录"></a>Step 1：确定 t 时刻之前的 6 个访问记录</h4><p>观察序列：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">..., 1, 3, 4, 5, 6, 0, 3, 2, 3, 2, ↑t, 0, 4, 0, 3, 2, 9, 2, 1, ...</span><br></pre></td></tr></table></figure></div>
+
+<p>t 时刻的箭头指向的是 <strong>第 11 个访问位置（从左往右数）</strong>，即：</p>
+<blockquote>
+<p>访问序列（标序号）：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>页面</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>2</td>
+</tr>
+<tr>
+<td>9</td>
+<td>3</td>
+</tr>
+<tr>
+<td>10</td>
+<td>2</td>
+</tr>
+<tr>
+<td>11</td>
+<td>← t</td>
+</tr>
+</tbody></table>
+<p>→ 所以，在 t 时刻，<strong>往前数 6 个访问</strong> 是指：</p>
+<p><strong>序号 6 到 11</strong>（包含 t 时刻的访问）：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">序号 6: 0</span><br><span class="line">序号 7: 3</span><br><span class="line">序号 8: 2</span><br><span class="line">序号 9: 3</span><br><span class="line">序号 10: 2</span><br><span class="line">序号 11: （t 时刻访问的页）？？</span><br></pre></td></tr></table></figure></div>
+
+<p>但注意：<strong>t 时刻的访问尚未发生</strong> —— 箭头在“2”之后，“0”之前，说明：</p>
+<blockquote>
+<p><strong>t 时刻是刚刚完成第 10 次访问（页面 2）之后</strong>，即将进行第 11 次访问（页面 0）。</p>
+</blockquote>
+<p>所以，<strong>t 时刻的工作集应基于“最近 6 次已完成的访问”</strong>，即：</p>
+<p><strong>从第 5 次到第 10 次访问</strong>（共 6 次）：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第 5 次：6</span><br><span class="line">第 6 次：0</span><br><span class="line">第 7 次：3</span><br><span class="line">第 8 次：2</span><br><span class="line">第 9 次：3</span><br><span class="line">第 10 次：2</span><br></pre></td></tr></table></figure></div>
+
+<p>→ 这 6 次访问的页面为：<code>6, 0, 3, 2, 3, 2</code></p>
+<p>→ 去重后得到工作集：<strong>{6, 0, 3, 2}</strong></p>
+<hr>
+<h3 id="✅-对照选项：-1"><a href="#✅-对照选项：-1" class="headerlink" title="✅ 对照选项："></a>✅ 对照选项：</h3><p>A. {6, 0, 3, 2} ✅ 正确<br>B. {2, 3, 0, 4} ❌ 包含 4（不在最近6次中）<br>C. {0, 4, 3, 2, 9} ❌ 包含 4、9（超出范围）<br>D. {4, 5, 6, 0, 3, 2} ❌ 包含 4、5（超出范围）</p>
+<hr>
+<h4 id="🎯-关键点："><a href="#🎯-关键点：" class="headerlink" title="🎯 关键点："></a>🎯 关键点：</h4><ul>
+<li>工作集是“最近 k 次访问中出现的页面”，不是“当前内存中的页面”；  </li>
+<li>“t 时刻”通常指“刚完成某次访问后”，因此取“前 k 次访问”；  </li>
+<li>本题中，t 时刻位于“2”之后、“0”之前，故取第 5~10 次访问。</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>A. {6, 0, 3, 2}</strong></p>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> Linux操作系统-第三章-内存</li>
+        <li><strong>Author:</strong> 姜智浩</li>
+        <li><strong>Created at
+                :</strong> 2025-12-29 11:45:14</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-01-15 08:50:14
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2025/12/29/20251229Linux操作系统-第三章-内存/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">#计算机科学</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/zhihaojiang.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">#操作系统</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/zhihaojiang.github.io/2025/12/29/20251229%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86%E4%B8%8E%E5%A4%84%E7%90%86--%E7%9B%B8%E5%85%B3%E4%B9%A0%E9%A2%98/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">数据采集与处理--相关习题</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/zhihaojiang.github.io/2025/12/28/20260116%E5%A4%9A%E5%85%83%E7%BB%9F%E8%AE%A1%E5%88%86%E6%9E%90%E4%B9%A0%E9%A2%98/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item">多元统计分析</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">Linux操作系统-第三章-内存</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90"><span class="nav-text">解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8A-%E9%A2%98%E7%9B%AE%E6%9D%A1%E4%BB%B6%EF%BC%9A"><span class="nav-text">📊 题目条件：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%8D-%E7%9B%AE%E6%A0%87%EF%BC%9A"><span class="nav-text">🔍 目标：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-text">✅ 解题思路：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-1%EF%BC%9A%E8%AE%A1%E7%AE%97%E4%B8%80%E4%B8%AA%E9%A1%B5%E8%A1%A8%E8%83%BD%E5%AE%B9%E7%BA%B3%E5%A4%9A%E5%B0%91%E4%B8%AA%E9%A1%B5%E8%A1%A8%E9%A1%B9"><span class="nav-text">步骤 1：计算一个页表能容纳多少个页表项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2%EF%BC%9A%E8%AE%A1%E7%AE%97%E9%9C%80%E8%A6%81%E5%A4%9A%E5%B0%91%E4%B8%AA%E9%A1%B5%E8%A1%A8"><span class="nav-text">步骤 2：计算需要多少个页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-3%EF%BC%9A%E9%A1%B5%E7%9B%AE%E5%BD%95%E8%A1%A8%E4%B8%AD%E8%A1%A8%E9%A1%B9%E4%B8%AA%E6%95%B0-%E9%A1%B5%E8%A1%A8%E4%B8%AA%E6%95%B0"><span class="nav-text">步骤 3：页目录表中表项个数 &#x3D; 页表个数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%9C%80%E7%BB%88%E7%AD%94%E6%A1%88%EF%BC%9AB-128"><span class="nav-text">✅ 最终答案：B. 128</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E9%AA%8C%E8%AF%81%E9%80%BB%E8%BE%91%EF%BC%9A"><span class="nav-text">🎯 验证逻辑：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-1"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-1"><span class="nav-text">解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%8D-%E6%94%B9%E8%BF%9B%E5%9E%8B-CLOCK-%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="nav-text">🔍 改进型 CLOCK 算法原理：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E6%B7%98%E6%B1%B0%E4%BC%98%E5%85%88%E7%BA%A7%EF%BC%88%E4%BB%8E%E9%AB%98%E5%88%B0%E4%BD%8E%EF%BC%89%EF%BC%9A"><span class="nav-text">📌 淘汰优先级（从高到低）：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E5%AF%B9%E7%85%A7%E9%80%89%E9%A1%B9%EF%BC%9A"><span class="nav-text">✅ 对照选项：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-text">🎯 考点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-2"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-2"><span class="nav-text">解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8A-%E9%A2%98%E7%9B%AE%E6%9D%A1%E4%BB%B6%EF%BC%9A-1"><span class="nav-text">📊 题目条件：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%EF%BC%9A-1"><span class="nav-text">✅ 解题思路：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A9-%E6%A8%A1%E6%8B%9F%E8%BF%87%E7%A8%8B%EF%BC%88%E7%BB%B4%E6%8A%A4%E4%B8%80%E4%B8%AA%E2%80%9C%E8%AE%BF%E9%97%AE%E5%8E%86%E5%8F%B2%E2%80%9D%E5%88%97%E8%A1%A8%EF%BC%8C%E8%B6%8A%E9%9D%A0%E5%B7%A6%E8%B6%8A%E4%B9%85%E6%9C%AA%E7%94%A8%EF%BC%89"><span class="nav-text">🧩 模拟过程（维护一个“访问历史”列表，越靠左越久未用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E5%BD%93%E5%89%8D%E5%86%85%E5%AD%98%E7%8A%B6%E6%80%81%EF%BC%88%E5%9C%A8%E8%AE%BF%E9%97%AE-5-%E5%90%8E%EF%BC%89%EF%BC%9A"><span class="nav-text">✅ 当前内存状态（在访问 5 后）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%8D-%E4%B8%8B%E4%B8%80%E6%AD%A5%EF%BC%9A%E8%AE%BF%E9%97%AE-7"><span class="nav-text">🔍 下一步：访问 7</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%AD%A3%E7%A1%AE%E7%AD%94%E6%A1%88%EF%BC%9AA-2"><span class="nav-text">✅ 正确答案：A. 2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E5%85%B3%E9%94%AE%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-text">🎯 关键点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-3"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-3"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E8%A7%A3%E6%9E%90%EF%BC%9A"><span class="nav-text">✅ 解析：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A-1"><span class="nav-text">🎯 考点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-4"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-4"><span class="nav-text">解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E7%BC%BA%E9%A1%B5%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B%EF%BC%88%E6%A0%87%E5%87%86%E6%AD%A5%E9%AA%A4%EF%BC%89%EF%BC%9A"><span class="nav-text">📌 缺页异常处理流程（标准步骤）：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%90%E9%A1%B9%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-text">逐项分析：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A-2"><span class="nav-text">🎯 考点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-5"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-5"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%8A-%E6%9C%89%E6%95%88%E8%AE%BF%E5%AD%98%E6%97%B6%E9%97%B4%E5%85%AC%E5%BC%8F%EF%BC%9A"><span class="nav-text">📊 有效访存时间公式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%90%E9%A1%B9%E5%88%86%E6%9E%90%EF%BC%9A-1"><span class="nav-text">逐项分析：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E7%BB%93%E8%AE%BA%EF%BC%9A"><span class="nav-text">🎯 结论：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1-%E8%A1%A5%E5%85%85%E8%AF%B4%E6%98%8E%EF%BC%9A"><span class="nav-text">💡 补充说明：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-6"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-6"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%8A-%E9%A2%98%E7%9B%AE%E6%9D%A1%E4%BB%B6%EF%BC%9A-2"><span class="nav-text">📊 题目条件：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E5%B7%A5%E4%BD%9C%E9%9B%86%E5%AE%9A%E4%B9%89%EF%BC%9A"><span class="nav-text">✅ 工作集定义：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%8D-%E8%A7%A3%E9%A2%98%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="nav-text">🔍 解题步骤：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E5%AF%B9%E7%85%A7%E9%80%89%E9%A1%B9%EF%BC%9A-1"><span class="nav-text">✅ 对照选项：</span></a></li></ol></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/zhihaojiang.github.io/">姜智浩</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        83 posts in total
+                    </span>
+                    
+                        <span>
+                            231.5k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container">
+	<img src="">
+</div>
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/zhihaojiang.github.io/js/build/libs/Swup.min.js"></script>
+
+<script src="/zhihaojiang.github.io/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/zhihaojiang.github.io/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/zhihaojiang.github.io/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/zhihaojiang.github.io/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/zhihaojiang.github.io/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    const swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+</script>
+
+
+
+
+	
+<script src="/zhihaojiang.github.io/js/build/tools/imageViewer.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/utils.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/main.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/layouts/navbarShrink.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/tools/scrollTopBottom.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/tools/lightDarkSwitch.js" type="module"></script>
+
+<script src="/zhihaojiang.github.io/js/build/layouts/categoryList.js" type="module"></script>
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/tools/localSearch.js" type="module"></script>
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/tools/codeBlock.js" type="module"></script>
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/layouts/lazyload.js" type="module"></script>
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/tools/runtime.js"></script>
+
+    
+<script src="/zhihaojiang.github.io/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/zhihaojiang.github.io/assets/odometer-theme-minimal.css">
+
+
+
+
+  
+<script src="/zhihaojiang.github.io/js/build/libs/Typed.min.js"></script>
+
+  
+<script src="/zhihaojiang.github.io/js/build/plugins/typed.js" type="module"></script>
+
+
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/libs/minimasonry.min.js"></script>
+
+    
+<script src="/zhihaojiang.github.io/js/build/plugins/masonry.js" type="module"></script>
+
+
+
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/zhihaojiang.github.io/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
+
+<script src="/zhihaojiang.github.io/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+<script src="/zhihaojiang.github.io/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
+
+
+<script src="/zhihaojiang.github.io/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
+
+
+
+
+
+    
+<script src="/zhihaojiang.github.io/js/build/layouts/bookmarkNav.js" type="module"></script>
+
+
+	
+	<div id="aplayer"></div>
+
+<script src="/zhihaojiang.github.io/js/build/libs/APlayer.min.js"></script>
+
+
+<script src="/zhihaojiang.github.io/js/build/plugins/aplayer.js"></script>
+
+
+	
+</body>
+
+</html>
