@@ -18737,4 +18737,244 @@ accuracy                           0.96       216
         <tag>数值分析</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Eco-Driving Behavior</title>
+    <url>/zhihaojiang.github.io/2026/01/20/20260120Eco-Driving%20Behavior/</url>
+    <content><![CDATA[<h1 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h1><p><a class="link"   href="https://www.kaggle.com/datasets/sonalshinde123/eco-driving-behavior-dataset/data" >https://www.kaggle.com/datasets/sonalshinde123/eco-driving-behavior-dataset/data<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h1 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h1><p>About Dataset<br>🚗 Introduction<br>The Eco-Driving Behavior Dataset is a large-scale synthetic dataset consisting of 30,000 rows, designed to simulate realistic vehicle driving behavior and fuel efficiency patterns. It represents trip-level driving metrics commonly captured by vehicle telematics systems, on-board diagnostics (OBD), and CAN-based sensors.</p>
+<p>The dataset is especially useful for machine learning modeling, statistical analysis, and benchmarking, where real-world driving data is often difficult to obtain due to privacy, cost, and accessibility constraints.</p>
+<p>🌱 Objective<br>The primary goal of this dataset is to help analyze how different driving behaviors impact fuel consumption and an overall eco-driving score, which reflects driving efficiency and environmental friendliness.</p>
+<p>The dataset allows users to:</p>
+<p>Study correlations between driving habits and eco-efficiency<br>Build predictive models for eco-driving scores<br>Experiment with feature engineering techniques<br>Compare regression and classification approaches on the same data<br>🧩 Feature-Level Explanation</p>
+<p>1.rpm_variation<br>Captures how much the engine RPM fluctuates during a trip. Higher values typically indicate aggressive throttle usage, frequent gear changes, or unstable driving patterns.</p>
+<p>2.harsh_braking_count<br>Represents the number of sudden braking events detected during the trip. Frequent harsh braking is usually associated with unsafe and inefficient driving behavior.</p>
+<p>3.idling_time<br>Measures the total duration (in minutes) when the vehicle engine was running without movement. Excessive idling leads to unnecessary fuel consumption and lower eco-efficiency.</p>
+<p>4.fuel_consumption<br>Indicates the fuel consumption rate for the trip. Higher values generally correspond to inefficient driving or heavy traffic conditions.</p>
+<p>5.acceleration_smoothness<br>A normalized score (0–1) indicating how smoothly the driver accelerates. Higher values reflect smoother acceleration, reduced mechanical stress, and better fuel economy.</p>
+<p>6.eco_score<br>A composite score derived from all behavioral factors. It reflects overall driving efficiency, environmental impact, and smoothness of driving behavior. This variable is ideal as a regression target or can be discretized for classification tasks (e.g., Poor &#x2F; Average &#x2F; Good driving).</p>
+<p>🧪 Synthetic Data Generation Approach</p>
+<p>The dataset was generated using:</p>
+<p>Controlled statistical distributions<br>Feature inter-dependencies (e.g., harsh braking impacting fuel consumption)<br>Randomized noise to avoid overly deterministic patterns<br>Special care was taken to ensure:</p>
+<p>Realistic feature ranges<br>Natural variance across trips<br>No perfect correlations<br>ML-friendly structure for experimentation</p>
+<h1 id="导入库"><a href="#导入库" class="headerlink" title="导入库"></a>导入库</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import pandas as pd</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&#x27;eco_driving_score.csv&#x27;</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+
+<p>1.rpm_variation  1.转速变化<br>Captures how much the engine RPM fluctuates during a trip. Higher values typically indicate aggressive throttle usage, frequent gear changes, or unstable driving patterns.<br>记录行驶过程中发动机转速的波动幅度。数值越高，通常表示油门使用过于激进、频繁换挡或驾驶习惯不稳定。</p>
+<p>2.harsh_braking_count  2.急刹车次数<br>Represents the number of sudden braking events detected during the trip. Frequent harsh braking is usually associated with unsafe and inefficient driving behavior.<br>表示行程中检测到的急刹车事件次数。频繁的急刹车通常与不安全和低效的驾驶行为有关。</p>
+<p>3.idling_time  3.空闲时间<br>Measures the total duration (in minutes) when the vehicle engine was running without movement. Excessive idling leads to unnecessary fuel consumption and lower eco-efficiency.<br>测量车辆发动机空转但车辆不移动的总时长（以分钟为单位）。怠速时间过长会导致不必要的燃油消耗和降低环保效率。</p>
+<p>4.fuel_consumption  4.燃油消耗<br>Indicates the fuel consumption rate for the trip. Higher values generally correspond to inefficient driving or heavy traffic conditions.<br>表示本次行程的燃油消耗率。数值越高，通常表示驾驶效率低下或交通拥堵情况越严重。</p>
+<p>5.acceleration_smoothness<br>5.加速度平滑度<br>A normalized score (0–1) indicating how smoothly the driver accelerates. Higher values reflect smoother acceleration, reduced mechanical stress, and better fuel economy.<br>标准化评分（​​0-1）表示驾驶员加速的平顺程度。数值越高，表示加速越平顺、机械应力越小、燃油经济性越好。</p>
+<p>6.eco_score  6.生态评分<br>A composite score derived from all behavioral factors. It reflects overall driving efficiency, environmental impact, and smoothness of driving behavior. This variable is ideal as a regression target or can be discretized for classification tasks (e.g., Poor &#x2F; Average &#x2F; Good driving).<br>该综合评分由所有行为因素构成，反映了整体驾驶效率、环境影响和驾驶行为的流畅性。该变量非常适合作为回归目标，也可以离散化用于分类任务（例如，驾驶水平差&#x2F;一般&#x2F;良好）。</p>
+<h1 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import seaborn as sns</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.hist(<span class="built_in">df</span>[col], bins=100)</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/001.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/002.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/003.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/004.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/005.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/006.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.pairplot(<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/007.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">sns.heatmap(df.corr())</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/008.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">cols = [<span class="string">&#x27;rpm_variation&#x27;</span>, <span class="string">&#x27;harsh_braking_count&#x27;</span>, <span class="string">&#x27;idling_time&#x27;</span>, <span class="string">&#x27;fuel_consumption&#x27;</span>, <span class="string">&#x27;acceleration_smoothness&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> cols:</span><br><span class="line">    <span class="built_in">df</span>[col + <span class="string">&#x27;_bin&#x27;</span>] = pd.cut(<span class="built_in">df</span>[col], bins=20)</span><br><span class="line">    binned = df.groupby(col + <span class="string">&#x27;_bin&#x27;</span>)[<span class="string">&#x27;eco_score&#x27;</span>].mean()</span><br><span class="line">    bin_centers = [interval.mid <span class="keyword">for</span> interval <span class="keyword">in</span> binned.index]</span><br><span class="line"></span><br><span class="line">    df.drop(columns=[col + <span class="string">&#x27;_bin&#x27;</span>], inplace=True)</span><br><span class="line"></span><br><span class="line">    plt.plot(bin_centers, binned.values, marker=<span class="string">&#x27;o&#x27;</span>)</span><br><span class="line">    plt.title(<span class="string">&#x27;Mean Eco Score VS &#x27;</span> + col + <span class="string">&#x27; Bin&#x27;</span>)</span><br><span class="line">    plt.xlabel(col)</span><br><span class="line">    plt.ylabel(<span class="string">&#x27;Mean Eco Score&#x27;</span>)</span><br><span class="line">    plt.grid(True)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/009.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/010.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/011.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/012.png"
+                      alt="photo"
+                ></p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/013.png"
+                      alt="photo"
+                ></p>
+<p>随着怠速时间的增加 ECO得分降低 但是可以看到一个一场的点 当怠速时间超过27分钟后 得分反而会升高</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">plt.boxplot(<span class="built_in">df</span>[<span class="string">&#x27;idling_time&#x27;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/014.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">Q1 = <span class="built_in">df</span>[<span class="string">&quot;idling_time&quot;</span>].quantile(0.25)</span><br><span class="line">Q3 = <span class="built_in">df</span>[<span class="string">&quot;idling_time&quot;</span>].quantile(0.75)</span><br><span class="line">IQR = Q3 - Q1</span><br><span class="line"><span class="built_in">df</span> = <span class="built_in">df</span>[~((df[&quot;idling_time&quot;] &lt; (Q1 - <span class="number">1.5</span> * IQR)) | (<span class="built_in">df</span>[<span class="string">&quot;idling_time&quot;</span>] &gt; (Q3 + 1.5 * IQR)))]</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">plt.boxplot(<span class="built_in">df</span>[<span class="string">&#x27;idling_time&#x27;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/015.png"
+                      alt="photo"
+                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;idling_time_bin&#x27;</span>] = pd.cut(<span class="built_in">df</span>[<span class="string">&#x27;idling_time&#x27;</span>], bins=20)</span><br><span class="line">binned = df.groupby(<span class="string">&#x27;idling_time_bin&#x27;</span>)[<span class="string">&#x27;eco_score&#x27;</span>].mean()</span><br><span class="line">bin_centers = [interval.mid <span class="keyword">for</span> interval <span class="keyword">in</span> binned.index]</span><br><span class="line"></span><br><span class="line">df.drop(columns=[<span class="string">&#x27;idling_time_bin&#x27;</span>], inplace=True)</span><br><span class="line"></span><br><span class="line">plt.plot(bin_centers, binned.values, marker=<span class="string">&#x27;o&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Mean Eco Score VS Idling Time Bin&#x27;</span>)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Idling Time Bin&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Mean Eco Score&#x27;</span>)</span><br><span class="line">plt.grid(True)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/016.png"
+                      alt="photo"
+                ></p>
+<h1 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">X = df.drop(<span class="string">&#x27;eco_score&#x27;</span>, axis=1)</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;eco_score&#x27;</span>]</span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+
+<h1 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line">from xgboost import XGBRegressor</span><br></pre></td></tr></table></figure></div>
+
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> = RandomForestRegressor()</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line">r2 = rm.score(X_test, y_test)</span><br><span class="line">r2</span><br></pre></td></tr></table></figure></div>
+<p>0.9250779240975352</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">xgb = XGBRegressor()</span><br><span class="line">xgb.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">xgb_r2 = xgb.score(X_test, y_test)</span><br><span class="line">xgb_r2</span><br></pre></td></tr></table></figure></div>
+<p>0.9244345372632315</p>
+<h1 id="RM-GV"><a href="#RM-GV" class="headerlink" title="RM GV"></a>RM GV</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">from sklearn.model_selection import RandomizedSearchCV</span><br><span class="line">from scipy.stats import randint, uniform</span><br><span class="line"></span><br><span class="line">param_dist = &#123;</span><br><span class="line">    <span class="string">&#x27;n_estimators&#x27;</span>: randint(100, 500),</span><br><span class="line">    <span class="string">&#x27;max_depth&#x27;</span>: randint(10, 50),</span><br><span class="line">    <span class="string">&#x27;min_samples_split&#x27;</span>: randint(2, 20),</span><br><span class="line">    <span class="string">&#x27;min_samples_leaf&#x27;</span>: randint(1, 10),</span><br><span class="line">    <span class="string">&#x27;max_features&#x27;</span>: [<span class="string">&#x27;sqrt&#x27;</span>, <span class="string">&#x27;log2&#x27;</span>, None]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">random_search = RandomizedSearchCV(</span><br><span class="line">    <span class="built_in">rm</span>,</span><br><span class="line">    param_distributions=param_dist,</span><br><span class="line">    n_iter=100,         <span class="comment"># 随机尝试100组参数</span></span><br><span class="line">    cv=5,</span><br><span class="line">    scoring=<span class="string">&#x27;neg_mean_squared_error&#x27;</span>,</span><br><span class="line">    n_jobs=-1,</span><br><span class="line">    random_state=42,</span><br><span class="line">    verbose=1</span><br><span class="line">)</span><br><span class="line">random_search.fit(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Best params (Random):&quot;</span>, random_search.best_params_)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(f<span class="string">&quot;Best R2 (Random): &#123;random_search.best_estimator_.score(X_test, y_test)&#125;&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<p>Best params (Random): {‘max_depth’: 44, ‘max_features’: ‘sqrt’, ‘min_samples_leaf’: 1, ‘min_samples_split’: 12, ‘n_estimators’: 200}<br>Best R2 (Random): 0.9286245296105547</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">rm</span> = RandomForestRegressor(</span><br><span class="line">    max_depth=44,</span><br><span class="line">    min_samples_split=12,</span><br><span class="line">    min_samples_leaf=1,</span><br><span class="line">    max_features=<span class="string">&#x27;sqrt&#x27;</span>,</span><br><span class="line">    n_estimators=200,</span><br><span class="line">)</span><br><span class="line">rm.fit(X_train, y_train)</span><br><span class="line"></span><br><span class="line">r2_score = rm.score(X_test, y_test)</span><br><span class="line"><span class="built_in">print</span>(f<span class="string">&quot;R2 Score: &#123;r2_score&#125;&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+<p>R2 Score: 0.928480167672461</p>
+<h1 id="特征重要性"><a href="#特征重要性" class="headerlink" title="特征重要性"></a>特征重要性</h1><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">import shap</span><br><span class="line">explainer = shap.TreeExplainer(<span class="built_in">rm</span>)</span><br><span class="line">shap_values = explainer.shap_values(X_train, approximate=True)</span><br><span class="line"></span><br><span class="line">shap.summary_plot(shap_values, X_train, plot_type=<span class="string">&quot;dot&quot;</span>)</span><br></pre></td></tr></table></figure></div>
+
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2026/01/20/017.png"
+                      alt="photo"
+                ></p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><h3 id="1-fuel-consumption（燃油消耗）"><a href="#1-fuel-consumption（燃油消耗）" class="headerlink" title="1 fuel_consumption（燃油消耗）"></a>1 <code>fuel_consumption</code>（燃油消耗）</h3><ul>
+<li><strong>影响范围最大</strong>，说明它对模型输出影响最显著。</li>
+<li><strong>红色部分集中在右侧</strong> → 当燃油消耗高时，模型倾向于预测更高的输出</li>
+<li><strong>蓝色部分集中在左侧</strong> → 燃油消耗低 → 模型预测值偏低<br><strong>结论</strong>：燃油消耗越高，模型预测值越大 → 代表“更耗油”、“更不经济”的驾驶行为</li>
+</ul>
+<hr>
+<h3 id="2-harsh-braking-count（急刹车次数）"><a href="#2-harsh-braking-count（急刹车次数）" class="headerlink" title="2 harsh_braking_count（急刹车次数）"></a>2 <code>harsh_braking_count</code>（急刹车次数）</h3><ul>
+<li>影响第二</li>
+<li><strong>高值（红）集中在右侧</strong> → 急刹车多 → 模型预测值高 → 可能代表“危险驾驶”</li>
+<li><strong>低值（蓝）集中在左侧</strong> → 急刹车少 → 预测值低 → 更安全&#x2F;平稳<br><strong>结论</strong>：急刹车次数越多，模型认为驾驶风险&#x2F;成本越高</li>
+</ul>
+<hr>
+<h3 id="3-rpm-variation（转速波动）"><a href="#3-rpm-variation（转速波动）" class="headerlink" title="3 rpm_variation（转速波动）"></a>3 <code>rpm_variation</code>（转速波动）</h3><ul>
+<li>影响中等</li>
+<li>分布较对称，但高值略偏向右侧 → 转速波动大 → 预测值偏高<br><strong>结论</strong>：转速不稳定可能被模型视为“不良驾驶习惯”</li>
+</ul>
+<hr>
+<h3 id="4-acceleration-smoothness（加速平顺性）"><a href="#4-acceleration-smoothness（加速平顺性）" class="headerlink" title="4 acceleration_smoothness（加速平顺性）"></a>4 <code>acceleration_smoothness</code>（加速平顺性）</h3><ul>
+<li>影响较小（约 -10 到 +10）</li>
+<li><strong>有趣的是：高值集中在左侧！</strong> → 加速越平顺，SHAP 值为负 → 模型预测值降低<br><strong>结论</strong>：加速越平顺 → 预测值越低 → 代表更优驾驶行为）</li>
+</ul>
+<hr>
+<h3 id="5-idling-time（怠速时间）"><a href="#5-idling-time（怠速时间）" class="headerlink" title="5 idling_time（怠速时间）"></a>5 <code>idling_time</code>（怠速时间）</h3><ul>
+<li>影响最小（约 -8 到 +8）</li>
+<li>高值（红）在右侧 → 怠速时间长 → 预测值高 → 代表“浪费燃油”或“效率低”<br><strong>结论</strong>：怠速时间越长，模型预测值越高 → 不良行为</li>
+</ul>
+<hr>
+<h2 id="整体模型行为总结"><a href="#整体模型行为总结" class="headerlink" title="整体模型行为总结"></a>整体模型行为总结</h2><table>
+<thead>
+<tr>
+<th>特征</th>
+<th>对模型输出影响方向</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>fuel_consumption</td>
+<td>↑ 高 → 输出↑</td>
+<td>越耗油，风险&#x2F;成本越高</td>
+</tr>
+<tr>
+<td>harsh_braking_count</td>
+<td>↑ 多 → 输出↑</td>
+<td>急刹车多，驾驶风险高</td>
+</tr>
+<tr>
+<td>rpm_variation</td>
+<td>↑ 波动大 → 输出↑</td>
+<td>转速不稳，驾驶不规范</td>
+</tr>
+<tr>
+<td>acceleration_smoothness</td>
+<td>↑ 平顺 → 输出↓</td>
+<td>加速越平顺，驾驶越好</td>
+</tr>
+<tr>
+<td>idling_time</td>
+<td>↑ 长 → 输出↑</td>
+<td>怠速久，效率低&#x2F;浪费</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h2><p><strong>优化驾驶行为</strong>：</p>
+<ul>
+<li>减少急刹车、控制转速波动、提升加速平顺性 → 可显著降低模型预测的“风险评分”</li>
+</ul>
+]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>计算机科学</tag>
+        <tag>数学</tag>
+        <tag>数据分析</tag>
+      </tags>
+  </entry>
 </search>
