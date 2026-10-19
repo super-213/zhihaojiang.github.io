@@ -115,7 +115,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -666,7 +780,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>503 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>493 Words</span>
         </span>
     
     
@@ -692,27 +806,27 @@
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
 			<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个整数数组 nums 和一个整数 k 。</p>
 <p>如果一个数组中所有 严格大于 h 的整数值都 相等 ，那么我们称整数 h 是 合法的 。</p>
-<p>比方说，如果 nums &#x3D; [10, 8, 10, 8] ，那么 h &#x3D; 9 是一个 合法 整数，因为所有满足 nums[i] &gt; 9 的数都等于 10 ，但是 5 不是 合法 整数。</p>
+<p>比方说，如果 nums = [10, 8, 10, 8] ，那么 h = 9 是一个 合法 整数，因为所有满足 nums[i] &gt; 9 的数都等于 10 ，但是 5 不是 合法 整数。</p>
 <p>你可以对 nums 执行以下操作：</p>
 <p>选择一个整数 h ，它对于 当前 nums 中的值是合法的。<br>对于每个下标 i ，如果它满足 nums[i] &gt; h ，那么将 nums[i] 变为 h 。<br>你的目标是将 nums 中的所有元素都变为 k ，请你返回 最少 操作次数。如果无法将所有元素都变 k ，那么返回 -1 。</p>
 <blockquote>
 <p>示例 1：</p>
-<p>输入：nums &#x3D; [5,2,5,4,5], k &#x3D; 2</p>
+<p>输入：nums = [5,2,5,4,5], k = 2</p>
 <p>输出：2</p>
 <p>解释：</p>
 <p>依次选择合法整数 4 和 2 ，将数组全部变为 2 。</p>
 <p>示例 2：</p>
-<p>输入：nums &#x3D; [2,1,2], k &#x3D; 2</p>
+<p>输入：nums = [2,1,2], k = 2</p>
 <p>输出：-1</p>
 <p>解释：</p>
 <p>没法将所有值变为 2 。</p>
 <p>示例 3：</p>
-<p>输入：nums &#x3D; [9,7,5,3], k &#x3D; 1</p>
+<p>输入：nums = [9,7,5,3], k = 1</p>
 <p>输出：4</p>
 <p>解释：</p>
 <p>依次选择合法整数 7 ，5 ，3 和 1 ，将数组全部变为 1 。</p>
 </blockquote>
-<h2 id="解释题目"><a href="#解释题目" class="headerlink" title="解释题目"></a>解释题目</h2><p>异常情况: nums[i]&lt;k, 直接返回 −1<br>需要进行转换的元素: nums[i]&gt;k<br>无需转换的元素: nums[i]&#x3D;&#x3D;k</p>
+<h2 id="解释题目"><a href="#解释题目" class="headerlink" title="解释题目"></a>解释题目</h2><p>异常情况: nums[i]&lt;k, 直接返回 −1<br>需要进行转换的元素: nums[i]&gt;k<br>无需转换的元素: nums[i]==k</p>
 <h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def minOperations(self, nums, k):</span><br><span class="line">        n = len(nums)</span><br><span class="line">        s = <span class="built_in">set</span>([])</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">if</span> nums[i] &lt; k:</span><br><span class="line">                <span class="built_in">return</span> -1</span><br><span class="line">            <span class="keyword">if</span> nums[i] != k:</span><br><span class="line">                s.add(nums[i])</span><br><span class="line">        <span class="built_in">return</span> len(s)</span><br></pre></td></tr></table></figure></div>
 
 <h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><p><strong>set()</strong><br>set顾名思义是集合 里面不能包含重复的元素 接收一个list作为参数<br>set() 函数创建一个无序不重复元素集 可进行关系测试 删除重复数据 还可以计算交集、差集、并集等</p>
@@ -840,7 +954,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

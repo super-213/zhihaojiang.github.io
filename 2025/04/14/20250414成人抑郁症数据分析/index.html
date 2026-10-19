@@ -116,7 +116,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -671,12 +785,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.4k Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.3k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>6 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>5 Mins</span>
         </span>
     
     
@@ -695,9 +809,9 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a class="link"   target="_blank" rel="noopener" href="https://www.kaggle.com/datasets/sonawanelalitsunil/adult-depression-lghc-indicator/data" >https://www.kaggle.com/datasets/sonawanelalitsunil/adult-depression-lghc-indicator/data<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+			<h2 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h2><p><a class="link" target="_blank" rel="noopener" href="https://www.kaggle.com/datasets/sonawanelalitsunil/adult-depression-lghc-indicator/data">https://www.kaggle.com/datasets/sonawanelalitsunil/adult-depression-lghc-indicator/data<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <h2 id="成人抑郁症"><a href="#成人抑郁症" class="headerlink" title="成人抑郁症"></a>成人抑郁症</h2><p>成人抑郁症（LGHC 指标）数据集提供了由地方健康地理比较 (LGHC) 计划跟踪的成人抑郁症患病率的见解。它可作为了解不同人群和地区心理健康趋势的公共卫生资源。</p>
-<p>主要特点：<br>健康指标：根据健康调查的自我报告数据，关注被诊断患有抑郁症的成年人的百分比。<br>人口统计和地理：按年龄、性别、种族&#x2F;民族、收入水平和地理位置（州、县或地方区域）细分数据。</p>
+<p>主要特点：<br>健康指标：根据健康调查的自我报告数据，关注被诊断患有抑郁症的成年人的百分比。<br>人口统计和地理：按年龄、性别、种族/民族、收入水平和地理位置（州、县或地方区域）细分数据。</p>
 <h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ul>
 <li>对数据集进行探索性分析，找出数据集中的问题。</li>
 <li>对数据进行预处理，包括缺失值处理、异常值处理、数据类型转换等。</li>
@@ -708,23 +822,13 @@
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.metrics import mean_squared_error,r2_score</span><br></pre></td></tr></table></figure></div>
 
 <p>读取文件</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&#x27;adult-depression-lghc-indicator-24.csv&#x27;</span>)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">'adult-depression-lghc-indicator-24.csv'</span>)</span><br></pre></td></tr></table></figure></div>
 
 <p>查看文件</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/001.png"
-                      alt="photo"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/001.png" alt="photo"></p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.info()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/002.png"
-                      alt="photo"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/002.png" alt="photo"></p>
 <h3 id="分析每个字段的含义"><a href="#分析每个字段的含义" class="headerlink" title="分析每个字段的含义"></a>分析每个字段的含义</h3><ul>
 <li><code>Year</code>：数据收集年份</li>
 <li><code>Strata</code>：包含了各种类别</li>
@@ -736,84 +840,34 @@
 <li><code>Upper 95% CL</code>：较高的 95% CL</li>
 </ul>
 <p>针对Strata</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;Strata&#x27;</span>].value_counts()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/003.png"
-                      alt="photo"
-                ></p>
-<h3 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="built_in">df</span>[<span class="string">&#x27;Year&#x27;</span>]</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Percent&#x27;</span>]</span><br><span class="line"></span><br><span class="line">sns.lineplot(x=x, y=y)</span><br><span class="line">plt.xlabel(<span class="string">&#x27;Year&#x27;</span>)</span><br><span class="line">plt.ylabel(<span class="string">&#x27;Percent&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Percent of Adults Depressed Over Time&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/004.png"
-                      alt="photo"
-                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">'Strata'</span>].value_counts()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/003.png" alt="photo"></p>
+<h3 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="built_in">df</span>[<span class="string">'Year'</span>]</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'Percent'</span>]</span><br><span class="line"></span><br><span class="line">sns.lineplot(x=x, y=y)</span><br><span class="line">plt.xlabel(<span class="string">'Year'</span>)</span><br><span class="line">plt.ylabel(<span class="string">'Percent'</span>)</span><br><span class="line">plt.title(<span class="string">'Percent of Adults Depressed Over Time'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/004.png" alt="photo"></p>
 <p>可以看到 抑郁症发病率在逐年上升 在2017年达到了最高值</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Strata_features = [<span class="string">&#x27;Income&#x27;</span>, <span class="string">&#x27;Race-Ethnicity&#x27;</span>, <span class="string">&#x27;Age&#x27;</span>, <span class="string">&#x27;Education&#x27;</span>, <span class="string">&#x27;Sex&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> feature <span class="keyword">in</span> Strata_features:</span><br><span class="line">    sns.barplot(x=<span class="string">&#x27;Strata Name&#x27;</span>, y=<span class="string">&#x27;Percent&#x27;</span>, data=<span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">&#x27;Strata&#x27;</span>]== feature], hue=<span class="string">&#x27;Year&#x27;</span>)</span><br><span class="line">    plt.title(f<span class="string">&#x27;Percent of Adults Depressed by &#123;feature&#125;&#x27;</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/005.png"
-                      alt="photo"
-                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Strata_features = [<span class="string">'Income'</span>, <span class="string">'Race-Ethnicity'</span>, <span class="string">'Age'</span>, <span class="string">'Education'</span>, <span class="string">'Sex'</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> feature <span class="keyword">in</span> Strata_features:</span><br><span class="line">    sns.barplot(x=<span class="string">'Strata Name'</span>, y=<span class="string">'Percent'</span>, data=<span class="built_in">df</span>[<span class="built_in">df</span>[<span class="string">'Strata'</span>]== feature], hue=<span class="string">'Year'</span>)</span><br><span class="line">    plt.title(f<span class="string">'Percent of Adults Depressed by {feature}'</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/005.png" alt="photo"></p>
 <p>可以看到 收入小于$20，000的人得抑郁症的概率高于其他收入水平</p>
-<p>可能的原因：低收入水平的人可能面临经济困难和压力，从而增加了他们对抑郁的感知和应对的难度。<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/006.png"
-                      alt="photo"
-                ></p>
+<p>可能的原因：低收入水平的人可能面临经济困难和压力，从而增加了他们对抑郁的感知和应对的难度。<br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/006.png" alt="photo"></p>
 <p>可以看到 亚非裔的人得抑郁症的概率低于其他种族和民族</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/007.png"
-                      alt="photo"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/007.png" alt="photo"></p>
 <p>可以看到 随着年龄的增长 得抑郁症的概率也在增长 在65岁以上时又减小</p>
-<p>可能的原因：随着年龄的增长 人们的生活和工作环境也在不断变化 压力也越来越大 因此也会增加得抑郁症的概率 在65岁以上时 人们已经退休了 没有了生活和工作的压力 因此也会减少得抑郁症的概率<br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/008.png"
-                      alt="photo"
-                ></p>
+<p>可能的原因：随着年龄的增长 人们的生活和工作环境也在不断变化 压力也越来越大 因此也会增加得抑郁症的概率 在65岁以上时 人们已经退休了 没有了生活和工作的压力 因此也会减少得抑郁症的概率<br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/008.png" alt="photo"></p>
 <p>可以看到 学历对得抑郁症的概率没有明显影响</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/009.png"
-                      alt="photo"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/009.png" alt="photo"></p>
 <p>可以看到 女性得抑郁症的概率高于男性</p>
 <p>男女性得抑郁症的概率都逐年上升 在2017年达到最高</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(<span class="built_in">df</span>[<span class="string">&#x27;Lower 95% CL&#x27;</span>], <span class="built_in">df</span>[<span class="string">&#x27;Percent&#x27;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(<span class="built_in">df</span>[<span class="string">'Lower 95% CL'</span>], <span class="built_in">df</span>[<span class="string">'Percent'</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(<span class="built_in">df</span>[<span class="string">&#x27;Upper 95% CL&#x27;</span>], <span class="built_in">df</span>[<span class="string">&#x27;Percent&#x27;</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.scatter(<span class="built_in">df</span>[<span class="string">'Upper 95% CL'</span>], <span class="built_in">df</span>[<span class="string">'Percent'</span>])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/010.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/011.png"
-                      alt="photo"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/010.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/011.png" alt="photo"></p>
 <p>上述两张散点图可以看到 Upper 95% CL和 Lower 95% CL 对得抑郁症的影响很大</p>
 <p>用相关性矩阵查看特征之间的关系</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num_df = df.select_dtypes(include=[np.number])</span><br><span class="line">sns.heatmap(num_df.corr(), annot=True, cmap=<span class="string">&#x27;coolwarm&#x27;</span>)</span><br><span class="line">plt.title(<span class="string">&#x27;Correlation Heatmap&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/012.png"
-                      alt="photo"
-                ></p>
-<h3 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.drop(columns=[<span class="string">&#x27;Strata Name&#x27;</span>, <span class="string">&#x27;Strata&#x27;</span>], inplace=True)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">num_df = df.select_dtypes(include=[np.number])</span><br><span class="line">sns.heatmap(num_df.corr(), annot=True, cmap=<span class="string">'coolwarm'</span>)</span><br><span class="line">plt.title(<span class="string">'Correlation Heatmap'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/04/14/012.png" alt="photo"></p>
+<h3 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.drop(columns=[<span class="string">'Strata Name'</span>, <span class="string">'Strata'</span>], inplace=True)</span><br></pre></td></tr></table></figure></div>
 
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
 <blockquote>
@@ -822,14 +876,14 @@
 <p>由于只有7个缺失值 所以直接删除</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.dropna(inplace=True)</span><br></pre></td></tr></table></figure></div>
 
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算 Z-Score</span></span><br><span class="line">mean = <span class="built_in">df</span>[<span class="string">&#x27;Frequency&#x27;</span>].mean()</span><br><span class="line">std = <span class="built_in">df</span>[<span class="string">&#x27;Frequency&#x27;</span>].std()</span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;Z-Score&#x27;</span>] = (<span class="built_in">df</span>[<span class="string">&#x27;Frequency&#x27;</span>] - mean) / std</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检测异常值（Z-Score &gt; 3 或 &lt; -3）</span></span><br><span class="line">outliers = <span class="built_in">df</span>[abs(<span class="built_in">df</span>[<span class="string">&#x27;Z-Score&#x27;</span>]) &gt; 3]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;异常值：\n&quot;</span>, outliers)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 计算 Z-Score</span></span><br><span class="line">mean = <span class="built_in">df</span>[<span class="string">'Frequency'</span>].mean()</span><br><span class="line">std = <span class="built_in">df</span>[<span class="string">'Frequency'</span>].std()</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'Z-Score'</span>] = (<span class="built_in">df</span>[<span class="string">'Frequency'</span>] - mean) / std</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检测异常值（Z-Score &gt; 3 或 &lt; -3）</span></span><br><span class="line">outliers = <span class="built_in">df</span>[abs(<span class="built_in">df</span>[<span class="string">'Z-Score'</span>]) &gt; 3]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"异常值：\n"</span>, outliers)</span><br></pre></td></tr></table></figure></div>
 <blockquote>
 <p>异常值：<br>    Year  Frequency  Weighted Frequency  Percent  Lower 95% CL  Upper 95% CL  <br>2  2012       1359           2163108.0    15.25         14.30         16.20<br>3  2012       1314           1806371.0    14.57         13.67         15.46   </p>
 <pre><code>Z-Score  
 </code></pre>
 <p>2  3.498507<br>3  3.339020</p>
 </blockquote>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from scipy.stats import mstats</span><br><span class="line"></span><br><span class="line"><span class="comment"># 胜率变换：将异常值限制在 5% 和 95% 分位数之间</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;Frequency_winsorized&#x27;</span>] = mstats.winsorize(<span class="built_in">df</span>[<span class="string">&#x27;Frequency&#x27;</span>], limits=[0.05, 0.05])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;胜率变换后的数据：\n&quot;</span>, <span class="built_in">df</span>)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from scipy.stats import mstats</span><br><span class="line"></span><br><span class="line"><span class="comment"># 胜率变换：将异常值限制在 5% 和 95% 分位数之间</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'Frequency_winsorized'</span>] = mstats.winsorize(<span class="built_in">df</span>[<span class="string">'Frequency'</span>], limits=[0.05, 0.05])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"胜率变换后的数据：\n"</span>, <span class="built_in">df</span>)</span><br></pre></td></tr></table></figure></div>
 <blockquote>
 <p>胜率变换后的数据：<br>      Year  Frequency  Weighted Frequency  Percent  Lower 95% CL  Upper 95% CL  <br>1    2012        561           1116664.0     8.12          7.32          8.92<br>2    2012       1359           2163108.0    15.25         14.30         16.20<br>3    2012       1314           1806371.0    14.57         13.67         15.46<br>4    2012         97            222022.0    13.54         10.44         16.65<br>5    2012        412            923174.0     9.98          8.91         11.05<br>..    …        …                 …      …           …           …<br>156  2018        496           1623933.0    17.69         13.72         21.66<br>157  2018        285            749615.0    14.56         10.91         18.21<br>158  2018        301           1052945.0    20.06         15.60         24.52<br>159  2018        432            854201.0    21.44         17.65         25.23<br>160  2018        450            661974.0    15.60         13.42         17.78   </p>
 <pre><code>  Z-Score  Frequency_winsorized  
@@ -838,10 +892,10 @@
 <p>[154 rows x 8 columns]</p>
 </blockquote>
 <p>就是将第2，3行的一场数据进行了胜率变换 其他行数据没有变化</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X = df.drop(columns=[<span class="string">&#x27;Percent&#x27;</span>, <span class="string">&#x27;Z-Score&#x27;</span>, <span class="string">&#x27;Frequency&#x27;</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Percent&#x27;</span>]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line"><span class="comment">#进行标准化</span></span><br><span class="line">scaler =  StandardScaler()</span><br><span class="line">scaler.fit(X_train, X_test)</span><br><span class="line">X_train_scaled = scaler.transform(X_train)</span><br><span class="line">X_test_scaled = scaler.transform(X_test)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">X = df.drop(columns=[<span class="string">'Percent'</span>, <span class="string">'Z-Score'</span>, <span class="string">'Frequency'</span>])</span><br><span class="line">y = <span class="built_in">df</span>[<span class="string">'Percent'</span>]</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line"><span class="comment">#进行标准化</span></span><br><span class="line">scaler =  StandardScaler()</span><br><span class="line">scaler.fit(X_train, X_test)</span><br><span class="line">X_train_scaled = scaler.transform(X_train)</span><br><span class="line">X_test_scaled = scaler.transform(X_test)</span><br></pre></td></tr></table></figure></div>
 <h3 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lr = LinearRegression()</span><br><span class="line">lr.fit(X_train_scaled, y_train)</span><br><span class="line">y_pred = lr.predict(X_test_scaled)</span><br></pre></td></tr></table></figure></div>
 
-<h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mse = mean_squared_error(y_test, y_pred)</span><br><span class="line">r2 = r2_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Linear Regression MSE:&quot;</span>, mse)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Linear Regression R^2:&quot;</span>, r2)</span><br></pre></td></tr></table></figure></div>
+<h3 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mse = mean_squared_error(y_test, y_pred)</span><br><span class="line">r2 = r2_score(y_test, y_pred)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Linear Regression MSE:"</span>, mse)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"Linear Regression R^2:"</span>, r2)</span><br></pre></td></tr></table></figure></div>
 <blockquote>
 <p>Linear Regression MSE: 1.439819098234569e-05<br>Linear Regression R^2: 0.999999015347916</p>
 </blockquote>
@@ -974,7 +1028,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

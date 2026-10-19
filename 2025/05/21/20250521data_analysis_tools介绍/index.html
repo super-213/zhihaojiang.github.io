@@ -115,7 +115,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -690,7 +804,7 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<p>GitHub地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/super-213/dataanalysistools" >https://github.com/super-213/dataanalysistools<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+			<p>GitHub地址：<a class="link" target="_blank" rel="noopener" href="https://github.com/super-213/dataanalysistools">https://github.com/super-213/dataanalysistools<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <h1 id="information"><a href="#information" class="headerlink" title="information"></a>information</h1><h2 id="summarize-df"><a href="#summarize-df" class="headerlink" title="summarize_df()"></a>summarize_df()</h2><p>汇总 DataFrame 的基本信息，包括 head, describe, info 等内容。</p>
 <p><strong>参数:</strong><br>        df (pd.DataFrame): 需要汇总的 DataFrame<br>        head_rows (int): 显示前几行数据,默认5行</p>
 <p><strong>返回:</strong><br>        dict: 包含 head, tail, describe, info, dtypes, missing 的字典结果</p>
@@ -698,12 +812,12 @@
 <p><strong>参数</strong><br>    df : pd.DataFrame<br>        要处理的数据框<br>    cols_to_drop : 可迭代[str], optional<br>        要删除的列名列表（如 [‘id’, ‘name’]）<br>    dtypes_to_drop : 可迭代[str], optional<br>        要删除的数据类型（如 [‘object’, ‘datetime64[ns]’]）<br>    verbose : bool, default False<br>        是否打印删除的列名</p>
 <p><strong>返回</strong><br>    pd.DataFrame<br>        删除列后的副本</p>
 <h2 id="impute"><a href="#impute" class="headerlink" title="impute()"></a>impute()</h2><p>通用缺失值填补函数。</p>
-<p><strong>参数</strong><br>    df : DataFrame<br>        原始数据<br>    strategy : {“mean”, “median”, “mode”, “constant”}<br>        填补策略<br>    constant_value : 任意<br>        strategy&#x3D;”constant” 时使用</p>
+<p><strong>参数</strong><br>    df : DataFrame<br>        原始数据<br>    strategy : {“mean”, “median”, “mode”, “constant”}<br>        填补策略<br>    constant_value : 任意<br>        strategy=”constant” 时使用</p>
 <p><strong>返回:</strong><br>    DataFrame<br>        填补后的副本</p>
 <h2 id="detect-outliers-zscore"><a href="#detect-outliers-zscore" class="headerlink" title="detect_outliers_zscore()"></a>detect_outliers_zscore()</h2><p>使用 Z-Score 方法检测并可剔除异常值。</p>
-<p><strong>参数</strong><br>    df : pd.DataFrame<br>        原始数据<br>    cols : list[str], optional<br>        要检测的列（默认全部数值列）<br>    threshold : float<br>        Z 分数阈值，超过即视为异常<br>    method : {‘both’, ‘high’, ‘low’}<br>        检测异常值方向：<br>            - ‘both’: 正负两侧都检测（默认）<br>            - ‘high’: 仅检测高值异常（z &gt; threshold）<br>            - ‘low’:  仅检测低值异常（z &lt; -threshold）<br>    return_zscore : bool<br>        是否返回异常值的 Z 分数（附加在结果中）<br>    drop : bool<br>        是否直接剔除异常值行（返回清洗后的 DataFrame）<br>    verbose : bool<br>        是否输出每列异常值数量<br><strong>返回</strong><br>    如果 drop&#x3D;False 且 return_zscore&#x3D;False:<br>        返回异常值的行（pd.DataFrame）<br>    如果 drop&#x3D;False 且 return_zscore&#x3D;True:<br>        返回包含 Z 分数的异常值 DataFrame<br>    如果 drop&#x3D;True:<br>        返回剔除后的 DataFrame（无异常值）</p>
+<p><strong>参数</strong><br>    df : pd.DataFrame<br>        原始数据<br>    cols : list[str], optional<br>        要检测的列（默认全部数值列）<br>    threshold : float<br>        Z 分数阈值，超过即视为异常<br>    method : {‘both’, ‘high’, ‘low’}<br>        检测异常值方向：<br>            - ‘both’: 正负两侧都检测（默认）<br>            - ‘high’: 仅检测高值异常（z &gt; threshold）<br>            - ‘low’:  仅检测低值异常（z &lt; -threshold）<br>    return_zscore : bool<br>        是否返回异常值的 Z 分数（附加在结果中）<br>    drop : bool<br>        是否直接剔除异常值行（返回清洗后的 DataFrame）<br>    verbose : bool<br>        是否输出每列异常值数量<br><strong>返回</strong><br>    如果 drop=False 且 return_zscore=False:<br>        返回异常值的行（pd.DataFrame）<br>    如果 drop=False 且 return_zscore=True:<br>        返回包含 Z 分数的异常值 DataFrame<br>    如果 drop=True:<br>        返回剔除后的 DataFrame（无异常值）</p>
 <h2 id="detect-outliers-iqr"><a href="#detect-outliers-iqr" class="headerlink" title="detect_outliers_iqr()"></a>detect_outliers_iqr()</h2><p>使用 IQR（四分位数）方法检测异常值，并可选择剔除。</p>
-<p><strong>参数</strong><br>    df : pd.DataFrame<br>        原始数据<br>    cols : list[str], optional<br>        要检测的列（默认全部数值列）<br>    multiplier : float<br>        IQR 倍数阈值（默认 1.5）<br>    method : {“both”, “high”, “low”}<br>        异常方向控制：<br>            - “both”: 上下两端都检测<br>            - “high”: 仅检测上异常（值 &gt; Q3 + 1.5×IQR）<br>            - “low” : 仅检测下异常（值 &lt; Q1 - 1.5×IQR）<br>    return_bounds : bool<br>        是否返回每列的上下界（Q1 和 Q3 基础上的判断线）<br>    drop : bool<br>        是否直接剔除异常值行（返回清洗后的 df）<br>    verbose : bool<br>        是否打印每列异常数量<br><strong>返回</strong><br>    如果 drop&#x3D;False:<br>        返回异常值 DataFrame<br>    如果 drop&#x3D;True:<br>        返回剔除异常值后的 DataFrame<br>    如果 return_bounds&#x3D;True:<br>        返回 (异常值DataFrame或清洗后df, bounds字典)</p>
+<p><strong>参数</strong><br>    df : pd.DataFrame<br>        原始数据<br>    cols : list[str], optional<br>        要检测的列（默认全部数值列）<br>    multiplier : float<br>        IQR 倍数阈值（默认 1.5）<br>    method : {“both”, “high”, “low”}<br>        异常方向控制：<br>            - “both”: 上下两端都检测<br>            - “high”: 仅检测上异常（值 &gt; Q3 + 1.5×IQR）<br>            - “low” : 仅检测下异常（值 &lt; Q1 - 1.5×IQR）<br>    return_bounds : bool<br>        是否返回每列的上下界（Q1 和 Q3 基础上的判断线）<br>    drop : bool<br>        是否直接剔除异常值行（返回清洗后的 df）<br>    verbose : bool<br>        是否打印每列异常数量<br><strong>返回</strong><br>    如果 drop=False:<br>        返回异常值 DataFrame<br>    如果 drop=True:<br>        返回剔除异常值后的 DataFrame<br>    如果 return_bounds=True:<br>        返回 (异常值DataFrame或清洗后df, bounds字典)</p>
 <h2 id="detect-outliers-boxplot"><a href="#detect-outliers-boxplot" class="headerlink" title="detect_outliers_boxplot()"></a>detect_outliers_boxplot()</h2><p>用箱线图批量可视化异常值<br>    df: pandas DataFrame<br>    features: 要检查的特征列表（数值型）<br>    max_per_page: 每页最多显示的子图数<br>    figsize: 每页图像尺寸<br>    dpi: 图像清晰度</p>
 <h2 id="handle-outliers"><a href="#handle-outliers" class="headerlink" title="handle_outliers()"></a>handle_outliers()</h2><p>处理异常值：删除、替换或裁剪。<br><strong>参数：</strong><br>    - df : 原始 DataFrame<br>    - cols : 指定处理列（默认数值列）<br>    - method : 异常检测方法（zscore 或 iqr）<br>    - strategy : 处理策略（删除、替换、裁剪）<br>    - z_thresh : Z-Score 阈值<br>    - iqr_mult : IQR 倍数<br>    - direction : 异常检测方向（上下）<br>    - verbose : 是否打印信息</p>
 <h1 id="EAD"><a href="#EAD" class="headerlink" title="EAD"></a>EAD</h1><h2 id="pairwise-plot"><a href="#pairwise-plot" class="headerlink" title="pairwise_plot()"></a>pairwise_plot()</h2><p>批量绘制特征两两组合的图表，每张大图包含最多9张子图。</p>
@@ -719,7 +833,7 @@
 <h1 id="features"><a href="#features" class="headerlink" title="features"></a>features</h1><h2 id="bin-continuous-variable"><a href="#bin-continuous-variable" class="headerlink" title="bin_continuous_variable()"></a>bin_continuous_variable()</h2><p>对连续变量进行分箱处理。</p>
 <p><strong>参数:</strong><br>        df (pd.DataFrame): 输入 DataFrame。<br>        column (str): 要分箱的列名。<br>        method (str): 分箱方法，’equal_width’（等宽）、’equal_freq’（等频）、’custom’（自定义）。<br>        bins (int or List[float]): 分箱数量或自定义边界。<br>        labels (List[str], optional): 分箱标签。如果不传将使用默认区间或数字编号。<br>        return_interval (bool): 是否显示区间（仅对默认 label 生效）。<br>        new_col_name (str): 分箱后新列的名称，默认为原列名+”_binned”。<br>        drop_original (bool): 是否删除原始列。<br>        inplace (bool): 是否在原df上修改。</p>
 <p><strong>返回:</strong><br>        pd.DataFrame: 处理后的 DataFrame。</p>
-<h1 id="使用案例："><a href="#使用案例：" class="headerlink" title="使用案例："></a>使用案例：</h1><p><a target="_blank" rel="noopener" href="https://super-213.github.io/zhihaojiang.github.io/2025/05/18/20250518%E7%B3%96%E5%B0%BF%E7%97%85%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90/">https://super-213.github.io/zhihaojiang.github.io/2025/05/18/20250518%E7%B3%96%E5%B0%BF%E7%97%85%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90/</a></p>
+<h1 id="使用案例："><a href="#使用案例：" class="headerlink" title="使用案例："></a>使用案例：</h1><p><a class="link" target="_blank" rel="noopener" href="https://super-213.github.io/zhihaojiang.github.io/2025/05/18/20250518%E7%B3%96%E5%B0%BF%E7%97%85%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90/">https://super-213.github.io/zhihaojiang.github.io/2025/05/18/20250518%E7%B3%96%E5%B0%BF%E7%97%85%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <p><strong>具体详见GitHub</strong></p>
 
 		</div>
@@ -845,7 +959,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

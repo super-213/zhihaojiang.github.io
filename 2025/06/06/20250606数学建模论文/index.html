@@ -115,7 +115,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -739,127 +853,32 @@
 <li>假设模型的计算和响应时间在可接受范围内，适合实际应用中的快速决策需求。</li>
 </ol>
 <h1 id="三、问题分析"><a href="#三、问题分析" class="headerlink" title="三、问题分析"></a>三、问题分析</h1><p>膳食食谱的营养分析与优化是一个典型的营养学与数据科学交叉问题，其核心在于通过定量分析食谱的营养成分，评估其是否符合健康膳食标准，并基于数学模型进行优化调整。题目提供了61种常见食物的详细营养成分数据，包括蛋白质、脂肪、碳水化合物、维生素及矿物质含量，以及8种必需氨基酸的组成信息。这些数据构成了问题分析的基础，而评价与调整的关键在于如何将这些数据转化为可计算的营养指标，并建立合理的优化模型。<br>该问题可抽象为一个多目标优化问题，主要涉及食谱中各类食物的摄入量作为决策变量，目标函数包括营养均衡性、氨基酸评分和经济性，约束条件则涵盖能量需求、营养素下限、餐次比和食物多样性等。由于氨基酸评分涉及最小值函数，导致目标函数呈现非线性特征，同时食物选择存在离散与连续变量混合的情况，这增加了问题的复杂性。针对这些特点，本文采用差分进化算法进行优化，该算法能够有效处理非线性问题，具有全局搜索能力，并能灵活应对混合变量类型。<br>通过模型求解，可以得到调整后的优化食谱方案。具体优化策略包括增加优质蛋白来源以提升氨基酸评分，减少高脂肪食物来改善宏量营养素比例，补充微量营养素以满足最低摄入要求，以及优化餐次分配确保能量供给合理。最终通过营养计算和可视化手段验证优化效果，确保调整后的食谱既科学合理又具有实际可操作性。这一方法不仅解决了当前食谱的营养均衡问题，也为后续个性化膳食推荐提供了可扩展的模型框架。</p>
-<h1 id="四、符号说明"><a href="#四、符号说明" class="headerlink" title="四、符号说明"></a>四、符号说明</h1><h1 id="五、模型的建立与求解"><a href="#五、模型的建立与求解" class="headerlink" title="五、模型的建立与求解"></a>五、模型的建立与求解</h1><h2 id="5-1男女生一天饮食评价"><a href="#5-1男女生一天饮食评价" class="headerlink" title="5.1男女生一天饮食评价"></a>5.1男女生一天饮食评价</h2><h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p><strong>评价模型</strong><br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/016.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/017.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/018.png"
-                      alt="photo"
-                ></p>
-<p><strong>优化模型</strong><br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/019.png"
-                      alt="photo"
-                ></p>
-<h3 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h3><p>本研究基于《中国食物成分表》的61种食材数据，对某校学生食堂提供的男女膳食方案进行了系统性评估。如图1（某校学生食堂食物类别分布）所示，男生食谱中谷薯类占比达35.7%，显著高于女生的28.6%（χ²&#x3D;4.32，p&lt;0.05），而女生食谱中蔬菜菌藻水果类占比41.2%则明显优于男生的33.3%。这种结构性差异直接影响了后续的营养素摄入分布。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/001.png"
-                      alt="photo"
-                ><br><em>图1 某校学生食堂食物类别分布</em></p>
+<h1 id="四、符号说明"><a href="#四、符号说明" class="headerlink" title="四、符号说明"></a>四、符号说明</h1><h1 id="五、模型的建立与求解"><a href="#五、模型的建立与求解" class="headerlink" title="五、模型的建立与求解"></a>五、模型的建立与求解</h1><h2 id="5-1男女生一天饮食评价"><a href="#5-1男女生一天饮食评价" class="headerlink" title="5.1男女生一天饮食评价"></a>5.1男女生一天饮食评价</h2><h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><p><strong>评价模型</strong><br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/016.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/017.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/018.png" alt="photo"></p>
+<p><strong>优化模型</strong><br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/019.png" alt="photo"></p>
+<h3 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h3><p>本研究基于《中国食物成分表》的61种食材数据，对某校学生食堂提供的男女膳食方案进行了系统性评估。如图1（某校学生食堂食物类别分布）所示，男生食谱中谷薯类占比达35.7%，显著高于女生的28.6%（χ²=4.32，p&lt;0.05），而女生食谱中蔬菜菌藻水果类占比41.2%则明显优于男生的33.3%。这种结构性差异直接影响了后续的营养素摄入分布。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/001.png" alt="photo"><br><em>图1 某校学生食堂食物类别分布</em></p>
 <p>通过图2（男生食物类别统计）和图3（女生食物类别统计）的对比分析发现，男生每日摄入的畜禽鱼蛋类食物达到4种，比女生多出1种，但奶豆坚果类仅2种，较女生少1种。这种不均衡分布导致了两者在微量元素摄入上的显著差异。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/002.png"
-                      alt="photo"
-                ><br><em>图2 男生食物类别统计</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/003.png"
-                      alt="photo"
-                ><br><em>图3 女生食物类别统计</em></p>
-<p>图4（男生膳食微量元素分布特征）显示，钙、铁、锌的摄入量分别为578.5mg、18.77mg和9.99mg，而图5（女生膳食微量元素分布特征）则显示相应数值为346.0mg、8.56mg和5.38mg，均低于男生水平（t&#x3D;3.21，p&lt;0.01）。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/004.png"
-                      alt="photo"
-                ><br><em>图4 男生膳食微量元素分布特征</em><br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/005.png"
-                      alt="photo"
-                ><br><em>图5 女生膳食微量元素分布特征</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/002.png" alt="photo"><br><em>图2 男生食物类别统计</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/003.png" alt="photo"><br><em>图3 女生食物类别统计</em></p>
+<p>图4（男生膳食微量元素分布特征）显示，钙、铁、锌的摄入量分别为578.5mg、18.77mg和9.99mg，而图5（女生膳食微量元素分布特征）则显示相应数值为346.0mg、8.56mg和5.38mg，均低于男生水平（t=3.21，p&lt;0.01）。</p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/004.png" alt="photo"><br><em>图4 男生膳食微量元素分布特征</em><br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/005.png" alt="photo"><br><em>图5 女生膳食微量元素分布特征</em></p>
 <p>在宏量营养素方面，图6（男生宏量营养素能量占比）左图清晰地展示了蛋白质、脂肪和碳水化合物的供能比分别为11.58%、43.35%和45.07%，其中脂肪占比远超推荐上限。图6（女生宏量营养素能量占比）右图则显示其脂肪占比为27.6%，虽然处于合理区间，但碳水化合物占比达57.3%，反映出主食过量的倾向。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/006.png"
-                      alt="photo"
-                ><br><strong>图6 男生(左)、女生（右）宏量营养素能量占比</strong></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/006.png" alt="photo"><br><strong>图6 男生(左)、女生（右）宏量营养素能量占比</strong></p>
 <p>这种差异在图7（男生实际摄入量与推荐摄入量比较）和图8（女生实际摄入量与推荐摄入量比较）中得到了进一步验证，男生总能量摄入2602.99kcal基本达标，但女生1347.98kcal的总能量仅达到推荐值的74.6%。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/007.png"
-                      alt="photo"
-                ><br><em>图7 男生实际摄入量与推荐摄入量比较</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/008.png"
-                      alt="photo"
-                ><br><em>图8 女生实际摄入量与推荐摄入量比较</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/007.png" alt="photo"><br><em>图7 男生实际摄入量与推荐摄入量比较</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/008.png" alt="photo"><br><em>图8 女生实际摄入量与推荐摄入量比较</em></p>
 <p>氨基酸评分分析揭示了更深层次的问题。图9（男生必需氨基酸评分（AAS））显示含硫氨基酸评分仅为40.16，成为限制蛋白质质量的首要因素；图10（女生必需氨基酸评分（AAS））虽然赖氨酸评分达92.90，但含硫氨基酸68.41的评分仍低于安全阈值。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/009.png"
-                      alt="photo"
-                ><br><em>图9 男生必需氨基酸评分（AAS）</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/010.png"
-                      alt="photo"
-                ><br><em>图10 女生必需氨基酸评分（AAS）</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/009.png" alt="photo"><br><em>图9 男生必需氨基酸评分（AAS）</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/010.png" alt="photo"><br><em>图10 女生必需氨基酸评分（AAS）</em></p>
 <p>通过图11（男生、女生三餐氨基酸摄入均衡性评估）的时间维度分析发现，晚餐的氨基酸评分普遍低于其他餐次，这与图12（男生、女生每餐能量占总能量的百分比）中显示的晚餐营养密度不足直接相关。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/011.png"
-                      alt="photo"
-                ><br><em>图11 男生（左）、女生（右）三餐氨基酸摄入均衡性评估</em><br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/012.png"
-                      alt="photo"
-                ><br><em>图12 男生（左）、女生（右）每餐能量占总能量的百分比</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/011.png" alt="photo"><br><em>图11 男生（左）、女生（右）三餐氨基酸摄入均衡性评估</em><br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/012.png" alt="photo"><br><em>图12 男生（左）、女生（右）每餐能量占总能量的百分比</em></p>
 <p>微量元素摄入的均衡性评估结果同样值得关注。图13（男生微量元素摄入均衡性评估）左图表明铁和锌的摄入充足，但钙和维生素C明显不足；图13（女生微量元素摄入均衡性评估）右图则显示所有微量元素的摄入量均低于推荐值，其中钙的缺口达45.3%。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/013.png"
-                      alt="photo"
-                ><br><em>图13 男生（左）、女生（右）微量元素摄入均衡性评估</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/013.png" alt="photo"><br><em>图13 男生（左）、女生（右）微量元素摄入均衡性评估</em></p>
 <p>这种差异在图14（男生膳食氨基酸与营养成分的分布特征）和图15（女生膳食氨基酸与营养成分的分布特征）的散点图中表现得尤为明显，女生数据点的分布更加偏离理想区间。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/014.png"
-                      alt="photo"
-                ><br><em>图14 男生膳食氨基酸与营养成分的分布特征</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/015.png"
-                      alt="photo"
-                ><br><em>图15 女生膳食氨基酸与营养成分的分布特征</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/014.png" alt="photo"><br><em>图14 男生膳食氨基酸与营养成分的分布特征</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/015.png" alt="photo"><br><em>图15 女生膳食氨基酸与营养成分的分布特征</em></p>
 <p>基于上述发现，本研究提出了针对性的优化方案。首先调整食物类别占比，增加男生奶制品和女生豆制品的摄入；其次重新分配餐次能量，将男生晚餐能量占比从32%提升至35%，女生早餐占比从30%增至33%；最后优化食材组合，采用氨基酸互补原则，如将男生食谱中的豆油部分替换为芝麻油，女生增加蛋奶混合食材。通过这些调整，最终使男生的含硫氨基酸评分提升至47.94，女生的钙摄入量达到649.1mg，显著改善了整体营养质量。</p>
 <h2 id="5-2男女生氨基酸优先推荐饮食"><a href="#5-2男女生氨基酸优先推荐饮食" class="headerlink" title="5.2男女生氨基酸优先推荐饮食"></a>5.2男女生氨基酸优先推荐饮食</h2><h3 id="食谱"><a href="#食谱" class="headerlink" title="食谱"></a>食谱</h3><p><strong>男生食谱</strong></p>
 <table>
@@ -967,78 +986,18 @@
 <td>柚子</td>
 </tr>
 </tbody></table>
-<h3 id="可视化评价"><a href="#可视化评价" class="headerlink" title="可视化评价"></a>可视化评价</h3><p><strong>男生</strong><br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/020.png"
-                      alt="photo"
-                ><br><em>男生三餐氨基酸摄入均衡性评估</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/021.png"
-                      alt="photo"
-                ><br><em>男生膳食微量元素分布特征</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/022.png"
-                      alt="photo"
-                ><br><em>全天氨基酸摄入评分柱状图</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/023.png"
-                      alt="photo"
-                ><br><em>三餐氨基酸摄入评分柱状图</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/024.png"
-                      alt="photo"
-                ><br><em>三餐营养供能占比</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/025.png"
-                      alt="photo"
-                ><br><em>三餐营养热力图</em></p>
-<p><strong>女生</strong><br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/026.png"
-                      alt="photo"
-                ><br><em>女生三餐氨基酸摄入均衡性评估</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/027.png"
-                      alt="photo"
-                ><br><em>女生膳食微量元素分布特征</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/028.png"
-                      alt="photo"
-                ><br><em>全天氨基酸摄入评分柱状图</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/029.png"
-                      alt="photo"
-                ><br><em>三餐氨基酸摄入评分柱状图</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/030.png"
-                      alt="photo"
-                ><br><em>三餐营养供能占比</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/031.png"
-                      alt="photo"
-                ><br><em>三餐营养热力图</em></p>
+<h3 id="可视化评价"><a href="#可视化评价" class="headerlink" title="可视化评价"></a>可视化评价</h3><p><strong>男生</strong><br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/020.png" alt="photo"><br><em>男生三餐氨基酸摄入均衡性评估</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/021.png" alt="photo"><br><em>男生膳食微量元素分布特征</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/022.png" alt="photo"><br><em>全天氨基酸摄入评分柱状图</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/023.png" alt="photo"><br><em>三餐氨基酸摄入评分柱状图</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/024.png" alt="photo"><br><em>三餐营养供能占比</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/025.png" alt="photo"><br><em>三餐营养热力图</em></p>
+<p><strong>女生</strong><br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/026.png" alt="photo"><br><em>女生三餐氨基酸摄入均衡性评估</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/027.png" alt="photo"><br><em>女生膳食微量元素分布特征</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/028.png" alt="photo"><br><em>全天氨基酸摄入评分柱状图</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/029.png" alt="photo"><br><em>三餐氨基酸摄入评分柱状图</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/030.png" alt="photo"><br><em>三餐营养供能占比</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/031.png" alt="photo"><br><em>三餐营养热力图</em></p>
 <h2 id="5-3男女生价格优先推荐饮食"><a href="#5-3男女生价格优先推荐饮食" class="headerlink" title="5.3男女生价格优先推荐饮食"></a>5.3男女生价格优先推荐饮食</h2><h3 id="食谱-1"><a href="#食谱-1" class="headerlink" title="食谱"></a>食谱</h3><p><strong>男生食谱</strong></p>
 <table>
 <thead>
@@ -1121,78 +1080,18 @@
 <td>柚子</td>
 </tr>
 </tbody></table>
-<h3 id="可视化评价-1"><a href="#可视化评价-1" class="headerlink" title="可视化评价"></a>可视化评价</h3><p><strong>男生</strong><br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/032.png"
-                      alt="photo"
-                ><br><em>男生三餐氨基酸摄入均衡性评估</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/033.png"
-                      alt="photo"
-                ><br><em>男生膳食微量元素分布特征</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/034.png"
-                      alt="photo"
-                ><br><em>全天氨基酸摄入评分柱状图</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/035.png"
-                      alt="photo"
-                ><br><em>三餐氨基酸摄入评分柱状图</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/036.png"
-                      alt="photo"
-                ><br><em>三餐营养供能占比</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/037.png"
-                      alt="photo"
-                ><br><em>三餐营养热力图</em></p>
-<p><strong>女生</strong><br><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/038.png"
-                      alt="photo"
-                ><br><em>女生三餐氨基酸摄入均衡性评估</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/039.png"
-                      alt="photo"
-                ><br><em>女生膳食微量元素分布特征</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/040.png"
-                      alt="photo"
-                ><br><em>全天氨基酸摄入评分柱状图</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/041.png"
-                      alt="photo"
-                ><br><em>三餐氨基酸摄入评分柱状图</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/042.png"
-                      alt="photo"
-                ><br><em>三餐营养供能占比</em></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/043.png"
-                      alt="photo"
-                ><em>三餐营养热力图</em></p>
+<h3 id="可视化评价-1"><a href="#可视化评价-1" class="headerlink" title="可视化评价"></a>可视化评价</h3><p><strong>男生</strong><br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/032.png" alt="photo"><br><em>男生三餐氨基酸摄入均衡性评估</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/033.png" alt="photo"><br><em>男生膳食微量元素分布特征</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/034.png" alt="photo"><br><em>全天氨基酸摄入评分柱状图</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/035.png" alt="photo"><br><em>三餐氨基酸摄入评分柱状图</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/036.png" alt="photo"><br><em>三餐营养供能占比</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/037.png" alt="photo"><br><em>三餐营养热力图</em></p>
+<p><strong>女生</strong><br><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/038.png" alt="photo"><br><em>女生三餐氨基酸摄入均衡性评估</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/039.png" alt="photo"><br><em>女生膳食微量元素分布特征</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/040.png" alt="photo"><br><em>全天氨基酸摄入评分柱状图</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/041.png" alt="photo"><br><em>三餐氨基酸摄入评分柱状图</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/042.png" alt="photo"><br><em>三餐营养供能占比</em></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/06/06/043.png" alt="photo"><em>三餐营养热力图</em></p>
 
 		</div>
 
@@ -1317,7 +1216,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

@@ -115,7 +115,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -666,7 +780,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>365 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>362 Words</span>
         </span>
     
     
@@ -694,17 +808,17 @@
 <p>从数组的开头移除 3 个元素。如果数组中元素少于 3 个，则移除所有剩余元素。<br>注意：空数组也视作为数组元素互不相同。返回使数组元素互不相同所需的 最少操作次数 。</p>
 <blockquote>
 <p>示例 1：</p>
-<p>输入： nums &#x3D; [1,2,3,4,2,3,3,5,7]</p>
+<p>输入： nums = [1,2,3,4,2,3,3,5,7]</p>
 <p>输出： 2</p>
 <p>解释：</p>
 <p>第一次操作：移除前 3 个元素，数组变为 [4, 2, 3, 3, 5, 7]。<br>第二次操作：再次移除前 3 个元素，数组变为 [3, 5, 7]，此时数组中的元素互不相同。<br>因此，答案是 2。</p>
 <p>示例 2：</p>
-<p>输入： nums &#x3D; [4,5,6,4,4]</p>
+<p>输入： nums = [4,5,6,4,4]</p>
 <p>输出： 2</p>
 <p>解释：</p>
 <p>第一次操作：移除前 3 个元素，数组变为 [4, 4]。<br>第二次操作：移除所有剩余元素，数组变为空。<br>因此，答案是 2。</p>
 <p>示例 3：</p>
-<p>输入： nums &#x3D; [6,7,8,9]</p>
+<p>输入： nums = [6,7,8,9]</p>
 <p>输出： 0</p>
 <p>解释：</p>
 <p>数组中的元素已经互不相同，因此不需要进行任何操作，答案是 0。</p>
@@ -835,7 +949,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

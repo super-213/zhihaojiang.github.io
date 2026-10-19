@@ -116,7 +116,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -671,12 +785,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.4k Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.3k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>5 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>4 Mins</span>
         </span>
     
     
@@ -712,11 +826,11 @@
 <p>通过 MCP，AI 模型可以直接与数据源建立标准化的连接，避免了为每个新数据源定制对接方案的繁琐过程，从而实现真正的互联互通。</p>
 <p>MCP（Model Context Protocol）允许你定义和暴露自定义的函数（工具），让大模型调用这些工具来完成特定任务。例如，你可以构建一个函数，让模型查询数据库、读取文件、调用 API，甚至执行本地计算。</p>
 <h2 id="MCP-让模型调用工具的方式"><a href="#MCP-让模型调用工具的方式" class="headerlink" title="MCP 让模型调用工具的方式"></a>MCP 让模型调用工具的方式</h2><p><strong>定义一个工具（函数）</strong><br>在本地或远程服务器上编写一个 API 或函数，例如：</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def get_weather(city):</span><br><span class="line">    <span class="comment"># 这里可以调用真实的天气 API</span></span><br><span class="line">    <span class="built_in">return</span> f<span class="string">&quot;&#123;city&#125; 当前气温 25°C，晴天&quot;</span></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">def get_weather(city):</span><br><span class="line">    <span class="comment"># 这里可以调用真实的天气 API</span></span><br><span class="line">    <span class="built_in">return</span> f<span class="string">"{city} 当前气温 25°C，晴天"</span></span><br></pre></td></tr></table></figure></div>
 
 <p><strong>通过 MCP 暴露该工具</strong><br>通过 MCP 让大模型知道这个工具的存在，并允许它调用。例如，在 Claude 或其他支持 MCP 的环境中，模型可以动态调用你的 get_weather(city) 函数。<br><strong>模型调用工具</strong><br>当用户询问「北京的天气如何？」时，模型可以自动调用 get_weather(“北京”)，并将结果返回给用户，而不是依赖自身训练的数据。</p>
 <h2 id="创建并使用的流程"><a href="#创建并使用的流程" class="headerlink" title="创建并使用的流程"></a>创建并使用的流程</h2><p>以get_weather为例<br>我们首先创建一个.py文件叫weather<br>在文件中输入下述代码</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">from mcp import MCPServer, tool</span><br><span class="line"></span><br><span class="line">class WeatherServer(MCPServer):</span><br><span class="line">    @tool</span><br><span class="line">    def get_weather(self, city: str) -&gt; str:</span><br><span class="line">        <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">        获取指定城市的天气信息。</span></span><br><span class="line"><span class="string">        &quot;</span><span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 调用天气 API 获取数据</span></span><br><span class="line">        api_key = <span class="string">&#x27;您的API密钥&#x27;</span></span><br><span class="line">        response = requests.get(f<span class="string">&#x27;http://api.weatherapi.com/v1/current.json?key=&#123;api_key&#125;&amp;q=&#123;city&#125;&amp;lang=zh&#x27;</span>)</span><br><span class="line">        data = response.json()</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;error&#x27;</span> <span class="keyword">in</span> data:</span><br><span class="line">            <span class="built_in">return</span> f<span class="string">&quot;无法获取&#123;city&#125;的天气信息。&quot;</span></span><br><span class="line">        weather = data[<span class="string">&#x27;current&#x27;</span>][<span class="string">&#x27;condition&#x27;</span>][<span class="string">&#x27;text&#x27;</span>]</span><br><span class="line">        temp_c = data[<span class="string">&#x27;current&#x27;</span>][<span class="string">&#x27;temp_c&#x27;</span>]</span><br><span class="line">        <span class="built_in">return</span> f<span class="string">&quot;&#123;city&#125;当前天气：&#123;weather&#125;，气温：&#123;temp_c&#125;°C。&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    server = WeatherServer()</span><br><span class="line">    server.run()</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">from mcp import MCPServer, tool</span><br><span class="line"></span><br><span class="line">class WeatherServer(MCPServer):</span><br><span class="line">    @tool</span><br><span class="line">    def get_weather(self, city: str) -&gt; str:</span><br><span class="line">        <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">        获取指定城市的天气信息。</span></span><br><span class="line"><span class="string">        "</span><span class="string">""</span></span><br><span class="line">        <span class="comment"># 调用天气 API 获取数据</span></span><br><span class="line">        api_key = <span class="string">'您的API密钥'</span></span><br><span class="line">        response = requests.get(f<span class="string">'http://api.weatherapi.com/v1/current.json?key={api_key}&amp;q={city}&amp;lang=zh'</span>)</span><br><span class="line">        data = response.json()</span><br><span class="line">        <span class="keyword">if</span> <span class="string">'error'</span> <span class="keyword">in</span> data:</span><br><span class="line">            <span class="built_in">return</span> f<span class="string">"无法获取{city}的天气信息。"</span></span><br><span class="line">        weather = data[<span class="string">'current'</span>][<span class="string">'condition'</span>][<span class="string">'text'</span>]</span><br><span class="line">        temp_c = data[<span class="string">'current'</span>][<span class="string">'temp_c'</span>]</span><br><span class="line">        <span class="built_in">return</span> f<span class="string">"{city}当前天气：{weather}，气温：{temp_c}°C。"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    server = WeatherServer()</span><br><span class="line">    server.run()</span><br></pre></td></tr></table></figure></div>
 
   <div class="note-large default">
     <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
@@ -730,9 +844,9 @@
   </div>
 <p>这样，MCP工具就做好了</p>
 <p>之后，我们要将这个工具告诉AI<br>打开一个支持MCP的AI软件或网站 这里我使用vs code中的cline插件<br>在插件设置中找到MCP Servers -&gt; installed -&gt; Configure MCP Server 点击<br>会进入到一个叫cline_mcp_settings.json的文档<br>里面应该是这样的</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;mcpServers&quot;</span>: &#123;</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="string">"mcpServers"</span>: {</span><br><span class="line">  </span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
 <p>在mcpServers中插入你写的工具</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;mcpServers&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;weather&quot;</span>: &#123;</span><br><span class="line">      <span class="string">&quot;command&quot;</span>: <span class="string">&quot;python&quot;</span>,</span><br><span class="line">      <span class="string">&quot;args&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;--directory&quot;</span>,</span><br><span class="line">        <span class="string">&quot;/Volumes/HIKSEMI/mcp_server&quot;</span>,</span><br><span class="line">        <span class="string">&quot;run&quot;</span>,</span><br><span class="line">        <span class="string">&quot;weather.py&quot;</span></span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="string">"mcpServers"</span>: {</span><br><span class="line">    <span class="string">"weather"</span>: {</span><br><span class="line">      <span class="string">"command"</span>: <span class="string">"python"</span>,</span><br><span class="line">      <span class="string">"args"</span>: [</span><br><span class="line">        <span class="string">"--directory"</span>,</span><br><span class="line">        <span class="string">"/Volumes/HIKSEMI/mcp_server"</span>,</span><br><span class="line">        <span class="string">"run"</span>,</span><br><span class="line">        <span class="string">"weather.py"</span></span><br><span class="line">      ]</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
 
   <div class="note-large default">
     <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
@@ -742,7 +856,7 @@
     <div class="notel-content">
       <p>“weather”: { -&gt; 这个是你的MCP工具的名字 可以自己随便取</p>
 <p>“command”: “python” -&gt;这个是告诉他使用 python 命令来运行 Python 解释器 启动服务器</p>
-<p>“args”: [<br>        “–directory”, -&gt;这个选项通常用来告诉服务器在哪个路径下查找需要的资源 或者在该目录下运行服务器<br>        “&#x2F;Volumes&#x2F;HIKSEMI&#x2F;mcp_server”, -&gt;这是指定你weather.py的路径<br>        “run”, -&gt; 这个是告诉程序去执行接下来的操作 即运行指定的Python脚本<br>        “weather.py” -&gt; 这是要执行的 Python 脚本的名称</p>
+<p>“args”: [<br>        “–directory”, -&gt;这个选项通常用来告诉服务器在哪个路径下查找需要的资源 或者在该目录下运行服务器<br>        “/Volumes/HIKSEMI/mcp_server”, -&gt;这是指定你weather.py的路径<br>        “run”, -&gt; 这个是告诉程序去执行接下来的操作 即运行指定的Python脚本<br>        “weather.py” -&gt; 这是要执行的 Python 脚本的名称</p>
 
     </div>
   </div>
@@ -876,7 +990,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

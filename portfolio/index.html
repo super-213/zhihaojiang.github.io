@@ -29,8 +29,8 @@
 <meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog.zhihaojiang.com/images/redefine-og.webp">
-<meta property="article:published_time" content="2025-12-30T13:41:52.420Z">
-<meta property="article:modified_time" content="2025-12-30T13:41:52.420Z">
+<meta property="article:published_time" content="2025-12-31T01:21:37.100Z">
+<meta property="article:modified_time" content="2025-12-31T01:21:37.100Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://blog.zhihaojiang.com/images/redefine-og.webp">
@@ -113,7 +113,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -597,259 +711,7 @@
 		<h1></h1>
 		
 
-		<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jiang Zhihao - macOS Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-wallpaper: url('https://images.unsplash.com/photo-1605142859619-229196a57d37?q=80&w=2070&auto=format&fit=crop');
-            --glass-bg: rgba(255, 255, 255, 0.75);
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --term-bg: rgba(30, 30, 30, 0.95);
-            --dock-bg: rgba(255, 255, 255, 0.3);
-            --accent-blue: #007aff;
-            --text-main: #333;
-        }
-
-        * { box-sizing: border-box; user-select: none; }
-        
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            font-family: 'Inter', sans-serif;
-            background-image: var(--bg-wallpaper);
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* === 顶部菜单栏 === */
-        .menubar {
-            height: 30px;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            font-size: 13px;
-            color: #000;
-            font-weight: 500;
-            z-index: 9999;
-        }
-
-        .menubar-left { display: flex; gap: 20px; }
-        .menubar-right { display: flex; gap: 15px; }
-
-        /* === 窗口系统 === */
-        .desktop {
-            flex-grow: 1;
-            position: relative;
-        }
-
-        .window {
-            position: absolute;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            border: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: opacity 0.2s, transform 0.2s;
-            opacity: 0;
-            transform: scale(0.9);
-            pointer-events: none;
-            min-width: 400px;
-        }
-
-        .window.active {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: all;
-        }
-
-        .window-header {
-            height: 30px;
-            background: rgba(255, 255, 255, 0.5);
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
-            cursor: grab;
-        }
-        .window-header:active { cursor: grabbing; }
-
-        .traffic-lights { display: flex; gap: 8px; }
-        .light { width: 12px; height: 12px; border-radius: 50%; cursor: pointer; }
-        .red { background: #ff5f56; border: 1px solid #e0443e; }
-        .yellow { background: #ffbd2e; border: 1px solid #dea123; }
-        .green { background: #27c93f; border: 1px solid #1aab29; }
-
-        .window-title {
-            flex-grow: 1;
-            text-align: center;
-            font-size: 13px;
-            color: #333;
-            margin-right: 52px;
-            font-weight: 600;
-        }
-
-        .window-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 20px;
-            color: var(--text-main);
-        }
-
-        /* === 终端窗口 === */
-        #term-win {
-            width: 700px;
-            height: 480px;
-            top: 15%;
-            left: 50%;
-            transform: translate(-50%, 0) scale(0.9);
-            background: var(--term-bg);
-        }
-        #term-win.active { transform: translate(-50%, 0) scale(1); }
-        #term-win .window-header { background: #333; border-bottom: none; }
-        #term-win .window-title { color: #bbb; }
-        #term-win .window-content { 
-            padding: 15px; 
-            font-family: 'JetBrains Mono', monospace; 
-            color: #fff;
-            font-size: 14px;
-        }
-
-        .cmd-line { display: flex; align-items: center; margin-top: 5px; }
-        .prompt { color: #27c93f; margin-right: 10px; }
-        .path { color: #58a6ff; margin-right: 10px; }
-        
-        #cmd-input {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-family: inherit;
-            font-size: inherit;
-            flex-grow: 1;
-            outline: none;
-        }
-
-        .output-line { margin-bottom: 8px; line-height: 1.5; white-space: pre-wrap; }
-        .hl-cmd { color: #f1e05a; }
-        .hl-info { color: #58a6ff; }
-        .hl-warn { color: #ffbd2e; }
-
-        /* === 底部 Dock === */
-        .dock-container {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            z-index: 10000;
-        }
-
-        .dock {
-            background: var(--dock-bg);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 15px;
-            border-radius: 20px;
-            display: flex;
-            gap: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .dock-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-        }
-
-        .dock-icon:hover {
-            transform: scale(1.2) translateY(-15px);
-            margin: 0 8px;
-        }
-
-        .dock-tooltip {
-            position: absolute;
-            top: -40px;
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 12px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-        }
-        .dock-icon:hover .dock-tooltip { opacity: 1; }
-
-        /* === 内容样式 === */
-        .project-card {
-            background: rgba(255,255,255,0.5);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(0,0,0,0.05);
-        }
-        .project-card h3 { margin: 0 0 5px 0; color: #007aff; }
-        .project-tech span {
-            background: rgba(0,0,0,0.1);
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 12px;
-            margin-right: 5px;
-        }
-        .skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .skill-item { background: rgba(255,255,255,0.5); padding: 10px; border-radius: 8px; font-weight: 500; }
-        
-        .award-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 10px;
-            padding: 10px;
-            background: linear-gradient(90deg, rgba(255,255,255,0.4), transparent);
-            border-radius: 8px;
-        }
-        .award-icon { font-size: 20px; }
-        
-        /* 图标颜色 */
-        .icon-finder { background: linear-gradient(180deg, #1c9bf6, #1461eb); color: #fff; font-size: 30px; }
-        .icon-term { background: #333; color: #27c93f; font-size: 24px; border: 2px solid #555; }
-        .icon-projects { background: linear-gradient(135deg, #FDB813, #F27059); color: #fff; }
-        .icon-skills { background: linear-gradient(135deg, #38ef7d, #11998e); color: #fff; }
-        .icon-awards { background: linear-gradient(135deg, #fce38a, #f38181); color: #fff; }
-        .icon-mail { background: linear-gradient(135deg, #4facfe, #00f2fe); color: #fff; }
-
-        /* 响应式 */
-        @media (max-width: 768px) {
-            #term-win { width: 95%; left: 50%; height: 60%; top: 10%; transform: translate(-50%, 0) scale(0.9); }
-            .window { min-width: 90%; left: 5% !important; top: 10% !important; }
-            .menubar-left span:not(:first-child) { display: none; }
-        }
-    </style>
-</head>
-<body>
+		
 
     <div class="menubar">
         <div class="menubar-left">
@@ -894,8 +756,7 @@
             </div>
         </div>
 
-        <div class="window" id="about-win"
-     style="top: 160px; left: 250px; width: 420px; height: 320px;">
+        <div class="window" id="about-win" style="top: 160px; left: 250px; width: 420px; height: 320px;">
             <div class="window-header">
                 <div class="traffic-lights">
                     <div class="light red" onclick="closeWindow('about-win')"></div>
@@ -958,7 +819,7 @@
                 <div class="window-title">Skills Stack</div>
             </div>
             <div class="window-content" style="overflow-y: auto; max-height: 420px; padding: 20px;">
-                <h3 style="margin-top: 0; margin-bottom: 15px; color: #333;">Programming & Data</h3>
+                <h3 style="margin-top: 0; margin-bottom: 15px; color: #333;">Programming &amp; Data</h3>
                 
                 <div class="skill-item-detailed">
                     <div class="skill-header">
@@ -1004,7 +865,7 @@
                     </div>
                 </div>
 
-                <h3 style="margin-top: 25px; margin-bottom: 15px; color: #333;">Tools & Platforms</h3>
+                <h3 style="margin-top: 25px; margin-bottom: 15px; color: #333;">Tools &amp; Platforms</h3>
 
                 <div class="skill-item-detailed">
                     <div class="skill-header">
@@ -1041,15 +902,14 @@
             </div>
         </div>
 
-        <div class="window" id="awards-win"
-     style="top: 160px; left: 250px; width: 420px; height: 320px;">
+        <div class="window" id="awards-win" style="top: 160px; left: 250px; width: 420px; height: 320px;">
             <div class="window-header">
                 <div class="traffic-lights">
                     <div class="light red" onclick="closeWindow('awards-win')"></div>
                     <div class="light yellow"></div>
                     <div class="light green"></div>
                 </div>
-                <div class="window-title">Awards & Honors</div>
+                <div class="window-title">Awards &amp; Honors</div>
             </div>
             <div class="window-content">
                 <div class="award-item">
@@ -1093,7 +953,7 @@
                 <div class="dock-tooltip">About Me</div>
             </div>
             <div class="dock-icon icon-term" onclick="openWindow('term-win')">
-                >_
+                &gt;_
                 <div class="dock-tooltip">Terminal</div>
             </div>
             <div class="dock-icon icon-projects" onclick="openWindow('projects-win')">
@@ -1394,8 +1254,7 @@
             }
         });
     </script>
-</body>
-</html>
+
 	</div>
 
 	<div class="page-template-comments">
@@ -1431,7 +1290,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

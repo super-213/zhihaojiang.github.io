@@ -115,7 +115,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -666,7 +780,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.1k Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>995 Words</span>
         </span>
     
     
@@ -690,26 +804,16 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<h1 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h1><p><a class="link"   target="_blank" rel="noopener" href="https://www.kaggle.com/competitions/playground-series-s5e5/data" >https://www.kaggle.com/competitions/playground-series-s5e5/data<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+			<h1 id="数据来源"><a href="#数据来源" class="headerlink" title="数据来源"></a>数据来源</h1><p><a class="link" target="_blank" rel="noopener" href="https://www.kaggle.com/competitions/playground-series-s5e5/data">https://www.kaggle.com/competitions/playground-series-s5e5/data<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <h1 id="数据描述"><a href="#数据描述" class="headerlink" title="数据描述"></a>数据描述</h1><p>The dataset for this competition (both train and test) was generated from a deep learning model trained on the Calories Burnt Prediction dataset. Feature distributions are close to, but not exactly the same, as the original. Feel free to use the original dataset as part of this competition, both to explore differences as well as to see whether incorporating the original in training improves model performance.</p>
 <p>Files<br>train.csv - the training dataset; Calories is the continuous target<br>test.csv - the test dataset; your objective is to predict the Calories for each row<br>sample_submission.csv - a sample submission file in the correct format.</p>
 <h1 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h1><p>导入库</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line">import seaborn as sns</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">%matplotlib inline</span><br><span class="line">from sklearn.model_selection import train_test_split</span><br><span class="line">from sklearn.preprocessing import StandardScaler</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">&#x27;train.csv&#x27;</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/001.png"
-                      alt="photo"
-                ></p>
+<h2 id="查看数据"><a href="#查看数据" class="headerlink" title="查看数据"></a>查看数据</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span> = pd.read_csv(<span class="string">'train.csv'</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/001.png" alt="photo"></p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.info()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/002.png"
-                      alt="photo"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/002.png" alt="photo"></p>
 <p>通过翻译得到每个特征的意思：</p>
 <ul>
 <li>Sex: 性别，1表示男性，0表示女性</li>
@@ -722,193 +826,68 @@
 <li>Calories: 卡路里，这是我们要预测的目标变量</li>
 </ul>
 <p>我们首先检查数据集中是否存在缺失值</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.drop(columns=[<span class="string">&#x27;id&#x27;</span>], inplace=True)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.drop(columns=[<span class="string">'id'</span>], inplace=True)</span><br></pre></td></tr></table></figure></div>
 
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.isnull().<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/003.png"
-                      alt="photo"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/003.png" alt="photo"></p>
 <p>可以看到 没有缺失值</p>
 <p>由于我们要预测卡路里的消耗量 因此我们自然想到BMI这个指标与人体有关 因此添加BMI这个特征</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;BMI&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;Weight&#x27;</span>] / (<span class="built_in">df</span>[<span class="string">&#x27;Height&#x27;</span>] / 100) ** 2</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">'BMI'</span>] = <span class="built_in">df</span>[<span class="string">'Weight'</span>] / (<span class="built_in">df</span>[<span class="string">'Height'</span>] / 100) ** 2</span><br></pre></td></tr></table></figure></div>
 <h2 id="特征编码"><a href="#特征编码" class="headerlink" title="特征编码"></a>特征编码</h2><p>将性别转换为数值型</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">&#x27;Sex&#x27;</span>] = <span class="built_in">df</span>[<span class="string">&#x27;Sex&#x27;</span>].replace(&#123;<span class="string">&#x27;male&#x27;</span>: 1, <span class="string">&#x27;female&#x27;</span>: 0&#125;)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">df</span>[<span class="string">'Sex'</span>] = <span class="built_in">df</span>[<span class="string">'Sex'</span>].replace({<span class="string">'male'</span>: 1, <span class="string">'female'</span>: 0})</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.scatter(<span class="built_in">df</span>[col], <span class="built_in">df</span>[<span class="string">&#x27;Calories&#x27;</span>])</span><br><span class="line">    plt.xlabel(col)</span><br><span class="line">    plt.ylabel(<span class="string">&#x27;Calories&#x27;</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/004.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/005.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/006.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/007.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/008.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/009.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/010.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/011.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/012.png"
-                      alt="photo"
-                ></p>
+<h2 id="EDA"><a href="#EDA" class="headerlink" title="EDA"></a>EDA</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    plt.scatter(<span class="built_in">df</span>[col], <span class="built_in">df</span>[<span class="string">'Calories'</span>])</span><br><span class="line">    plt.xlabel(col)</span><br><span class="line">    plt.ylabel(<span class="string">'Calories'</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/004.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/005.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/006.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/007.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/008.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/009.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/010.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/011.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/012.png" alt="photo"></p>
 <p>可以看到 duration、Heart_Rate、Body_Temp与Calories呈线性关系<br>接下来我们查看特征与特征之间的相关性。</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.countplot(x=pd.cut(<span class="built_in">df</span>[<span class="string">&#x27;Weight&#x27;</span>], bins=20, labels=False), data=<span class="built_in">df</span>,hue=<span class="string">&#x27;Sex&#x27;</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/013.png"
-                      alt="photo"
-                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.countplot(x=pd.cut(<span class="built_in">df</span>[<span class="string">'Weight'</span>], bins=20, labels=False), data=<span class="built_in">df</span>,hue=<span class="string">'Sex'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/013.png" alt="photo"></p>
 <p>可以看到 男性的体重分布是偏右的，而女性的体重分布是偏左的</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">&#x27;Height&#x27;</span>,y=<span class="string">&#x27;Weight&#x27;</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/014.png"
-                      alt="photo"
-                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">'Height'</span>,y=<span class="string">'Weight'</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/014.png" alt="photo"></p>
 <p>可以看到 Weight与Height存在正相关</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">&#x27;Duration&#x27;</span>,y=<span class="string">&#x27;Heart_Rate&#x27;</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/015.png"
-                      alt="photo"
-                ></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">&#x27;Duration&#x27;</span>,y=<span class="string">&#x27;Body_Temp&#x27;</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/016.png"
-                      alt="photo"
-                ></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">&#x27;Heart_Rate&#x27;</span>,y=<span class="string">&#x27;Body_Temp&#x27;</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/017.png"
-                      alt="photo"
-                ></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">'Duration'</span>,y=<span class="string">'Heart_Rate'</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/015.png" alt="photo"></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">'Duration'</span>,y=<span class="string">'Body_Temp'</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/016.png" alt="photo"></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sns.lineplot(x=<span class="string">'Heart_Rate'</span>,y=<span class="string">'Body_Temp'</span>,data=<span class="built_in">df</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/017.png" alt="photo"></p>
 <h2 id="异常值可视化检测"><a href="#异常值可视化检测" class="headerlink" title="异常值可视化检测"></a>异常值可视化检测</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> df.columns:</span><br><span class="line">    sns.boxplot(x=<span class="built_in">df</span>[col])</span><br><span class="line">    plt.title(col)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
 
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/018.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/019.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/020.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/021.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/022.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/023.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/024.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/025.png"
-                      alt="photo"
-                ></p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/026.png"
-                      alt="photo"
-                ></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from scipy.stats import mstats</span><br><span class="line"></span><br><span class="line">features = [<span class="string">&#x27;Height&#x27;</span>, <span class="string">&#x27;Weight&#x27;</span>, <span class="string">&#x27;Heart_Rate&#x27;</span>, <span class="string">&#x27;Body_Temp&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> features:</span><br><span class="line">    <span class="built_in">df</span>[col] = mstats.winsorize(<span class="built_in">df</span>[col], limits=[0.05, 0.05])</span><br></pre></td></tr></table></figure></div>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/018.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/019.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/020.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/021.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/022.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/023.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/024.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/025.png" alt="photo"></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/026.png" alt="photo"></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">from scipy.stats import mstats</span><br><span class="line"></span><br><span class="line">features = [<span class="string">'Height'</span>, <span class="string">'Weight'</span>, <span class="string">'Heart_Rate'</span>, <span class="string">'Body_Temp'</span>]</span><br><span class="line"><span class="keyword">for</span> col <span class="keyword">in</span> features:</span><br><span class="line">    <span class="built_in">df</span>[col] = mstats.winsorize(<span class="built_in">df</span>[col], limits=[0.05, 0.05])</span><br></pre></td></tr></table></figure></div>
 
 <h2 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.corr()</span><br></pre></td></tr></table></figure></div>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/027.png"
-                      alt="photo"
-                ></p>
+<p><img lazyload="" src="/images/loading.svg" data-src="https://raw.githubusercontent.com/super-213/hexo-images/main/articles/2025/05/09/027.png" alt="photo"></p>
 <p>可以看到在相关性分析中</p>
 <p><code>Calories</code>与<code>Duration</code>、<code>Heart_Rate</code>、<code>Body_Temp</code>的相关性最高<br>为0.959908、0.908748、0.828671，因此选择这三个特征作为模型的输入特征<br>接下来 我们通过卡方检验来选择特征</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Calories&#x27;</span>]</span><br><span class="line">X = df.drop([<span class="string">&#x27;Calories&#x27;</span>], axis=1)</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">y = <span class="built_in">df</span>[<span class="string">'Calories'</span>]</span><br><span class="line">X = df.drop([<span class="string">'Calories'</span>], axis=1)</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br></pre></td></tr></table></figure></div>
 
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.feature_selection import SelectKBest, chi2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用卡方检验选择前 2 个最佳特征</span></span><br><span class="line">selector = SelectKBest(chi2, k=3)</span><br><span class="line">X_new = selector.fit_transform(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选择后的特征形状：&quot;</span>, X_new.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;每个特征的得分：&quot;</span>, selector.scores_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;是否被选择：&quot;</span>, selector.get_support())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出每个特征的得分</span></span><br><span class="line">scores = pd.Series(selector.scores_, index=X.columns)</span><br><span class="line">scores = scores.sort_values(ascending=False)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;卡方检验得分最高的特征：\n&quot;</span>, scores.head(10))</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.feature_selection import SelectKBest, chi2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用卡方检验选择前 2 个最佳特征</span></span><br><span class="line">selector = SelectKBest(chi2, k=3)</span><br><span class="line">X_new = selector.fit_transform(X_train, y_train)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"选择后的特征形状："</span>, X_new.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"每个特征的得分："</span>, selector.scores_)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"是否被选择："</span>, selector.get_support())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出每个特征的得分</span></span><br><span class="line">scores = pd.Series(selector.scores_, index=X.columns)</span><br><span class="line">scores = scores.sort_values(ascending=False)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"卡方检验得分最高的特征：\n"</span>, scores.head(10))</span><br></pre></td></tr></table></figure></div>
 
 <blockquote>
 <p>选择后的特征形状： (600000, 3)<br>每个特征的得分： [8.72102007e+03 2.13858892e+05 1.32375353e+04 4.71694088e+04<br> 2.61568982e+06 4.35154289e+05 6.94410801e+03 1.65968833e+03]<br>是否被选择： [False  True False False  True  True False False]<br>卡方检验得分最高的特征：<br> Duration      2.615690e+06<br>Heart_Rate    4.351543e+05<br>Age           2.138589e+05<br>Weight        4.716941e+04<br>Height        1.323754e+04<br>Sex           8.721020e+03<br>Body_Temp     6.944108e+03<br>BMI           1.659688e+03<br>dtype: float64</p>
 </blockquote>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.drop(columns=[<span class="string">&#x27;BMI&#x27;</span>, <span class="string">&#x27;Sex&#x27;</span>, <span class="string">&#x27;Weight&#x27;</span>, <span class="string">&#x27;Height&#x27;</span>], inplace=True)</span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.drop(columns=[<span class="string">'BMI'</span>, <span class="string">'Sex'</span>, <span class="string">'Weight'</span>, <span class="string">'Height'</span>], inplace=True)</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">y = <span class="built_in">df</span>[<span class="string">&#x27;Calories&#x27;</span>]</span><br><span class="line">X = df.drop([<span class="string">&#x27;Calories&#x27;</span>], axis=1)</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">X_train_scaled = scaler.fit_transform(X_train)</span><br><span class="line">X_test_scaled = scaler.transform(X_test)</span><br></pre></td></tr></table></figure></div>
+<h2 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">y = <span class="built_in">df</span>[<span class="string">'Calories'</span>]</span><br><span class="line">X = df.drop([<span class="string">'Calories'</span>], axis=1)</span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">scaler = StandardScaler()</span><br><span class="line">X_train_scaled = scaler.fit_transform(X_train)</span><br><span class="line">X_test_scaled = scaler.transform(X_test)</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line">import xgboost as xgb</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor</span><br><span class="line">from sklearn.metrics import root_mean_squared_error, root_mean_squared_log_error, r2_score</span><br><span class="line"></span><br><span class="line">models = &#123;</span><br><span class="line">    <span class="string">&#x27;Linear Regression&#x27;</span>: LinearRegression(),</span><br><span class="line">    <span class="string">&#x27;Random Forest&#x27;</span>: RandomForestRegressor(),</span><br><span class="line">    <span class="string">&#x27;XGBoost&#x27;</span>: xgb.XGBRegressor(),</span><br><span class="line">    <span class="string">&#x27;Gradient Boosting&#x27;</span>: GradientBoostingRegressor()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">results = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, model <span class="keyword">in</span> models.items():</span><br><span class="line">    y_train_log = np.log1p(y_train)</span><br><span class="line">    model.fit(X_train_scaled, y_train_log)</span><br><span class="line">    y_pred_log = model.predict(X_test_scaled)</span><br><span class="line">    y_pred = np.expm1(y_pred_log)</span><br><span class="line"></span><br><span class="line">    rmse = root_mean_squared_error(y_test, y_pred)</span><br><span class="line">    rmsle = root_mean_squared_log_error(y_test, y_pred)</span><br><span class="line">    r2 = r2_score(y_test, y_pred)</span><br><span class="line">    </span><br><span class="line">    results.append(&#123;</span><br><span class="line">        <span class="string">&#x27;Model&#x27;</span>: name,</span><br><span class="line">        <span class="string">&#x27;RMSE&#x27;</span>: rmse,</span><br><span class="line">        <span class="string">&#x27;RMSLE&#x27;</span>: rmsle,</span><br><span class="line">        <span class="string">&#x27;R²&#x27;</span>: r2</span><br><span class="line">    &#125;)</span><br><span class="line">results_df = pd.DataFrame(results)</span><br><span class="line"><span class="built_in">print</span>(results_df)</span><br></pre></td></tr></table></figure></div>
+<h2 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.linear_model import LinearRegression</span><br><span class="line">from sklearn.ensemble import RandomForestRegressor</span><br><span class="line">import xgboost as xgb</span><br><span class="line">from sklearn.ensemble import GradientBoostingRegressor</span><br><span class="line">from sklearn.metrics import root_mean_squared_error, root_mean_squared_log_error, r2_score</span><br><span class="line"></span><br><span class="line">models = {</span><br><span class="line">    <span class="string">'Linear Regression'</span>: LinearRegression(),</span><br><span class="line">    <span class="string">'Random Forest'</span>: RandomForestRegressor(),</span><br><span class="line">    <span class="string">'XGBoost'</span>: xgb.XGBRegressor(),</span><br><span class="line">    <span class="string">'Gradient Boosting'</span>: GradientBoostingRegressor()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">results = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, model <span class="keyword">in</span> models.items():</span><br><span class="line">    y_train_log = np.log1p(y_train)</span><br><span class="line">    model.fit(X_train_scaled, y_train_log)</span><br><span class="line">    y_pred_log = model.predict(X_test_scaled)</span><br><span class="line">    y_pred = np.expm1(y_pred_log)</span><br><span class="line"></span><br><span class="line">    rmse = root_mean_squared_error(y_test, y_pred)</span><br><span class="line">    rmsle = root_mean_squared_log_error(y_test, y_pred)</span><br><span class="line">    r2 = r2_score(y_test, y_pred)</span><br><span class="line">    </span><br><span class="line">    results.append({</span><br><span class="line">        <span class="string">'Model'</span>: name,</span><br><span class="line">        <span class="string">'RMSE'</span>: rmse,</span><br><span class="line">        <span class="string">'RMSLE'</span>: rmsle,</span><br><span class="line">        <span class="string">'R²'</span>: r2</span><br><span class="line">    })</span><br><span class="line">results_df = pd.DataFrame(results)</span><br><span class="line"><span class="built_in">print</span>(results_df)</span><br></pre></td></tr></table></figure></div>
 
 <blockquote>
 <pre><code>           Model       RMSE     RMSLE        R²
@@ -1039,7 +1018,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

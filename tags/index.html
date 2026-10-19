@@ -113,7 +113,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -637,12 +751,6 @@
 				</li>
 			
 				<li>
-					<a data-weight="7" href="/tags/%E5%8A%9B%E6%89%A3/">
-						<i class="fa-solid fa-hashtag"></i>力扣
-					</a>
-				</li>
-			
-				<li>
 					<a data-weight="66" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">
 						<i class="fa-solid fa-hashtag"></i>计算机科学
 					</a>
@@ -651,6 +759,12 @@
 				<li>
 					<a data-weight="26" href="/tags/%E6%95%B0%E5%AD%A6/">
 						<i class="fa-solid fa-hashtag"></i>数学
+					</a>
+				</li>
+			
+				<li>
+					<a data-weight="7" href="/tags/%E5%8A%9B%E6%89%A3/">
+						<i class="fa-solid fa-hashtag"></i>力扣
 					</a>
 				</li>
 			
@@ -679,18 +793,6 @@
 				</li>
 			
 				<li>
-					<a data-weight="1" href="/tags/%E7%A7%91%E6%8A%80/">
-						<i class="fa-solid fa-hashtag"></i>科技
-					</a>
-				</li>
-			
-				<li>
-					<a data-weight="1" href="/tags/%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/">
-						<i class="fa-solid fa-hashtag"></i>算法原理
-					</a>
-				</li>
-			
-				<li>
 					<a data-weight="2" href="/tags/%E7%A7%91%E6%8A%80%E5%89%8D%E6%B2%BF/">
 						<i class="fa-solid fa-hashtag"></i>科技前沿
 					</a>
@@ -705,6 +807,18 @@
 				<li>
 					<a data-weight="24" href="/tags/%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/">
 						<i class="fa-solid fa-hashtag"></i>商业数据分析
+					</a>
+				</li>
+			
+				<li>
+					<a data-weight="1" href="/tags/%E7%A7%91%E6%8A%80/">
+						<i class="fa-solid fa-hashtag"></i>科技
+					</a>
+				</li>
+			
+				<li>
+					<a data-weight="1" href="/tags/%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/">
+						<i class="fa-solid fa-hashtag"></i>算法原理
 					</a>
 				</li>
 			
@@ -733,14 +847,14 @@
 				</li>
 			
 				<li>
-					<a data-weight="1" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/">
-						<i class="fa-solid fa-hashtag"></i>数据采集
+					<a data-weight="1" href="/tags/%E5%A4%9A%E5%85%83%E7%BB%9F%E8%AE%A1/">
+						<i class="fa-solid fa-hashtag"></i>多元统计
 					</a>
 				</li>
 			
 				<li>
-					<a data-weight="1" href="/tags/%E5%A4%9A%E5%85%83%E7%BB%9F%E8%AE%A1/">
-						<i class="fa-solid fa-hashtag"></i>多元统计
+					<a data-weight="1" href="/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/">
+						<i class="fa-solid fa-hashtag"></i>数据采集
 					</a>
 				</li>
 			
@@ -796,7 +910,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

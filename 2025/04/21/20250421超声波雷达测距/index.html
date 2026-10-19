@@ -114,7 +114,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -661,7 +775,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>256 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>242 Words</span>
         </span>
     
     
@@ -694,7 +808,7 @@
 <blockquote>
 <p>VCC → 3.3V 或 5V<br>GND → GND<br>SCL → A5<br>SDA → A4</p>
 </blockquote>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;Adafruit_GFX.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_SSD1306.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define TRIG_PIN 9</span></span><br><span class="line"><span class="comment">#define ECHO_PIN 10</span></span><br><span class="line"><span class="comment">#define SCREEN_WIDTH 128</span></span><br><span class="line"><span class="comment">#define SCREEN_HEIGHT 64</span></span><br><span class="line"><span class="comment">#define OLED_RESET     -1</span></span><br><span class="line">Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, OLED_RESET);</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">setup</span></span>() &#123;</span><br><span class="line">  pinMode(TRIG_PIN, OUTPUT);</span><br><span class="line">  pinMode(ECHO_PIN, INPUT);</span><br><span class="line"></span><br><span class="line">  Serial.begin(9600);</span><br><span class="line">  <span class="keyword">if</span>(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) &#123;</span><br><span class="line">    Serial.println(F(<span class="string">&quot;OLED init failed&quot;</span>));</span><br><span class="line">    <span class="keyword">for</span>(;;);</span><br><span class="line">  &#125;</span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.display();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">float</span> <span class="function"><span class="title">getDistance</span></span>() &#123;</span><br><span class="line">  digitalWrite(TRIG_PIN, LOW);</span><br><span class="line">  delayMicroseconds(2);</span><br><span class="line">  digitalWrite(TRIG_PIN, HIGH);</span><br><span class="line">  delayMicroseconds(10);</span><br><span class="line">  digitalWrite(TRIG_PIN, LOW);</span><br><span class="line">  long duration = pulseIn(ECHO_PIN, HIGH);</span><br><span class="line">  <span class="built_in">return</span> duration * 0.034 / 2;  // 距离（厘米）</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int posX = 0; // 用来在横向慢慢移动</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">loop</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">      // 绘制两边的参考线</span><br><span class="line">  display.drawLine(0, 0, 0, SCREEN_HEIGHT, WHITE);  // 左边的距离线</span><br><span class="line">  display.drawLine(SCREEN_WIDTH - 1, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT, WHITE);  // 右边的距离线</span><br><span class="line">  display.display();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">float</span> distance = getDistance();  // 单位 cm</span><br><span class="line">  Serial.<span class="built_in">print</span>(<span class="string">&quot;Distance: &quot;</span>);</span><br><span class="line">  Serial.println(distance);</span><br><span class="line"></span><br><span class="line">  // 归一化距离（最多显示到60cm）</span><br><span class="line">  int r = map(min(distance, 60.0), 0, 60, SCREEN_HEIGHT - 1, 0); // 越远越上</span><br><span class="line"></span><br><span class="line">  display.drawPixel(posX, r, WHITE);</span><br><span class="line">  posX++;</span><br><span class="line">  <span class="keyword">if</span> (posX &gt;= SCREEN_WIDTH) &#123;</span><br><span class="line">    posX = 0;</span><br><span class="line">    display.clearDisplay(); // 清除屏幕从头来</span><br><span class="line">  &#125;</span><br><span class="line">  display.display();</span><br><span class="line">  delay(100); // 每秒10个点</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;Adafruit_GFX.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_SSD1306.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define TRIG_PIN 9</span></span><br><span class="line"><span class="comment">#define ECHO_PIN 10</span></span><br><span class="line"><span class="comment">#define SCREEN_WIDTH 128</span></span><br><span class="line"><span class="comment">#define SCREEN_HEIGHT 64</span></span><br><span class="line"><span class="comment">#define OLED_RESET     -1</span></span><br><span class="line">Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, OLED_RESET);</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">setup</span></span>() {</span><br><span class="line">  pinMode(TRIG_PIN, OUTPUT);</span><br><span class="line">  pinMode(ECHO_PIN, INPUT);</span><br><span class="line"></span><br><span class="line">  Serial.begin(9600);</span><br><span class="line">  <span class="keyword">if</span>(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {</span><br><span class="line">    Serial.println(F(<span class="string">"OLED init failed"</span>));</span><br><span class="line">    <span class="keyword">for</span>(;;);</span><br><span class="line">  }</span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.display();</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="built_in">float</span> <span class="function"><span class="title">getDistance</span></span>() {</span><br><span class="line">  digitalWrite(TRIG_PIN, LOW);</span><br><span class="line">  delayMicroseconds(2);</span><br><span class="line">  digitalWrite(TRIG_PIN, HIGH);</span><br><span class="line">  delayMicroseconds(10);</span><br><span class="line">  digitalWrite(TRIG_PIN, LOW);</span><br><span class="line">  long duration = pulseIn(ECHO_PIN, HIGH);</span><br><span class="line">  <span class="built_in">return</span> duration * 0.034 / 2;  // 距离（厘米）</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">int posX = 0; // 用来在横向慢慢移动</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">loop</span></span>() {</span><br><span class="line"></span><br><span class="line">      // 绘制两边的参考线</span><br><span class="line">  display.drawLine(0, 0, 0, SCREEN_HEIGHT, WHITE);  // 左边的距离线</span><br><span class="line">  display.drawLine(SCREEN_WIDTH - 1, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT, WHITE);  // 右边的距离线</span><br><span class="line">  display.display();</span><br><span class="line"></span><br><span class="line">  <span class="built_in">float</span> distance = getDistance();  // 单位 cm</span><br><span class="line">  Serial.<span class="built_in">print</span>(<span class="string">"Distance: "</span>);</span><br><span class="line">  Serial.println(distance);</span><br><span class="line"></span><br><span class="line">  // 归一化距离（最多显示到60cm）</span><br><span class="line">  int r = map(min(distance, 60.0), 0, 60, SCREEN_HEIGHT - 1, 0); // 越远越上</span><br><span class="line"></span><br><span class="line">  display.drawPixel(posX, r, WHITE);</span><br><span class="line">  posX++;</span><br><span class="line">  <span class="keyword">if</span> (posX &gt;= SCREEN_WIDTH) {</span><br><span class="line">    posX = 0;</span><br><span class="line">    display.clearDisplay(); // 清除屏幕从头来</span><br><span class="line">  }</span><br><span class="line">  display.display();</span><br><span class="line">  delay(100); // 每秒10个点</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
 		</div>
 
 		
@@ -814,7 +928,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

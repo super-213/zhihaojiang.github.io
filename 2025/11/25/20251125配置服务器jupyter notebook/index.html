@@ -115,7 +115,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -666,7 +780,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>962 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>959 Words</span>
         </span>
     
     
@@ -696,7 +810,7 @@
 <li>安装pip</li>
 </ol>
 <p>这两个安装非常简单，自己从网上查找教程</p>
-<h1 id="安装anaconda"><a href="#安装anaconda" class="headerlink" title="安装anaconda"></a>安装anaconda</h1><h2 id="从anaconda官网下载相应的版本"><a href="#从anaconda官网下载相应的版本" class="headerlink" title="从anaconda官网下载相应的版本"></a>从anaconda官网下载相应的版本</h2><p><a class="link"   target="_blank" rel="noopener" href="https://repo.anaconda.com/archive/" >anaconda下载地址<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
+<h1 id="安装anaconda"><a href="#安装anaconda" class="headerlink" title="安装anaconda"></a>安装anaconda</h1><h2 id="从anaconda官网下载相应的版本"><a href="#从anaconda官网下载相应的版本" class="headerlink" title="从anaconda官网下载相应的版本"></a>从anaconda官网下载相应的版本</h2><p><a class="link" target="_blank" rel="noopener" href="https://repo.anaconda.com/archive/">anaconda下载地址<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></p>
 <p>进入后选择相应的版本，请注意。文件名中aarch64是arm处理器的版本；X86是inter处理器的版本，根据你处理器型号下载，不要下载错了。</p>
 <h2 id="使用wget进行下载"><a href="#使用wget进行下载" class="headerlink" title="使用wget进行下载"></a>使用wget进行下载</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://repo.anaconda.com/archive/Anaconda3-2025.06-1-Linux-aarch64.sh</span><br></pre></td></tr></table></figure></div>
 
@@ -733,7 +847,7 @@
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(base) zhihaojiang@linux-24-10-node5:~$ jupyter notebook password</span><br><span class="line">Enter password: </span><br><span class="line">Verify password: </span><br><span class="line">[JupyterPasswordApp] Wrote hashed password to /home/zhihaojiang/.jupyter/jupyter_server_config.json</span><br></pre></td></tr></table></figure></div>
 <h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano ~/.jupyter/jupyter_notebook_config.py</span><br></pre></td></tr></table></figure></div>
 <p>在文件中添加如下配置</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">c = get_config()</span><br><span class="line">c.NotebookApp.ip = <span class="string">&#x27;0.0.0.0&#x27;</span></span><br><span class="line">c.NotebookApp.port = 8888</span><br><span class="line">c.NotebookApp.open_browser = False</span><br><span class="line">c.NotebookApp.allow_root = True</span><br><span class="line">c.NotebookApp.notebook_dir = <span class="string">&#x27;/home/你自己的用户名</span></span><br></pre></td></tr></table></figure></div>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">c = get_config()</span><br><span class="line">c.NotebookApp.ip = <span class="string">'0.0.0.0'</span></span><br><span class="line">c.NotebookApp.port = 8888</span><br><span class="line">c.NotebookApp.open_browser = False</span><br><span class="line">c.NotebookApp.allow_root = True</span><br><span class="line">c.NotebookApp.notebook_dir = <span class="string">'/home/你自己的用户名</span></span><br></pre></td></tr></table></figure></div>
 
 <p>我这里端口是8888，若你的这个端口被占用了，可以更换成别的没被占用的端口</p>
 <h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><p>运行</p>
@@ -868,7 +982,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

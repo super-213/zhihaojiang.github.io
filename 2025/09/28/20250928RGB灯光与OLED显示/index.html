@@ -114,7 +114,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -661,7 +775,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>242 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>224 Words</span>
         </span>
     
     
@@ -694,7 +808,7 @@
 <blockquote>
 <p>VCC → 3.3V 或 5V<br>GND → GND<br>SCL → A5<br>SDA → A4</p>
 </blockquote>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;Wire.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_GFX.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_SSD1306.h&gt;</span></span><br><span class="line"></span><br><span class="line">// OLED 屏幕分辨率</span><br><span class="line"><span class="comment">#define SCREEN_WIDTH 128</span></span><br><span class="line"><span class="comment">#define SCREEN_HEIGHT 64</span></span><br><span class="line">Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, -1);</span><br><span class="line"></span><br><span class="line">// RGB 引脚</span><br><span class="line">const int redPin = 9;</span><br><span class="line">const int greenPin = 10;</span><br><span class="line">const int bluePin = 11;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">setup</span></span>() &#123;</span><br><span class="line">  // 初始化 RGB 引脚</span><br><span class="line">  pinMode(redPin, OUTPUT);</span><br><span class="line">  pinMode(greenPin, OUTPUT);</span><br><span class="line">  pinMode(bluePin, OUTPUT);</span><br><span class="line"></span><br><span class="line">  // 初始化 OLED</span><br><span class="line">  <span class="keyword">if</span> (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) &#123; // 0x3C 是常见地址</span><br><span class="line">    <span class="keyword">for</span> (;;); // 如果初始化失败就卡住</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.setTextSize(2);      // 字体大小</span><br><span class="line">  display.setTextColor(SSD1306_WHITE);</span><br><span class="line">  display.setCursor(0, 0);</span><br><span class="line">  display.println(<span class="string">&quot;RGB TEST&quot;</span>);</span><br><span class="line">  display.display();</span><br><span class="line">  delay(1000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">loop</span></span>() &#123;</span><br><span class="line">  // 红色</span><br><span class="line">  setColor(HIGH, LOW, LOW);</span><br><span class="line">  showText(<span class="string">&quot;RED&quot;</span>);</span><br><span class="line">  delay(1000);</span><br><span class="line"></span><br><span class="line">  // 绿色</span><br><span class="line">  setColor(LOW, HIGH, LOW);</span><br><span class="line">  showText(<span class="string">&quot;GREEN&quot;</span>);</span><br><span class="line">  delay(1000);</span><br><span class="line"></span><br><span class="line">  // 蓝色</span><br><span class="line">  setColor(LOW, LOW, HIGH);</span><br><span class="line">  showText(<span class="string">&quot;BLUE&quot;</span>);</span><br><span class="line">  delay(1000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 控制 RGB 灯亮灭</span><br><span class="line">void setColor(int r, int g, int b) &#123;</span><br><span class="line">  digitalWrite(redPin, r);</span><br><span class="line">  digitalWrite(greenPin, g);</span><br><span class="line">  digitalWrite(bluePin, b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// OLED 显示文字</span><br><span class="line">void showText(const char *text) &#123;</span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.setCursor(0, 20);</span><br><span class="line">  display.println(text);</span><br><span class="line">  display.display();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &lt;Wire.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_GFX.h&gt;</span></span><br><span class="line"><span class="comment">#include &lt;Adafruit_SSD1306.h&gt;</span></span><br><span class="line"></span><br><span class="line">// OLED 屏幕分辨率</span><br><span class="line"><span class="comment">#define SCREEN_WIDTH 128</span></span><br><span class="line"><span class="comment">#define SCREEN_HEIGHT 64</span></span><br><span class="line">Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &amp;Wire, -1);</span><br><span class="line"></span><br><span class="line">// RGB 引脚</span><br><span class="line">const int redPin = 9;</span><br><span class="line">const int greenPin = 10;</span><br><span class="line">const int bluePin = 11;</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">setup</span></span>() {</span><br><span class="line">  // 初始化 RGB 引脚</span><br><span class="line">  pinMode(redPin, OUTPUT);</span><br><span class="line">  pinMode(greenPin, OUTPUT);</span><br><span class="line">  pinMode(bluePin, OUTPUT);</span><br><span class="line"></span><br><span class="line">  // 初始化 OLED</span><br><span class="line">  <span class="keyword">if</span> (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // 0x3C 是常见地址</span><br><span class="line">    <span class="keyword">for</span> (;;); // 如果初始化失败就卡住</span><br><span class="line">  }</span><br><span class="line"></span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.setTextSize(2);      // 字体大小</span><br><span class="line">  display.setTextColor(SSD1306_WHITE);</span><br><span class="line">  display.setCursor(0, 0);</span><br><span class="line">  display.println(<span class="string">"RGB TEST"</span>);</span><br><span class="line">  display.display();</span><br><span class="line">  delay(1000);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">void <span class="function"><span class="title">loop</span></span>() {</span><br><span class="line">  // 红色</span><br><span class="line">  setColor(HIGH, LOW, LOW);</span><br><span class="line">  showText(<span class="string">"RED"</span>);</span><br><span class="line">  delay(1000);</span><br><span class="line"></span><br><span class="line">  // 绿色</span><br><span class="line">  setColor(LOW, HIGH, LOW);</span><br><span class="line">  showText(<span class="string">"GREEN"</span>);</span><br><span class="line">  delay(1000);</span><br><span class="line"></span><br><span class="line">  // 蓝色</span><br><span class="line">  setColor(LOW, LOW, HIGH);</span><br><span class="line">  showText(<span class="string">"BLUE"</span>);</span><br><span class="line">  delay(1000);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">// 控制 RGB 灯亮灭</span><br><span class="line">void setColor(int r, int g, int b) {</span><br><span class="line">  digitalWrite(redPin, r);</span><br><span class="line">  digitalWrite(greenPin, g);</span><br><span class="line">  digitalWrite(bluePin, b);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">// OLED 显示文字</span><br><span class="line">void showText(const char *text) {</span><br><span class="line">  display.clearDisplay();</span><br><span class="line">  display.setCursor(0, 20);</span><br><span class="line">  display.println(text);</span><br><span class="line">  display.display();</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
 		</div>
 
 		
@@ -814,7 +928,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

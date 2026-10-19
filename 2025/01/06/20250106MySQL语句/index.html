@@ -114,7 +114,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -661,7 +775,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.5k Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.4k Words</span>
         </span>
     
     
@@ -687,9 +801,9 @@
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
 			<p>本位与2025-01-06在CSDN上发布 现将其转移至自己的博客</p>
 <h2 id="引擎相关"><a href="#引擎相关" class="headerlink" title="引擎相关"></a>引擎相关</h2><h3 id="查看存储引擎："><a href="#查看存储引擎：" class="headerlink" title="查看存储引擎："></a>查看存储引擎：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show engines;</span><br></pre></td></tr></table></figure></div>
-<h3 id="查看显示支持的存储引擎信息："><a href="#查看显示支持的存储引擎信息：" class="headerlink" title="查看显示支持的存储引擎信息："></a>查看显示支持的存储引擎信息：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like <span class="string">&#x27;have%&#x27;</span></span><br></pre></td></tr></table></figure></div>
+<h3 id="查看显示支持的存储引擎信息："><a href="#查看显示支持的存储引擎信息：" class="headerlink" title="查看显示支持的存储引擎信息："></a>查看显示支持的存储引擎信息：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like <span class="string">'have%'</span></span><br></pre></td></tr></table></figure></div>
 
-<h3 id="查看默认的存储引擎："><a href="#查看默认的存储引擎：" class="headerlink" title="查看默认的存储引擎："></a>查看默认的存储引擎：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like <span class="string">&#x27;storage_engine&#x27;</span></span><br></pre></td></tr></table></figure></div>
+<h3 id="查看默认的存储引擎："><a href="#查看默认的存储引擎：" class="headerlink" title="查看默认的存储引擎："></a>查看默认的存储引擎：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show variables like <span class="string">'storage_engine'</span></span><br></pre></td></tr></table></figure></div>
 
 <h2 id="数据库相关操作-增-删-改"><a href="#数据库相关操作-增-删-改" class="headerlink" title="数据库相关操作(增 删 改)"></a>数据库相关操作(增 删 改)</h2><h3 id="创建数据库："><a href="#创建数据库：" class="headerlink" title="创建数据库："></a>创建数据库：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create datbase [<span class="keyword">if</span> not exists] db_name</span><br><span class="line">[[DEFAULT] CHARACTER SET charset_name]</span><br><span class="line">[[DEFALUT] COLLATE collation_name]</span><br></pre></td></tr></table></figure></div>
 
@@ -772,7 +886,7 @@
 <h3 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h3><p>将表t_name删除</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop table t_name；</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="数据相关操作"><a href="#数据相关操作" class="headerlink" title="数据相关操作"></a>数据相关操作</h2><h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">insert [into]</span><br><span class="line">    t_name(name_1, name_2, name_3)</span><br><span class="line">    values(12,<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;2025-01-04&#x27;</span>);</span><br></pre></td></tr></table></figure></div>
+<h2 id="数据相关操作"><a href="#数据相关操作" class="headerlink" title="数据相关操作"></a>数据相关操作</h2><h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">insert [into]</span><br><span class="line">    t_name(name_1, name_2, name_3)</span><br><span class="line">    values(12,<span class="string">'hello'</span>, <span class="string">'2025-01-04'</span>);</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="查看插入信息"><a href="#查看插入信息" class="headerlink" title="查看插入信息"></a>查看插入信息</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from t_name;</span><br></pre></td></tr></table></figure></div>
 
@@ -821,7 +935,7 @@
 <p>带比较运算符的子查询</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> *</span><br><span class="line">from t_name_1</span><br><span class="line"><span class="built_in">where</span> name = (</span><br><span class="line">    <span class="keyword">select</span> <span class="built_in">id</span></span><br><span class="line">    from t_name_2</span><br><span class="line">    <span class="built_in">where</span> <span class="built_in">id</span> = 2</span><br><span class="line">)</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>引:<br>    面试题：select id,name,age from sd where name&#x3D;’张飞’<br>    怎么优化？最佳方案是什么？<br>    答：在name上创建索引：<br>    create index in name on sd(name);</p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>引:<br>    面试题：select id,name,age from sd where name=’张飞’<br>    怎么优化？最佳方案是什么？<br>    答：在name上创建索引：<br>    create index in name on sd(name);</p>
 <h3 id="语法（已存在的表）："><a href="#语法（已存在的表）：" class="headerlink" title="语法（已存在的表）："></a>语法（已存在的表）：</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create index in_id</span><br><span class="line">on t_name(<span class="built_in">id</span>);</span><br></pre></td></tr></table></figure></div>
 
   <div class="note-large default">
@@ -839,12 +953,12 @@
 <h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><h3 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create view view_name as</span><br><span class="line"><span class="comment">#查询语句:</span></span><br><span class="line"><span class="keyword">select</span>...</span><br><span class="line">[with [cascaded|<span class="built_in">local</span>] check option];</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop view view_name;</span><br></pre></td></tr></table></figure></div>
-<h2 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h2><h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span> identifiednby <span class="string">&#x27;密码&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
+<h2 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h2><h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user <span class="string">'用户名'</span>@<span class="string">'localhost'</span> identifiednby <span class="string">'密码'</span>;</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="查询用户"><a href="#查询用户" class="headerlink" title="查询用户"></a>查询用户</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * from mysql.user;</span><br></pre></td></tr></table></figure></div>
 
-<h3 id="分配权限"><a href="#分配权限" class="headerlink" title="分配权限"></a>分配权限</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant 权限 on 库.表 to <span class="string">&#x27;用户名&#x27;</span>@<span class="string">&#x27;localhost&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
-<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><h3 id="触发器设置"><a href="#触发器设置" class="headerlink" title="触发器设置"></a>触发器设置</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#触发器设置</span></span><br><span class="line">CREATE TRIGGER before_position_update</span><br><span class="line">BEFORE UPDATE ON staff</span><br><span class="line">FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">    IF OLD.position != NEW.position THEN</span><br><span class="line">        CASE NEW.position</span><br><span class="line">            WHEN <span class="string">&#x27;董事长&#x27;</span> THEN</span><br><span class="line">                SET NEW.role = 9;</span><br><span class="line">            WHEN <span class="string">&#x27;经理&#x27;</span> THEN</span><br><span class="line">                SET NEW.role = 6;</span><br><span class="line">            ELSE</span><br><span class="line">                SET NEW.role = 2;</span><br><span class="line">        END CASE;</span><br><span class="line">    END IF;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></div>
+<h3 id="分配权限"><a href="#分配权限" class="headerlink" title="分配权限"></a>分配权限</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant 权限 on 库.表 to <span class="string">'用户名'</span>@<span class="string">'localhost'</span>;</span><br></pre></td></tr></table></figure></div>
+<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><h3 id="触发器设置"><a href="#触发器设置" class="headerlink" title="触发器设置"></a>触发器设置</h3><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#触发器设置</span></span><br><span class="line">CREATE TRIGGER before_position_update</span><br><span class="line">BEFORE UPDATE ON staff</span><br><span class="line">FOR EACH ROW</span><br><span class="line">BEGIN</span><br><span class="line">    IF OLD.position != NEW.position THEN</span><br><span class="line">        CASE NEW.position</span><br><span class="line">            WHEN <span class="string">'董事长'</span> THEN</span><br><span class="line">                SET NEW.role = 9;</span><br><span class="line">            WHEN <span class="string">'经理'</span> THEN</span><br><span class="line">                SET NEW.role = 6;</span><br><span class="line">            ELSE</span><br><span class="line">                SET NEW.role = 2;</span><br><span class="line">        END CASE;</span><br><span class="line">    END IF;</span><br><span class="line">END;</span><br></pre></td></tr></table></figure></div>
 
   <div class="note-large default">
     <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
@@ -983,7 +1097,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

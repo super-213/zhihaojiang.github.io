@@ -115,7 +115,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -666,7 +780,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>445 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>433 Words</span>
         </span>
     
     
@@ -692,14 +806,14 @@
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
 			<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个下标从 0 开始的字符串 s ，以及一个下标从 0 开始的整数数组 spaces 。</p>
 <p>数组 spaces 描述原字符串中需要添加空格的下标。每个空格都应该插入到给定索引处的字符值 之前 。</p>
-<p>例如，s &#x3D; “EnjoyYourCoffee” 且 spaces &#x3D; [5, 9] ，那么我们需要在 ‘Y’ 和 ‘C’ 之前添加空格，这两个字符分别位于下标 5 和下标 9 。因此，最终得到 “Enjoy Your Coffee” 。<br>请你添加空格，并返回修改后的字符串。</p>
+<p>例如，s = “EnjoyYourCoffee” 且 spaces = [5, 9] ，那么我们需要在 ‘Y’ 和 ‘C’ 之前添加空格，这两个字符分别位于下标 5 和下标 9 。因此，最终得到 “Enjoy Your Coffee” 。<br>请你添加空格，并返回修改后的字符串。</p>
 <blockquote>
 <p>示例 1：</p>
-<p>输入：s &#x3D; “LeetcodeHelpsMeLearn”, spaces &#x3D; [8,13,15]<br>输出：”Leetcode Helps Me Learn”<br>解释：<br>下标 8、13 和 15 对应 “LeetcodeHelpsMeLearn” 中加粗斜体字符。<br>接着在这些字符前添加空格。<br>示例 2：</p>
-<p>输入：s &#x3D; “icodeinpython”, spaces &#x3D; [1,5,7,9]<br>输出：”i code in py thon”<br>解释：<br>下标 1、5、7 和 9 对应 “icodeinpython” 中加粗斜体字符。<br>接着在这些字符前添加空格。<br>示例 3：</p>
-<p>输入：s &#x3D; “spacing”, spaces &#x3D; [0,1,2,3,4,5,6]<br>输出：” s p a c i n g”<br>解释：<br>字符串的第一个字符前可以添加空格。</p>
+<p>输入：s = “LeetcodeHelpsMeLearn”, spaces = [8,13,15]<br>输出：”Leetcode Helps Me Learn”<br>解释：<br>下标 8、13 和 15 对应 “LeetcodeHelpsMeLearn” 中加粗斜体字符。<br>接着在这些字符前添加空格。<br>示例 2：</p>
+<p>输入：s = “icodeinpython”, spaces = [1,5,7,9]<br>输出：”i code in py thon”<br>解释：<br>下标 1、5、7 和 9 对应 “icodeinpython” 中加粗斜体字符。<br>接着在这些字符前添加空格。<br>示例 3：</p>
+<p>输入：s = “spacing”, spaces = [0,1,2,3,4,5,6]<br>输出：” s p a c i n g”<br>解释：<br>字符串的第一个字符前可以添加空格。</p>
 </blockquote>
-<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def addSpaces(self, s, spaces):</span><br><span class="line">        s = list(s) <span class="comment">#字符串字符串在 Python 中是不可变的 而列表是可变的</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> spaces:    <span class="comment">#遍历 spaces 中的每个元素 即i = spaces[i]</span></span><br><span class="line">            s[i] = <span class="string">&#x27; &#x27;</span> + s[i]</span><br><span class="line">        <span class="built_in">return</span> <span class="string">&#x27;&#x27;</span>.<span class="built_in">join</span>(s)   <span class="comment">#将修改后的字符列表重新组合成一个字符串。</span></span><br></pre></td></tr></table></figure></div>
+<h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def addSpaces(self, s, spaces):</span><br><span class="line">        s = list(s) <span class="comment">#字符串字符串在 Python 中是不可变的 而列表是可变的</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> spaces:    <span class="comment">#遍历 spaces 中的每个元素 即i = spaces[i]</span></span><br><span class="line">            s[i] = <span class="string">' '</span> + s[i]</span><br><span class="line">        <span class="built_in">return</span> <span class="string">''</span>.<span class="built_in">join</span>(s)   <span class="comment">#将修改后的字符列表重新组合成一个字符串。</span></span><br></pre></td></tr></table></figure></div>
 
 <h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><p><strong>‘’.join(s)</strong><br>join函数是一个字符串操作函数 这个函数展开来写应该是str.join(item) str表示字符串（字符），item表示一个成员</p>
 <blockquote>
@@ -833,7 +947,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>

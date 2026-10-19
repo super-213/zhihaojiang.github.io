@@ -115,7 +115,121 @@
     
 <!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 
 
@@ -690,7 +804,7 @@
 
 
 		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
-			<p>在B站看到了有人讲解λ演算 很感兴趣 于是去了解了一下<br>原视频：<a class="link"   target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RcVA8Nj6HEo&t=44s" >https://www.youtube.com/watch?v=RcVA8Nj6HEo&amp;t=44s<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>原视频很精彩 图文描述 我也是看了这个视频写的 推荐观看</p>
+			<p>在B站看到了有人讲解λ演算 很感兴趣 于是去了解了一下<br>原视频：<a class="link" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RcVA8Nj6HEo&t=44s">https://www.youtube.com/watch?v=RcVA8Nj6HEo&amp;t=44s<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a><br>原视频很精彩 图文描述 我也是看了这个视频写的 推荐观看</p>
 <h2 id="什么是λ演算"><a href="#什么是λ演算" class="headerlink" title="什么是λ演算"></a>什么是λ演算</h2><p>λ演算（Lambda Calculus）是一种用于研究函数定义、函数应用和递归的数学逻辑系统 由阿隆佐·丘奇（Alonzo Church）在 1930 年代提出。它是计算理论的基础之一 并在编程语言的设计中发挥了重要作用 特别是对函数式编程语言（如 Haskell、Lisp 和 ML）有深远的影响 </p>
 <p>诶 这里学过python的人肯定想到了 python中有个lambda表达式 是不是和这个λ演算相关呢<br>没错 Python 中的 lambda 表达式确实与 λ（Lambda）演算有关系 但它只是 λ演算的一个简单应用 并没有完全实现 λ演算的全部概念 这里不过多叙述 只是告诉大家他们之间确实有关系</p>
 <h2 id="λ演算的基本概念"><a href="#λ演算的基本概念" class="headerlink" title="λ演算的基本概念"></a>λ演算的基本概念</h2><p>λ演算由三种基本表达式组成：</p>
@@ -722,11 +836,11 @@
 <p>这些就是λ表达式的内容</p>
 <h2 id="λ图"><a href="#λ图" class="headerlink" title="λ图"></a>λ图</h2><p>有很多种可视化λ图</p>
 <ol>
-<li>Tromp图表：<a class="link"   target="_blank" rel="noopener" href="https://tromp.github.io/cl/diagrams.html" >https://tromp.github.io/cl/diagrams.html<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
-<li>David C Keenan的λ演算图形符号：<a class="link"   target="_blank" rel="noopener" href="https://dkeenan.com/Lambda/" >https://dkeenan.com/Lambda/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
-<li>de Bruijn索引：<a class="link"   target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/De_Bruijn_index" >https://en.wikipedia.org/wiki/De_Bruijn_index<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> </li>
-<li>Vex（Wayne Citrin，Richard Hall，Benjamin Zorn）：<a class="link"   target="_blank" rel="noopener" href="https://www.researchgate.net/publication/2726047_Programming_with_Visual_Expressions" >https://www.researchgate.net/publication/2726047_Programming_with_Visual_Expressions<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> </li>
-<li>视觉λ演算（Viktor Massalõgin）：<a class="link"   target="_blank" rel="noopener" href="https://github.com/bntre/visual-lambda" >https://github.com/bntre/visual-lambda<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li>Tromp图表：<a class="link" target="_blank" rel="noopener" href="https://tromp.github.io/cl/diagrams.html">https://tromp.github.io/cl/diagrams.html<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li>David C Keenan的λ演算图形符号：<a class="link" target="_blank" rel="noopener" href="https://dkeenan.com/Lambda/">https://dkeenan.com/Lambda/<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
+<li>de Bruijn索引：<a class="link" target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/De_Bruijn_index">https://en.wikipedia.org/wiki/De_Bruijn_index<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> </li>
+<li>Vex（Wayne Citrin，Richard Hall，Benjamin Zorn）：<a class="link" target="_blank" rel="noopener" href="https://www.researchgate.net/publication/2726047_Programming_with_Visual_Expressions">https://www.researchgate.net/publication/2726047_Programming_with_Visual_Expressions<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a> </li>
+<li>视觉λ演算（Viktor Massalõgin）：<a class="link" target="_blank" rel="noopener" href="https://github.com/bntre/visual-lambda">https://github.com/bntre/visual-lambda<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a></li>
 </ol>
 <h2 id="λ演算的计算规则"><a href="#λ演算的计算规则" class="headerlink" title="λ演算的计算规则"></a>λ演算的计算规则</h2><p>λ演算主要有三个计算规则：</p>
 <ol>
@@ -736,7 +850,7 @@
 </ol>
 <h3 id="α-变换（Alpha-Conversion）"><a href="#α-变换（Alpha-Conversion）" class="headerlink" title="α-变换（Alpha Conversion）"></a>α-变换（Alpha Conversion）</h3><p>简单来说就是变量重命名</p>
 <blockquote>
-<p>λx.x &#x3D; λy.y</p>
+<p>λx.x = λy.y</p>
 </blockquote>
 <p>只要不影响表达式的意义 就可以更改变量名称 就像你可以随意地取变量名</p>
 <h3 id="β-规约"><a href="#β-规约" class="headerlink" title="β-规约"></a>β-规约</h3><p>函数应用的计算<br>我们来看这样的一个式子：</p>
@@ -770,10 +884,10 @@
 <blockquote>
 <p>λx.fx 等价于 f</p>
 </blockquote>
-<p>只要 f 在所有输入 x 上都保持不变 那么 λx. f x 和 f 是等价的<br>什么意思呢<br>以f(x) &#x3D; x + 3为例</p>
-<p>假设有f(x) &#x3D; x + 3<br>在 λ 形式下 他可以表示为</p>
+<p>只要 f 在所有输入 x 上都保持不变 那么 λx. f x 和 f 是等价的<br>什么意思呢<br>以f(x) = x + 3为例</p>
+<p>假设有f(x) = x + 3<br>在 λ 形式下 他可以表示为</p>
 <blockquote>
-<p>f &#x3D; λx. x + 1</p>
+<p>f = λx. x + 1</p>
 </blockquote>
 <p>那么 λx.fx 等价于 f 即</p>
 <blockquote>
@@ -838,7 +952,7 @@
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def apply_func(f, x):</span><br><span class="line">    <span class="built_in">return</span> f(x)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(apply_func(lambda x: x * 2, 10))  <span class="comment"># 输出 20</span></span><br></pre></td></tr></table></figure></div>
 
 <p>现代语言的 闭包（Closure）、惰性求值、纯函数 等概念都源于 λ演算</p>
-<h3 id="形式化数学-逻辑推理"><a href="#形式化数学-逻辑推理" class="headerlink" title="形式化数学 &amp; 逻辑推理"></a>形式化数学 &amp; 逻辑推理</h3><p>λ演算被用作数学逻辑的基础，特别是在构造主义数学和类型理论中。例如：</p>
+<h3 id="形式化数学-逻辑推理"><a href="#形式化数学-逻辑推理" class="headerlink" title="形式化数学 & 逻辑推理"></a>形式化数学 &amp; 逻辑推理</h3><p>λ演算被用作数学逻辑的基础，特别是在构造主义数学和类型理论中。例如：</p>
 <ul>
 <li>Curry-Howard 对应：λ演算中的函数和逻辑推理中的证明之间存在对应关系 程序可以被视为数学证明</li>
 <li>依赖类型（Dependent Types）：Coq、Agda 这些数学证明工具都基于λ演算的扩展形式</li>
@@ -853,7 +967,7 @@
 <li>η-变换（函数简化） 可以减少不必要的函数包装 提高性能</li>
 </ul>
 <p>许多编译器（如 GHC Haskell、Scala、Lisp 解释器）都会用 λ演算作为中间表示（IR）帮助优化代码</p>
-<h3 id="并发-分布式计算"><a href="#并发-分布式计算" class="headerlink" title="并发 &amp; 分布式计算"></a>并发 &amp; 分布式计算</h3><p>λ演算的无状态特性使其非常适用于并发计算和分布式系统 例如：</p>
+<h3 id="并发-分布式计算"><a href="#并发-分布式计算" class="headerlink" title="并发 & 分布式计算"></a>并发 &amp; 分布式计算</h3><p>λ演算的无状态特性使其非常适用于并发计算和分布式系统 例如：</p>
 <ul>
 <li>MapReduce（Google 的大规模数据处理模型）依赖于 λ演算的映射与归约思想</li>
 <li>Actor Model（Erlang、Akka）与函数式编程紧密相关 受λ演算启发</li>
@@ -982,7 +1096,7 @@
                     </span>
                     
                         <span>
-                            236.7k words in total
+                            228.4k words in total
                         </span>
                     
                 </p>
