@@ -5,7 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="Hexo Theme Redefine">
     
+    
     <meta name="author" content="姜智浩">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
     <!-- preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +82,6 @@
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
-    
     
     
         
@@ -59,7 +123,7 @@
     
 
     <!-- 这里是 Live2D 代码 -->
-    <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+    <script defer src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
 
     
 <link rel="stylesheet" href="/css/style.css">
@@ -91,8 +155,9 @@
 
     <script id="hexo-configurations">
     window.config = {"hostname":"blog.zhihaojiang.com","root":"/","language":"en","path":"search.xml"};
-    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/defaults/bear.PNG","dark":"/images/defaults/bear.PNG"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/super-213","instagram":null,"zhihu":null,"twitter":null,"email":"jiangzhihaojzh@126.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1"},"mathjax":{"tags":"none","single_dollars":true,"cjk_width":0.9,"normal_width":0.6,"append_css":true,"every_page":true}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Portfolio":"/portfolio/","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"shuoshuo":{"icon":"fa-solid fa-bookmark","path":"/essays/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/defaults/bear.PNG","dark":"/images/defaults/bear.PNG"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":[{"icon":"fa-brands fa-github","url":"https://github.com/super-213"},{"icon":"fa-solid fa-at","url":"jiangzhihaojzh@126.com"}],"qrs":[]}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/original.png","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/original.png","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1","theme":{"light":"default","dark":"dark"}},"mathjax":{"tags":"none","single_dollars":true,"cjk_width":0.9,"normal_width":0.6,"append_css":true,"every_page":true}},"version":"2.9.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Portfolio":"/portfolio/","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur","masonry":{"batch_size":12,"initial_batch_size":24}},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"shuoshuo":{"icon":"fa-solid fa-bookmark","path":"/essays/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footer":{"runtime":true,"icon":"<i class=\"fa-solid fa-heart fa-beat\" style=\"--fa-animation-duration: 0.5s; color: #f54545\"></i>","start":"2022/8/17 11:45:14","statistics":true,"customize":null,"icp":{"enable":false,"number":null,"url":null}},"footerStart":"2022/8/17 11:45:14","mermaid":{"style":{"light":"default","dark":"dark"}}};
     window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.i18n = {"search":"Search...","toc":"On this page","prev":"Prev","next":"Next","prev_posts":"Prev posts","next_posts":"Next posts","page":"Page %d","recent_posts":"Recent Posts","share":"Share","powered_by":"POWERED BY %s","theme":"THEME","rss_feed":"RSS Feed","category":"Category","categories":"Categories","tag":"Tag","tags":"Tags","post":"Post","posts":"Posts","tagcloud":"Tag Cloud","comment":"Comment","comments":"Comments","home":"Home","archive":"Archive","archives":"Archives","top":"TOP","sticky":"Sticky","go-back-home":"Go Back Home","masonry_loading":"Loading photos...","image_viewer":"Image viewer","close":"Close","exif":{"title":"EXIF","cards":{"camera":"Camera","lens":"Lens","exposure":"Exposure","other":"Other"},"fields":{"make":"Brand","model":"Model","date_taken":"Date taken","lens_model":"Lens","focal_length":"Focal length","focus_mode":"Focus mode","shutter":"Shutter","aperture":"Aperture","iso":"ISO","exposure_program":"Exposure program","exposure_compensation":"Exposure compensation","metering_mode":"Metering mode","flash":"Flash","white_balance":"White balance","latitude":"Latitude","longitude":"Longitude","altitude":"Altitude"},"status":{"loading":"Loading...","no_exif":"No EXIF available","library_missing":"EXIF library not loaded","image_source_missing":"Image source unavailable","unavailable":"EXIF unavailable (blocked by CORS or missing metadata)","flag_unavailable":"EXIF unavailable"}},"about":"About","changelog":"Changelog","links":"Links","link":"Link","friends":"Friends","friend":"Friend","timeline":"Timeline","shuoshuo":"Shuoshuo","bookmarks":"Bookmarks","site_uv":"VISITOR COUNT","site_pv":"TOTAL PAGE VIEWS","read_more":"Read more","wordcount":"Words","min2read":"Mins","status":"Status","runtime":"Blog up for","days":"days","hours":"hrs","minutes":"Min","seconds":"Sec","optimized_by":"and Optimized by Evan","rights":"All Rights Reserved","site_posts":"%s posts in total","site_wordcount":"%s words in total","copyright":{"author":"Author","title":"Title","link":"Link","create_time":"Created at","update_time":"Updated at","license_title":"License","license_content":"This work is licensed under %s.","all_rights_reserved":"All Rights Reserved &#169; %s","public_domain":"This work is in the public domain."},"ago":{"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"},"create_time":"Created","update_time":"Updated","expired":"This post is written %s days ago, and the content may not be up to date."};
     window.data = {"masonry":true};
   </script>
     
@@ -230,7 +295,6 @@ mjx-container[display="true"] + br {
   display: none;
 }
 </style></head>
-
 
 
 <body>
@@ -678,7 +742,7 @@ mjx-container[display="true"] + br {
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">25</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">29</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -686,7 +750,7 @@ mjx-container[display="true"] + br {
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">89</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">91</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -716,7 +780,7 @@ mjx-container[display="true"] + br {
 
 		
 		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
-			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+			<div class="avatar w-[46px] h-[46px] shrink-0 rounded-medium border border-border-color p-px">
 				<img src="/images/defaults/IMG_3744.JPG">
 			</div>
 			<div class="info flex flex-col justify-between">
@@ -836,22 +900,22 @@ mjx-container[display="true"] + br {
 <h3 id="相关性分析"><a href="#相关性分析" class="headerlink" title="相关性分析"></a>相关性分析</h3><p>相关性矩阵</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">y = data[<span class="string">'target'</span>]  <span class="comment">#填入要进行分析的结果列 通常为最后一列</span></span><br><span class="line">X = diabetes.drop([<span class="string">'target'</span>, <span class="string">'others'</span>], axis=1) <span class="comment">#去除结果列和字符列（如果有）</span></span><br><span class="line"><span class="comment">#通常string类型的列（离散的特性）进行调整成int类型（连续化）即离散特征连续化</span></span><br><span class="line"></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)</span><br><span class="line"></span><br><span class="line">correlation_matrix = pd.concat([X_train, y_train], axis=1).corr()</span><br><span class="line"></span><br><span class="line">sns.heatmap(correlation_matrix, annot=True, cmap=<span class="string">'coolwarm'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
 
-<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><h3 id="处理缺失值"><a href="#处理缺失值" class="headerlink" title="处理缺失值"></a>处理缺失值</h3><div class="tabs" id="tab-001"><ul class="nav-tabs"><li class="tab active"><a class="#001-1">删除含有缺失值的行</a></li><li class="tab"><a class="#001-2">使用均值填充缺失值</a></li><li class="tab"><a class="#001-3">使用众数填充缺失值</a></li><li class="tab"><a class="#001-4">使用分位数填充缺失值</a></li></ul><div class="tab-content"><div class="tab-pane active" id="001-1"><p><strong>删除含有缺失值的行</strong></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_cleaned = df.dropna()</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="001-2"><p><strong>使用均值填充缺失值</strong></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_filled = df.fillna(df.mean())</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="001-3"><p><strong>使用众数填充缺失值</strong></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = {<span class="string">'A'</span>: [1, 2, 2, None, 4, 2], <span class="string">'B'</span>: [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'red'</span>, None, <span class="string">'green'</span>, <span class="string">'red'</span>]}</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找到每列的众数</span></span><br><span class="line">mode_A = <span class="built_in">df</span>[<span class="string">'A'</span>].mode()[0]  <span class="comment"># 数值型列</span></span><br><span class="line">mode_B = <span class="built_in">df</span>[<span class="string">'B'</span>].mode()[0]  <span class="comment"># 类别型列</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用众数填充缺失值</span></span><br><span class="line">df_filled_mode = df.fillna({<span class="string">'A'</span>: mode_A, <span class="string">'B'</span>: mode_B})</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="001-4"><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = {<span class="string">'C'</span>: [1, 2, 3, None, 5, 6, None]}</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算指定分位数</span></span><br><span class="line">quantile_25 = <span class="built_in">df</span>[<span class="string">'C'</span>].quantile(0.25)  <span class="comment"># 第一四分位数 (25%)</span></span><br><span class="line">quantile_50 = <span class="built_in">df</span>[<span class="string">'C'</span>].quantile(0.50)  <span class="comment"># 中位数 (50%)</span></span><br><span class="line">quantile_75 = <span class="built_in">df</span>[<span class="string">'C'</span>].quantile(0.75)  <span class="comment"># 第三四分位数 (75%)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用分位数填充缺失值</span></span><br><span class="line">df_filled_quantile_25 = df.fillna({<span class="string">'C'</span>: quantile_25})</span><br><span class="line">df_filled_quantile_50 = df.fillna({<span class="string">'C'</span>: quantile_50})</span><br><span class="line">df_filled_quantile_75 = df.fillna({<span class="string">'C'</span>: quantile_75})</span><br></pre></td></tr></table></figure></div></div></div></div>
+<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><h3 id="处理缺失值"><a href="#处理缺失值" class="headerlink" title="处理缺失值"></a>处理缺失值</h3><div class="tabs relative my-4 bg-second-background-color border border-border-color rounded-md" id="tab-tab-2025-04-07-20250407-helper-1"><div role="tablist" aria-orientation="horizontal" class="flex gap-3.5 overflow-x-auto px-4 not-markdown scrollbar-hide" tabindex="0"><button type="button" role="tab" aria-selected="true" data-state="active" data-tab="tab-2025-04-07-20250407-helper-1-1" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="0">删除含有缺失值的行</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-2025-04-07-20250407-helper-1-2" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">使用均值填充缺失值</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-2025-04-07-20250407-helper-1-3" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">使用众数填充缺失值</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-2025-04-07-20250407-helper-1-4" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">使用分位数填充缺失值</button></div><div class="tab-content p-4 bg-background-color/70 rounded-md shadow-[0_0_2px_0_var(--shadow-color-1)]"><div class="tab-pane" data-state="active" id="tab-2025-04-07-20250407-helper-1-1"><p><strong>删除含有缺失值的行</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data_cleaned = df.dropna()</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" data-state="inactive" id="tab-2025-04-07-20250407-helper-1-2" hidden=""><p><strong>使用均值填充缺失值</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df_filled = df.fillna(df.mean())</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" data-state="inactive" id="tab-2025-04-07-20250407-helper-1-3" hidden=""><p><strong>使用众数填充缺失值</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = {<span class="string">'A'</span>: [1, 2, 2, None, 4, 2], <span class="string">'B'</span>: [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'red'</span>, None, <span class="string">'green'</span>, <span class="string">'red'</span>]}</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 找到每列的众数</span></span><br><span class="line">mode_A = <span class="built_in">df</span>[<span class="string">'A'</span>].mode()[0]  <span class="comment"># 数值型列</span></span><br><span class="line">mode_B = <span class="built_in">df</span>[<span class="string">'B'</span>].mode()[0]  <span class="comment"># 类别型列</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用众数填充缺失值</span></span><br><span class="line">df_filled_mode = df.fillna({<span class="string">'A'</span>: mode_A, <span class="string">'B'</span>: mode_B})</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" data-state="inactive" id="tab-2025-04-07-20250407-helper-1-4" hidden=""><div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = {<span class="string">'C'</span>: [1, 2, 3, None, 5, 6, None]}</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算指定分位数</span></span><br><span class="line">quantile_25 = <span class="built_in">df</span>[<span class="string">'C'</span>].quantile(0.25)  <span class="comment"># 第一四分位数 (25%)</span></span><br><span class="line">quantile_50 = <span class="built_in">df</span>[<span class="string">'C'</span>].quantile(0.50)  <span class="comment"># 中位数 (50%)</span></span><br><span class="line">quantile_75 = <span class="built_in">df</span>[<span class="string">'C'</span>].quantile(0.75)  <span class="comment"># 第三四分位数 (75%)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用分位数填充缺失值</span></span><br><span class="line">df_filled_quantile_25 = df.fillna({<span class="string">'C'</span>: quantile_25})</span><br><span class="line">df_filled_quantile_50 = df.fillna({<span class="string">'C'</span>: quantile_50})</span><br><span class="line">df_filled_quantile_75 = df.fillna({<span class="string">'C'</span>: quantile_75})</span><br></pre></td></tr></table></figure></div></div></div></div>
 
 
-<h3 id="处理异常值"><a href="#处理异常值" class="headerlink" title="处理异常值"></a>处理异常值</h3><h4 id="异常值检测"><a href="#异常值检测" class="headerlink" title="异常值检测"></a>异常值检测</h4><div class="tabs" id="tab-异常值检测"><ul class="nav-tabs"><li class="tab active"><a class="#异常值检测-1">使用 Z-Score 检测</a></li><li class="tab"><a class="#异常值检测-2">使用 IQR 方法检测</a></li><li class="tab"><a class="#异常值检测-3">使用可视化方法检测</a></li></ul><div class="tab-content"><div class="tab-pane active" id="异常值检测-1"><p><strong>使用 Z-Score 检测</strong></p>
-<p> Z-Score 衡量某个值距离均值的标准差数量。通常，绝对 Z-Score 大于 3 的值被认为是异常值。<br> <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = {<span class="string">'A'</span>: [1, 2, 3, 4, 5, 100]}</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算 Z-Score</span></span><br><span class="line">mean = <span class="built_in">df</span>[<span class="string">'A'</span>].mean()</span><br><span class="line">std = <span class="built_in">df</span>[<span class="string">'A'</span>].std()</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'Z-Score'</span>] = (<span class="built_in">df</span>[<span class="string">'A'</span>] - mean) / std</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检测异常值（Z-Score &gt; 3 或 &lt; -3）</span></span><br><span class="line">outliers = <span class="built_in">df</span>[abs(<span class="built_in">df</span>[<span class="string">'Z-Score'</span>]) &gt; 3]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"异常值：\n"</span>, outliers)</span><br></pre></td></tr></table></figure></div></p></div><div class="tab-pane" id="异常值检测-2"><p><strong>使用 IQR 方法检测</strong></p>
+<h3 id="处理异常值"><a href="#处理异常值" class="headerlink" title="处理异常值"></a>处理异常值</h3><h4 id="异常值检测"><a href="#异常值检测" class="headerlink" title="异常值检测"></a>异常值检测</h4><div class="tabs relative my-4 bg-second-background-color border border-border-color rounded-md" id="tab-tab"><div role="tablist" aria-orientation="horizontal" class="flex gap-3.5 overflow-x-auto px-4 not-markdown scrollbar-hide" tabindex="0"><button type="button" role="tab" aria-selected="true" data-state="active" data-tab="tab-1" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="0">使用 Z-Score 检测</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-2" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">使用 IQR 方法检测</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-3" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">使用可视化方法检测</button></div><div class="tab-content p-4 bg-background-color/70 rounded-md shadow-[0_0_2px_0_var(--shadow-color-1)]"><div class="tab-pane" data-state="active" id="tab-1"><p><strong>使用 Z-Score 检测</strong></p>
+<p> Z-Score 衡量某个值距离均值的标准差数量。通常，绝对 Z-Score 大于 3 的值被认为是异常值。<br> <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = {<span class="string">'A'</span>: [1, 2, 3, 4, 5, 100]}</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算 Z-Score</span></span><br><span class="line">mean = <span class="built_in">df</span>[<span class="string">'A'</span>].mean()</span><br><span class="line">std = <span class="built_in">df</span>[<span class="string">'A'</span>].std()</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'Z-Score'</span>] = (<span class="built_in">df</span>[<span class="string">'A'</span>] - mean) / std</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检测异常值（Z-Score &gt; 3 或 &lt; -3）</span></span><br><span class="line">outliers = <span class="built_in">df</span>[abs(<span class="built_in">df</span>[<span class="string">'Z-Score'</span>]) &gt; 3]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"异常值：\n"</span>, outliers)</span><br></pre></td></tr></table></figure></div></p></div><div class="tab-pane" data-state="inactive" id="tab-2" hidden=""><p><strong>使用 IQR 方法检测</strong></p>
 <p>IQR（四分位距）是第三四分位数（Q3）与第一四分位数（Q1）的差值。通常，低于 Q1−1.5×IQR 或高于 Q3+1.5×IQR 的值被认为是异常值。</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = {<span class="string">'A'</span>: [1, 2, 3, 4, 5, 100]}</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算 IQR</span></span><br><span class="line">Q1 = <span class="built_in">df</span>[<span class="string">'A'</span>].quantile(0.25)</span><br><span class="line">Q3 = <span class="built_in">df</span>[<span class="string">'A'</span>].quantile(0.75)</span><br><span class="line">IQR = Q3 - Q1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义上下界</span></span><br><span class="line">lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检测异常值</span></span><br><span class="line">outliers = <span class="built_in">df</span>[(<span class="built_in">df</span>[<span class="string">'A'</span>] &lt; lower_bound) | (<span class="built_in">df</span>[<span class="string">'A'</span>] &gt; upper_bound)]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"异常值：\n"</span>, outliers)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="异常值检测-3"><p><strong>This is Tab 3.</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = {<span class="string">'A'</span>: [1, 2, 3, 4, 5, 100]}</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算 IQR</span></span><br><span class="line">Q1 = <span class="built_in">df</span>[<span class="string">'A'</span>].quantile(0.25)</span><br><span class="line">Q3 = <span class="built_in">df</span>[<span class="string">'A'</span>].quantile(0.75)</span><br><span class="line">IQR = Q3 - Q1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义上下界</span></span><br><span class="line">lower_bound = Q1 - 1.5 * IQR</span><br><span class="line">upper_bound = Q3 + 1.5 * IQR</span><br><span class="line"></span><br><span class="line"><span class="comment"># 检测异常值</span></span><br><span class="line">outliers = <span class="built_in">df</span>[(<span class="built_in">df</span>[<span class="string">'A'</span>] &lt; lower_bound) | (<span class="built_in">df</span>[<span class="string">'A'</span>] &gt; upper_bound)]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"异常值：\n"</span>, outliers)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" data-state="inactive" id="tab-3" hidden=""><p><strong>This is Tab 3.</strong></p>
 <p>箱线图（Box Plot）是一种直观的异常值检测工具。<br>箱线图中的点位于箱子外部的上界或下界之外，这些点即为异常值。</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import matplotlib.pyplot as plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 绘制箱线图</span></span><br><span class="line">plt.boxplot(<span class="built_in">df</span>[<span class="string">'A'</span>])</span><br><span class="line">plt.title(<span class="string">'Box Plot of Data'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div></div></div></div>
 
-<h4 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h4><div class="tabs" id="tab-异常值处理方法"><ul class="nav-tabs"><li class="tab active"><a class="#异常值处理方法-1">删除异常值</a></li><li class="tab"><a class="#异常值处理方法-2">替换异常值</a></li><li class="tab"><a class="#异常值处理方法-3">胜率变换</a></li></ul><div class="tab-content"><div class="tab-pane active" id="异常值处理方法-1"><p><strong>删除异常值</strong><br>直接从数据集中移除异常值。<br> <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment"># 删除基于 IQR 方法检测到的异常值</span></span><br><span class="line">filtered_df = <span class="built_in">df</span>[(<span class="built_in">df</span>[<span class="string">'A'</span>] &gt;= lower_bound) &amp; (<span class="built_in">df</span>[<span class="string">'A'</span>] &lt;= upper_bound)]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"删除异常值后的数据：\n"</span>, filtered_df)</span><br></pre></td></tr></table></figure></div></p></div><div class="tab-pane" id="异常值处理方法-2"><p><strong>替换异常值</strong></p>
+<h4 id="异常值处理"><a href="#异常值处理" class="headerlink" title="异常值处理"></a>异常值处理</h4><div class="tabs relative my-4 bg-second-background-color border border-border-color rounded-md" id="tab-tab"><div role="tablist" aria-orientation="horizontal" class="flex gap-3.5 overflow-x-auto px-4 not-markdown scrollbar-hide" tabindex="0"><button type="button" role="tab" aria-selected="true" data-state="active" data-tab="tab-1" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="0">删除异常值</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-2" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">替换异常值</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-3" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">胜率变换</button></div><div class="tab-content p-4 bg-background-color/70 rounded-md shadow-[0_0_2px_0_var(--shadow-color-1)]"><div class="tab-pane" data-state="active" id="tab-1"><p><strong>删除异常值</strong><br>直接从数据集中移除异常值。<br> <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment"># 删除基于 IQR 方法检测到的异常值</span></span><br><span class="line">filtered_df = <span class="built_in">df</span>[(<span class="built_in">df</span>[<span class="string">'A'</span>] &gt;= lower_bound) &amp; (<span class="built_in">df</span>[<span class="string">'A'</span>] &lt;= upper_bound)]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"删除异常值后的数据：\n"</span>, filtered_df)</span><br></pre></td></tr></table></figure></div></p></div><div class="tab-pane" data-state="inactive" id="tab-2" hidden=""><p><strong>替换异常值</strong></p>
 <p>将异常值替换为合理的值，例如均值、中位数或边界值。</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将异常值替换为中位数</span></span><br><span class="line">median = <span class="built_in">df</span>[<span class="string">'A'</span>].median()</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'A'</span>] = np.where((df['A'] &lt; lower_bound) | (df['A'] &gt; upper_bound), median, df['A'])</span><br><span class="line"></span><br><span class="line">print("替换异常值后的数据：\n", df)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="异常值处理方法-3"><p><strong>胜率变换</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将异常值替换为中位数</span></span><br><span class="line">median = <span class="built_in">df</span>[<span class="string">'A'</span>].median()</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'A'</span>] = np.where((df['A'] &lt; lower_bound) | (df['A'] &gt; upper_bound), median, df['A'])</span><br><span class="line"></span><br><span class="line">print("替换异常值后的数据：\n", df)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" data-state="inactive" id="tab-3" hidden=""><p><strong>胜率变换</strong></p>
 <p>将异常值限制在一定范围内，而不是完全删除或替换。</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from scipy.stats import mstats</span><br><span class="line"></span><br><span class="line"><span class="comment"># 胜率变换：将异常值限制在 5% 和 95% 分位数之间</span></span><br><span class="line"><span class="built_in">df</span>[<span class="string">'A_winsorized'</span>] = mstats.winsorize(<span class="built_in">df</span>[<span class="string">'A'</span>], limits=[0.05, 0.05])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"胜率变换后的数据：\n"</span>, <span class="built_in">df</span>)</span><br></pre></td></tr></table></figure></div></div></div></div>
 
@@ -872,22 +936,22 @@ mjx-container[display="true"] + br {
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import StandardScaler, MinMaxScaler</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = [[1, 2], [3, 4], [5, 6]]</span><br><span class="line">X = pd.DataFrame(data, columns=[<span class="string">'A'</span>, <span class="string">'B'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 归一化</span></span><br><span class="line">minmax_scaler = MinMaxScaler()</span><br><span class="line">X_normalized = minmax_scaler.fit_transform(X)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"归一化后的数据：\n"</span>, X_normalized)</span><br></pre></td></tr></table></figure></div>
 
 <h3 id="特征编码"><a href="#特征编码" class="headerlink" title="特征编码"></a>特征编码</h3><p>特征编码（Feature Encoding）是将非数值型特征（如类别型、文本型数据）转换为数值型表示的过程。它是机器学习中数据预处理的重要步骤，因为大多数机器学习算法只能处理数值型数据。</p>
-<div class="tabs" id="tab-常见的特征编码方法"><ul class="nav-tabs"><li class="tab active"><a class="#常见的特征编码方法-1">标签编码</a></li><li class="tab"><a class="#常见的特征编码方法-2">独热编码</a></li><li class="tab"><a class="#常见的特征编码方法-3">目标编码</a></li></ul><div class="tab-content"><div class="tab-pane active" id="常见的特征编码方法-1"><p>将类别型变量映射为整数（如 “red” → 0, “blue” → 1, “green” → 2）。<br>适用场景 ：类别之间具有顺序关系（如 “low”, “medium”, “high”）。<br>优点 ：简单高效，适用于少量类别的情况。<br>缺点 ：可能导致模型误以为类别之间有数值上的大小关系。</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import LabelEncoder</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>, <span class="string">'red'</span>]</span><br><span class="line">le = LabelEncoder()</span><br><span class="line">encoded_data = le.fit_transform(data)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"标签编码结果："</span>, encoded_data)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="常见的特征编码方法-2"><p>将每个类别值转换为一个二进制向量。<br>适用场景 ：类别之间没有顺序关系（如 “red”, “blue”, “green”）。<br>优点 ：消除了类别间的数值关系，适合无序类别。<br>缺点 ：可能会导致维度爆炸（类别数量过多时生成的特征维度过大）。</p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>, <span class="string">'red'</span>]</span><br><span class="line">ohe = OneHotEncoder(sparse=False)</span><br><span class="line">encoded_data = ohe.fit_transform(pd.DataFrame(data))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"独热编码结果：\n"</span>, encoded_data)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="常见的特征编码方法-3"><p>使用目标变量的统计信息（如均值）对类别变量进行编码。<br>适用场景 ：类别数量较多且数据量较大时，避免维度爆炸问题。<br>优点 ：保留了类别与目标变量的关系。<br>缺点 ：可能导致过拟合，需注意平滑处理。</p>
+<div class="tabs relative my-4 bg-second-background-color border border-border-color rounded-md" id="tab-tab"><div role="tablist" aria-orientation="horizontal" class="flex gap-3.5 overflow-x-auto px-4 not-markdown scrollbar-hide" tabindex="0"><button type="button" role="tab" aria-selected="true" data-state="active" data-tab="tab-1" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="0">标签编码</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-2" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">独热编码</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-3" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">目标编码</button></div><div class="tab-content p-4 bg-background-color/70 rounded-md shadow-[0_0_2px_0_var(--shadow-color-1)]"><div class="tab-pane" data-state="active" id="tab-1"><p>将类别型变量映射为整数（如 “red” → 0, “blue” → 1, “green” → 2）。<br>适用场景 ：类别之间具有顺序关系（如 “low”, “medium”, “high”）。<br>优点 ：简单高效，适用于少量类别的情况。<br>缺点 ：可能导致模型误以为类别之间有数值上的大小关系。</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import LabelEncoder</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>, <span class="string">'red'</span>]</span><br><span class="line">le = LabelEncoder()</span><br><span class="line">encoded_data = le.fit_transform(data)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"标签编码结果："</span>, encoded_data)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" data-state="inactive" id="tab-2" hidden=""><p>将每个类别值转换为一个二进制向量。<br>适用场景 ：类别之间没有顺序关系（如 “red”, “blue”, “green”）。<br>优点 ：消除了类别间的数值关系，适合无序类别。<br>缺点 ：可能会导致维度爆炸（类别数量过多时生成的特征维度过大）。</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import OneHotEncoder</span><br><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = [<span class="string">'red'</span>, <span class="string">'blue'</span>, <span class="string">'green'</span>, <span class="string">'blue'</span>, <span class="string">'red'</span>]</span><br><span class="line">ohe = OneHotEncoder(sparse=False)</span><br><span class="line">encoded_data = ohe.fit_transform(pd.DataFrame(data))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"独热编码结果：\n"</span>, encoded_data)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" data-state="inactive" id="tab-3" hidden=""><p>使用目标变量的统计信息（如均值）对类别变量进行编码。<br>适用场景 ：类别数量较多且数据量较大时，避免维度爆炸问题。<br>优点 ：保留了类别与目标变量的关系。<br>缺点 ：可能导致过拟合，需注意平滑处理。</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 示例数据</span></span><br><span class="line">data = {<span class="string">'category'</span>: [<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>], <span class="string">'target'</span>: [1, 0, 1, 1, 0]}</span><br><span class="line"><span class="built_in">df</span> = pd.DataFrame(data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算每个类别的目标均值</span></span><br><span class="line">target_mean = df.groupby(<span class="string">'category'</span>)[<span class="string">'target'</span>].mean()</span><br><span class="line"><span class="built_in">df</span>[<span class="string">'target_encoded'</span>] = <span class="built_in">df</span>[<span class="string">'category'</span>].map(target_mean)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"目标编码结果：\n"</span>, <span class="built_in">df</span>)</span><br></pre></td></tr></table></figure></div></div></div></div>
 
 <h3 id="特征选择与降维"><a href="#特征选择与降维" class="headerlink" title="特征选择与降维"></a>特征选择与降维</h3><h4 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h4><p>特征选择是从原始特征集中选择最重要的子集，从而减少无关或冗余特征对模型的影响。</p>
 <p>减少过拟合 ：通过去除无关特征，降低模型复杂度。<br>提高训练效率 ：减少特征数量可以加速模型训练。<br>增强可解释性 ：保留关键特征有助于理解模型的工作机制。</p>
 <p>根据特征选择的方式，可分为以下三类：</p>
-<div class="tabs" id="tab-特征选择"><ul class="nav-tabs"><li class="tab active"><a class="#特征选择-1">过滤法</a></li><li class="tab"><a class="#特征选择-2">包装法</a></li><li class="tab"><a class="#特征选择-3">嵌入法</a></li></ul><div class="tab-content"><div class="tab-pane active" id="特征选择-1"><p>根据统计指标（如相关性、互信息等）独立评估每个特征的重要性。<br>不依赖于具体模型。<br>优点 ：计算简单，速度快。<br>缺点 ：可能忽略特征之间的交互关系。</p>
+<div class="tabs relative my-4 bg-second-background-color border border-border-color rounded-md" id="tab-tab"><div role="tablist" aria-orientation="horizontal" class="flex gap-3.5 overflow-x-auto px-4 not-markdown scrollbar-hide" tabindex="0"><button type="button" role="tab" aria-selected="true" data-state="active" data-tab="tab-1" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="0">过滤法</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-2" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">包装法</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-3" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">嵌入法</button></div><div class="tab-content p-4 bg-background-color/70 rounded-md shadow-[0_0_2px_0_var(--shadow-color-1)]"><div class="tab-pane" data-state="active" id="tab-1"><p>根据统计指标（如相关性、互信息等）独立评估每个特征的重要性。<br>不依赖于具体模型。<br>优点 ：计算简单，速度快。<br>缺点 ：可能忽略特征之间的交互关系。</p>
 <blockquote>
 <p>示例 ：<br>相关系数（Pearson、Spearman）<br>卡方检验<br>互信息</p>
 </blockquote>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.feature_selection import SelectKBest, chi2</span><br><span class="line">from sklearn.datasets import load_iris</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line">X, y = load_iris(return_X_y=True)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用卡方检验选择前 2 个最佳特征</span></span><br><span class="line">selector = SelectKBest(chi2, k=2)</span><br><span class="line">X_new = selector.fit_transform(X, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"选择后的特征形状："</span>, X_new.shape)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="特征选择-2"><p>通过反复训练模型来评估特征子集的表现。<br>常用算法：递归特征消除（RFE）。<br>优点 ：考虑特征之间的交互关系。<br>缺点 ：计算成本高。</p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.feature_selection import SelectKBest, chi2</span><br><span class="line">from sklearn.datasets import load_iris</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据</span></span><br><span class="line">X, y = load_iris(return_X_y=True)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用卡方检验选择前 2 个最佳特征</span></span><br><span class="line">selector = SelectKBest(chi2, k=2)</span><br><span class="line">X_new = selector.fit_transform(X, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"选择后的特征形状："</span>, X_new.shape)</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" data-state="inactive" id="tab-2" hidden=""><p>通过反复训练模型来评估特征子集的表现。<br>常用算法：递归特征消除（RFE）。<br>优点 ：考虑特征之间的交互关系。<br>缺点 ：计算成本高。</p>
 <blockquote>
 <p>示例 ：<br>RFE（Recursive Feature Elimination）</p>
- <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> from sklearn.feature_selection import RFE</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line">model = LogisticRegression()</span><br><span class="line">rfe = RFE(model, n_features_to_select=2)</span><br><span class="line">X_new = rfe.fit_transform(X, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"选择后的特征形状："</span>, X_new.shape)</span><br></pre></td></tr></table></figure></div></blockquote></div><div class="tab-pane" id="特征选择-3"><p>在模型训练过程中自动选择重要特征。<br>常用算法：Lasso 回归、树模型（如随机森林、XGBoost）。<br>优点 ：结合了模型训练和特征选择。<br>缺点 ：依赖于具体模型。</p>
+ <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> from sklearn.feature_selection import RFE</span><br><span class="line">from sklearn.linear_model import LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建模型</span></span><br><span class="line">model = LogisticRegression()</span><br><span class="line">rfe = RFE(model, n_features_to_select=2)</span><br><span class="line">X_new = rfe.fit_transform(X, y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"选择后的特征形状："</span>, X_new.shape)</span><br></pre></td></tr></table></figure></div></blockquote></div><div class="tab-pane" data-state="inactive" id="tab-3" hidden=""><p>在模型训练过程中自动选择重要特征。<br>常用算法：Lasso 回归、树模型（如随机森林、XGBoost）。<br>优点 ：结合了模型训练和特征选择。<br>缺点 ：依赖于具体模型。</p>
 <blockquote>
 <p>示例 ：<br>Lasso 回归（基于 L1 正则化） </p>
 </blockquote>
@@ -998,7 +1062,7 @@ mjx-container[display="true"] + br {
 						<i class="fa-solid fa-chevron-left"></i>
 					</span>
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">使数组元素互不相同所需的最少操作次数</span>
+						<span class="post-nav-title-item truncate max-w-48">使数组元素互不相同所需的最少操作次数</span>
 						<span class="post-nav-item">Prev posts</span>
 					</span>
 				</a>
@@ -1008,7 +1072,7 @@ mjx-container[display="true"] + br {
 			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
 				<a class="next" rel="next" href="/2025/04/02/20250402%E6%9C%89%E5%BA%8F%E4%B8%89%E5%85%83%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC%20I/">
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">有序三元组中的最大值 I</span>
+						<span class="post-nav-title-item truncate max-w-48">有序三元组中的最大值 I</span>
 						<span class="post-nav-item">Next posts</span>
 					</span>
 					<span class="right arrow-icon flex justify-center items-center">
@@ -1037,6 +1101,7 @@ mjx-container[display="true"] + br {
 	</div>
 	
 </div>
+
 			</div>
 
 			
@@ -1057,11 +1122,11 @@ mjx-container[display="true"] + br {
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        89 posts in total
+                        91 posts in total
                     </span>
                     
                         <span>
-                            228.4k words in total
+                            236.8k words in total
                         </span>
                     
                 </p>
@@ -1086,7 +1151,7 @@ mjx-container[display="true"] + br {
         
         <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
             <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
-            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.9.0</a></span>
         </div>
         
         
@@ -1176,9 +1241,43 @@ mjx-container[display="true"] + br {
 </div>
 	</div>
 
-	<div class="image-viewer-container">
-	<img src="">
+	<div class="image-viewer-container" role="dialog" aria-modal="true" aria-label="Image viewer">
+	<button class="image-viewer-close" type="button" aria-label="Close">
+		<i class="fa-solid fa-xmark"></i>
+	</button>
+	<button class="image-viewer-prev" type="button" aria-label="Prev">
+		<i class="fa-solid fa-chevron-left"></i>
+	</button>
+	<div class="image-viewer-frame">
+		<img src="" alt="">
+	</div>
+	<div class="image-viewer-exif-panel hidden absolute left-1/2 bottom-20 -translate-x-1/2 w-[min(92vw,420px)] max-h-[60vh] overflow-hidden rounded-2xl bg-background-color-transparent-80 p-4 text-left shadow-redefine-flat backdrop-blur-md" role="dialog" aria-label="EXIF" aria-hidden="true">
+		<div class="flex items-center justify-between mb-3">
+			<span class="text-sm font-semibold text-first-text-color">EXIF</span>
+			<button class="image-viewer-exif-close flex h-8 w-8 items-center justify-center rounded-full bg-background-color-transparent-80 text-first-text-color transition hover:bg-background-color-transparent-40" type="button" aria-label="Close">
+				<i class="fa-solid fa-xmark text-[0.65rem]"></i>
+			</button>
+		</div>
+		<div class="image-viewer-exif-cards grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto pr-1 scrollbar-hide"></div>
+		<template class="image-viewer-exif-card-template">
+			<div class="rounded-lg bg-background-color-transparent-40 px-3 py-2">
+				<div class="image-viewer-exif-card-header flex items-center gap-2 mb-1">
+					<i class="image-viewer-exif-card-icon fa-solid fa-circle-info text-xs text-third-text-color"></i>
+					<div class="image-viewer-exif-card-title text-xs font-semibold text-first-text-color"></div>
+				</div>
+				<div class="image-viewer-exif-card-items flex flex-col gap-1"></div>
+			</div>
+		</template>
+	</div>
+	<button class="image-viewer-exif-toggle flex items-center gap-2 hidden absolute left-1/2 bottom-6 -translate-x-1/2 rounded-full border border-border-color bg-background-color-transparent-80 px-4 py-2 text-first-text-color backdrop-blur-md transition hover:bg-background-color-transparent-40" type="button" aria-label="EXIF" aria-expanded="false">
+		<i class="fa-solid fa-circle-info text-xs"></i>
+		<span class="text-xs font-semibold uppercase tracking-wider">EXIF</span>
+	</button>
+	<button class="image-viewer-next" type="button" aria-label="Next">
+		<i class="fa-solid fa-chevron-right"></i>
+	</button>
 </div>
+
 
 	
 	<div class="search-pop-overlay">
@@ -1220,7 +1319,7 @@ mjx-container[display="true"] + br {
 <script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
 
 <script>
-    const swup = new Swup({
+    window.swup = new Swup({
         plugins: [
             new SwupScriptsPlugin({
                 optin: true,
@@ -1236,48 +1335,23 @@ mjx-container[display="true"] + br {
         ],
         containers: ["#swup"],
     });
+
+    window.dispatchEvent(
+        new CustomEvent("redefine:swup:ready", {
+            detail: {
+                swup: window.swup,
+            },
+        }),
+    );
 </script>
 
 
 
 
 	
-<script src="/js/build/tools/imageViewer.js" type="module"></script>
-
-<script src="/js/build/utils.js" type="module"></script>
-
 <script src="/js/build/main.js" type="module"></script>
 
-<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
 
-<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
-
-<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
-
-<script src="/js/build/layouts/categoryList.js" type="module"></script>
-
-
-
-    
-<script src="/js/build/tools/localSearch.js" type="module"></script>
-
-
-
-
-    
-<script src="/js/build/tools/codeBlock.js" type="module"></script>
-
-
-
-
-    
-<script src="/js/build/layouts/lazyload.js" type="module"></script>
-
-
-
-
-    
-<script src="/js/build/tools/runtime.js"></script>
 
     
 <script src="/js/build/libs/odometer.min.js"></script>
@@ -1288,22 +1362,12 @@ mjx-container[display="true"] + br {
 
 
 
+
+
+
   
 <script src="/js/build/libs/Typed.min.js"></script>
 
-  
-<script src="/js/build/plugins/typed.js" type="module"></script>
-
-
-
-
-
-
-    
-<script src="/js/build/libs/minimasonry.min.js"></script>
-
-    
-<script src="/js/build/plugins/masonry.js" type="module"></script>
 
 
 
@@ -1312,26 +1376,13 @@ mjx-container[display="true"] + br {
 
 
     
-<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
-
-<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
-
-<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+<script src="/js/build/libs/minimasonry.min.js" data-swup-reload-script=""></script>
 
 
 
 
 <script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
 
-
-<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
-
-
-
-
-
-    
-<script src="/js/build/layouts/bookmarkNav.js" type="module"></script>
 
 
 	

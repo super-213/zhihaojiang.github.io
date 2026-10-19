@@ -5,7 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="Hexo Theme Redefine">
     
+    
     <meta name="author" content="姜智浩">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
     <!-- preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +82,6 @@
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
-    
     
     
         
@@ -59,7 +123,7 @@
     
 
     <!-- 这里是 Live2D 代码 -->
-    <script src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+    <script defer src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
 
     
 <link rel="stylesheet" href="/css/style.css">
@@ -91,8 +155,9 @@
 
     <script id="hexo-configurations">
     window.config = {"hostname":"blog.zhihaojiang.com","root":"/","language":"en","path":"search.xml"};
-    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/defaults/bear.PNG","dark":"/images/defaults/bear.PNG"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":{"github":"https://github.com/super-213","instagram":null,"zhihu":null,"twitter":null,"email":"jiangzhihaojzh@126.com"},"qrs":{"weixin":null}}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"/zhihaojiang.github.io/music/cover/original.png","lrc":"/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1"},"mathjax":{"tags":"none","single_dollars":true,"cjk_width":0.9,"normal_width":0.6,"append_css":true,"every_page":true}},"version":"2.8.2","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Portfolio":"/portfolio/","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur"},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"shuoshuo":{"icon":"fa-solid fa-bookmark","path":"/essays/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footerStart":"2022/8/17 11:45:14"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":true,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/defaults/bear.PNG","dark":"/images/defaults/bear.PNG"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":[{"icon":"fa-brands fa-github","url":"https://github.com/super-213"},{"icon":"fa-solid fa-at","url":"jiangzhihaojzh@126.com"}],"qrs":[]}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/original.png","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/original.png","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1","theme":{"light":"default","dark":"dark"}},"mathjax":{"tags":"none","single_dollars":true,"cjk_width":0.9,"normal_width":0.6,"append_css":true,"every_page":true}},"version":"2.9.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Portfolio":"/portfolio/","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":true}},"page_templates":{"friends_column":2,"tags_style":"blur","masonry":{"batch_size":12,"initial_batch_size":24}},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"shuoshuo":{"icon":"fa-solid fa-bookmark","path":"/essays/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footer":{"runtime":true,"icon":"<i class=\"fa-solid fa-heart fa-beat\" style=\"--fa-animation-duration: 0.5s; color: #f54545\"></i>","start":"2022/8/17 11:45:14","statistics":true,"customize":null,"icp":{"enable":false,"number":null,"url":null}},"footerStart":"2022/8/17 11:45:14","mermaid":{"style":{"light":"default","dark":"dark"}}};
     window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.i18n = {"search":"Search...","toc":"On this page","prev":"Prev","next":"Next","prev_posts":"Prev posts","next_posts":"Next posts","page":"Page %d","recent_posts":"Recent Posts","share":"Share","powered_by":"POWERED BY %s","theme":"THEME","rss_feed":"RSS Feed","category":"Category","categories":"Categories","tag":"Tag","tags":"Tags","post":"Post","posts":"Posts","tagcloud":"Tag Cloud","comment":"Comment","comments":"Comments","home":"Home","archive":"Archive","archives":"Archives","top":"TOP","sticky":"Sticky","go-back-home":"Go Back Home","masonry_loading":"Loading photos...","image_viewer":"Image viewer","close":"Close","exif":{"title":"EXIF","cards":{"camera":"Camera","lens":"Lens","exposure":"Exposure","other":"Other"},"fields":{"make":"Brand","model":"Model","date_taken":"Date taken","lens_model":"Lens","focal_length":"Focal length","focus_mode":"Focus mode","shutter":"Shutter","aperture":"Aperture","iso":"ISO","exposure_program":"Exposure program","exposure_compensation":"Exposure compensation","metering_mode":"Metering mode","flash":"Flash","white_balance":"White balance","latitude":"Latitude","longitude":"Longitude","altitude":"Altitude"},"status":{"loading":"Loading...","no_exif":"No EXIF available","library_missing":"EXIF library not loaded","image_source_missing":"Image source unavailable","unavailable":"EXIF unavailable (blocked by CORS or missing metadata)","flag_unavailable":"EXIF unavailable"}},"about":"About","changelog":"Changelog","links":"Links","link":"Link","friends":"Friends","friend":"Friend","timeline":"Timeline","shuoshuo":"Shuoshuo","bookmarks":"Bookmarks","site_uv":"VISITOR COUNT","site_pv":"TOTAL PAGE VIEWS","read_more":"Read more","wordcount":"Words","min2read":"Mins","status":"Status","runtime":"Blog up for","days":"days","hours":"hrs","minutes":"Min","seconds":"Sec","optimized_by":"and Optimized by Evan","rights":"All Rights Reserved","site_posts":"%s posts in total","site_wordcount":"%s words in total","copyright":{"author":"Author","title":"Title","link":"Link","create_time":"Created at","update_time":"Updated at","license_title":"License","license_content":"This work is licensed under %s.","all_rights_reserved":"All Rights Reserved &#169; %s","public_domain":"This work is in the public domain."},"ago":{"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"},"create_time":"Created","update_time":"Updated","expired":"This post is written %s days ago, and the content may not be up to date."};
     window.data = {"masonry":true};
   </script>
     
@@ -230,7 +295,6 @@ mjx-container[display="true"] + br {
   display: none;
 }
 </style></head>
-
 
 
 <body>
@@ -678,7 +742,7 @@ mjx-container[display="true"] + br {
 
         <div class="statistics flex justify-around my-2.5">
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">25</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">29</div>
         <div class="label text-third-text-color text-sm">Tags</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
@@ -686,7 +750,7 @@ mjx-container[display="true"] + br {
         <div class="label text-third-text-color text-sm">Categories</div>
     </a>
     <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
-        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">89</div>
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">91</div>
         <div class="label text-third-text-color text-sm">Posts</div>
     </a>
 </div>
@@ -716,7 +780,7 @@ mjx-container[display="true"] + br {
 
 		
 		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
-			<div class="avatar w-[46px] h-[46px] flex-shrink-0 rounded-medium border border-border-color p-[1px]">
+			<div class="avatar w-[46px] h-[46px] shrink-0 rounded-medium border border-border-color p-px">
 				<img src="/images/defaults/IMG_3744.JPG">
 			</div>
 			<div class="info flex flex-col justify-between">
@@ -818,34 +882,14 @@ mjx-container[display="true"] + br {
 
 <h2 id="分位数离散法"><a href="#分位数离散法" class="headerlink" title="分位数离散法"></a>分位数离散法</h2><p>分位数离散化的核心思想是：<br>按照数据的累积分布函数 (CDF) 计算分位点。<br>根据分位数（如四分位数 (quartiles)、十分位数 (deciles)）划分数据，使得每个区间的样本数接近相等。<br>由于基于数据的分布进行划分，适用于非均匀分布的数据。</p>
 <p>以下是不同的方法进行实现</p>
-<div class="tabs" id="tab-分位数离散法实现方法"><ul class="nav-tabs"><li class="tab active"><a class="#分位数离散法实现方法-1">方法一</a></li><li class="tab"><a class="#分位数离散法实现方法-2">方法二</a></li></ul><div class="tab-content"><div class="tab-pane active" id="分位数离散法实现方法-1"><p><strong>使用pandas.qcut()</strong></p>
-<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成 1000 个随机数据</span></span><br><span class="line">data = np.random.randn(1000)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 qcut 进行分位数离散化（四分位）</span></span><br><span class="line">bins = pd.qcut(data, q=4, labels=[<span class="string">'Q1'</span>, <span class="string">'Q2'</span>, <span class="string">'Q3'</span>, <span class="string">'Q4'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 统计每个分箱的数据量</span></span><br><span class="line"><span class="built_in">print</span>(bins.value_counts())</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" id="分位数离散法实现方法-2"><p><strong>使用numpy.percentile()</strong></p>
+<div class="tabs relative my-4 bg-second-background-color border border-border-color rounded-md" id="tab-tab"><div role="tablist" aria-orientation="horizontal" class="flex gap-3.5 overflow-x-auto px-4 not-markdown scrollbar-hide" tabindex="0"><button type="button" role="tab" aria-selected="true" data-state="active" data-tab="tab-1" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="0">方法一</button><button type="button" role="tab" aria-selected="false" data-state="inactive" data-tab="tab-2" class="inline-flex items-center gap-2 whitespace-nowrap text-third-text-color border-b-2 border-transparent py-2 text-sm font-medium transition-colors hover:text-second-text-color data-[state=active]:border-primary data-[state=active]:text-primary" tabindex="-1">方法二</button></div><div class="tab-content p-4 bg-background-color/70 rounded-md shadow-[0_0_2px_0_var(--shadow-color-1)]"><div class="tab-pane" data-state="active" id="tab-1"><p><strong>使用pandas.qcut()</strong></p>
+<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import pandas as pd</span><br><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成 1000 个随机数据</span></span><br><span class="line">data = np.random.randn(1000)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 qcut 进行分位数离散化（四分位）</span></span><br><span class="line">bins = pd.qcut(data, q=4, labels=[<span class="string">'Q1'</span>, <span class="string">'Q2'</span>, <span class="string">'Q3'</span>, <span class="string">'Q4'</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 统计每个分箱的数据量</span></span><br><span class="line"><span class="built_in">print</span>(bins.value_counts())</span><br></pre></td></tr></table></figure></div></div><div class="tab-pane" data-state="inactive" id="tab-2" hidden=""><p><strong>使用numpy.percentile()</strong></p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成 1000 个随机数据</span></span><br><span class="line">data = np.random.randn(1000)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算 10 分位数（十分位数）</span></span><br><span class="line">percentiles = np.percentile(data, q=[10, 20, 30, 40, 50, 60, 70, 80, 90])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 np.digitize 进行分箱</span></span><br><span class="line">bins = np.digitize(data, percentiles)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 统计每个分箱的数据量</span></span><br><span class="line"><span class="built_in">print</span>(np.bincount(bins))</span><br></pre></td></tr></table></figure></div></div></div></div>
 
+<div class="callout callout--titled default mb-4 rounded-small shadow-redefine-flat bg-(--callout-bg-color) p-3 pl-1 relative flex flex-row gap-2"><div role="none" class="rounded-full self-stretch w-0.5 bg-(--callout-primary-color) shrink-0 opacity-60"></div><div class="flex flex-col gap-2"><div class="callout__title flex items-center gap-2 font-semibold tracking-tight"><i class="callout__icon fa-solid fa-info leading-none text-(--callout-primary-color) text-sm shrink-0"></i> 分位数离散化的优缺点</div><div class="callout__content markdown-body flex-1 min-w-0"><p>✅ 优点<br>适用于非均匀分布数据，相比于等宽离散化更合理。<br>避免某些区间数据过多或过少，能够更好地均衡数据。<br>能够减少异常值的影响，因为分箱是基于数据分布，而不是固定范围。</p>
+<p>❌ 缺点<br>对极端值敏感，如果数据中有极端值，可能会影响分位数计算结果。<br>区间边界难以解释，不像等宽分箱那样有固定的区间宽度。<br>对新数据可能需要重新计算分位点，导致难以适用于流式数据。</p></div></div></div>
 
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>分位数离散化的优缺点</p>
-
-    </div>
-    <div class="notel-content">
-      <p>✅ 优点<br>适用于非均匀分布数据，相比于等宽离散化更合理。<br>避免某些区间数据过多或过少，能够更好地均衡数据。<br>能够减少异常值的影响，因为分箱是基于数据分布，而不是固定范围。</p>
-<p>❌ 缺点<br>对极端值敏感，如果数据中有极端值，可能会影响分位数计算结果。<br>区间边界难以解释，不像等宽分箱那样有固定的区间宽度。<br>对新数据可能需要重新计算分位点，导致难以适用于流式数据。</p>
-
-    </div>
-  </div>
-
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>何时使用分位数离散化？</p>
-
-    </div>
-    <div class="notel-content">
-      <p>数据分布不均匀（例如数据集中在某些范围）。<br>避免某些区间样本过多或过少，如在决策树、统计建模等场景中使用。<br>希望减少异常值的影响，避免极端值导致不均匀的划分。</p>
-
-    </div>
-  </div>
+<div class="callout callout--titled default mb-4 rounded-small shadow-redefine-flat bg-(--callout-bg-color) p-3 pl-1 relative flex flex-row gap-2"><div role="none" class="rounded-full self-stretch w-0.5 bg-(--callout-primary-color) shrink-0 opacity-60"></div><div class="flex flex-col gap-2"><div class="callout__title flex items-center gap-2 font-semibold tracking-tight"><i class="callout__icon fa-solid fa-info leading-none text-(--callout-primary-color) text-sm shrink-0"></i> 何时使用分位数离散化？</div><div class="callout__content markdown-body flex-1 min-w-0"><p>数据分布不均匀（例如数据集中在某些范围）。<br>避免某些区间样本过多或过少，如在决策树、统计建模等场景中使用。<br>希望减少异常值的影响，避免极端值导致不均匀的划分。</p></div></div></div>
 
 <h2 id="基于卡方分裂的离散法"><a href="#基于卡方分裂的离散法" class="headerlink" title="基于卡方分裂的离散法"></a>基于卡方分裂的离散法</h2><p>该分裂算法是把整个属性的取值区间当做一个离散的属性值，然后对该区间进行划分，一般是一分为二，即把一个区间分为两个相邻的区间，每个区间对应一个离散的属性值，该划分可以一直进行下去，直到满足某种停止条件，其关键是划分点的选取。</p>
 <p><strong>方法一</strong><br><strong>手动实现</strong></p>
@@ -855,30 +899,10 @@ mjx-container[display="true"] + br {
 <p>如果不想手动实现，可以使用 optbinning 库，它可以进行最优分箱（Optimal Binning），内部使用 ChiMerge 或者 Decision Tree 进行离散化。</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from optbinning import OptimalBinning</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成示例数据</span></span><br><span class="line">np.random.seed(42)</span><br><span class="line">data = np.random.randn(100) * 10 + 50</span><br><span class="line">target = np.random.choice([0, 1], size=100)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 OptimalBinning 进行卡方离散化</span></span><br><span class="line">optb = OptimalBinning(name=<span class="string">"feature"</span>, dtype=<span class="string">"numerical"</span>, solver=<span class="string">"cp"</span>)</span><br><span class="line">optb.fit(data, target)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取分箱边界</span></span><br><span class="line">bin_edges = optb.splits</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"自动计算的分箱边界:"</span>, bin_edges)</span><br></pre></td></tr></table></figure></div>
 
+<div class="callout callout--titled default mb-4 rounded-small shadow-redefine-flat bg-(--callout-bg-color) p-3 pl-1 relative flex flex-row gap-2"><div role="none" class="rounded-full self-stretch w-0.5 bg-(--callout-primary-color) shrink-0 opacity-60"></div><div class="flex flex-col gap-2"><div class="callout__title flex items-center gap-2 font-semibold tracking-tight"><i class="callout__icon fa-solid fa-info leading-none text-(--callout-primary-color) text-sm shrink-0"></i> ChiMerge的优缺点</div><div class="callout__content markdown-body flex-1 min-w-0"><p>✅ 优点<br>保持类别信息：确保离散化后不同类别仍然可以区分，提高模型效果。<br>自动确定最优分箱：基于卡方值合并区间，减少信息损失。<br>避免过度离散化：不像等宽分箱或等频分箱可能导致信息丢失。</p>
+<p>❌ 缺点<br>计算量较大：随着样本数增加，计算卡方统计量的复杂度会增加。<br>依赖类别变量：只能用于分类任务，如果目标变量是连续值，需要先离散化。<br>需要调整超参数：最大分箱数 max_bins 需要根据数据调优。</p></div></div></div>
 
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>ChiMerge的优缺点</p>
-
-    </div>
-    <div class="notel-content">
-      <p>✅ 优点<br>保持类别信息：确保离散化后不同类别仍然可以区分，提高模型效果。<br>自动确定最优分箱：基于卡方值合并区间，减少信息损失。<br>避免过度离散化：不像等宽分箱或等频分箱可能导致信息丢失。</p>
-<p>❌ 缺点<br>计算量较大：随着样本数增加，计算卡方统计量的复杂度会增加。<br>依赖类别变量：只能用于分类任务，如果目标变量是连续值，需要先离散化。<br>需要调整超参数：最大分箱数 max_bins 需要根据数据调优。</p>
-
-    </div>
-  </div>
-
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>何时使用ChiMerge</p>
-
-    </div>
-    <div class="notel-content">
-      <p>分类任务：目标变量是离散类别（如二分类、多分类）。<br>决策树模型：离散化后可以提升决策树模型的可解释性。<br>数据量较大：对于大规模数据，可通过 optbinning 等库加速处理。</p>
-
-    </div>
-  </div>
+<div class="callout callout--titled default mb-4 rounded-small shadow-redefine-flat bg-(--callout-bg-color) p-3 pl-1 relative flex flex-row gap-2"><div role="none" class="rounded-full self-stretch w-0.5 bg-(--callout-primary-color) shrink-0 opacity-60"></div><div class="flex flex-col gap-2"><div class="callout__title flex items-center gap-2 font-semibold tracking-tight"><i class="callout__icon fa-solid fa-info leading-none text-(--callout-primary-color) text-sm shrink-0"></i> 何时使用ChiMerge</div><div class="callout__content markdown-body flex-1 min-w-0"><p>分类任务：目标变量是离散类别（如二分类、多分类）。<br>决策树模型：离散化后可以提升决策树模型的可解释性。<br>数据量较大：对于大规模数据，可通过 optbinning 等库加速处理。</p></div></div></div>
 
 <p>ChiMerge 离散化适用于分类任务，可以在决策树、朴素贝叶斯等模型中提升效果。对于回归任务，可以考虑 KMeans 或 等宽/等频分箱。</p>
 <h2 id="1R离散法"><a href="#1R离散法" class="headerlink" title="1R离散法"></a>1R离散法</h2><p>1R 就是 1-rule，称为1 规则，也就是产生一层的决策树，用一个规则集的形式，只在某个特定的属性上进行测试。1R是一个简单廉价的方法，但却常常能得到令人吃惊的准确率。<br>它的核心思想是：<br>将连续特征划分为多个区间，然后<br>寻找能够最好地预测目标变量（类别）的区间划分。</p>
@@ -889,30 +913,10 @@ mjx-container[display="true"] + br {
 <p><strong>方法二</strong><br><strong>使用KBinsDiscretizer</strong></p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.preprocessing import KBinsDiscretizer</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成示例数据</span></span><br><span class="line">data = data.reshape(-1, 1)  <span class="comment"># 需要转换为 2D 数组</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用监督式分箱</span></span><br><span class="line">discretizer = KBinsDiscretizer(n_bins=4, encode=<span class="string">'ordinal'</span>, strategy=<span class="string">'uniform'</span>)</span><br><span class="line">binned_data = discretizer.fit_transform(data)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"1R 近似分箱结果:"</span>, np.unique(binned_data))</span><br></pre></td></tr></table></figure></div>
 
+<div class="callout callout--titled default mb-4 rounded-small shadow-redefine-flat bg-(--callout-bg-color) p-3 pl-1 relative flex flex-row gap-2"><div role="none" class="rounded-full self-stretch w-0.5 bg-(--callout-primary-color) shrink-0 opacity-60"></div><div class="flex flex-col gap-2"><div class="callout__title flex items-center gap-2 font-semibold tracking-tight"><i class="callout__icon fa-solid fa-info leading-none text-(--callout-primary-color) text-sm shrink-0"></i> 1R方法的优缺点</div><div class="callout__content markdown-body flex-1 min-w-0"><p>✅ 优点<br>监督式分箱：保留目标变量信息，减少信息损失。<br>简单易懂：规则明确，适合初步数据探索。<br>适用于分类任务：尤其适用于决策树、朴素贝叶斯等分类模型。</p>
+<p>❌ 缺点<br>计算复杂度较高：需要尝试多个分箱方案，计算错误率。<br>可能过拟合：如果 max_bins 过大，可能导致分箱过多，导致模型过拟合。<br>仅适用于分类任务：如果目标变量是连续值，需要先进行离散化。</p></div></div></div>
 
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>1R方法的优缺点</p>
-
-    </div>
-    <div class="notel-content">
-      <p>✅ 优点<br>监督式分箱：保留目标变量信息，减少信息损失。<br>简单易懂：规则明确，适合初步数据探索。<br>适用于分类任务：尤其适用于决策树、朴素贝叶斯等分类模型。</p>
-<p>❌ 缺点<br>计算复杂度较高：需要尝试多个分箱方案，计算错误率。<br>可能过拟合：如果 max_bins 过大，可能导致分箱过多，导致模型过拟合。<br>仅适用于分类任务：如果目标变量是连续值，需要先进行离散化。</p>
-
-    </div>
-  </div>
-
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>何时使用1R离散化？</p>
-
-    </div>
-    <div class="notel-content">
-      <p>分类任务（目标变量是离散类别，如 0/1 或 A/B/C）。<br>数据探索：快速找到能够划分类别的最优分箱方式。<br>决策树建模：如 CART、ID3、C4.5 等模型。</p>
-
-    </div>
-  </div>
+<div class="callout callout--titled default mb-4 rounded-small shadow-redefine-flat bg-(--callout-bg-color) p-3 pl-1 relative flex flex-row gap-2"><div role="none" class="rounded-full self-stretch w-0.5 bg-(--callout-primary-color) shrink-0 opacity-60"></div><div class="flex flex-col gap-2"><div class="callout__title flex items-center gap-2 font-semibold tracking-tight"><i class="callout__icon fa-solid fa-info leading-none text-(--callout-primary-color) text-sm shrink-0"></i> 何时使用1R离散化？</div><div class="callout__content markdown-body flex-1 min-w-0"><p>分类任务（目标变量是离散类别，如 0/1 或 A/B/C）。<br>数据探索：快速找到能够划分类别的最优分箱方式。<br>决策树建模：如 CART、ID3、C4.5 等模型。</p></div></div></div>
 
 <h2 id="二值化离散法"><a href="#二值化离散法" class="headerlink" title="二值化离散法"></a>二值化离散法</h2><p>二值化离散法是一种简单且常用的离散化方法，它的基本思想是 将连续变量转换为两个类别（0 和 1），即：<br>小于某个阈值的设为 0<br>大于等于某个阈值的设为 1</p>
 <p>这种方法特别适用于需要转换成 布尔值（Boolean） 的场景，如 信用评分、风险预测 或 神经网络中的二元特征输入。</p>
@@ -925,18 +929,8 @@ mjx-container[display="true"] + br {
 <p>如果有分类标签 Y，可以使用决策树来学习最佳的二值化阈值：</p>
 <div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.tree import DecisionTreeClassifier</span><br><span class="line"></span><br><span class="line"><span class="comment"># 假设目标变量 Y</span></span><br><span class="line">target = np.random.choice([0, 1], size=len(data))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练决策树</span></span><br><span class="line">tree = DecisionTreeClassifier(max_depth=1)  <span class="comment"># 只允许一层分裂</span></span><br><span class="line">tree.fit(data.reshape(-1, 1), target)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取最优的分裂阈值</span></span><br><span class="line">optimal_threshold = tree.tree_.threshold[0]</span><br><span class="line">binarized_data_tree = (data &gt;= optimal_threshold).astype(int)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(f<span class="string">"决策树选择的最优二值化阈值: {optimal_threshold}"</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"基于决策树的二值化结果:"</span>, binarized_data_tree)</span><br></pre></td></tr></table></figure></div>
 
-
-  <div class="note-large default">
-    <div class="notel-title rounded-t-lg p-3 font-bold text-lg flex flex-row gap-2 items-center">
-      <i class="notel-icon fa-solid fa-info"></i><p>何时使用二值化？</p>
-
-    </div>
-    <div class="notel-content">
-      <p>✅ 适用场景<br>逻辑回归或朴素贝叶斯模型（需要布尔特征）。<br>信用评分、欺诈检测（例如：收入是否高于某个值？）。<br>生物信息学（例如：基因表达水平是否超过某个阈值？）。<br>特征筛选（减少噪声，提高模型可解释性）。<br>规则挖掘（如 Apriori 算法）（将数据转换为 0/1 格式）。</p>
-<p>❌ 不适用场景<br>信息损失严重：如果数据本身具有重要的连续性信息（如温度、房价），二值化可能会损失过多信息。<br>非布尔场景：如果数据有多个类别，建议使用多级离散化（如分箱）。</p>
-
-    </div>
-  </div>
+<div class="callout callout--titled default mb-4 rounded-small shadow-redefine-flat bg-(--callout-bg-color) p-3 pl-1 relative flex flex-row gap-2"><div role="none" class="rounded-full self-stretch w-0.5 bg-(--callout-primary-color) shrink-0 opacity-60"></div><div class="flex flex-col gap-2"><div class="callout__title flex items-center gap-2 font-semibold tracking-tight"><i class="callout__icon fa-solid fa-info leading-none text-(--callout-primary-color) text-sm shrink-0"></i> 何时使用二值化？</div><div class="callout__content markdown-body flex-1 min-w-0"><p>✅ 适用场景<br>逻辑回归或朴素贝叶斯模型（需要布尔特征）。<br>信用评分、欺诈检测（例如：收入是否高于某个值？）。<br>生物信息学（例如：基因表达水平是否超过某个阈值？）。<br>特征筛选（减少噪声，提高模型可解释性）。<br>规则挖掘（如 Apriori 算法）（将数据转换为 0/1 格式）。</p>
+<p>❌ 不适用场景<br>信息损失严重：如果数据本身具有重要的连续性信息（如温度、房价），二值化可能会损失过多信息。<br>非布尔场景：如果数据有多个类别，建议使用多级离散化（如分箱）。</p></div></div></div>
 		</div>
 
 		
@@ -997,7 +991,7 @@ mjx-container[display="true"] + br {
 						<i class="fa-solid fa-chevron-left"></i>
 					</span>
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">MCP介绍及其创建使用</span>
+						<span class="post-nav-title-item truncate max-w-48">MCP介绍及其创建使用</span>
 						<span class="post-nav-item">Prev posts</span>
 					</span>
 				</a>
@@ -1007,7 +1001,7 @@ mjx-container[display="true"] + br {
 			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
 				<a class="next" rel="next" href="/2025/03/28/20250328%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 					<span class="title flex justify-center items-center">
-						<span class="post-nav-title-item">机器学习作业笔记</span>
+						<span class="post-nav-title-item truncate max-w-48">机器学习作业笔记</span>
 						<span class="post-nav-item">Next posts</span>
 					</span>
 					<span class="right arrow-icon flex justify-center items-center">
@@ -1036,6 +1030,7 @@ mjx-container[display="true"] + br {
 	</div>
 	
 </div>
+
 			</div>
 
 			
@@ -1056,11 +1051,11 @@ mjx-container[display="true"] + br {
                 
                 <p class="post-count space-x-0.5">
                     <span>
-                        89 posts in total
+                        91 posts in total
                     </span>
                     
                         <span>
-                            228.4k words in total
+                            236.8k words in total
                         </span>
                     
                 </p>
@@ -1085,7 +1080,7 @@ mjx-container[display="true"] + br {
         
         <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
             <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
-            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.8.2</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.9.0</a></span>
         </div>
         
         
@@ -1175,9 +1170,43 @@ mjx-container[display="true"] + br {
 </div>
 	</div>
 
-	<div class="image-viewer-container">
-	<img src="">
+	<div class="image-viewer-container" role="dialog" aria-modal="true" aria-label="Image viewer">
+	<button class="image-viewer-close" type="button" aria-label="Close">
+		<i class="fa-solid fa-xmark"></i>
+	</button>
+	<button class="image-viewer-prev" type="button" aria-label="Prev">
+		<i class="fa-solid fa-chevron-left"></i>
+	</button>
+	<div class="image-viewer-frame">
+		<img src="" alt="">
+	</div>
+	<div class="image-viewer-exif-panel hidden absolute left-1/2 bottom-20 -translate-x-1/2 w-[min(92vw,420px)] max-h-[60vh] overflow-hidden rounded-2xl bg-background-color-transparent-80 p-4 text-left shadow-redefine-flat backdrop-blur-md" role="dialog" aria-label="EXIF" aria-hidden="true">
+		<div class="flex items-center justify-between mb-3">
+			<span class="text-sm font-semibold text-first-text-color">EXIF</span>
+			<button class="image-viewer-exif-close flex h-8 w-8 items-center justify-center rounded-full bg-background-color-transparent-80 text-first-text-color transition hover:bg-background-color-transparent-40" type="button" aria-label="Close">
+				<i class="fa-solid fa-xmark text-[0.65rem]"></i>
+			</button>
+		</div>
+		<div class="image-viewer-exif-cards grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto pr-1 scrollbar-hide"></div>
+		<template class="image-viewer-exif-card-template">
+			<div class="rounded-lg bg-background-color-transparent-40 px-3 py-2">
+				<div class="image-viewer-exif-card-header flex items-center gap-2 mb-1">
+					<i class="image-viewer-exif-card-icon fa-solid fa-circle-info text-xs text-third-text-color"></i>
+					<div class="image-viewer-exif-card-title text-xs font-semibold text-first-text-color"></div>
+				</div>
+				<div class="image-viewer-exif-card-items flex flex-col gap-1"></div>
+			</div>
+		</template>
+	</div>
+	<button class="image-viewer-exif-toggle flex items-center gap-2 hidden absolute left-1/2 bottom-6 -translate-x-1/2 rounded-full border border-border-color bg-background-color-transparent-80 px-4 py-2 text-first-text-color backdrop-blur-md transition hover:bg-background-color-transparent-40" type="button" aria-label="EXIF" aria-expanded="false">
+		<i class="fa-solid fa-circle-info text-xs"></i>
+		<span class="text-xs font-semibold uppercase tracking-wider">EXIF</span>
+	</button>
+	<button class="image-viewer-next" type="button" aria-label="Next">
+		<i class="fa-solid fa-chevron-right"></i>
+	</button>
 </div>
+
 
 	
 	<div class="search-pop-overlay">
@@ -1219,7 +1248,7 @@ mjx-container[display="true"] + br {
 <script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
 
 <script>
-    const swup = new Swup({
+    window.swup = new Swup({
         plugins: [
             new SwupScriptsPlugin({
                 optin: true,
@@ -1235,48 +1264,23 @@ mjx-container[display="true"] + br {
         ],
         containers: ["#swup"],
     });
+
+    window.dispatchEvent(
+        new CustomEvent("redefine:swup:ready", {
+            detail: {
+                swup: window.swup,
+            },
+        }),
+    );
 </script>
 
 
 
 
 	
-<script src="/js/build/tools/imageViewer.js" type="module"></script>
-
-<script src="/js/build/utils.js" type="module"></script>
-
 <script src="/js/build/main.js" type="module"></script>
 
-<script src="/js/build/layouts/navbarShrink.js" type="module"></script>
 
-<script src="/js/build/tools/scrollTopBottom.js" type="module"></script>
-
-<script src="/js/build/tools/lightDarkSwitch.js" type="module"></script>
-
-<script src="/js/build/layouts/categoryList.js" type="module"></script>
-
-
-
-    
-<script src="/js/build/tools/localSearch.js" type="module"></script>
-
-
-
-
-    
-<script src="/js/build/tools/codeBlock.js" type="module"></script>
-
-
-
-
-    
-<script src="/js/build/layouts/lazyload.js" type="module"></script>
-
-
-
-
-    
-<script src="/js/build/tools/runtime.js"></script>
 
     
 <script src="/js/build/libs/odometer.min.js"></script>
@@ -1287,22 +1291,12 @@ mjx-container[display="true"] + br {
 
 
 
+
+
+
   
 <script src="/js/build/libs/Typed.min.js"></script>
 
-  
-<script src="/js/build/plugins/typed.js" type="module"></script>
-
-
-
-
-
-
-    
-<script src="/js/build/libs/minimasonry.min.js"></script>
-
-    
-<script src="/js/build/plugins/masonry.js" type="module"></script>
 
 
 
@@ -1311,26 +1305,13 @@ mjx-container[display="true"] + br {
 
 
     
-<script src="/js/build/tools/tocToggle.js" type="module" data-swup-reload-script=""></script>
-
-<script src="/js/build/layouts/toc.js" type="module" data-swup-reload-script=""></script>
-
-<script src="/js/build/plugins/tabs.js" type="module" data-swup-reload-script=""></script>
+<script src="/js/build/libs/minimasonry.min.js" data-swup-reload-script=""></script>
 
 
 
 
 <script src="/js/build/libs/moment-with-locales.min.js" data-swup-reload-script=""></script>
 
-
-<script src="/js/build/layouts/essays.js" type="module" data-swup-reload-script=""></script>
-
-
-
-
-
-    
-<script src="/js/build/layouts/bookmarkNav.js" type="module"></script>
 
 
 	
