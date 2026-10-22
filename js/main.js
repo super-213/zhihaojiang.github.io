@@ -12,6 +12,7 @@ import initPangu from "./plugins/pangu.js";
 import initTabs from "./plugins/tabs.js";
 import initTyped from "./plugins/typed.js";
 import initDeferredWidgets from "./plugins/deferredWidgets.js";
+import initGitalk from "./plugins/gitalk.js";
 import initCopyCode from "./tools/codeBlock.js";
 import initExpirationDate from "./tools/expirationDate.js";
 import initModeToggle from "./tools/lightDarkSwitch.js";
@@ -170,6 +171,10 @@ const initPage = () => {
     if (theme.navbar?.search?.enable === true) {
       initLocalSearchPage();
     }
+  });
+
+  safeRun("gitalk", () => {
+    initGitalk({ signal: pageSignal });
   });
 
   safeRun("copyCode", () => {

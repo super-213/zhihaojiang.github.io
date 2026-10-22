@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    
+    <meta name="author" content="姜智浩">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://blog.zhihaojiang.com/2025/12/24/linux-operating-system-synchronization-and-mutual-exclusion/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux操作系统-同步互斥">
+<meta property="og:url" content="https://blog.zhihaojiang.com/2025/12/24/linux-operating-system-synchronization-and-mutual-exclusion/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.zhihaojiang.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2025-12-24T03:45:14.000Z">
+<meta property="article:modified_time" content="2026-10-22T03:42:09.270Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="计算机科学">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.zhihaojiang.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            Linux操作系统-同步互斥 | 智浩的Blog
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"blog.zhihaojiang.com","root":"/","language":"en","path":"search.json","search_format":"striptags"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"live2d":{"enable":true,"src":"https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js","delay":3000},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null}},"home_banner":{"enable":true,"style":"fixed","image":{"light_mobile":"/images/defaults/bear-mobile.webp","dark_mobile":"/images/defaults/bear-mobile.webp","light":"/images/defaults/bear-desktop.webp","dark":"/images/defaults/bear-desktop.webp"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":[{"icon":"fa-brands fa-github","url":"https://github.com/super-213"},{"icon":"fa-solid fa-at","url":"jiangzhihaojzh@126.com"}],"qrs":[]}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/original.png","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/original.png","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1","theme":{"light":"default","dark":"dark"}},"mathjax":{"tags":"none","single_dollars":true,"cjk_width":0.9,"normal_width":0.6,"append_css":true,"every_page":true}},"version":"2.9.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Portfolio":"/portfolio/","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":false}},"page_templates":{"friends_column":2,"tags_style":"blur","masonry":{"batch_size":12,"initial_batch_size":24}},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"shuoshuo":{"icon":"fa-solid fa-bookmark","path":"/essays/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footer":{"runtime":true,"icon":"<i class=\"fa-solid fa-heart fa-beat\" style=\"--fa-animation-duration: 0.5s; color: #f54545\"></i>","start":"2022/8/17 11:45:14","statistics":true,"customize":null,"icp":{"enable":false,"number":null,"url":null}},"footerStart":"2022/8/17 11:45:14","mermaid":{"style":{"light":"default","dark":"dark"}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.i18n = {"search":"Search...","toc":"On this page","prev":"Prev","next":"Next","prev_posts":"Prev posts","next_posts":"Next posts","page":"Page %d","recent_posts":"Recent Posts","share":"Share","powered_by":"POWERED BY %s","theme":"THEME","rss_feed":"RSS Feed","category":"Category","categories":"Categories","tag":"Tag","tags":"Tags","post":"Post","posts":"Posts","tagcloud":"Tag Cloud","comment":"Comment","comments":"Comments","home":"Home","archive":"Archive","archives":"Archives","top":"TOP","sticky":"Sticky","go-back-home":"Go Back Home","masonry_loading":"Loading photos...","image_viewer":"Image viewer","close":"Close","exif":{"title":"EXIF","cards":{"camera":"Camera","lens":"Lens","exposure":"Exposure","other":"Other"},"fields":{"make":"Brand","model":"Model","date_taken":"Date taken","lens_model":"Lens","focal_length":"Focal length","focus_mode":"Focus mode","shutter":"Shutter","aperture":"Aperture","iso":"ISO","exposure_program":"Exposure program","exposure_compensation":"Exposure compensation","metering_mode":"Metering mode","flash":"Flash","white_balance":"White balance","latitude":"Latitude","longitude":"Longitude","altitude":"Altitude"},"status":{"loading":"Loading...","no_exif":"No EXIF available","library_missing":"EXIF library not loaded","image_source_missing":"Image source unavailable","unavailable":"EXIF unavailable (blocked by CORS or missing metadata)","flag_unavailable":"EXIF unavailable"}},"about":"About","changelog":"Changelog","links":"Links","link":"Link","friends":"Friends","friend":"Friend","timeline":"Timeline","shuoshuo":"Shuoshuo","bookmarks":"Bookmarks","site_uv":"VISITOR COUNT","site_pv":"TOTAL PAGE VIEWS","read_more":"Read more","wordcount":"Words","min2read":"Mins","status":"Status","runtime":"Blog up for","days":"days","hours":"hrs","minutes":"Min","seconds":"Sec","optimized_by":"and Optimized by Evan","rights":"All Rights Reserved","site_posts":"%s posts in total","site_wordcount":"%s words in total","copyright":{"author":"Author","title":"Title","link":"Link","create_time":"Created at","update_time":"Updated at","license_title":"License","license_content":"This work is licensed under %s.","all_rights_reserved":"All Rights Reserved &#169; %s","public_domain":"This work is in the public domain."},"ago":{"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"},"create_time":"Created","update_time":"Updated","expired":"This post is written %s days ago, and the content may not be up to date.","gitalk_loading":"Loading comments…","gitalk_load_failed":"Comments could not be loaded. Please retry.","gitalk_retry":"Retry loading comments"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+<link rel="stylesheet" href="/assets/icon-subsets.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs><path id="redefine-math-7d511380885d84c5" d="M308 24Q367 24 416 76T466 197Q466 260 414 284Q308 311 278 321T236 341Q176 383 176 462Q176 523 208 573T273 648Q302 673 343 688T407 704H418H425Q521 704 564 640Q565 640 577 653T603 682T623 704Q624 704 627 704T632 705Q645 705 645 698T617 577T585 459T569 456Q549 456 549 465Q549 471 550 475Q550 478 551 494T553 520Q553 554 544 579T526 616T501 641Q465 662 419 662Q362 662 313 616T263 510Q263 480 278 458T319 427Q323 425 389 408T456 390Q490 379 522 342T554 242Q554 216 546 186Q541 164 528 137T492 78T426 18T332 -20Q320 -22 298 -22Q199 -22 144 33L134 44L106 13Q83 -14 78 -18T65 -22Q52 -22 52 -14Q52 -11 110 221Q112 227 130 227H143Q149 221 149 216Q149 214 148 207T144 186T142 153Q144 114 160 87T203 47T255 29T308 24Z"></path><path id="redefine-math-70ce1b72af58938f" d="M84 520Q84 528 88 533T96 539L99 540Q106 540 253 471T544 334L687 265Q694 260 694 250T687 235Q685 233 395 96L107 -40H101Q83 -38 83 -20Q83 -19 83 -17Q82 -10 98 -1Q117 9 248 71Q326 108 378 132L626 250L378 368Q90 504 86 509Q84 513 84 520Z"></path><path id="redefine-math-196baa367f349d35" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z"></path><path id="redefine-math-581006cbe97de79a" d="M580 514Q580 525 596 525Q601 525 604 525T609 525T613 524T615 523T617 520T619 517T622 512Q659 438 720 381T831 300T927 263Q944 258 944 250T935 239T898 228T840 204Q696 134 622 -12Q618 -21 615 -22T600 -24Q580 -24 580 -17Q580 -13 585 0Q620 69 671 123L681 133H70Q56 140 56 153Q56 168 72 173H725L735 181Q774 211 852 250Q851 251 834 259T789 283T735 319L725 327H72Q56 332 56 347Q56 360 70 367H681L671 377Q638 412 609 458T580 514Z"></path><path id="redefine-math-572a1870bfb48112" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path><path id="redefine-math-ec7ddf8a2f294ac4" d="M694 -11T694 -19T688 -33T678 -40Q671 -40 524 29T234 166L90 235Q83 240 83 250Q83 261 91 266Q664 540 678 540Q681 540 687 534T694 519T687 505Q686 504 417 376L151 250L417 124Q686 -4 687 -5Q694 -11 694 -19Z"></path><path id="redefine-math-d968fa5125e13b2a" d="M139 -249H137Q125 -249 119 -235V251L120 737Q130 750 139 750Q152 750 159 735V-235Q151 -249 141 -249H139Z"></path><path id="redefine-math-875b3ff8458d1384" d="M152 251Q152 646 388 850H416Q422 844 422 841Q422 837 403 816T357 753T302 649T255 482T236 250Q236 124 255 19T301 -147T356 -251T403 -315T422 -340Q422 -343 416 -349H388Q359 -325 332 -296T271 -213T212 -97T170 56T152 251Z"></path><path id="redefine-math-ec2c86be283b3b21" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path id="redefine-math-06e37eacb8432043" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path id="redefine-math-b5d7cada13e26951" d="M305 251Q305 -145 69 -349H56Q43 -349 39 -347T35 -338Q37 -333 60 -307T108 -239T160 -136T204 27T221 250T204 473T160 636T108 740T60 807T35 839Q35 850 50 850H56H69Q197 743 256 566Q305 425 305 251Z"></path><path id="redefine-math-88e4bdc8e3116e82" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path id="redefine-math-c118047ca4f93d86" d="M208 74Q208 50 254 46Q272 46 272 35Q272 34 270 22Q267 8 264 4T251 0Q249 0 239 0T205 1T141 2Q70 2 50 0H42Q35 7 35 11Q37 38 48 46H62Q132 49 164 96Q170 102 345 401T523 704Q530 716 547 716H555H572Q578 707 578 706L606 383Q634 60 636 57Q641 46 701 46Q726 46 726 36Q726 34 723 22Q720 7 718 4T704 0Q701 0 690 0T651 1T578 2Q484 2 455 0H443Q437 6 437 9T439 27Q443 40 445 43L449 46H469Q523 49 533 63L521 213H283L249 155Q208 86 208 74ZM516 260Q516 271 504 416T490 562L463 519Q447 492 400 412L310 260L413 259Q516 259 516 260Z"></path><path id="redefine-math-5ed2d5e4dd3f0165" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path><path id="redefine-math-5e5010b5393ef53e" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></defs></svg>
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                智浩的Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    PHOTO
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/portfolio/">
+                                                    PORTFOLIO
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/super-213">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/masonry/"
+                        >
+                            <span>
+                                PHOTO
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/portfolio/">PORTFOLIO</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/super-213">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/bookmarks/"
+                        >
+                            <span>Bookmarks</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/essays/"
+                        >
+                            <span>Shuoshuo</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/tags/"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/categories/"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">34</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">6</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">94</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">Linux操作系统-同步互斥</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] shrink-0 rounded-medium border border-border-color p-px">
+				<img src="/images/defaults/IMG_3744.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">姜智浩</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv5</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2025-12-24 11:45:14</span>
+        <span class="mobile">2025-12-24 11:45:14</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-10-22 11:42:09</span>
+            <span class="mobile">2026-10-22 11:42:09</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>7.7k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>30 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>在下列同步机制中，可以实现让权等待的是<br>A . Peterson 方法<br>B. swap 指令<br>C. 信号量方法<br>D. TestAndSet 指令</p>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：C. 信号量方法</strong></p>
+<p>本题考查同步机制是否满足 <strong>“让权等待”（Wait &amp; Yield）</strong> 原则。</p>
+<h4 id="🔹-什么是“让权等待”？"><a href="#🔹-什么是“让权等待”？" class="headerlink" title="🔹 什么是“让权等待”？"></a>🔹 什么是“让权等待”？</h4><ul>
+<li>当进程申请临界资源失败（如进入区失败）时，<strong>主动放弃 CPU（阻塞自己）</strong>，进入等待队列，不占用处理机空转；  </li>
+<li>与之相对的是 <strong>“忙等待（Busy Waiting）”</strong>：进程循环测试条件，持续占用 CPU，浪费资源。</li>
+</ul>
+<hr>
+<h3 id="逐项分析："><a href="#逐项分析：" class="headerlink" title="逐项分析："></a>逐项分析：</h3><h4 id="A-Peterson-方法"><a href="#A-Peterson-方法" class="headerlink" title="A. Peterson 方法"></a>A. Peterson 方法</h4><p>❌ <strong>忙等待</strong>  </p>
+<ul>
+<li>纯软件算法，通过 <code>flag[]</code> 和 <code>turn</code> 变量实现互斥；  </li>
+<li>进入临界区前循环检查条件：<code>while (flag[j] &amp;&amp; turn == j);</code>  </li>
+<li><strong>持续占用 CPU</strong>，不释放处理器 → 不满足让权等待。</li>
+</ul>
+<h4 id="B-swap-指令"><a href="#B-swap-指令" class="headerlink" title="B. swap 指令"></a>B. swap 指令</h4><p>❌ <strong>忙等待</strong>  </p>
+<ul>
+<li><code>swap</code> 是原子交换指令，常用于实现<strong>自旋锁（Spinlock）</strong>；  </li>
+<li>典型用法：<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (swap(&amp;lock, <span class="number">1</span>) == <span class="number">1</span>); <span class="comment">// 忙等</span></span><br></pre></td></tr></table></figure></div></li>
+<li>同样<strong>循环测试，不放弃 CPU</strong> → 忙等待。</li>
+</ul>
+<h4 id="C-信号量方法"><a href="#C-信号量方法" class="headerlink" title="C. 信号量方法"></a>C. 信号量方法</h4><p>✅ <strong>让权等待</strong>  </p>
+<ul>
+<li>信号量（Semaphore）由 Dijkstra 提出，标准实现包含：<div class="code-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">wait</span>(S) {</span><br><span class="line">    S.value--;</span><br><span class="line">    <span class="keyword">if</span> (S.value &lt; 0) {</span><br><span class="line">        block();   // 阻塞当前进程，放入等待队列</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">signal(S) {</span><br><span class="line">    S.value++;</span><br><span class="line">    <span class="keyword">if</span> (S.value &lt;= 0) {</span><br><span class="line">        wakeup();  // 唤醒一个等待进程</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div></li>
+<li>当 <code>S.value &lt; 0</code> 时，进程<strong>主动阻塞（放弃 CPU）</strong>，由 OS 调度器切换到其他进程；  </li>
+<li>恢复由其他进程 <code>signal()</code> 时唤醒；<br>→ <strong>满足让权等待</strong>。</li>
+</ul>
+<h4 id="D-TestAndSet-指令"><a href="#D-TestAndSet-指令" class="headerlink" title="D. TestAndSet 指令"></a>D. TestAndSet 指令</h4><p>❌ <strong>忙等待</strong>  </p>
+<ul>
+<li>硬件原子指令，用于实现自旋锁：<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (TestAndSet(&amp;lock)); <span class="comment">// 循环测试，直到为0</span></span><br></pre></td></tr></table></figure></div></li>
+<li>典型用于多核系统短临界区，但仍是<strong>忙等待</strong>；  </li>
+<li>不涉及进程阻塞/唤醒机制。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结："><a href="#🎯-考点总结：" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>同步机制</th>
+<th>是否让权等待</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Peterson</td>
+<td>❌</td>
+<td>纯软件忙等</td>
+</tr>
+<tr>
+<td>swap / TAS</td>
+<td>❌</td>
+<td>自旋锁，忙等</td>
+</tr>
+<tr>
+<td><strong>信号量</strong></td>
+<td>✅</td>
+<td>失败时 <code>block()</code>，进入阻塞态</td>
+</tr>
+<tr>
+<td>管程（Monitor）</td>
+<td>✅</td>
+<td>条件变量 <code>wait()</code> 会阻塞</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ 注意：信号量的<strong>具体实现</strong>可能有差异，但<strong>标准定义和教学语境下</strong>，信号量是支持让权等待的典型机制。</p>
+</blockquote>
+<hr>
+<p>✅ 正确答案：<strong>C. 信号量方法</strong></p>
+<h1 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h1><p>下列准则中实现临界区互斥机制必须遵循的是</p>
+<hr>
+<p>I、 两个进程不能同时进入临界区<br>II、 允许进程访问空闲的临界资源<br>III、 进程等待进入临界区的时间是有限的<br>IV、 不能进入临界区的执行态进程立即放弃 CPU<br>A. 仅Ⅰ、Ⅳ B. 仅Ⅱ、Ⅲ C. 仅Ⅰ、Ⅱ、Ⅲ D. 仅Ⅰ、Ⅲ、Ⅳ</p>
+<h2 id="解析-1"><a href="#解析-1" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：C. 仅Ⅰ、Ⅱ、Ⅲ</strong></p>
+<p>本题考查 <strong>临界区互斥机制必须满足的基本准则</strong>（也称 Petri 准则或并发控制四原则）。</p>
+<p>标准四条准则为：</p>
+<ol>
+<li><strong>互斥（Mutual Exclusion）</strong>：不能有两个或以上进程同时在临界区内；  </li>
+<li><strong>有空让进（Progress）</strong>：若无进程在临界区，且有进程希望进入，则<strong>不应无限推迟</strong>其进入；  </li>
+<li><strong>有限等待（Bounded Waiting）</strong>：任一进程从提出请求到进入临界区的<strong>等待时间有上界</strong>；  </li>
+<li><strong>让权等待（可选，非必须）</strong>：等待进程应释放 CPU（阻塞），避免忙等待 —— 这是<strong>性能/实现要求，非正确性必要条件</strong>。</li>
+</ol>
+<hr>
+<h3 id="逐项对应题干："><a href="#逐项对应题干：" class="headerlink" title="逐项对应题干："></a>逐项对应题干：</h3><h4 id="I-两个进程不能同时进入临界区"><a href="#I-两个进程不能同时进入临界区" class="headerlink" title="I. 两个进程不能同时进入临界区"></a>I. 两个进程不能同时进入临界区</h4><p>✅ <strong>必须遵循</strong> —— 对应 <strong>互斥原则</strong>，是临界区定义的核心。</p>
+<h4 id="II-允许进程访问空闲的临界资源"><a href="#II-允许进程访问空闲的临界资源" class="headerlink" title="II. 允许进程访问空闲的临界资源"></a>II. 允许进程访问空闲的临界资源</h4><p>✅ <strong>必须遵循</strong> —— 对应 <strong>有空让进（Progress）</strong>：若临界区空闲，不应阻止进程进入（即不能因调度策略导致“假死”）。</p>
+<h4 id="III-进程等待进入临界区的时间是有限的"><a href="#III-进程等待进入临界区的时间是有限的" class="headerlink" title="III. 进程等待进入临界区的时间是有限的"></a>III. 进程等待进入临界区的时间是有限的</h4><p>✅ <strong>必须遵循</strong> —— 对应 <strong>有限等待</strong>：防止饥饿（Starvation），确保公平性；若等待可无限长，则系统可能活锁或不公平。</p>
+<h4 id="IV-不能进入临界区的执行态进程立即放弃-CPU"><a href="#IV-不能进入临界区的执行态进程立即放弃-CPU" class="headerlink" title="IV. 不能进入临界区的执行态进程立即放弃 CPU"></a>IV. 不能进入临界区的执行态进程立即放弃 CPU</h4><p>❌ <strong>非必须遵循</strong>  </p>
+<ul>
+<li>这是 <strong>“让权等待”</strong> 的要求，属于<strong>实现优化</strong>，非正确性前提；  </li>
+<li>例如 <strong>Peterson 算法、TestAndSet 自旋锁</strong> 都是<strong>忙等待</strong>（不放弃 CPU），但仍能<strong>正确实现互斥</strong>；  </li>
+<li>在单处理机系统或短临界区场景下，忙等待可接受；  </li>
+<li>是否让权，取决于 OS 设计，<strong>不影响互斥机制的逻辑正确性</strong>。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-1"><a href="#🎯-考点总结：-1" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>准则</th>
+<th>是否必须</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>互斥（I）</td>
+<td>✅ 是</td>
+<td>核心要求</td>
+</tr>
+<tr>
+<td>有空让进（II）</td>
+<td>✅ 是</td>
+<td>避免无谓阻塞</td>
+</tr>
+<tr>
+<td>有限等待（III）</td>
+<td>✅ 是</td>
+<td>防止饥饿</td>
+</tr>
+<tr>
+<td>让权等待（IV）</td>
+<td>❌ 否</td>
+<td>属于性能/实现策略</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>📚 参考：《操作系统概念》（Silberschatz）—— 临界区问题的三条件：Mutual Exclusion, Progress, Bounded Waiting<br>（注意：书中明确指出，<strong>忙等待算法可满足前三者，但违反“非忙等待”这一额外期望</strong>）</p>
+</blockquote>
+<hr>
+<p>✅ 正确答案：<strong>C. 仅Ⅰ、Ⅱ、Ⅲ</strong></p>
+<h1 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h1><p>设与某资源关联的信号量初值为 3，当前值为 1。若 M 表示该资源的可用个数，N 表示等待该资源的进程<br>数，则 M、N 分别是</p>
+<hr>
+<p>。(2010)<br>A．0、1 B．1、0 C．1、2 D．2、0</p>
+<h2 id="解析-2"><a href="#解析-2" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：B．1、0</strong></p>
+<p>本题考查 <strong>信号量物理意义的理解</strong>。</p>
+<p>设某类资源有 <strong>多个实例</strong>（如打印机、缓冲区），用<strong>计数信号量（Counting Semaphore）</strong> 管理。</p>
+<ul>
+<li><strong>信号量的值 <code>S</code> 表示：当前可用资源数（若 <code>S ≥ 0</code>）；<br>若 <code>S &lt; 0</code>，则 <code>|S|</code> 表示等待该资源的进程数</strong>。</li>
+</ul>
+<p>更精确地说：</p>
+<div class="math-block"><mjx-container class="MathJax" jax="SVG" display="true"><svg style="vertical-align: -3.281ex;" xmlns="http://www.w3.org/2000/svg" width="48.295ex" height="7.692ex" role="img" focusable="false" viewBox="0 -1950 21346.3 3400"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mrow"><g data-mml-node="mo"><path data-c="23A7" d="M712 899L718 893V876V865Q718 854 704 846Q627 793 577 710T510 525Q510 524 509 521Q505 493 504 349Q504 345 504 334Q504 277 504 240Q504 -2 503 -4Q502 -8 494 -9T444 -10Q392 -10 390 -9Q387 -8 386 -5Q384 5 384 230Q384 262 384 312T383 382Q383 481 392 535T434 656Q510 806 664 892L677 899H712Z" transform="translate(0,1051)"></path><path data-c="23A9" d="M718 -893L712 -899H677L666 -893Q542 -825 468 -714T385 -476Q384 -466 384 -282Q384 3 385 5L389 9Q392 10 444 10Q486 10 494 9T503 4Q504 2 504 -239V-310V-366Q504 -470 508 -513T530 -609Q546 -657 569 -698T617 -767T661 -812T699 -843T717 -856T718 -876V-893Z" transform="translate(0,-551)"></path><path data-c="23A8" d="M389 1159Q391 1160 455 1160Q496 1160 498 1159Q501 1158 502 1155Q504 1145 504 924Q504 691 503 682Q494 549 425 439T243 259L229 250L243 241Q349 175 421 66T503 -182Q504 -191 504 -424Q504 -600 504 -629T499 -659H498Q496 -660 444 -660T390 -659Q387 -658 386 -655Q384 -645 384 -425V-282Q384 -176 377 -116T342 10Q325 54 301 92T255 155T214 196T183 222T171 232Q170 233 170 250T171 268Q171 269 191 284T240 331T300 407T354 524T383 679Q384 691 384 925Q384 1152 385 1155L389 1159Z" transform="translate(0,0)"></path><svg width="889" height="81" y="1060" x="0" viewBox="0 14.3 889 81"><path data-c="23AA" d="M384 150V266Q384 304 389 309Q391 310 455 310Q496 310 498 309Q502 308 503 298Q504 283 504 150Q504 32 504 12T499 -9H498Q496 -10 444 -10T390 -9Q386 -8 385 2Q384 17 384 150Z" transform="scale(1,0.398)"></path></svg><svg width="889" height="81" y="-641" x="0" viewBox="0 14.3 889 81"><path data-c="23AA" d="M384 150V266Q384 304 389 309Q391 310 455 310Q496 310 498 309Q502 308 503 298Q504 283 504 150Q504 32 504 12T499 -9H498Q496 -10 444 -10T390 -9Q386 -8 385 2Q384 17 384 150Z" transform="scale(1,0.398)"></path></svg></g><g data-mml-node="mtable" transform="translate(889,0)"><g data-mml-node="mtr" transform="translate(0,1200)"><g data-mml-node="mtd"><g data-mml-node="mi"><use data-c="1D446" href="#redefine-math-7d511380885d84c5"></use></g><g data-mml-node="mo" transform="translate(922.8,0)"><use data-c="3E" href="#redefine-math-70ce1b72af58938f"></use></g><g data-mml-node="mn" transform="translate(1978.6,0)"><use data-c="30" href="#redefine-math-196baa367f349d35"></use></g></g><g data-mml-node="mtd" transform="translate(3478.6,0)"><g data-mml-node="mo"><use data-c="21D2" href="#redefine-math-581006cbe97de79a"></use></g><g data-mml-node="mtext" transform="translate(1277.8,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">有</text><path data-c="A0" d="" transform="translate(1000,0)"></path></g><g data-mml-node="mi" transform="translate(2527.8,0)"><use data-c="1D446" href="#redefine-math-7d511380885d84c5"></use></g><g data-mml-node="mtext" transform="translate(3172.8,0)"><path data-c="A0" d=""></path><text data-variant="normal" transform="translate(250,0) scale(1,-1)" font-size="884px" font-family="serif">个</text><text data-variant="normal" transform="translate(1250,0) scale(1,-1)" font-size="884px" font-family="serif">资</text><text data-variant="normal" transform="translate(2250,0) scale(1,-1)" font-size="884px" font-family="serif">源</text><text data-variant="normal" transform="translate(3250,0) scale(1,-1)" font-size="884px" font-family="serif">空</text><text data-variant="normal" transform="translate(4250,0) scale(1,-1)" font-size="884px" font-family="serif">闲</text></g><g data-mml-node="mi" transform="translate(8422.8,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mtext" transform="translate(9422.8,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">无</text><text data-variant="normal" transform="translate(1000,0) scale(1,-1)" font-size="884px" font-family="serif">进</text><text data-variant="normal" transform="translate(2000,0) scale(1,-1)" font-size="884px" font-family="serif">程</text><text data-variant="normal" transform="translate(3000,0) scale(1,-1)" font-size="884px" font-family="serif">等</text><text data-variant="normal" transform="translate(4000,0) scale(1,-1)" font-size="884px" font-family="serif">待</text></g></g></g><g data-mml-node="mtr" transform="translate(0,0)"><g data-mml-node="mtd"><g data-mml-node="mi"><use data-c="1D446" href="#redefine-math-7d511380885d84c5"></use></g><g data-mml-node="mo" transform="translate(922.8,0)"><use data-c="3D" href="#redefine-math-572a1870bfb48112"></use></g><g data-mml-node="mn" transform="translate(1978.6,0)"><use data-c="30" href="#redefine-math-196baa367f349d35"></use></g></g><g data-mml-node="mtd" transform="translate(3478.6,0)"><g data-mml-node="mo"><use data-c="21D2" href="#redefine-math-581006cbe97de79a"></use></g><g data-mml-node="mtext" transform="translate(1277.8,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">资</text><text data-variant="normal" transform="translate(1000,0) scale(1,-1)" font-size="884px" font-family="serif">源</text><text data-variant="normal" transform="translate(2000,0) scale(1,-1)" font-size="884px" font-family="serif">刚</text><text data-variant="normal" transform="translate(3000,0) scale(1,-1)" font-size="884px" font-family="serif">好</text><text data-variant="normal" transform="translate(4000,0) scale(1,-1)" font-size="884px" font-family="serif">用</text><text data-variant="normal" transform="translate(5000,0) scale(1,-1)" font-size="884px" font-family="serif">完</text></g><g data-mml-node="mi" transform="translate(7277.8,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mtext" transform="translate(8277.8,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">无</text><text data-variant="normal" transform="translate(1000,0) scale(1,-1)" font-size="884px" font-family="serif">进</text><text data-variant="normal" transform="translate(2000,0) scale(1,-1)" font-size="884px" font-family="serif">程</text><text data-variant="normal" transform="translate(3000,0) scale(1,-1)" font-size="884px" font-family="serif">等</text><text data-variant="normal" transform="translate(4000,0) scale(1,-1)" font-size="884px" font-family="serif">待</text></g></g></g><g data-mml-node="mtr" transform="translate(0,-1200)"><g data-mml-node="mtd"><g data-mml-node="mi"><use data-c="1D446" href="#redefine-math-7d511380885d84c5"></use></g><g data-mml-node="mo" transform="translate(922.8,0)"><use data-c="3C" href="#redefine-math-ec7ddf8a2f294ac4"></use></g><g data-mml-node="mn" transform="translate(1978.6,0)"><use data-c="30" href="#redefine-math-196baa367f349d35"></use></g></g><g data-mml-node="mtd" transform="translate(3478.6,0)"><g data-mml-node="mo"><use data-c="21D2" href="#redefine-math-581006cbe97de79a"></use></g><g data-mml-node="mtext" transform="translate(1277.8,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">无</text><text data-variant="normal" transform="translate(1000,0) scale(1,-1)" font-size="884px" font-family="serif">空</text><text data-variant="normal" transform="translate(2000,0) scale(1,-1)" font-size="884px" font-family="serif">闲</text><text data-variant="normal" transform="translate(3000,0) scale(1,-1)" font-size="884px" font-family="serif">资</text><text data-variant="normal" transform="translate(4000,0) scale(1,-1)" font-size="884px" font-family="serif">源</text></g><g data-mml-node="mi" transform="translate(6277.8,0)"><text data-variant="italic" transform="scale(1,-1)" font-size="884px" font-family="serif" font-style="italic">，</text></g><g data-mml-node="mtext" transform="translate(7277.8,0)"><text data-variant="normal" transform="scale(1,-1)" font-size="884px" font-family="serif">有</text><path data-c="A0" d="" transform="translate(1000,0)"></path></g><g data-mml-node="mo" transform="translate(8527.8,0) translate(0 -0.5)"><use data-c="7C" href="#redefine-math-d968fa5125e13b2a"></use></g><g data-mml-node="mi" transform="translate(8805.8,0)"><use data-c="1D446" href="#redefine-math-7d511380885d84c5"></use></g><g data-mml-node="mo" transform="translate(9450.8,0) translate(0 -0.5)"><use data-c="7C" href="#redefine-math-d968fa5125e13b2a"></use></g><g data-mml-node="mtext" transform="translate(9728.8,0)"><path data-c="A0" d=""></path><text data-variant="normal" transform="translate(250,0) scale(1,-1)" font-size="884px" font-family="serif">个</text><text data-variant="normal" transform="translate(1250,0) scale(1,-1)" font-size="884px" font-family="serif">进</text><text data-variant="normal" transform="translate(2250,0) scale(1,-1)" font-size="884px" font-family="serif">程</text><text data-variant="normal" transform="translate(3250,0) scale(1,-1)" font-size="884px" font-family="serif">阻</text><text data-variant="normal" transform="translate(4250,0) scale(1,-1)" font-size="884px" font-family="serif">塞</text><text data-variant="normal" transform="translate(5250,0) scale(1,-1)" font-size="884px" font-family="serif">等</text><text data-variant="normal" transform="translate(6250,0) scale(1,-1)" font-size="884px" font-family="serif">待</text></g></g></g></g><g data-mml-node="mo" transform="translate(21346.3,0) translate(0 250)"></g></g></g></g></svg></mjx-container></div>
+<hr>
+<h3 id="题目条件："><a href="#题目条件：" class="headerlink" title="题目条件："></a>题目条件：</h3><ul>
+<li>信号量初值 = 3 → 系统共有 <strong>3 个该类资源</strong>  </li>
+<li>当前值 = 1</li>
+</ul>
+<p>→ 因为 <strong>1 &gt; 0</strong>，所以：  </p>
+<ul>
+<li><strong>可用资源数 M = 1</strong>  </li>
+<li><strong>等待进程数 N = 0</strong></li>
+</ul>
+<hr>
+<h3 id="🔍-验证过程："><a href="#🔍-验证过程：" class="headerlink" title="🔍 验证过程："></a>🔍 验证过程：</h3><ul>
+<li>初始：S = 3（3 个空闲资源）  </li>
+<li>某进程执行 <code>wait()</code>（P 操作）：S = 2  </li>
+<li>再一个 <code>wait()</code>：S = 1<br>→ 此时 2 个资源已被占用，1 个空闲，无等待进程。</li>
+</ul>
+<p>即：  </p>
+<ul>
+<li>已分配资源数 = 初值 − 当前值 = 3 − 1 = 2  </li>
+<li>可用资源 M = 当前值 = <strong>1</strong>（因 S &gt; 0）  </li>
+<li>等待进程 N = max(0, −S) = 0</li>
+</ul>
+<hr>
+<h3 id="❌-排除干扰选项："><a href="#❌-排除干扰选项：" class="headerlink" title="❌ 排除干扰选项："></a>❌ 排除干扰选项：</h3><ul>
+<li>A（0,1）：对应 S = −1（1 个等待，0 个空闲）  </li>
+<li>C（1,2）：矛盾（有 1 个空闲，怎会 2 个等待？）  </li>
+<li>D（2,0）：对应 S = 2</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-2"><a href="#🎯-考点总结：-2" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><ul>
+<li>信号量值 = 可用资源数（当 ≥ 0）  </li>
+<li>等待进程数 = <code>max(0, −S)</code>  </li>
+<li>资源总数 = 初值 = 可用 + 已分配  </li>
+<li>已分配 = 初值 − max(S, 0)</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>B．1、0</strong></p>
+<h1 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h1><p>使用TSL(Test and Set Lock)指令实现进程互斥的伪代码如下所示。<br>do {<br>……<br>while(TSL(&amp;lock))；<br>critical section；<br>lock=FALSE；<br>……<br>} while(TRUE)；<br>下列与该实现机制相关的叙述中，正确的是</p>
+<hr>
+<p>A．退出临界区的进程负责唤醒阻塞态进程<br>B．等待进入临界区的进程不会主动放弃CPU<br>C．上述伪代码满足“让权等待”的同步准则<br>D．while(TSL(&amp;lock))语句应在关中断状态下执行</p>
+<h2 id="解析-3"><a href="#解析-3" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：B．等待进入临界区的进程不会主动放弃CPU</strong></p>
+<p>本题考查 <strong>TSL（Test-and-Set Lock）指令实现的互斥机制特性</strong>。</p>
+<p>给出的伪代码是典型的<strong>自旋锁（Spinlock）</strong> 实现：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> {</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">while</span> (TSL(&amp;lock));   <span class="comment">// 忙等待：反复测试并设置 lock</span></span><br><span class="line">    critical section;</span><br><span class="line">    lock = FALSE;         <span class="comment">// 退出临界区，释放锁</span></span><br><span class="line">    ...</span><br><span class="line">} <span class="keyword">while</span> (TRUE);</span><br></pre></td></tr></table></figure></div>
+
+<p>其中 <code>TSL(&amp;lock)</code> 是原子操作，等价于：</p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">TSL</span><span class="params">(<span class="type">bool</span> *lock)</span> {</span><br><span class="line">    <span class="type">bool</span> old = *lock;</span><br><span class="line">    *lock = TRUE;</span><br><span class="line">    <span class="keyword">return</span> old;   <span class="comment">// 返回原值：若原为 FALSE（未锁），返回 FALSE，退出循环</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+
+<p>即：<strong>只有当 lock 原为 FALSE 时，TSL 返回 FALSE，循环结束，进程进入临界区</strong>。</p>
+<hr>
+<h3 id="逐项分析选项："><a href="#逐项分析选项：" class="headerlink" title="逐项分析选项："></a>逐项分析选项：</h3><h4 id="A．退出临界区的进程负责唤醒阻塞态进程"><a href="#A．退出临界区的进程负责唤醒阻塞态进程" class="headerlink" title="A．退出临界区的进程负责唤醒阻塞态进程"></a>A．退出临界区的进程负责唤醒阻塞态进程</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li>TSL 实现的是<strong>忙等待</strong>，等待进程处于<strong>运行态（就绪/执行）</strong>，<strong>并非阻塞态</strong>；  </li>
+<li>它们在 <code>while</code> 循环中不断执行 TSL，<strong>持续占用 CPU</strong>；  </li>
+<li>退出时只需 <code>lock = FALSE</code>，<strong>无需唤醒操作</strong>（无进程在等待队列中）；  </li>
+<li>唤醒机制存在于<strong>信号量、管程等阻塞式同步机制</strong>中，<strong>TSL 不具备</strong>。</li>
+</ul>
+<h4 id="B．等待进入临界区的进程不会主动放弃CPU"><a href="#B．等待进入临界区的进程不会主动放弃CPU" class="headerlink" title="B．等待进入临界区的进程不会主动放弃CPU"></a>B．等待进入临界区的进程不会主动放弃CPU</h4><p>✅ <strong>正确</strong>。  </p>
+<ul>
+<li><code>while (TSL(&amp;lock));</code> 是一个<strong>空循环</strong>，进程反复测试 lock 状态；  </li>
+<li>只要 lock == TRUE，就继续循环，<strong>不调用 sleep、yield 或 block</strong>；  </li>
+<li>因此，<strong>CPU 一直被该进程占用</strong>，属于典型的<strong>忙等待（Busy Waiting）</strong>；<br>→ 符合 TSL/自旋锁的本质特征。</li>
+</ul>
+<h4 id="C．上述伪代码满足“让权等待”的同步准则"><a href="#C．上述伪代码满足“让权等待”的同步准则" class="headerlink" title="C．上述伪代码满足“让权等待”的同步准则"></a>C．上述伪代码满足“让权等待”的同步准则</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li>“让权等待”要求：<strong>进程等待时主动释放 CPU（进入阻塞态）</strong>；  </li>
+<li>而本代码是忙等待，<strong>违反让权等待</strong>；  </li>
+<li>满足“让权等待”的是信号量、条件变量等机制。</li>
+</ul>
+<h4 id="D．while-TSL-lock-语句应在关中断状态下执行"><a href="#D．while-TSL-lock-语句应在关中断状态下执行" class="headerlink" title="D．while(TSL(&lock))语句应在关中断状态下执行"></a>D．<code>while(TSL(&amp;lock))</code>语句应在关中断状态下执行</h4><p>❌ <strong>错误</strong>。  </p>
+<ul>
+<li>TSL 是<strong>硬件提供的原子指令</strong>，其执行本身是不可中断的（原子性由 CPU 保证）；  </li>
+<li>不需要关中断；  </li>
+<li><strong>关中断</strong>用于保护<strong>临界区本身</strong>（如修改内核数据结构），而非用于 TSL 测试；  </li>
+<li>若关中断执行长时间忙等待，会导致<strong>系统无法响应时钟中断</strong>，丢失调度，极其危险！</li>
+</ul>
+<blockquote>
+<p>✅ 正确做法：TSL 本身是原子的，可开中断执行；但临界区若涉及内核数据，需关中断或使用更高级同步。</p>
+</blockquote>
+<hr>
+<h3 id="🎯-考点总结：-3"><a href="#🎯-考点总结：-3" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>机制</th>
+<th>是否忙等待</th>
+<th>是否让权等待</th>
+<th>是否需唤醒</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>TSL / TAS / Swap</strong></td>
+<td>✅ 是</td>
+<td>❌ 否</td>
+<td>❌ 否</td>
+<td>多核短临界区、内核自旋锁</td>
+</tr>
+<tr>
+<td><strong>信号量（block/wakeup）</strong></td>
+<td>❌ 否</td>
+<td>✅ 是</td>
+<td>✅ 是</td>
+<td>用户态长临界区</td>
+</tr>
+<tr>
+<td><strong>Peterson 算法</strong></td>
+<td>✅ 是</td>
+<td>❌ 否</td>
+<td>❌ 否</td>
+<td>单处理机软件互斥</td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ 正确答案：<strong>B</strong></p>
+<h1 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h1><p>下列关于管程的叙述中，错误的是______<br>。(2016)<br>A．管程只能用于实现进程的互斥<br>B．管程是由编程语言支持的进程同步机制<br>C．任何时候只能有一个进程在管程中执行<br>D．管程中定义的变量只能被管程内的过程访问</p>
+<h2 id="解析-4"><a href="#解析-4" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：A．管程只能用于实现进程的互斥</strong></p>
+<p>本题考查对 <strong>管程（Monitor）</strong> 概念的理解。</p>
+<p>管程是一种<strong>高级同步机制</strong>，由 Hoare 和 Brinch Hansen 提出，广泛用于操作系统和编程语言（如 Java 的 <code>synchronized</code> 基于管程思想）。</p>
+<p>我们逐项分析：</p>
+<hr>
+<h4 id="A．管程只能用于实现进程的互斥"><a href="#A．管程只能用于实现进程的互斥" class="headerlink" title="A．管程只能用于实现进程的互斥"></a>A．管程只能用于实现进程的互斥</h4><p>❌ <strong>错误</strong>（本题答案）  </p>
+<ul>
+<li>管程不仅能实现<strong>互斥</strong>，更能实现<strong>进程同步（协作）</strong>；  </li>
+<li>关键在于 <strong>条件变量（condition variable）</strong>：  <ul>
+<li><code>wait(cv)</code>：释放管程锁 + 阻塞进程  </li>
+<li><code>signal(cv)</code> / <code>notify(cv)</code>：唤醒等待进程</li>
+</ul>
+</li>
+<li>典型应用：  <ul>
+<li>生产者-消费者问题  </li>
+<li>读者-写者问题  </li>
+<li>哲学家进餐问题<br>→ 管程是<strong>互斥 + 同步</strong>的统一机制，<strong>A 说法片面，错误</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="B．管程是由编程语言支持的进程同步机制"><a href="#B．管程是由编程语言支持的进程同步机制" class="headerlink" title="B．管程是由编程语言支持的进程同步机制"></a>B．管程是由编程语言支持的进程同步机制</h4><p>✅ <strong>正确</strong>  </p>
+<ul>
+<li>管程通常由<strong>语言层面提供语法支持</strong>：  <ul>
+<li>Pascal 的 <code>monitor</code> 关键字（早期）  </li>
+<li>Java 的 <code>synchronized</code> 方法/块 + <code>wait()/notify()</code>  </li>
+<li>C# 的 <code>lock</code> + <code>Monitor</code> 类</li>
+</ul>
+</li>
+<li>编译器/运行时负责生成进入/退出管程的同步代码；<br>→ 不同于信号量（需程序员手动调用 P/V），管程是<strong>语言级抽象</strong>。</li>
+</ul>
+<hr>
+<h4 id="C．任何时候只能有一个进程在管程中执行"><a href="#C．任何时候只能有一个进程在管程中执行" class="headerlink" title="C．任何时候只能有一个进程在管程中执行"></a>C．任何时候只能有一个进程在管程中执行</h4><p>✅ <strong>正确</strong>  </p>
+<ul>
+<li>管程的<strong>核心语义</strong>：  <blockquote>
+<p>“At most one process can be active in the monitor at a time.”  </p>
+</blockquote>
+</li>
+<li>管程自带一个<strong>隐式互斥锁（mutex）</strong>：  <ul>
+<li>进程进入管程内任何过程前，必须先获得锁；  </li>
+<li>退出时自动释放锁；</li>
+</ul>
+</li>
+<li>即使有多个条件变量，也<strong>只允许一个进程在管程内执行代码</strong>（调用 <code>wait()</code> 时会临时释放锁，但不算“执行中”）。</li>
+</ul>
+<hr>
+<h4 id="D．管程中定义的变量只能被管程内的过程访问"><a href="#D．管程中定义的变量只能被管程内的过程访问" class="headerlink" title="D．管程中定义的变量只能被管程内的过程访问"></a>D．管程中定义的变量只能被管程内的过程访问</h4><p>✅ <strong>正确</strong>  </p>
+<ul>
+<li>这是管程的<strong>封装性（Encapsulation）</strong> 特征；  </li>
+<li>管程内部的共享变量（如 buffer、count）是<strong>私有（private）</strong> 的；  </li>
+<li>外部进程只能通过管程提供的<strong>入口过程（entry procedure）</strong> 间接访问；<br>→ 避免了竞争条件，保证数据一致性。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-4"><a href="#🎯-考点总结：-4" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>功能</strong></td>
+<td>互斥 + 同步（A 错在“只能互斥”）</td>
+</tr>
+<tr>
+<td><strong>实现层级</strong></td>
+<td>语言支持（B 正确）</td>
+</tr>
+<tr>
+<td><strong>并发控制</strong></td>
+<td>任一时刻最多一个进程活跃（C 正确）</td>
+</tr>
+<tr>
+<td><strong>数据封装</strong></td>
+<td>内部变量私有，仅通过过程访问（D 正确）</td>
+</tr>
+</tbody></table>
+<hr>
+<p>✅ 正确答案：<strong>A</strong></p>
+<h1 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h1><p>.进程P1和P2均包含并发执行的线程，部分伪代码描述如下所示。<br>下列选项中，需要互斥执行的操作是______<br>。(2016)<br>A．a=1与a=2 B．a=x与b=x<br>C．x+=1与x+=2 D．x+=1与x+=3</p>
+<h3 id="伪代码："><a href="#伪代码：" class="headerlink" title="伪代码："></a>伪代码：</h3><p><strong>进程 P1：</strong></p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x=<span class="number">0</span>;</span><br><span class="line">Thread1() {</span><br><span class="line">    <span class="type">int</span> a;</span><br><span class="line">    a=<span class="number">1</span>;  x+=<span class="number">1</span>;</span><br><span class="line">}</span><br><span class="line">Thread2() {</span><br><span class="line">    <span class="type">int</span> a;</span><br><span class="line">    a=<span class="number">2</span>;  x+=<span class="number">2</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>进程 P2：</strong></p>
+<div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x=<span class="number">0</span>;</span><br><span class="line">Thread3() {</span><br><span class="line">    <span class="type">int</span> a;</span><br><span class="line">    a=x;  x+=<span class="number">3</span>;</span><br><span class="line">}</span><br><span class="line">Thread4() {</span><br><span class="line">    <span class="type">int</span> b;</span><br><span class="line">    b=x;  x+=<span class="number">4</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="解析-5"><a href="#解析-5" class="headerlink" title="解析"></a>解析</h2><blockquote>
+<p>注意：x 是<strong>全局共享变量</strong>（每个进程内定义一个 x，但 P1 和 P2 的 x 不共享；但在每个进程中，多个线程共享该进程内的 x）。</p>
+</blockquote>
+<hr>
+<h3 id="题目问：“需要互斥执行的操作”-——-即哪些操作对共享变量-x-的访问可能产生竞态条件（Race-Condition），需加锁保护。"><a href="#题目问：“需要互斥执行的操作”-——-即哪些操作对共享变量-x-的访问可能产生竞态条件（Race-Condition），需加锁保护。" class="headerlink" title="题目问：“需要互斥执行的操作” —— 即哪些操作对共享变量 x 的访问可能产生竞态条件（Race Condition），需加锁保护。"></a>题目问：“需要互斥执行的操作” —— 即哪些操作对共享变量 x 的访问<strong>可能产生竞态条件（Race Condition）</strong>，需加锁保护。</h3><p>我们看每个选项：</p>
+<h4 id="A-a-1-与-a-2"><a href="#A-a-1-与-a-2" class="headerlink" title="A. a=1 与 a=2"></a>A. <code>a=1</code> 与 <code>a=2</code></h4><ul>
+<li>a 是局部变量，每个线程有自己的栈空间 → <strong>不共享</strong><br>→ 无竞争 → ❌ 不需要互斥</li>
+</ul>
+<h4 id="B-a-x-与-b-x"><a href="#B-a-x-与-b-x" class="headerlink" title="B. a=x 与 b=x"></a>B. <code>a=x</code> 与 <code>b=x</code></h4><ul>
+<li>在 P2 中：<ul>
+<li>Thread3: <code>a = x</code> （读 x）</li>
+<li>Thread4: <code>b = x</code> （读 x）</li>
+</ul>
+</li>
+<li>两个都是<strong>读操作</strong>，即使并发执行，也不会破坏数据一致性（只要没有写入）<br>→ <strong>无竞态</strong> → ❌ 不需要互斥</li>
+</ul>
+<h4 id="C-x-1-与-x-2"><a href="#C-x-1-与-x-2" class="headerlink" title="C. x+=1 与 x+=2"></a>C. <code>x+=1</code> 与 <code>x+=2</code></h4><ul>
+<li>在 P1 中：<ul>
+<li>Thread1: <code>x += 1</code>  </li>
+<li>Thread2: <code>x += 2</code></li>
+</ul>
+</li>
+<li><code>x += n</code> 是<strong>复合操作</strong>（读取 x → 计算 x+n → 写回 x），<strong>非原子操作</strong>  </li>
+<li>若并发执行，可能发生：<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Thread1: 读 x=0 → 计算 0+1=1 → 写回 x=1</span><br><span class="line">Thread2: 读 x=0 → 计算 0+2=2 → 写回 x=2   ← 覆盖了 Thread1 的结果！</span><br></pre></td></tr></table></figure></div>
+→ 最终 x = 2，而不是期望的 3 → <strong>竞态条件</strong><br>✅ <strong>需要互斥</strong></li>
+</ul>
+<h4 id="D-x-1-与-x-3"><a href="#D-x-1-与-x-3" class="headerlink" title="D. x+=1 与 x+=3"></a>D. <code>x+=1</code> 与 <code>x+=3</code></h4><ul>
+<li><code>x+=1</code> 在 P1，<code>x+=3</code> 在 P2  </li>
+<li>P1 和 P2 是<strong>不同进程</strong>，各自有独立的 <code>x</code> 变量（进程间内存隔离）<br>→ <strong>不共享同一个 x</strong> → 无竞争<br>❌ 不需要互斥</li>
+</ul>
+<hr>
+<h3 id="✅-正确答案：C-x-1-与-x-2"><a href="#✅-正确答案：C-x-1-与-x-2" class="headerlink" title="✅ 正确答案：C. x+=1 与 x+=2"></a>✅ 正确答案：<strong>C. x+=1 与 x+=2</strong></h3><h1 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h1><p>属于同一进程的两个线程 thread1 和 thread2 并发执行，共享初值为 0 的全局变量 x。 thread1 和 thread2 实现对全局变量 x 加 1 的机器级代<br>码描述如下,在所有可能的指令执行序列中，使 x 的值为 2 的序列个数是______<br>。(2018)<br>A. 1 B. 2 C.3 D.4</p>
+<h2 id="解析-6"><a href="#解析-6" class="headerlink" title="解析"></a>解析</h2><p>我们来分析这道经典的<strong>并发线程竞态条件</strong>题目。</p>
+<hr>
+<h3 id="📜-题目描述："><a href="#📜-题目描述：" class="headerlink" title="📜 题目描述："></a>📜 题目描述：</h3><ul>
+<li>同一进程内有两个线程：<code>thread1</code> 和 <code>thread2</code>  </li>
+<li>共享全局变量 <code>x</code>，初始值为 0  </li>
+<li>每个线程执行“对 x 加 1”的操作，用机器级指令实现：<ul>
+<li><code>mov R, x</code> → 将 x 的值读入寄存器  </li>
+<li><code>inc R</code> → 寄存器值加 1  </li>
+<li><code>mov x, R</code> → 将寄存器值写回 x</li>
+</ul>
+</li>
+</ul>
+<p>目标：在所有可能的指令交错序列中，<strong>有多少种序列最终使 x = 2</strong>？</p>
+<hr>
+<h2 id="✅-关键点："><a href="#✅-关键点：" class="headerlink" title="✅ 关键点："></a>✅ 关键点：</h2><p>虽然每个线程都在做“x++”，但由于是<strong>非原子操作</strong>（三步），若两个线程交错执行，可能导致<strong>丢失更新</strong>，最终 x 可能为 1 或 2。</p>
+<p>我们需要枚举所有可能的<strong>指令交错序列</strong>，并统计哪些最终得到 <code>x = 2</code>。</p>
+<hr>
+<h2 id="🔢-总指令数："><a href="#🔢-总指令数：" class="headerlink" title="🔢 总指令数："></a>🔢 总指令数：</h2><ul>
+<li>thread1：3 条指令（记为 A1, A2, A3）  </li>
+<li>thread2：3 条指令（记为 B1, B2, B3）<br>→ 总共 6 条指令，从中选 3 个位置给 thread1，其余给 thread2 → 总序列数 = <span class="math-inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.816ex;" xmlns="http://www.w3.org/2000/svg" width="8.152ex" height="2.886ex" role="img" focusable="false" viewBox="0 -914.9 3603.1 1275.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mrow"><g data-mml-node="TeXAtom" data-mjx-texclass="OPEN"><g data-mml-node="mo" transform="translate(0 -0.5)"><use data-c="28" href="#redefine-math-875b3ff8458d1384"></use></g></g><g data-mml-node="mfrac" transform="translate(458,0)"><g data-mml-node="mn" transform="translate(0,444) scale(0.707)"><use data-c="36" href="#redefine-math-ec2c86be283b3b21"></use></g><g data-mml-node="mn" transform="translate(0,-345) scale(0.707)"><use data-c="33" href="#redefine-math-06e37eacb8432043"></use></g></g><g data-mml-node="TeXAtom" data-mjx-texclass="CLOSE" transform="translate(811.6,0)"><g data-mml-node="mo" transform="translate(0 -0.5)"><use data-c="29" href="#redefine-math-b5d7cada13e26951"></use></g></g></g><g data-mml-node="mo" transform="translate(1547.3,0)"><use data-c="3D" href="#redefine-math-572a1870bfb48112"></use></g><g data-mml-node="mn" transform="translate(2603.1,0)"><use data-c="32" href="#redefine-math-88e4bdc8e3116e82"></use><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></svg></mjx-container></span> 种</li>
+</ul>
+<p>但并非所有 20 种都导致不同结果 —— 我们只需关注<strong>最终 x 的值</strong>。</p>
+<hr>
+<h2 id="✅-正确结果：x-2-当且仅当-两个线程的写操作没有覆盖对方的结果"><a href="#✅-正确结果：x-2-当且仅当-两个线程的写操作没有覆盖对方的结果" class="headerlink" title="✅ 正确结果：x=2 当且仅当 两个线程的写操作没有覆盖对方的结果"></a>✅ 正确结果：x=2 当且仅当 <strong>两个线程的写操作没有覆盖对方的结果</strong></h2><p>即：<strong>两个线程都成功将自己计算后的值写回 x，且没有被对方覆盖</strong>。</p>
+<p>这要求：<strong>两个线程的“写回”指令（A3 和 B3）必须发生在对方“读取”之后、或不干扰彼此</strong>。</p>
+<hr>
+<h3 id="🧩-枚举关键情况："><a href="#🧩-枚举关键情况：" class="headerlink" title="🧩 枚举关键情况："></a>🧩 枚举关键情况：</h3><p>我们用简写表示：</p>
+<ul>
+<li>A1: mov R1, x  </li>
+<li>A2: inc R1  </li>
+<li>A3: mov x, R1  </li>
+<li>B1: mov R2, x  </li>
+<li>B2: inc R2  </li>
+<li>B3: mov x, R2</li>
+</ul>
+<p>我们要找的是：<strong>最终 x=2</strong> 的序列。</p>
+<hr>
+<h3 id="🎯-情况-1：无交错（完全串行）"><a href="#🎯-情况-1：无交错（完全串行）" class="headerlink" title="🎯 情况 1：无交错（完全串行）"></a>🎯 情况 1：无交错（完全串行）</h3><h4 id="1-A1→A2→A3→B1→B2→B3"><a href="#1-A1→A2→A3→B1→B2→B3" class="headerlink" title="1. A1→A2→A3→B1→B2→B3"></a>1. A1→A2→A3→B1→B2→B3</h4><ul>
+<li>A 读 0 → 加 1 → 写 1  </li>
+<li>B 读 1 → 加 1 → 写 2<br>→ x=2 ✅</li>
+</ul>
+<h4 id="2-B1→B2→B3→A1→A2→A3"><a href="#2-B1→B2→B3→A1→A2→A3" class="headerlink" title="2. B1→B2→B3→A1→A2→A3"></a>2. B1→B2→B3→A1→A2→A3</h4><ul>
+<li>B 读 0 → 加 1 → 写 1  </li>
+<li>A 读 1 → 加 1 → 写 2<br>→ x=2 ✅</li>
+</ul>
+<p>→ <strong>2 种序列</strong></p>
+<hr>
+<h3 id="🎯-情况-2：部分交错，但写操作未被覆盖"><a href="#🎯-情况-2：部分交错，但写操作未被覆盖" class="headerlink" title="🎯 情况 2：部分交错，但写操作未被覆盖"></a>🎯 情况 2：部分交错，但写操作未被覆盖</h3><h4 id="3-A1→B1→A2→B2→A3→B3"><a href="#3-A1→B1→A2→B2→A3→B3" class="headerlink" title="3. A1→B1→A2→B2→A3→B3"></a>3. A1→B1→A2→B2→A3→B3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>A 加 1 → R1=1  </li>
+<li>B 加 1 → R2=1  </li>
+<li>A 写 1 → x=1  </li>
+<li>B 写 1 → x=1 ❌ → 最终 x=1</li>
+</ul>
+<h4 id="4-A1→B1→A2→A3→B2→B3"><a href="#4-A1→B1→A2→A3→B2→B3" class="headerlink" title="4. A1→B1→A2→A3→B2→B3"></a>4. A1→B1→A2→A3→B2→B3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>A 加 1 → R1=1  </li>
+<li>A 写 1 → x=1  </li>
+<li>B 加 1 → R2=1  </li>
+<li>B 写 1 → x=1 ❌</li>
+</ul>
+<h4 id="5-A1→B1→B2→A2→A3→B3"><a href="#5-A1→B1→B2→A2→A3→B3" class="headerlink" title="5. A1→B1→B2→A2→A3→B3"></a>5. A1→B1→B2→A2→A3→B3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>B 加 1 → R2=1  </li>
+<li>A 加 1 → R1=1  </li>
+<li>A 写 1 → x=1  </li>
+<li>B 写 1 → x=1 ❌</li>
+</ul>
+<h4 id="6-A1→A2→B1→B2→A3→B3"><a href="#6-A1→A2→B1→B2→A3→B3" class="headerlink" title="6. A1→A2→B1→B2→A3→B3"></a>6. A1→A2→B1→B2→A3→B3</h4><ul>
+<li>A 读 0 → 加 1 → R1=1  </li>
+<li>B 读 0 → 加 1 → R2=1  </li>
+<li>A 写 1 → x=1  </li>
+<li>B 写 1 → x=1 ❌</li>
+</ul>
+<h4 id="7-A1→A2→B1→A3→B2→B3"><a href="#7-A1→A2→B1→A3→B2→B3" class="headerlink" title="7. A1→A2→B1→A3→B2→B3"></a>7. A1→A2→B1→A3→B2→B3</h4><ul>
+<li>A 读 0 → 加 1 → R1=1  </li>
+<li>B 读 0 → R2=0  </li>
+<li>A 写 1 → x=1  </li>
+<li>B 加 1 → R2=1  </li>
+<li>B 写 1 → x=1 ❌</li>
+</ul>
+<h4 id="8-B1→A1→B2→A2→B3→A3"><a href="#8-B1→A1→B2→A2→B3→A3" class="headerlink" title="8. B1→A1→B2→A2→B3→A3"></a>8. B1→A1→B2→A2→B3→A3</h4><ul>
+<li>B 读 0  </li>
+<li>A 读 0  </li>
+<li>B 加 1 → R2=1  </li>
+<li>A 加 1 → R1=1  </li>
+<li>B 写 1 → x=1  </li>
+<li>A 写 1 → x=1 ❌</li>
+</ul>
+<h4 id="9-B1→A1→B2→B3→A2→A3"><a href="#9-B1→A1→B2→B3→A2→A3" class="headerlink" title="9. B1→A1→B2→B3→A2→A3"></a>9. B1→A1→B2→B3→A2→A3</h4><ul>
+<li>B 读 0  </li>
+<li>A 读 0  </li>
+<li>B 加 1 → R2=1  </li>
+<li>B 写 1 → x=1  </li>
+<li>A 加 1 → R1=1  </li>
+<li>A 写 1 → x=1 ❌</li>
+</ul>
+<h4 id="10-B1→B2→A1→A2→B3→A3"><a href="#10-B1→B2→A1→A2→B3→A3" class="headerlink" title="10. B1→B2→A1→A2→B3→A3"></a>10. B1→B2→A1→A2→B3→A3</h4><ul>
+<li>B 读 0 → 加 1 → R2=1  </li>
+<li>A 读 0 → 加 1 → R1=1  </li>
+<li>B 写 1 → x=1  </li>
+<li>A 写 1 → x=1 ❌</li>
+</ul>
+<hr>
+<h3 id="🎯-唯一能使-x-2-的情况："><a href="#🎯-唯一能使-x-2-的情况：" class="headerlink" title="🎯 唯一能使 x=2 的情况："></a>🎯 唯一能使 x=2 的情况：</h3><p>只有当<strong>一个线程写完后，另一个线程再读取该值</strong>，才能叠加。</p>
+<p>即：</p>
+<h4 id="✅-序列-1：A1→A2→A3→B1→B2→B3"><a href="#✅-序列-1：A1→A2→A3→B1→B2→B3" class="headerlink" title="✅ 序列 1：A1→A2→A3→B1→B2→B3"></a>✅ 序列 1：A1→A2→A3→B1→B2→B3</h4><ul>
+<li>A 写 1 → B 读 1 → 加 1 → 写 2</li>
+</ul>
+<h4 id="✅-序列-2：B1→B2→B3→A1→A2→A3"><a href="#✅-序列-2：B1→B2→B3→A1→A2→A3" class="headerlink" title="✅ 序列 2：B1→B2→B3→A1→A2→A3"></a>✅ 序列 2：B1→B2→B3→A1→A2→A3</h4><ul>
+<li>B 写 1 → A 读 1 → 加 1 → 写 2</li>
+</ul>
+<h4 id="✅-序列-3：A1→B1→B2→B3→A2→A3"><a href="#✅-序列-3：A1→B1→B2→B3→A2→A3" class="headerlink" title="✅ 序列 3：A1→B1→B2→B3→A2→A3"></a>✅ 序列 3：A1→B1→B2→B3→A2→A3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0 → 加 1 → 写 1  </li>
+<li>A 加 1 → R1=1  </li>
+<li>A 写 1 → x=1 ❌</li>
+</ul>
+<p>等等 —— 等等！有没有第三种？</p>
+<p>让我们思考：</p>
+<p>如果线程1先读 x=0，然后线程2完成全部操作（读0→加1→写1），然后线程1再加1→写1 → x=1 ❌</p>
+<p>除非线程1在写之前，线程2已经写过，但线程1仍保留旧值。</p>
+<p>所以唯一能让 x=2 的是：</p>
+<blockquote>
+<p><strong>两个线程的“读取”操作发生在不同的时间点，且后写的线程读到了前一个线程写入的值。</strong></p>
+</blockquote>
+<p>也就是说：</p>
+<ul>
+<li>要么 A 先写，B 后读；  </li>
+<li>要么 B 先写，A 后读。</li>
+</ul>
+<p>但注意：<strong>只要有一个线程在另一个线程写入后读取，就能得到 2</strong>。</p>
+<hr>
+<h3 id="🧠-正确方法：枚举所有-20-种序列，统计-x-2-的数量"><a href="#🧠-正确方法：枚举所有-20-种序列，统计-x-2-的数量" class="headerlink" title="🧠 正确方法：枚举所有 20 种序列，统计 x=2 的数量"></a>🧠 正确方法：枚举所有 20 种序列，统计 x=2 的数量</h3><p>我们用更系统的方法：</p>
+<p>最终 x=2 的充要条件是：<strong>两个线程的写操作都没有被覆盖</strong>，即：</p>
+<ul>
+<li>两个线程都成功将“自己的 +1 结果”写回 x，且没有被对方覆盖。</li>
+</ul>
+<p>这要求：<strong>两个写操作（A3 和 B3）之间，不能有“读取+写入”的完整序列覆盖</strong>。</p>
+<p>实际上，只有两种情况满足：</p>
+<ol>
+<li>A 完整执行完毕（A1→A2→A3），然后 B 执行（B1→B2→B3）  </li>
+<li>B 完整执行完毕（B1→B2→B3），然后 A 执行（A1→A2→A3）</li>
+</ol>
+<p>→ 这就是我们之前说的 2 种。</p>
+<p>但等等 —— 还有一种可能：</p>
+<h4 id="✅-序列-3：A1→A2→B1→B2→B3→A3"><a href="#✅-序列-3：A1→A2→B1→B2→B3→A3" class="headerlink" title="✅ 序列 3：A1→A2→B1→B2→B3→A3"></a>✅ 序列 3：A1→A2→B1→B2→B3→A3</h4><ul>
+<li>A 读 0 → 加 1 → R1=1  </li>
+<li>B 读 0 → 加 1 → R2=1  </li>
+<li>B 写 1 → x=1  </li>
+<li>A 写 1 → x=1 ❌</li>
+</ul>
+<p>不行。</p>
+<h4 id="✅-序列-4：A1→B1→A2→B2→B3→A3"><a href="#✅-序列-4：A1→B1→A2→B2→B3→A3" class="headerlink" title="✅ 序列 4：A1→B1→A2→B2→B3→A3"></a>✅ 序列 4：A1→B1→A2→B2→B3→A3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>A 加 1 → R1=1  </li>
+<li>B 加 1 → R2=1  </li>
+<li>B 写 1 → x=1  </li>
+<li>A 写 1 → x=1 ❌</li>
+</ul>
+<p>还是 1。</p>
+<hr>
+<h3 id="🚫-有没有第三种？"><a href="#🚫-有没有第三种？" class="headerlink" title="🚫 有没有第三种？"></a>🚫 有没有第三种？</h3><p>考虑：</p>
+<h4 id="✅-序列：A1→B1→B2→A2→B3→A3"><a href="#✅-序列：A1→B1→B2→A2→B3→A3" class="headerlink" title="✅ 序列：A1→B1→B2→A2→B3→A3"></a>✅ 序列：A1→B1→B2→A2→B3→A3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>B 加 1 → R2=1  </li>
+<li>A 加 1 → R1=1  </li>
+<li>B 写 1 → x=1  </li>
+<li>A 写 1 → x=1 ❌</li>
+</ul>
+<p>还是 1。</p>
+<hr>
+<h3 id="💡-突破点："><a href="#💡-突破点：" class="headerlink" title="💡 突破点："></a>💡 突破点：</h3><p>其实，只有当<strong>一个线程的写操作发生在另一个线程的读操作之后</strong>，并且<strong>该读操作读到了前一个线程写入的值</strong>，才能叠加。</p>
+<p>例如：</p>
+<h4 id="✅-序列：A1→A2→A3→B1→B2→B3-→-x-2"><a href="#✅-序列：A1→A2→A3→B1→B2→B3-→-x-2" class="headerlink" title="✅ 序列：A1→A2→A3→B1→B2→B3 → x=2"></a>✅ 序列：A1→A2→A3→B1→B2→B3 → x=2</h4><h4 id="✅-序列：B1→B2→B3→A1→A2→A3-→-x-2"><a href="#✅-序列：B1→B2→B3→A1→A2→A3-→-x-2" class="headerlink" title="✅ 序列：B1→B2→B3→A1→A2→A3 → x=2"></a>✅ 序列：B1→B2→B3→A1→A2→A3 → x=2</h4><h4 id="✅-序列：A1→B1→B2→B3→A2→A3-→-x-1-❌"><a href="#✅-序列：A1→B1→B2→B3→A2→A3-→-x-1-❌" class="headerlink" title="✅ 序列：A1→B1→B2→B3→A2→A3 → x=1 ❌"></a>✅ 序列：A1→B1→B2→B3→A2→A3 → x=1 ❌</h4><h4 id="✅-序列：B1→A1→A2→A3→B2→B3-→-x-1-❌"><a href="#✅-序列：B1→A1→A2→A3→B2→B3-→-x-1-❌" class="headerlink" title="✅ 序列：B1→A1→A2→A3→B2→B3 → x=1 ❌"></a>✅ 序列：B1→A1→A2→A3→B2→B3 → x=1 ❌</h4><p>等等。</p>
+<p>我们发现：<strong>只有完全串行的两种情况能得到 x=2</strong>。</p>
+<p>但等等！看这个：</p>
+<h4 id="✅-序列：A1→B1→A2→B2→A3→B3"><a href="#✅-序列：A1→B1→A2→B2→A3→B3" class="headerlink" title="✅ 序列：A1→B1→A2→B2→A3→B3"></a>✅ 序列：A1→B1→A2→B2→A3→B3</h4><ul>
+<li>A 读 0  </li>
+<li>B 读 0  </li>
+<li>A 加 1 → R1=1  </li>
+<li>B 加 1 → R2=1  </li>
+<li>A 写 1 → x=1  </li>
+<li>B 写 1 → x=1 ❌</li>
+</ul>
+<p>还是 1。</p>
+<hr>
+<h3 id="📊-实际答案（参考标准解答）："><a href="#📊-实际答案（参考标准解答）：" class="headerlink" title="📊 实际答案（参考标准解答）："></a>📊 实际答案（参考标准解答）：</h3><p>在所有 20 种可能的指令交错中，<strong>只有 2 种序列能得到 x=2</strong>：</p>
+<ol>
+<li>A1→A2→A3→B1→B2→B3  </li>
+<li>B1→B2→B3→A1→A2→A3</li>
+</ol>
+<p>其他 18 种都会导致 x=1。</p>
+<hr>
+<h3 id="✅-正确答案：B-2"><a href="#✅-正确答案：B-2" class="headerlink" title="✅ 正确答案：B. 2"></a>✅ 正确答案：<strong>B. 2</strong></h3><hr>
+<h3 id="🎯-考点总结：-5"><a href="#🎯-考点总结：-5" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><ul>
+<li>“x++” 不是原子操作 → 并发时易发生<strong>丢失更新</strong>；  </li>
+<li>最终 x=2 仅当两个线程的写操作<strong>不互相覆盖</strong>，即<strong>一个线程写入后，另一个线程读到该值再写入</strong>；  </li>
+<li>这在指令交错中只发生在<strong>完全串行</strong>的情况下（2 种）。</li>
+</ul>
+<hr>
+<p>✅ 正确答案：<strong>B. 2</strong></p>
+<h1 id="题目-7"><a href="#题目-7" class="headerlink" title="题目"></a>题目</h1><p>若 x 是管程内的条件变量，则当进程执行 x.wait() 时所做的工作是______<br>。(2018)<br>A. 实现对变量 x 的互斥访问<br>B. 唤醒一个在 x 上阻塞的进程<br>C. 根据 x 的值判断该进程是否进人阻塞状态<br>D. 阻塞该进程，并将之插入 x 的阻塞队列中</p>
+<h2 id="解析-7"><a href="#解析-7" class="headerlink" title="解析"></a>解析</h2><p><strong>答案：D. 阻塞该进程，并将之插入 x 的阻塞队列中</strong></p>
+<p>本题考查 <strong>管程中条件变量 <code>wait()</code> 操作的语义</strong>。</p>
+<p>在管程（Monitor）中：</p>
+<ul>
+<li>管程本身保证<strong>任一时刻最多一个进程在管程中执行</strong>（通过隐式互斥锁）；  </li>
+<li><strong>条件变量（condition variable）</strong> 用于实现<strong>进程同步与协作</strong>（非互斥），典型如：  <ul>
+<li><code>x.wait()</code>：当前进程<strong>暂时放弃管程所有权</strong>，进入等待状态；  </li>
+<li><code>x.signal()</code> / <code>x.notify()</code>：唤醒一个在 <code>x</code> 上等待的进程。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="x-wait-的标准行为（以-Hoare-管程为例）："><a href="#x-wait-的标准行为（以-Hoare-管程为例）：" class="headerlink" title="x.wait() 的标准行为（以 Hoare 管程为例）："></a><code>x.wait()</code> 的标准行为（以 Hoare 管程为例）：</h3><p>当一个进程在管程内执行 <code>x.wait()</code> 时，系统会：</p>
+<ol>
+<li><strong>释放管程的互斥锁</strong>（以便其他进程可进入管程）；  </li>
+<li><strong>将当前进程阻塞</strong>（从运行态转为阻塞态）；  </li>
+<li><strong>将该进程放入条件变量 <code>x</code> 的阻塞队列（等待队列）中</strong>；  </li>
+<li>调度器切换到其他就绪进程。</li>
+</ol>
+<blockquote>
+<p>📌 注意：<code>wait()</code> <strong>不检查 <code>x</code> 的值</strong>（条件变量本身没有“值”，它只是一个同步对象）；<br>判断是否等待应由<strong>程序员在 <code>wait()</code> 前用 while 循环检查条件</strong>，如：</p>
+<div class="code-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (buffer.isEmpty()) {</span><br><span class="line">    notEmpty.wait();   <span class="comment">// 进入等待</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure></div></blockquote>
+<hr>
+<h3 id="逐项排除："><a href="#逐项排除：" class="headerlink" title="逐项排除："></a>逐项排除：</h3><h4 id="A-实现对变量-x-的互斥访问"><a href="#A-实现对变量-x-的互斥访问" class="headerlink" title="A. 实现对变量 x 的互斥访问"></a>A. 实现对变量 x 的互斥访问</h4><p>❌ 错误。  </p>
+<ul>
+<li>互斥由<strong>管程本身</strong>保证（进入管程过程时自动加锁）；  </li>
+<li>条件变量 <code>x</code> <strong>不提供互斥</strong>，只用于同步；  </li>
+<li>多个进程可同时在不同条件变量上等待，互不冲突。</li>
+</ul>
+<h4 id="B-唤醒一个在-x-上阻塞的进程"><a href="#B-唤醒一个在-x-上阻塞的进程" class="headerlink" title="B. 唤醒一个在 x 上阻塞的进程"></a>B. 唤醒一个在 x 上阻塞的进程</h4><p>❌ 错误。  </p>
+<ul>
+<li>这是 <code>x.signal()</code> 或 <code>x.notify()</code> 的功能；  </li>
+<li><code>wait()</code> 是<strong>自己去等待</strong>，不是唤醒别人。</li>
+</ul>
+<h4 id="C-根据-x-的值判断该进程是否进入阻塞状态"><a href="#C-根据-x-的值判断该进程是否进入阻塞状态" class="headerlink" title="C. 根据 x 的值判断该进程是否进入阻塞状态"></a>C. 根据 x 的值判断该进程是否进入阻塞状态</h4><p>❌ 错误。  </p>
+<ul>
+<li>条件变量 <code>x</code> <strong>没有数值属性</strong>，它只是一个同步机制；  </li>
+<li>是否等待由程序员逻辑决定（如 <code>while (!condition) x.wait()</code>）；  </li>
+<li><code>wait()</code> 一旦调用，<strong>必然阻塞</strong>（除非信号量实现特殊优化，但标准语义是阻塞）。</li>
+</ul>
+<h4 id="D-阻塞该进程，并将之插入-x-的阻塞队列中"><a href="#D-阻塞该进程，并将之插入-x-的阻塞队列中" class="headerlink" title="D. 阻塞该进程，并将之插入 x 的阻塞队列中"></a>D. 阻塞该进程，并将之插入 x 的阻塞队列中</h4><p>✅ <strong>正确</strong>。  </p>
+<ul>
+<li>完整描述了 <code>wait()</code> 的核心行为；  </li>
+<li>是管程条件变量的标准定义。</li>
+</ul>
+<hr>
+<h3 id="🎯-考点总结：-6"><a href="#🎯-考点总结：-6" class="headerlink" title="🎯 考点总结："></a>🎯 考点总结：</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>x.wait()</code></td>
+<td>阻塞自己，入队 <code>x</code> 的等待队列，释放管程锁</td>
+</tr>
+<tr>
+<td><code>x.signal()</code></td>
+<td>唤醒一个在 <code>x</code> 上等待的进程（若无则忽略）</td>
+</tr>
+<tr>
+<td><code>x.broadcast()</code></td>
+<td>唤醒所有在 <code>x</code> 上等待的进程</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>📚 参考：《操作系统概念》—— “A condition variable allows a process to suspend execution until some condition is satisfied.”</p>
+</blockquote>
+<hr>
+<p>✅ 正确答案：<strong>D</strong></p>
+<h1 id="题目-8"><a href="#题目-8" class="headerlink" title="题目"></a>题目</h1><p>和尚打水问题（辽宁大学2016年计算机专硕）<br>寺庙中有小和尚和老和尚若干,有一个水缸,由小和尚提水入缸供老和尚饮用.<br>水缸可以容纳10桶水,水取自同一口井中,由于水井口窄,每次只能容纳一个<br>水桶取水，水桶总数为3个。每次入水、取水仅为一桶,且不可同时进行。<br>试给出有关取水、入水的PV算法描述。</p>
+<h2 id="解析-8"><a href="#解析-8" class="headerlink" title="解析"></a>解析</h2><p>我们来系统分析并设计 <strong>和尚打水问题</strong> 的 PV（信号量）同步算法。</p>
+<hr>
+<h2 id="🔍-问题建模"><a href="#🔍-问题建模" class="headerlink" title="🔍 问题建模"></a>🔍 问题建模</h2><h3 id="🧍-角色与资源："><a href="#🧍-角色与资源：" class="headerlink" title="🧍 角色与资源："></a>🧍 角色与资源：</h3><table>
+<thead>
+<tr>
+<th>实体</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>小和尚</strong></td>
+<td>负责从井中打水 → 倒入水缸（<strong>生产者</strong>）</td>
+</tr>
+<tr>
+<td><strong>老和尚</strong></td>
+<td>从水缸中取水饮用（<strong>消费者</strong>）</td>
+</tr>
+<tr>
+<td><strong>水缸</strong></td>
+<td>容量为 10 桶水，缓冲区</td>
+</tr>
+<tr>
+<td><strong>水井</strong></td>
+<td>临界资源，<strong>每次仅允 1 个水桶取水</strong>（互斥）</td>
+</tr>
+<tr>
+<td><strong>水桶</strong></td>
+<td>共 3 个，<strong>有限资源</strong>（提水需先获得空桶）</td>
+</tr>
+</tbody></table>
+<h3 id="⏳-操作流程："><a href="#⏳-操作流程：" class="headerlink" title="⏳ 操作流程："></a>⏳ 操作流程：</h3><ol>
+<li>小和尚：<br><code>拿空桶</code> → <code>到井边打水</code>（互斥）→ <code>提水到缸边</code> → <code>倒水入缸</code>（互斥）→ <code>放回空桶</code>  </li>
+<li>老和尚：<br><code>拿水桶</code>（从缸取水需用水桶？题目未明确，但按常理：取水也需水桶）→<br><code>从缸取水</code>（互斥）→ <code>饮用</code> → <code>放回空桶</code></li>
+</ol>
+<blockquote>
+<p>📌 <strong>关键</strong>：题目说“水桶总数为 3 个”，且“每次入水、取水仅为一桶”，说明<strong>水桶是共用的临界资源</strong>，无论打水还是取水都需使用水桶。</p>
+</blockquote>
+<p>但更合理的理解是：</p>
+<ul>
+<li>小和尚用桶打水（1 桶/次），倒入缸后桶空闲；  </li>
+<li>老和尚直接从缸舀水饮用（<strong>不一定用水桶</strong>），题目未说老和尚需要桶；  </li>
+<li><strong>水桶仅用于“从井打水”环节</strong>（因井口窄，需用桶打水）；</li>
+</ul>
+<p>✅ 采用<strong>主流解法理解</strong>：</p>
+<ul>
+<li><strong>水桶</strong>是有限资源（3 个），仅小和尚打水时需要；  </li>
+<li>老和尚从水缸取水 <strong>不占用水桶</strong>（如用碗、直接饮），只消耗水缸中的水；  </li>
+<li>水缸本身是临界区（倒水/取水需互斥）；  </li>
+<li>井是临界资源（打水需互斥）。</li>
+</ul>
+<hr>
+<h2 id="✅-信号量设计"><a href="#✅-信号量设计" class="headerlink" title="✅ 信号量设计"></a>✅ 信号量设计</h2><table>
+<thead>
+<tr>
+<th>信号量</th>
+<th>初值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>mutex_jing</code></td>
+<td>1</td>
+<td>保护水井，互斥打水</td>
+</tr>
+<tr>
+<td><code>mutex_gang</code></td>
+<td>1</td>
+<td>保护水缸，互斥倒水/取水</td>
+</tr>
+<tr>
+<td><code>empty</code></td>
+<td>10</td>
+<td>水缸中<strong>空位数</strong>（可倒入的桶数）</td>
+</tr>
+<tr>
+<td><code>full</code></td>
+<td>0</td>
+<td>水缸中<strong>水量</strong>（可取用的桶数）</td>
+</tr>
+<tr>
+<td><code>buckets</code></td>
+<td>3</td>
+<td><strong>空水桶数量</strong>（小和尚打水前需申请）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>📝 注：<code>empty</code> 和 <code>full</code> 是典型的生产者-消费者信号量；<br><code>buckets</code> 是额外资源限制（类似“有限缓冲区”的桶资源）。</p>
+</blockquote>
+<hr>
+<h2 id="✅-进程描述（伪代码）"><a href="#✅-进程描述（伪代码）" class="headerlink" title="✅ 进程描述（伪代码）"></a>✅ 进程描述（伪代码）</h2><h3 id="小和尚（生产者）："><a href="#小和尚（生产者）：" class="headerlink" title="小和尚（生产者）："></a>小和尚（生产者）：</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">semaphore mutex_jing = <span class="number">1</span>;   <span class="comment">// 井互斥</span></span><br><span class="line">semaphore mutex_gang = <span class="number">1</span>;   <span class="comment">// 缸互斥</span></span><br><span class="line">semaphore empty = <span class="number">10</span>;       <span class="comment">// 水缸空位</span></span><br><span class="line">semaphore full = <span class="number">0</span>;         <span class="comment">// 水缸水量</span></span><br><span class="line">semaphore buckets = <span class="number">3</span>;      <span class="comment">// 空桶数</span></span><br><span class="line"></span><br><span class="line">process 小和尚() {</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) {</span><br><span class="line">        P(buckets);         <span class="comment">// 1. 申请一个空桶</span></span><br><span class="line">        P(empty);           <span class="comment">// 2. 等待水缸有空位</span></span><br><span class="line">        P(mutex_jing);      <span class="comment">// 3. 互斥访问水井</span></span><br><span class="line">            <span class="comment">// 从井中打一桶水（临界区）</span></span><br><span class="line">        V(mutex_jing);      <span class="comment">//   释放井</span></span><br><span class="line">        </span><br><span class="line">        P(mutex_gang);      <span class="comment">// 4. 互斥访问水缸</span></span><br><span class="line">            <span class="comment">// 将水倒入水缸（1桶）</span></span><br><span class="line">        V(mutex_gang);      <span class="comment">//   释放水缸</span></span><br><span class="line">        </span><br><span class="line">        V(full);            <span class="comment">// 5. 水量 +1</span></span><br><span class="line">        V(buckets);         <span class="comment">// 6. 归还空桶（倒完后桶空闲）</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="老和尚（消费者）："><a href="#老和尚（消费者）：" class="headerlink" title="老和尚（消费者）："></a>老和尚（消费者）：</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">process 老和尚() {</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) {</span><br><span class="line">        P(full);            <span class="comment">// 1. 等待水缸有水</span></span><br><span class="line">        P(mutex_gang);      <span class="comment">// 2. 互斥访问水缸</span></span><br><span class="line">            <span class="comment">// 从水缸取一桶水饮用</span></span><br><span class="line">        V(mutex_gang);      <span class="comment">//   释放水缸</span></span><br><span class="line">        </span><br><span class="line">        V(empty);           <span class="comment">// 3. 水缸空位 +1</span></span><br><span class="line">        <span class="comment">// 老和尚不占用水桶，无需操作 buckets</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="✅-关键点说明"><a href="#✅-关键点说明" class="headerlink" title="✅ 关键点说明"></a>✅ 关键点说明</h2><table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>为什么需要？</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>P(buckets)</code> 在 <code>P(empty)</code> 前？</td>
+<td>✅ 合理：先拿桶，再看缸有没有空位；若顺序反过来，可能占着空位却没桶，降低并发性</td>
+</tr>
+<tr>
+<td>井和缸分别加锁？</td>
+<td>✅ 是：井（打水）和缸（倒/取）是两个不同临界资源，应独立互斥</td>
+</tr>
+<tr>
+<td>老和尚不操作 <code>buckets</code>？</td>
+<td>✅ 合理：题目中水桶用于“提水”，老和尚“饮用”不涉及提水，故无需桶；若题目明确老和尚也用水桶，则需在 <code>P(full)</code> 后加 <code>P(buckets)</code>，饮用后 <code>V(buckets)</code>，但题干未说明，按常规省略</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>🎯 若严格按“水桶总数为 3 个，每次入水、取水仅为一桶”理解：  </p>
+<ul>
+<li>“取水”也用水桶 → 老和尚需 <code>P(buckets)</code>；<br>可补充如下：</li>
+</ul>
+</blockquote>
+<h3 id="（可选）若老和尚也需用水桶："><a href="#（可选）若老和尚也需用水桶：" class="headerlink" title="（可选）若老和尚也需用水桶："></a>（可选）若老和尚也需用水桶：</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">process 老和尚() {</span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) {</span><br><span class="line">        P(full);</span><br><span class="line">        P(buckets);         <span class="comment">// 取水也需用水桶</span></span><br><span class="line">        P(mutex_gang);</span><br><span class="line">            <span class="comment">// 取水</span></span><br><span class="line">        V(mutex_gang);</span><br><span class="line">        V(empty);</span><br><span class="line">        V(buckets);         <span class="comment">// 归还桶</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure></div>
+
+<p>但<strong>主流解法和考题惯例中，水桶仅用于“打水”环节</strong>，故推荐第一种。</p>
+<hr>
+<h2 id="✅-答案总结（标准-PV-描述）"><a href="#✅-答案总结（标准-PV-描述）" class="headerlink" title="✅ 答案总结（标准 PV 描述）"></a>✅ 答案总结（标准 PV 描述）</h2><p><strong>信号量定义：</strong></p>
+<ul>
+<li><code>mutex_jing = 1</code>：互斥使用水井  </li>
+<li><code>mutex_gang = 1</code>：互斥使用水缸  </li>
+<li><code>empty = 10</code>：水缸空位数  </li>
+<li><code>full = 0</code>：水缸水量  </li>
+<li><code>buckets = 3</code>：空水桶数</li>
+</ul>
+<p><strong>小和尚：</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">P(buckets);</span><br><span class="line">P(empty);</span><br><span class="line">P(mutex_jing); 打水; V(mutex_jing);</span><br><span class="line">P(mutex_gang); 倒水; V(mutex_gang);</span><br><span class="line">V(full);</span><br><span class="line">V(buckets);</span><br></pre></td></tr></table></figure></div>
+
+<p><strong>老和尚：</strong></p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">P(full);</span><br><span class="line">P(mutex_gang); 取水; V(mutex_gang);</span><br><span class="line">V(empty);</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<p>✅ 完整、无死锁、无饥饿、满足题目所有约束。</p>
+<h1 id="题目-9"><a href="#题目-9" class="headerlink" title="题目"></a>题目</h1><p>试画出下面四条语句的前趋图，并用wait和<br>signal原语描述前趋图<br>S1: x:=a+b<br>S2: y:=c+d<br>S3: z:=x*y<br>S4: w=z2<br>（注：a,b,c,d为常量）</p>
+<h2 id="解析-9"><a href="#解析-9" class="headerlink" title="解析"></a>解析</h2><p>我们来逐步分析并画出这四条语句的<strong>前趋图（Precedence Graph）</strong>，并用 <strong><code>wait</code> / <code>signal</code></strong> 原语（即 P/V 操作）实现同步。</p>
+<hr>
+<h2 id="🔍-一、分析语句间的数据依赖关系"><a href="#🔍-一、分析语句间的数据依赖关系" class="headerlink" title="🔍 一、分析语句间的数据依赖关系"></a>🔍 一、分析语句间的数据依赖关系</h2><p>给定语句：</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">S1: x := a + b</span><br><span class="line">S2: y := c + d</span><br><span class="line">S3: z := x * y</span><br><span class="line">S4: w := z * 2   （注：z2 应为 z*2）</span><br></pre></td></tr></table></figure></div>
+
+<p>分析读写变量：</p>
+<table>
+<thead>
+<tr>
+<th>语句</th>
+<th>写入变量</th>
+<th>读取变量</th>
+<th>依赖关系</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>S1</td>
+<td>x</td>
+<td>a, b</td>
+<td>无输入依赖（a,b 为常量）</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>y</td>
+<td>c, d</td>
+<td>无输入依赖</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>z</td>
+<td>x, y</td>
+<td>依赖 S1（需 x）、依赖 S2（需 y）</td>
+</tr>
+<tr>
+<td>S4</td>
+<td>w</td>
+<td>z</td>
+<td>依赖 S3（需 z）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="✅-二、前趋图（依赖图）"><a href="#✅-二、前趋图（依赖图）" class="headerlink" title="✅ 二、前趋图（依赖图）"></a>✅ 二、前趋图（依赖图）</h2><p>前趋图是有向无环图（DAG），节点为语句，边 <span class="math-inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.025ex;" xmlns="http://www.w3.org/2000/svg" width="6.933ex" height="1.645ex" role="img" focusable="false" viewBox="0 -716 3064.6 727"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><use data-c="1D434" href="#redefine-math-c118047ca4f93d86"></use></g><g data-mml-node="mo" transform="translate(1027.8,0)"><use data-c="2192" href="#redefine-math-5ed2d5e4dd3f0165"></use></g><g data-mml-node="mi" transform="translate(2305.6,0)"><use data-c="1D435" href="#redefine-math-5e5010b5393ef53e"></use></g></g></g></svg></mjx-container></span> 表示 A 必须先于 B 执行。</p>
+<div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">S1        S2</span><br><span class="line"> \       /</span><br><span class="line">  \     /</span><br><span class="line">   \   /</span><br><span class="line">    S3</span><br><span class="line">    |</span><br><span class="line">    |</span><br><span class="line">    S4</span><br></pre></td></tr></table></figure></div>
+
+<p>即：</p>
+<ul>
+<li>S1 → S3  </li>
+<li>S2 → S3  </li>
+<li>S3 → S4</li>
+</ul>
+<p>S1 与 S2 无依赖，可并发执行。</p>
+<hr>
+<h2 id="✅-三、用-wait-signal-原语实现同步"><a href="#✅-三、用-wait-signal-原语实现同步" class="headerlink" title="✅ 三、用 wait / signal 原语实现同步"></a>✅ 三、用 wait / signal 原语实现同步</h2><h3 id="🧩-思路："><a href="#🧩-思路：" class="headerlink" title="🧩 思路："></a>🧩 思路：</h3><ul>
+<li>为每条依赖边设置一个<strong>同步信号量</strong>（初值为 0）；  </li>
+<li>前驱执行完后 <code>signal</code>，后继执行前 <code>wait</code>。</li>
+</ul>
+<h3 id="📌-信号量设计："><a href="#📌-信号量设计：" class="headerlink" title="📌 信号量设计："></a>📌 信号量设计：</h3><table>
+<thead>
+<tr>
+<th>信号量</th>
+<th>含义</th>
+<th>初值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>s1_done</code></td>
+<td>S1 是否完成</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>s2_done</code></td>
+<td>S2 是否完成</td>
+<td>0</td>
+</tr>
+<tr>
+<td><code>s3_done</code></td>
+<td>S3 是否完成</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注意：S3 需等待 S1 和 S2 都完成，因此需两个 <code>wait</code>。</p>
+</blockquote>
+<hr>
+<h3 id="✅-同步代码（用-P-V-表示，P-wait-V-signal）："><a href="#✅-同步代码（用-P-V-表示，P-wait-V-signal）：" class="headerlink" title="✅ 同步代码（用 P/V 表示，P = wait, V = signal）："></a>✅ 同步代码（用 P/V 表示，P = wait, V = signal）：</h3><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化信号量</span></span><br><span class="line">semaphore s1_done = <span class="number">0</span>;</span><br><span class="line">semaphore s2_done = <span class="number">0</span>;</span><br><span class="line">semaphore s3_done = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 进程/线程并发执行以下代码：</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// S1</span></span><br><span class="line">x := a + b;</span><br><span class="line">V(s1_done);        <span class="comment">// 通知 S3：S1 已完成</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// S2</span></span><br><span class="line">y := c + d;</span><br><span class="line">V(s2_done);        <span class="comment">// 通知 S3：S2 已完成</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// S3</span></span><br><span class="line">P(s1_done);        <span class="comment">// 等待 S1 完成</span></span><br><span class="line">P(s2_done);        <span class="comment">// 等待 S2 完成</span></span><br><span class="line">z := x * y;</span><br><span class="line">V(s3_done);        <span class="comment">// 通知 S4：S3 已完成</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// S4</span></span><br><span class="line">P(s3_done);        <span class="comment">// 等待 S3 完成</span></span><br><span class="line">w := z * <span class="number">2</span>;</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h2 id="✅-四、正确性说明"><a href="#✅-四、正确性说明" class="headerlink" title="✅ 四、正确性说明"></a>✅ 四、正确性说明</h2><ul>
+<li>S1、S2 可并行执行（无同步约束）；  </li>
+<li>S3 在 <code>P(s1_done)</code> 和 <code>P(s2_done)</code> 后才执行，保证 <code>x</code> 和 <code>y</code> 已计算；  </li>
+<li>S4 在 <code>P(s3_done)</code> 后执行，保证 <code>z</code> 已计算；  </li>
+<li>所有数据依赖均被满足，无竞态条件。</li>
+</ul>
+<hr>
+<h2 id="📌-补充：若用四个线程分别执行-S1-S4"><a href="#📌-补充：若用四个线程分别执行-S1-S4" class="headerlink" title="📌 补充：若用四个线程分别执行 S1~S4"></a>📌 补充：若用四个线程分别执行 S1~S4</h2><div class="code-container" data-rel="C"><figure class="iseeu highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 主程序初始化信号量后创建 4 个线程：</span></span><br><span class="line"></span><br><span class="line">Thread1() { x = a+b; V(s1_done); }</span><br><span class="line">Thread2() { y = c+d; V(s2_done); }</span><br><span class="line">Thread3() { P(s1_done); P(s2_done); z = x*y; V(s3_done); }</span><br><span class="line">Thread4() { P(s3_done); w = z*<span class="number">2</span>; }</span><br></pre></td></tr></table></figure></div>
+
+<hr>
+<h3 id="✅-最终答案："><a href="#✅-最终答案：" class="headerlink" title="✅ 最终答案："></a>✅ 最终答案：</h3><h4 id="1-前趋图："><a href="#1-前趋图：" class="headerlink" title="1. 前趋图："></a>1. 前趋图：</h4><div class="code-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">S1 ───┐</span><br><span class="line">      ├─→ S3 ──→ S4</span><br><span class="line">S2 ───┘</span><br></pre></td></tr></table></figure></div>
+
+<h4 id="2-wait-signal-描述："><a href="#2-wait-signal-描述：" class="headerlink" title="2. wait/signal 描述："></a>2. wait/signal 描述：</h4><ul>
+<li>信号量：<code>s1_done = 0, s2_done = 0, s3_done = 0</code>  </li>
+<li>S1 后：<code>signal(s1_done)</code>  </li>
+<li>S2 后：<code>signal(s2_done)</code>  </li>
+<li>S3 前：<code>wait(s1_done); wait(s2_done)</code>；后：<code>signal(s3_done)</code>  </li>
+<li>S4 前：<code>wait(s3_done)</code></li>
+</ul>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> Linux操作系统-同步互斥</li>
+        <li><strong>Author:</strong> 姜智浩</li>
+        <li><strong>Created at
+                :</strong> 2025-12-24 11:45:14</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-10-22 11:42:09
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2025/12/24/linux-operating-system-synchronization-and-mutual-exclusion/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">#计算机科学</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">#操作系统</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			<div class="article-prev border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="prev" rel="prev" href="/2025/12/28/multivariate-statistical-analysis/">
+					<span class="left arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-left"></i>
+					</span>
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">多元统计分析</span>
+						<span class="post-nav-item">Prev posts</span>
+					</span>
+				</a>
+			</div>
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2025/12/23/linux-operating-system-deadlock-exercises/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">Linux操作系统-死锁题目</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"
+         data-library-src="/js/build/libs/gitalk.min.js"
+         data-error-message="Comments could not be loaded. Please retry.">
+        <p role="status" aria-live="polite">Loading comments…</p>
+        <button type="button" hidden data-gitalk-retry>Retry loading comments</button>
+    </div>
+    <script type="application/json" id="gitalk-settings">{"clientID":"Ov23linBgyFBXfnXEw2i","clientSecret":"3113c7378ac301cd0147ba7f2832161c75dee62f","repo":"gitalk","owner":"super-213","admin":["super-213"],"id":"/2025/12/24/20251224Linux操作系统-同步互斥/","title":"Linux操作系统-同步互斥","language":"en","proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"}</script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">Linux操作系统-同步互斥</div>
+		<ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%90%E9%A1%B9%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-text">逐项分析：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="nav-text">🎯 考点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-1"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-1"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%90%E9%A1%B9%E5%AF%B9%E5%BA%94%E9%A2%98%E5%B9%B2%EF%BC%9A"><span class="nav-text">逐项对应题干：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A-1"><span class="nav-text">🎯 考点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-2"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-2"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%9D%A1%E4%BB%B6%EF%BC%9A"><span class="nav-text">题目条件：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%94%8D-%E9%AA%8C%E8%AF%81%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="nav-text">🔍 验证过程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9D%8C-%E6%8E%92%E9%99%A4%E5%B9%B2%E6%89%B0%E9%80%89%E9%A1%B9%EF%BC%9A"><span class="nav-text">❌ 排除干扰选项：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A-2"><span class="nav-text">🎯 考点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-3"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-3"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%90%E9%A1%B9%E5%88%86%E6%9E%90%E9%80%89%E9%A1%B9%EF%BC%9A"><span class="nav-text">逐项分析选项：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A-3"><span class="nav-text">🎯 考点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-4"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-4"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A-4"><span class="nav-text">🎯 考点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-5"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-text">伪代码：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-5"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E9%97%AE%EF%BC%9A%E2%80%9C%E9%9C%80%E8%A6%81%E4%BA%92%E6%96%A5%E6%89%A7%E8%A1%8C%E7%9A%84%E6%93%8D%E4%BD%9C%E2%80%9D-%E2%80%94%E2%80%94-%E5%8D%B3%E5%93%AA%E4%BA%9B%E6%93%8D%E4%BD%9C%E5%AF%B9%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F-x-%E7%9A%84%E8%AE%BF%E9%97%AE%E5%8F%AF%E8%83%BD%E4%BA%A7%E7%94%9F%E7%AB%9E%E6%80%81%E6%9D%A1%E4%BB%B6%EF%BC%88Race-Condition%EF%BC%89%EF%BC%8C%E9%9C%80%E5%8A%A0%E9%94%81%E4%BF%9D%E6%8A%A4%E3%80%82"><span class="nav-text">题目问：“需要互斥执行的操作” —— 即哪些操作对共享变量 x 的访问可能产生竞态条件（Race Condition），需加锁保护。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E6%AD%A3%E7%A1%AE%E7%AD%94%E6%A1%88%EF%BC%9AC-x-1-%E4%B8%8E-x-2"><span class="nav-text">✅ 正确答案：C. x+&#x3D;1 与 x+&#x3D;2</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-6"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-6"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%9C-%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0%EF%BC%9A"><span class="nav-text">📜 题目描述：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E5%85%B3%E9%94%AE%E7%82%B9%EF%BC%9A"><span class="nav-text">✅ 关键点：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%A2-%E6%80%BB%E6%8C%87%E4%BB%A4%E6%95%B0%EF%BC%9A"><span class="nav-text">🔢 总指令数：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E6%AD%A3%E7%A1%AE%E7%BB%93%E6%9E%9C%EF%BC%9Ax-2-%E5%BD%93%E4%B8%94%E4%BB%85%E5%BD%93-%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%86%99%E6%93%8D%E4%BD%9C%E6%B2%A1%E6%9C%89%E8%A6%86%E7%9B%96%E5%AF%B9%E6%96%B9%E7%9A%84%E7%BB%93%E6%9E%9C"><span class="nav-text">✅ 正确结果：x&#x3D;2 当且仅当 两个线程的写操作没有覆盖对方的结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A9-%E6%9E%9A%E4%B8%BE%E5%85%B3%E9%94%AE%E6%83%85%E5%86%B5%EF%BC%9A"><span class="nav-text">🧩 枚举关键情况：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E6%83%85%E5%86%B5-1%EF%BC%9A%E6%97%A0%E4%BA%A4%E9%94%99%EF%BC%88%E5%AE%8C%E5%85%A8%E4%B8%B2%E8%A1%8C%EF%BC%89"><span class="nav-text">🎯 情况 1：无交错（完全串行）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E6%83%85%E5%86%B5-2%EF%BC%9A%E9%83%A8%E5%88%86%E4%BA%A4%E9%94%99%EF%BC%8C%E4%BD%86%E5%86%99%E6%93%8D%E4%BD%9C%E6%9C%AA%E8%A2%AB%E8%A6%86%E7%9B%96"><span class="nav-text">🎯 情况 2：部分交错，但写操作未被覆盖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E5%94%AF%E4%B8%80%E8%83%BD%E4%BD%BF-x-2-%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%9A"><span class="nav-text">🎯 唯一能使 x&#x3D;2 的情况：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A0-%E6%AD%A3%E7%A1%AE%E6%96%B9%E6%B3%95%EF%BC%9A%E6%9E%9A%E4%B8%BE%E6%89%80%E6%9C%89-20-%E7%A7%8D%E5%BA%8F%E5%88%97%EF%BC%8C%E7%BB%9F%E8%AE%A1-x-2-%E7%9A%84%E6%95%B0%E9%87%8F"><span class="nav-text">🧠 正确方法：枚举所有 20 种序列，统计 x&#x3D;2 的数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%9A%AB-%E6%9C%89%E6%B2%A1%E6%9C%89%E7%AC%AC%E4%B8%89%E7%A7%8D%EF%BC%9F"><span class="nav-text">🚫 有没有第三种？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%92%A1-%E7%AA%81%E7%A0%B4%E7%82%B9%EF%BC%9A"><span class="nav-text">💡 突破点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%8A-%E5%AE%9E%E9%99%85%E7%AD%94%E6%A1%88%EF%BC%88%E5%8F%82%E8%80%83%E6%A0%87%E5%87%86%E8%A7%A3%E7%AD%94%EF%BC%89%EF%BC%9A"><span class="nav-text">📊 实际答案（参考标准解答）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E6%AD%A3%E7%A1%AE%E7%AD%94%E6%A1%88%EF%BC%9AB-2"><span class="nav-text">✅ 正确答案：B. 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A-5"><span class="nav-text">🎯 考点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-7"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-7"><span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x-wait-%E7%9A%84%E6%A0%87%E5%87%86%E8%A1%8C%E4%B8%BA%EF%BC%88%E4%BB%A5-Hoare-%E7%AE%A1%E7%A8%8B%E4%B8%BA%E4%BE%8B%EF%BC%89%EF%BC%9A"><span class="nav-text">x.wait() 的标准行为（以 Hoare 管程为例）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%90%E9%A1%B9%E6%8E%92%E9%99%A4%EF%BC%9A"><span class="nav-text">逐项排除：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%8E%AF-%E8%80%83%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A-6"><span class="nav-text">🎯 考点总结：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-8"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-8"><span class="nav-text">解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%8D-%E9%97%AE%E9%A2%98%E5%BB%BA%E6%A8%A1"><span class="nav-text">🔍 问题建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%8D-%E8%A7%92%E8%89%B2%E4%B8%8E%E8%B5%84%E6%BA%90%EF%BC%9A"><span class="nav-text">🧍 角色与资源：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%8F%B3-%E6%93%8D%E4%BD%9C%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="nav-text">⏳ 操作流程：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E4%BF%A1%E5%8F%B7%E9%87%8F%E8%AE%BE%E8%AE%A1"><span class="nav-text">✅ 信号量设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E8%BF%9B%E7%A8%8B%E6%8F%8F%E8%BF%B0%EF%BC%88%E4%BC%AA%E4%BB%A3%E7%A0%81%EF%BC%89"><span class="nav-text">✅ 进程描述（伪代码）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E5%92%8C%E5%B0%9A%EF%BC%88%E7%94%9F%E4%BA%A7%E8%80%85%EF%BC%89%EF%BC%9A"><span class="nav-text">小和尚（生产者）：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%81%E5%92%8C%E5%B0%9A%EF%BC%88%E6%B6%88%E8%B4%B9%E8%80%85%EF%BC%89%EF%BC%9A"><span class="nav-text">老和尚（消费者）：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E5%85%B3%E9%94%AE%E7%82%B9%E8%AF%B4%E6%98%8E"><span class="nav-text">✅ 关键点说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89%E8%8B%A5%E8%80%81%E5%92%8C%E5%B0%9A%E4%B9%9F%E9%9C%80%E7%94%A8%E6%B0%B4%E6%A1%B6%EF%BC%9A"><span class="nav-text">（可选）若老和尚也需用水桶：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E7%AD%94%E6%A1%88%E6%80%BB%E7%BB%93%EF%BC%88%E6%A0%87%E5%87%86-PV-%E6%8F%8F%E8%BF%B0%EF%BC%89"><span class="nav-text">✅ 答案总结（标准 PV 描述）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE-9"><span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-9"><span class="nav-text">解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%94%8D-%E4%B8%80%E3%80%81%E5%88%86%E6%9E%90%E8%AF%AD%E5%8F%A5%E9%97%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="nav-text">🔍 一、分析语句间的数据依赖关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E4%BA%8C%E3%80%81%E5%89%8D%E8%B6%8B%E5%9B%BE%EF%BC%88%E4%BE%9D%E8%B5%96%E5%9B%BE%EF%BC%89"><span class="nav-text">✅ 二、前趋图（依赖图）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E4%B8%89%E3%80%81%E7%94%A8-wait-signal-%E5%8E%9F%E8%AF%AD%E5%AE%9E%E7%8E%B0%E5%90%8C%E6%AD%A5"><span class="nav-text">✅ 三、用 wait &#x2F; signal 原语实现同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%A7%A9-%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-text">🧩 思路：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%F0%9F%93%8C-%E4%BF%A1%E5%8F%B7%E9%87%8F%E8%AE%BE%E8%AE%A1%EF%BC%9A"><span class="nav-text">📌 信号量设计：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E5%90%8C%E6%AD%A5%E4%BB%A3%E7%A0%81%EF%BC%88%E7%94%A8-P-V-%E8%A1%A8%E7%A4%BA%EF%BC%8CP-wait-V-signal%EF%BC%89%EF%BC%9A"><span class="nav-text">✅ 同步代码（用 P&#x2F;V 表示，P &#x3D; wait, V &#x3D; signal）：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E2%9C%85-%E5%9B%9B%E3%80%81%E6%AD%A3%E7%A1%AE%E6%80%A7%E8%AF%B4%E6%98%8E"><span class="nav-text">✅ 四、正确性说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%F0%9F%93%8C-%E8%A1%A5%E5%85%85%EF%BC%9A%E8%8B%A5%E7%94%A8%E5%9B%9B%E4%B8%AA%E7%BA%BF%E7%A8%8B%E5%88%86%E5%88%AB%E6%89%A7%E8%A1%8C-S1-S4"><span class="nav-text">📌 补充：若用四个线程分别执行 S1~S4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-%E6%9C%80%E7%BB%88%E7%AD%94%E6%A1%88%EF%BC%9A"><span class="nav-text">✅ 最终答案：</span></a></li></ol></li></ol></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">姜智浩</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        94 posts in total
+                    </span>
+                    
+                        <span>
+                            252.3k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script async data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.9.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container" role="dialog" aria-modal="true" aria-label="Image viewer">
+	<button class="image-viewer-close" type="button" aria-label="Close">
+		<i class="fa-solid fa-xmark"></i>
+	</button>
+	<button class="image-viewer-prev" type="button" aria-label="Prev">
+		<i class="fa-solid fa-chevron-left"></i>
+	</button>
+	<div class="image-viewer-frame">
+		<img src="" alt="">
+	</div>
+	<div class="image-viewer-exif-panel hidden absolute left-1/2 bottom-20 -translate-x-1/2 w-[min(92vw,420px)] max-h-[60vh] overflow-hidden rounded-2xl bg-background-color-transparent-80 p-4 text-left shadow-redefine-flat backdrop-blur-md" role="dialog" aria-label="EXIF" aria-hidden="true">
+		<div class="flex items-center justify-between mb-3">
+			<span class="text-sm font-semibold text-first-text-color">EXIF</span>
+			<button class="image-viewer-exif-close flex h-8 w-8 items-center justify-center rounded-full bg-background-color-transparent-80 text-first-text-color transition hover:bg-background-color-transparent-40" type="button" aria-label="Close">
+				<i class="fa-solid fa-xmark text-[0.65rem]"></i>
+			</button>
+		</div>
+		<div class="image-viewer-exif-cards grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto pr-1 scrollbar-hide"></div>
+		<template class="image-viewer-exif-card-template">
+			<div class="rounded-lg bg-background-color-transparent-40 px-3 py-2">
+				<div class="image-viewer-exif-card-header flex items-center gap-2 mb-1">
+					<i class="image-viewer-exif-card-icon fa-solid fa-circle-info text-xs text-third-text-color"></i>
+					<div class="image-viewer-exif-card-title text-xs font-semibold text-first-text-color"></div>
+				</div>
+				<div class="image-viewer-exif-card-items flex flex-col gap-1"></div>
+			</div>
+		</template>
+	</div>
+	<button class="image-viewer-exif-toggle flex items-center gap-2 hidden absolute left-1/2 bottom-6 -translate-x-1/2 rounded-full border border-border-color bg-background-color-transparent-80 px-4 py-2 text-first-text-color backdrop-blur-md transition hover:bg-background-color-transparent-40" type="button" aria-label="EXIF" aria-expanded="false">
+		<i class="fa-solid fa-circle-info text-xs"></i>
+		<span class="text-xs font-semibold uppercase tracking-wider">EXIF</span>
+	</button>
+	<button class="image-viewer-next" type="button" aria-label="Next">
+		<i class="fa-solid fa-chevron-right"></i>
+	</button>
+</div>
+
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    window.swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+
+    window.dispatchEvent(
+        new CustomEvent("redefine:swup:ready", {
+            detail: {
+                swup: window.swup,
+            },
+        }),
+    );
+</script>
+
+
+
+
+	
+<script src="/js/build/main.js" type="module"></script>
+
+
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/minimasonry.min.js" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+	<div id="aplayer"></div>
+
+<script src="/js/build/libs/APlayer.min.js" defer></script>
+
+
+<script src="/js/build/plugins/aplayer.js" defer></script>
+
+
+	
+</body>
+
+</html>
