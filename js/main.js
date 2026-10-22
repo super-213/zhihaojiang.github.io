@@ -11,6 +11,7 @@ import initMermaid from "./plugins/mermaid.js";
 import initPangu from "./plugins/pangu.js";
 import initTabs from "./plugins/tabs.js";
 import initTyped from "./plugins/typed.js";
+import initDeferredWidgets from "./plugins/deferredWidgets.js";
 import initCopyCode from "./tools/codeBlock.js";
 import initExpirationDate from "./tools/expirationDate.js";
 import initModeToggle from "./tools/lightDarkSwitch.js";
@@ -55,6 +56,7 @@ const initGlobalsOnce = () => {
 
   globalsInitialized = true;
   const appSignal = getAppSignal();
+  initDeferredWidgets();
 
   safeRun("utils:globals", () => {
     initUtilsGlobals({ signal: appSignal });
@@ -128,9 +130,7 @@ const initPage = () => {
   });
 
   safeRun("essays", () => {
-    if (typeof moment !== "undefined") {
-      initEssays();
-    }
+    initEssays();
   });
 
   safeRun("pangu", () => {
@@ -180,7 +180,7 @@ const initPage = () => {
 
   safeRun("lazyload", () => {
     if (theme.articles?.lazyload === true) {
-      initLazyLoad();
+      initLazyLoad({ signal: pageSignal });
     }
   });
 

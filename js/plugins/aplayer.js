@@ -9,7 +9,7 @@
       artist: audio.artist,
       url: audio.url,
       cover: audio.cover,
-      lrc: audio.lrc,
+      lrc: audio.lrc || "",
       theme: audio.theme,
     };
     audioList.push(audioObj);
@@ -19,12 +19,14 @@
     new APlayer({
       container: document.getElementById("aplayer"),
       mini: true,
+      preload: "none",
       audio: audioList,
     });
   } else if (isFixed) {
     const player = new APlayer({
       container: document.getElementById("aplayer"),
       fixed: true,
+      preload: "none",
       lrcType: 3,
       audio: audioList,
     });

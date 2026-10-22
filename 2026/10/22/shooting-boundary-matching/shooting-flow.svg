@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="468" viewBox="0 0 380 468" role="img" aria-labelledby="title desc">
+<title id="title">从初始斜率到边界残差</title><desc id="desc">外层选斜率，内层积分，检查右端；未匹配则更新斜率，匹配后继续核查精度。</desc>
+<style>text{font-family:system-ui,-apple-system,"PingFang SC",sans-serif;fill:#20382c;font-size:19px}.small{font-size:16px;fill:#4e665a}.box{fill:#f0f6f2;stroke:#46785f;stroke-width:1.5}.line{fill:none;stroke:#46785f;stroke-width:2}@media(prefers-color-scheme:dark){text{fill:#e2ede5}.small{fill:#bad0c0}.box{fill:#1c3025;stroke:#95c0a5}.line{stroke:#95c0a5}}</style>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6" fill="none" stroke="#6c9d80" stroke-width="1.3"/></marker></defs>
+<rect class="box" x="4" y="4" width="372" height="460" rx="14"/>
+<text x="190" y="36" text-anchor="middle">外层：寻找出发斜率</text>
+<rect class="box" x="82" y="57" width="267" height="74" rx="8"/>
+<text x="215" y="86" text-anchor="middle">猜一个 s</text><text class="small" x="215" y="113" text-anchor="middle">y(a)=α，y′(a)=s</text>
+<path class="line" d="M215 131 V164" marker-end="url(#arrow)"/>
+<rect class="box" x="82" y="168" width="267" height="78" rx="8"/>
+<text x="215" y="199" text-anchor="middle">内层：沿方程向右积分</text><text class="small" x="215" y="226" text-anchor="middle">同时更新高度 y 与斜率 y′</text>
+<path class="line" d="M215 246 V280" marker-end="url(#arrow)"/>
+<rect class="box" x="82" y="284" width="267" height="77" rx="8"/>
+<text x="215" y="314" text-anchor="middle">检查右端残差</text><text class="small" x="215" y="341" text-anchor="middle">R(s)=y(b;s)−β</text>
+<path class="line" d="M82 321 H48 V95 H79" marker-end="url(#arrow)"/>
+<text class="small" x="31" y="213" text-anchor="middle" transform="rotate(-90 31 213)">未匹配：更新 s</text>
+<path class="line" d="M215 361 V398" marker-end="url(#arrow)"/>
+<text x="215" y="424" text-anchor="middle">匹配后核查积分误差</text>
+</svg>

@@ -78,6 +78,8 @@ export const updateHomeBannerBlur = (ctx) => {
   if (theme.home_banner.style === "fixed" && location.pathname === config.root) {
     const scrollY = window.scrollY || window.pageYOffset;
     const blurValue = scrollY >= ctx.triggerViewHeight ? 15 : 0;
+    if (ctx.bannerBlurValue === blurValue) return;
+    ctx.bannerBlurValue = blurValue;
 
     try {
       requestAnimationFrame(() => {

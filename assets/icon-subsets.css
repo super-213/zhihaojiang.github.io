@@ -1,0 +1,25 @@
+/* Font Awesome subsets; original font faces remain fallbacks for new icons. */
+@font-face {
+  font-family: "Font Awesome 6 Pro";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../fonts/icons/fa-solid-900-subset.woff2") format("woff2");
+  unicode-range: U+23,U+40,U+E09F,U+E0C9,U+E0D7,U+E29E,U+F002,U+F004,U+F007,U+F00C,U+F00D,U+F00E,U+F010,U+F013,U+F015,U+F017,U+F02B,U+F02C,U+F02E,U+F030,U+F03B,U+F03C,U+F03E,U+F053,U+F054,U+F05A,U+F061,U+F062,U+F063,U+F06E,U+F077,U+F078,U+F07B,U+F080,U+F084,U+F086,U+F08D,U+F09E,U+F0AD,U+F0C1,U+F0C5,U+F104,U+F105,U+F110,U+F11C,U+F129,U+F185,U+F186,U+F187,U+F1CE,U+F49E,U+F500,U+F5AC,U+F660,U+F7D9,U+F8B1,U+F8E7;
+}
+@font-face {
+  font-family: "Font Awesome 6 Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/icons/fa-regular-400-subset.woff2") format("woff2");
+  unicode-range: U+23,U+40,U+E09F,U+E0C9,U+E0D7,U+E29E,U+F002,U+F004,U+F007,U+F00C,U+F00D,U+F00E,U+F010,U+F013,U+F015,U+F017,U+F02B,U+F02C,U+F02E,U+F030,U+F03B,U+F03C,U+F03E,U+F053,U+F054,U+F05A,U+F061,U+F062,U+F063,U+F06E,U+F077,U+F078,U+F07B,U+F080,U+F084,U+F086,U+F08D,U+F09E,U+F0AD,U+F0C1,U+F0C5,U+F104,U+F105,U+F110,U+F11C,U+F129,U+F185,U+F186,U+F187,U+F1CE,U+F49E,U+F500,U+F5AC,U+F660,U+F7D9,U+F8B1,U+F8E7;
+}
+@font-face {
+  font-family: "Font Awesome 6 Brands";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/icons/fa-brands-400-subset.woff2") format("woff2");
+  unicode-range: U+23,U+40,U+F09B;
+}

@@ -33,7 +33,16 @@ const ensureObserver = () => {
   }, options);
 };
 
-export default function initLazyLoad() {
+export default function initLazyLoad({ signal } = {}) {
+  if (signal) {
+    signal.addEventListener("abort", () => {
+      lazyloadObserver?.disconnect();
+      lazyloadObserver = null;
+      document.querySelectorAll("img[data-redefine-lazyload-observed]").forEach((img) => {
+        delete img.dataset.redefineLazyloadObserved;
+      });
+    }, { once: true });
+  }
   if (typeof IntersectionObserver === "undefined") {
     document.querySelectorAll("img[lazyload]").forEach((img) => {
       const dataSrc = img.getAttribute("data-src");

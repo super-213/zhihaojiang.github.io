@@ -3,6 +3,7 @@ import { getStyleStatus } from "../state/styleStatus.js";
 
 let tocState = null;
 let didInitScroll = false;
+let scrollFrame = null;
 
 const registerScrollHandler = (signal) => {
   if (didInitScroll || !signal) {
@@ -13,10 +14,19 @@ const registerScrollHandler = (signal) => {
   window.addEventListener(
     "scroll",
     () => {
-      tocState?.updateActiveTOCLink();
+      if (scrollFrame !== null) return;
+      scrollFrame = window.requestAnimationFrame(() => {
+        scrollFrame = null;
+        tocState?.updateActiveTOCLink();
+      });
     },
-    { signal },
+    { signal, passive: true },
   );
+  signal.addEventListener("abort", () => {
+    if (scrollFrame !== null) window.cancelAnimationFrame(scrollFrame);
+    scrollFrame = null;
+    didInitScroll = false;
+  }, { once: true });
 };
 
 export function initTOC({ signal } = {}) {

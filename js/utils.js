@@ -13,6 +13,7 @@ import {
 
 let activeUtils = null;
 let didInitScroll = false;
+let scrollFrame = null;
 
 const debounce = (func, delay) => {
   let timer;
@@ -23,12 +24,14 @@ const debounce = (func, delay) => {
 };
 
 const handleScroll = () => {
-  if (!activeUtils) {
+  if (!activeUtils || scrollFrame !== null) {
     return;
   }
-
-  activeUtils.updateScrollStyle();
-  activeUtils.updateAutoHideTools();
+  scrollFrame = window.requestAnimationFrame(() => {
+    scrollFrame = null;
+    activeUtils?.updateScrollStyle();
+    activeUtils?.updateAutoHideTools();
+  });
 };
 
 const handleHomeBannerBlur = () => {
@@ -45,9 +48,9 @@ const registerScrollHandlers = (signal) => {
   }
 
   didInitScroll = true;
-  window.addEventListener("scroll", handleScroll, { signal });
+  window.addEventListener("scroll", handleScroll, { signal, passive: true });
   window.addEventListener("scroll", debounce(handleHomeBannerBlur, 20), {
-    signal,
+    signal, passive: true,
   });
 };
 

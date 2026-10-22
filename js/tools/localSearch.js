@@ -4,6 +4,11 @@ let cachedPath = null;
 let isXml = true;
 let didInit = false;
 let warnedMissing = false;
+let pendingFetch = null;
+let inputTimer = null;
+const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+})[char]);
 
 const resolveSearchPath = () => {
   const configPath = config.path;
@@ -32,7 +37,9 @@ const normalizeData = (rawData) => {
     .map((data) => {
       data.title = data.title.trim();
       data.content = data.content
-        ? data.content.trim().replace(/<[^>]+>/g, "")
+        ? (config.search_format === "striptags"
+          ? data.content.trim()
+          : data.content.trim().replace(/<[^>]+>/g, ""))
         : "";
       data.url = decodeURIComponent(data.url).replace(/\/{2,}/g, "/");
       return data;
@@ -40,38 +47,37 @@ const normalizeData = (rawData) => {
 };
 
 const fetchData = () => {
-  if (isFetched || !cachedPath) {
-    return;
-  }
+  if (isFetched || !cachedPath) return Promise.resolve();
+  if (pendingFetch) return pendingFetch;
 
-  fetch(config.root + cachedPath)
-    .then((response) => response.text())
+  const status = document.getElementById("no-result");
+  if (status) status.textContent = "正在加载搜索索引…";
+  pendingFetch = fetch(config.root + cachedPath)
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.text();
+    })
     .then((res) => {
-      isFetched = true;
-      cachedData = isXml
-        ? [
-            ...new DOMParser()
-              .parseFromString(res, "text/xml")
-              .querySelectorAll("entry"),
-          ].map((element) => {
-            return {
-              title: element.querySelector("title").textContent,
-              content: element.querySelector("content").textContent,
-              url: element.querySelector("url").textContent,
-            };
-          })
+      const rawData = isXml
+        ? [...new DOMParser().parseFromString(res, "text/xml").querySelectorAll("entry")]
+          .map((element) => ({
+            title: element.querySelector("title")?.textContent || "",
+            content: element.querySelector("content")?.textContent || "",
+            url: element.querySelector("url")?.textContent || "",
+          }))
         : JSON.parse(res);
-
-      cachedData = normalizeData(cachedData);
-      const noResultDom = document.querySelector("#no-result");
-      if (noResultDom) {
-        noResultDom.innerHTML =
-          '<i class="fa-solid fa-magnifying-glass fa-5x"></i>';
-      }
+      cachedData = normalizeData(rawData);
+      isFetched = true;
+      // Include input typed while the index was still downloading.
+      renderSearchResult(document.querySelector(".search-input"));
     })
     .catch((error) => {
       console.error("Failed to load search data:", error);
-    });
+      const status = document.getElementById("no-result");
+      if (status) status.textContent = "搜索索引加载失败，请关闭后重新打开搜索重试。";
+    })
+    .finally(() => { pendingFetch = null; });
+  return pendingFetch;
 };
 
 const getSearchDom = () => ({
@@ -86,6 +92,7 @@ const closePopup = () => {
     return;
   }
 
+  clearTimeout(inputTimer);
   document.body.style.overflow = "";
   overlay.classList.remove("active");
 };
@@ -162,15 +169,12 @@ const highlightKeyword = (text, slice) => {
   let result = "";
   let prevEnd = slice.start;
   slice.hits.forEach((hit) => {
-    result += text.substring(prevEnd, hit.position);
+    result += escapeHTML(text.substring(prevEnd, hit.position));
     const end = hit.position + hit.length;
-    result += `<b class="search-keyword">${text.substring(
-      hit.position,
-      end,
-    )}</b>`;
+    result += `<b class="search-keyword">${escapeHTML(text.substring(hit.position, end))}</b>`;
     prevEnd = end;
   });
-  result += text.substring(prevEnd, slice.end);
+  result += escapeHTML(text.substring(prevEnd, slice.end));
   return result;
 };
 
@@ -222,7 +226,7 @@ const renderSearchResult = (searchInputDom) => {
         const slicesOfTitle = [];
         if (indexOfTitle.length !== 0) {
           const tmp = mergeIntoSlice(0, title.length, indexOfTitle, searchText);
-          searchTextCount += tmp.searchTextCountInSlice;
+          searchTextCount += tmp.searchTextCount;
           slicesOfTitle.push(tmp);
         }
 
@@ -242,7 +246,7 @@ const renderSearchResult = (searchInputDom) => {
             end = content.length;
           }
           const tmp = mergeIntoSlice(start, end, indexOfContent, searchText);
-          searchTextCount += tmp.searchTextCountInSlice;
+          searchTextCount += tmp.searchTextCount;
           slicesOfContent.push(tmp);
         }
 
@@ -268,16 +272,16 @@ const renderSearchResult = (searchInputDom) => {
         let resultItem = "";
 
         if (slicesOfTitle.length !== 0) {
-          resultItem += `<li><a href="${url}" class="search-result-title">${highlightKeyword(
+          resultItem += `<li><a href="${escapeHTML(url)}" class="search-result-title">${highlightKeyword(
             title,
             slicesOfTitle[0],
           )}</a>`;
         } else {
-          resultItem += `<li><a href="${url}" class="search-result-title">${title}</a>`;
+          resultItem += `<li><a href="${escapeHTML(url)}" class="search-result-title">${escapeHTML(title)}</a>`;
         }
 
         slicesOfContent.forEach((slice) => {
-          resultItem += `<a href="${url}"><p class="search-result">${highlightKeyword(
+          resultItem += `<a href="${escapeHTML(url)}"><p class="search-result">${highlightKeyword(
             content,
             slice,
           )}...</p></a>`;
@@ -324,7 +328,9 @@ const handleInput = (event) => {
     return;
   }
 
-  renderSearchResult(event.target);
+  clearTimeout(inputTimer);
+  if (event.isComposing) return;
+  inputTimer = window.setTimeout(() => renderSearchResult(event.target), 120);
 };
 
 const handleClick = (event) => {
