@@ -1,0 +1,40 @@
+'use strict';
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const { JSDOM } = require('jsdom');
+const assets = path.join(__dirname, '20261021三对角方程组与追赶法');
+function setup(mode) {
+  const dom = new JSDOM('<!doctype html><html><body><main id="lab"></main></body></html>', { url: `https://example.test/lab.html?mode=${mode}`, runScripts: 'outside-only' });
+  const w = dom.window;
+  w.matchMedia = () => ({ matches: false, addEventListener() {}, removeEventListener() {} });
+  w.ResizeObserver = class { observe() {} disconnect() {} };
+  for (const name of ['model.js', 'lab.js']) w.eval(fs.readFileSync(path.join(assets, name), 'utf8'));
+  const $ = id => w.document.getElementById(id);
+  function set(id, value, type = 'input') { $(id).value = value; $(id).dispatchEvent(new w.Event(type, { bubbles: true })); }
+  return { dom, $, set };
+}
+const { dom, $, set } = setup('structure');
+assert.match($('balance').textContent, /尚未检查/);
+assert.equal($('trial-inputs').querySelectorAll('input').length, 4);
+$('inspect').click(); assert.match($('balance').textContent, /25 ℃/);
+$('save-trial').click(); assert.match($('saved-trial').textContent, /50, 50, 50, 50/);
+for (let i=0;i<4;i++) set(`trial-${i}`,20*(i+1));
+assert.match($('balance').textContent, /尚未检查/);
+$('inspect').click(); assert.match($('balance').textContent, /0 ℃/); assert.match($('saved-trial').textContent, /最大偏差 25 ℃/);
+set('right',50); $('inspect').click(); assert.match($('balance').textContent, /25 ℃/); assert.match($('saved-trial').textContent,/条件/);
+$('solve-trial').click(); assert.deepEqual(Array.from($('trial-inputs').querySelectorAll('input'), e => +e.value),[10,20,30,40]);
+set('trial-0',''); $('inspect').click(); assert.match($('balance').textContent,/请把每个/);
+set('n',6,'change'); assert.equal($('trial-inputs').querySelectorAll('input').length,6);
+$('solve-trial').click(); assert.match($('balance').textContent,/每个点均已平衡/);
+$('rod').querySelector('[data-node="5"]').click(); assert.match($('equation').textContent,/2x6/);
+set('n',3,'change'); assert.match($('equation').textContent,/2x3/); assert.doesNotMatch($('equation').textContent,/x6/);
+dom.window.close();
+const p=setup('pivot');
+assert.equal(p.$('epsilon').value,'2');
+p.set('epsilon','zero','change'); assert.match(p.$('plain').textContent,/停止/); assert.match(p.$('previous-pivot').textContent,/0.01/);
+p.set('epsilon','18','change'); assert.match(p.$('previous-pivot').textContent,/未输出解/); assert.match(p.$('plain').textContent,/\(0, 1\)/);
+p.set('epsilon','8','change'); assert.match(p.$('previous-pivot').textContent,/1.000e-18/);
+assert.equal(p.$('lab').querySelectorAll('details.hint').length,1);
+p.dom.window.close();
+console.log('PASS: editable trials; whole-system balance; preserved comparison; boundary and node-count changes; invalid-input recovery; reference solution; node focus selection; pivot history and zero-pivot states.');
