@@ -1,0 +1,1225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/10/23/algorithm-complexity-memory-bandwidth-roofline/</loc>
+    
+    <lastmod>2026-10-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/01/03/hello-world/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/12/19/supply-chain-collaboration-and-on-time-delivery-optimization/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/12/23/linux-operating-system-deadlock-exercises/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/12/29/linux-operating-system-chapter-3-memory/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/12/22/linux-operating-system-fundamentals-exercises/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/12/24/linux-operating-system-synchronization-and-mutual-exclusion/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/12/29/data-collection-and-processing-exercises/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/01/17/numerical-analysis-and-algorithm-design-explicit-euler-method/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/12/28/multivariate-statistical-analysis/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/01/17/numerical-analysis-and-algorithm-design-lagrange-linear-interpolation/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/01/17/numerical-analysis-and-algorithm-design-improved-euler-method/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/01/17/numerical-analysis-and-algorithm-design-gaussian-elimination-with-partial-pivoting/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/01/17/numerical-analysis-and-algorithm-design-newton-interpolation/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/01/20/eco-driving-behavior/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/29/business-data-analysis-data-preprocessing-and-feature-engineering/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/30/business-data-analysis-face-recognition/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/30/business-data-analysis-credit-card-data/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/10/09/business-data-analysis-product-reviews/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/30/business-data-analysis-movie-recommendation-system/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/10/16/earthquake-data-and-tsunamis/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/10/09/least-squares-estimation-of-silicon-carbide-epitaxial-layer-thickness/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/30/business-data-analysis-news/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/10/11/predicting-road-accident-risk/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/11/06/advertising-strategies-and-effectiveness/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/10/09/business-data-analysis-traditional-chinese-medicine-syndrome-differentiation/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/12/02/brain-tumor-dataset/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/11/25/setting-up-jupyter-notebook-on-a-server/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/12/03/business-data-analysis-final-project/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/10/21/lifestyle-and-health-risk-prediction-synthetic-dataset/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/19/business-data-analysis-customer-value-data/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/21/hadoop-deployment-pitfalls/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/23/business-data-analysis-employee-attrition-prediction/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/23/business-data-analysis-handwritten-character-recognition/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/23/business-data-analysis-stock-customer-churn/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/24/numerical-analysis-and-algorithm-design-lab-report-1/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/22/common-linux-commands/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/23/business-data-analysis-tumor-data/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/25/business-data-analysis-credit-card-targeted-marketing/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/25/business-data-analysis-product-pricing-model/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/25/business-data-analysis-stock-price-movement-prediction/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/26/business-data-analysis-advertising-revenue/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/26/business-data-analysis-credit-card-transactions/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/24/hadoop-deployment-verifying-distributed-operation/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/28/rgb-lighting-and-oled-display/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/26/business-data-analysis-customer-information-and-defaults/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/28/business-data-analysis-credit-scorecard-model/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/06/02/understanding-complementary-slackness/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/06/04/extrovert-vs-introvert-behavior-data/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/05/26/long-tailed-distributions-in-machine-learning/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/06/05/global-internet-adoption-and-digital-growth-analysis/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/06/05/caravan-insurance-purchase-propensity-prediction/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/06/13/apriori-algorithm-principles/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/06/15/weekly-tech-news-issue-1/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/06/22/weekly-tech-news-issue-2/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/07/02/study-report-on-crossing-the-yangtze-river-2003d/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/06/06/mathematical-modeling-paper/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/07/01/study-report-on-coal-gangue-piling-1999c/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/08/28/deformation-of-an-ancient-pagoda/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/18/business-data-analysis-automotive-industry-revenue/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/18/business-data-analysis-food-service-industry-revenue/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/18/business-data-analysis-financial-industry-revenue/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/09/18/business-data-analysis-it-industry-revenue/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/08/minimum-operations-to-make-array-values-distinct/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/07/machine-learning-data-analysis-helper/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/09/minimum-operations-to-make-array-equal-to-k/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/11/count-symmetric-integers/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/18/spaceship-titanic/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/14/adult-depression-data-analysis/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/16/predict-podcast-listening-time/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/10/adding-spaces-to-a-string/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/21/ultrasonic-radar-distance-measurement/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/21/environmental-monitoring/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/05/09/predict-calorie-expenditure/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/05/26/lung-cancer-survey/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/05/19/mathematical-modeling-competition-2025/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/05/21/introduction-to-data-analysis-tools/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/26/machine-learning-optimization-methods-in-python/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/05/18/diabetes-prediction-analysis/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2024/07/31/guangzhou-travel/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2024/10/17/jiaxing-university-performance/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/01/06/mysql-statements/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/03/28/machine-learning-assignment-notes/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/01/25/australia-travel/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/03/29/continuous-feature-discretization-in-python/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/03/30/mcp-introduction-creation-and-usage/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/03/31/percentage-of-letter-in-string/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/01/solving-questions-with-brainpower/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/01/lambda-calculus/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2025/04/02/maximum-value-of-ordered-triplet-i/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/about/index.html</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/essays/index.html</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/10/22/shooting-boundary-matching/</loc>
+    
+    <lastmod>2026-10-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/10/21/tridiagonal-thomas/</loc>
+    
+    <lastmod>2026-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/10/21/coupon-collector/</loc>
+    
+    <lastmod>2026-10-21</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/10/19/percolation-theory/</loc>
+    
+    <lastmod>2026-10-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/2026/10/19/arcsine-law/</loc>
+    
+    <lastmod>2026-10-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/bookmarks/index.html</loc>
+    
+    <lastmod>2025-03-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/index.html</loc>
+    
+    <lastmod>2025-03-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/categories/index.html</loc>
+    
+    <lastmod>2025-03-28</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/masonry/index.html</loc>
+    
+    <lastmod>2025-03-26</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  <url>
+    <loc>https://blog.zhihaojiang.com/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%91%84%E5%BD%B1/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/mysql/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/python/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/MCP/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/AI/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E5%8A%9B%E6%89%A3/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%95%B0%E5%AD%A6/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/Arduino/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%95%B0%E5%AD%A6%E5%BB%BA%E6%A8%A1/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E8%BF%90%E7%AD%B9%E5%AD%A6/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E7%A7%91%E6%8A%80/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E7%A7%91%E6%8A%80%E5%89%8D%E6%B2%BF/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%96%B0%E9%97%BB/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E5%95%86%E4%B8%9A%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/Hadoop/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/Linux/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E5%A4%9A%E5%85%83%E7%BB%9F%E8%AE%A1/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E9%9A%8F%E6%9C%BA%E6%B8%B8%E8%B5%B0/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E5%8F%AF%E4%BA%A4%E4%BA%92%E5%AE%9E%E9%AA%8C/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%B8%97%E6%B5%81%E7%90%86%E8%AE%BA/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E8%BF%BD%E8%B5%B6%E6%B3%95/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%89%93%E9%9D%B6%E6%B3%95/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E7%AE%97%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/tags/%E6%95%B0%E5%AD%A6%E6%9C%9F%E6%9C%9B/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/categories/%E6%97%85%E6%B8%B8/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/categories/%E6%97%A5%E5%B8%B8/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/categories/%E7%A7%91%E6%8A%80/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/categories/%E5%88%86%E4%BA%AB/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.zhihaojiang.com/categories/%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+</urlset>
