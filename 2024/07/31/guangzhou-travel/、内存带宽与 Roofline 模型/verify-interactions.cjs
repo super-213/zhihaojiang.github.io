@@ -1,0 +1,31 @@
+'use strict';
+const assert = require('node:assert/strict'), fs = require('node:fs'), path = require('node:path');
+const { JSDOM } = require('jsdom');
+function setup(mode, reduced = false) {
+  const dom = new JSDOM('<!doctype html><html><body><main id="lab"></main></body></html>', { url: `https://test.example/lab.html?mode=${mode}`, runScripts: 'outside-only' });
+  const w = dom.window; let interval = null;
+  w.matchMedia = query => ({ matches: query.includes('reduced-motion') && reduced, addEventListener() {}, removeEventListener() {} });
+  w.ResizeObserver = class { observe() {} disconnect() {} };
+  w.setInterval = fn => { interval = fn; return 1; }; w.clearInterval = () => { interval = null; };
+  for (const f of ['model.js', 'lab.js']) w.eval(fs.readFileSync(path.join(__dirname, '20261023算法复杂度、内存带宽与 Roofline 模型', f), 'utf8'));
+  const $ = id => w.document.getElementById(id);
+  return { dom, $, set(id, value, type = 'input') { $(id).value = value; $(id).dispatchEvent(new w.Event(type, { bubbles: true })); }, tick() { interval?.(); }, playing() { return !!interval; } };
+}
+const a = setup('complexity'); assert.equal(a.$('work').textContent, '192');
+a.$('save').click(); a.set('size', 5); assert.equal(a.$('work').textContent, '384'); assert.match(a.$('saved').textContent, /= 2/);
+a.set('method', 'fused', 'change'); assert.equal(a.$('aux').textContent, '0'); assert.equal(a.$('work').textContent, '384');
+a.$('reset').click(); assert.equal(a.$('work').textContent, '192'); assert.match(a.$('saved').textContent, /尚未/); a.dom.window.close();
+const b = setup('traffic'); assert.equal(b.$('total').textContent, '32'); assert(b.$('prev').disabled);
+b.$('next').click(); assert.equal(b.$('moved').textContent, '8'); b.$('prev').click(); assert.equal(b.$('moved').textContent, '0');
+b.$('play').click(); assert(b.playing()); b.tick(); b.$('play').click(); assert(!b.playing());
+b.$('save').click(); b.set('method', 'fused', 'change'); assert.equal(b.$('moved').textContent, '0'); assert.equal(b.$('total').textContent, '16'); assert.match(b.$('saved').textContent, /0.5/);
+b.$('play').click(); b.tick(); b.tick(); assert(!b.playing()); assert(b.$('next').disabled); assert.equal(b.$('moved').textContent, '16');
+b.$('reset').click(); b.set('bytes', '4', 'change'); assert.equal(b.$('total').textContent, '8'); assert.match(b.$('saved').textContent, /精度已改变/);
+b.$('play').click(); b.dom.window.dispatchEvent(new b.dom.window.Event('pagehide')); assert(!b.playing()); b.dom.window.close();
+const c = setup('roofline'); assert.equal(c.$('ceiling').textContent, '18.75'); c.$('save').click(); c.set('peak', 2000); assert.equal(c.$('ceiling').textContent, '18.75');
+c.set('bandwidth', 200); assert.equal(c.$('ceiling').textContent, '37.5'); assert.match(c.$('saved').textContent, /= 2/); assert(c.$('chart').querySelector('.saved-point'));
+c.$('reset').click(); c.set('preset', '16', 'change'); assert.equal(c.$('ceiling').textContent, '1,000'); assert.match(c.$('feedback').textContent, /计算约束/);
+c.set('intensity-control', -4); assert.equal(c.$('preset').value, 'custom'); assert.equal(c.$('ceiling').textContent, '6.25');
+c.$('reset').click(); assert.equal(c.$('preset').value, '0.1875'); assert(!c.$('chart').querySelector('.saved-point')); c.dom.window.close();
+const d = setup('traffic', true); assert(d.$('play').disabled); d.$('next').click(); assert.equal(d.$('moved').textContent, '8'); d.dom.window.close();
+console.log('PASS: controlled comparisons, retained results, precision changes, play/pause/back/reset, input synchronization, reduced motion, timer cleanup and roofline regimes.');

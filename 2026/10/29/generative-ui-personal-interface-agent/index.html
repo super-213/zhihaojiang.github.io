@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><link rel=manifest href=/manifest.json>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Hexo Theme Redefine">
+    
+    
+    <meta name="author" content="姜智浩">
+    
+    <!-- Completely eliminate flash of wrong theme -->
+    <script>
+        (function() {
+            const THEME_KEY = "REDEFINE-THEME-STATUS";
+            const DARK = "dark", LIGHT = "light";
+            
+            // Get preferred theme
+            function getTheme() {
+                try {
+                    const saved = localStorage.getItem(THEME_KEY);
+                    if (saved) {
+                        const { isDark } = JSON.parse(saved);
+                        return isDark ? DARK : LIGHT;
+                    }
+                } catch (e) {}
+                
+                return matchMedia("(prefers-color-scheme: dark)").matches ? DARK : LIGHT;
+            }
+            
+            // Apply theme to document
+            function applyTheme(theme) {
+                const isDark = theme === DARK;
+                const root = document.documentElement;
+                
+                // Set classes for compatibility
+                root.classList.add(theme);
+                root.classList.remove(isDark ? LIGHT : DARK);
+                root.style.colorScheme = theme;
+            }
+            
+            // Initial application
+            const theme = getTheme();
+            applyTheme(theme);
+            
+            // Listen for system preference changes
+            matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ({ matches }) => {
+                // Only update if using system preference (no localStorage entry)
+                if (!localStorage.getItem(THEME_KEY)) {
+                    applyTheme(matches ? DARK : LIGHT);
+                }
+            });
+            
+            // Set body classes ASAP (before DOMContentLoaded)
+            (function() {
+                const addBodyClass = () => {
+                    const b = document.body;
+                    if (!b) return false;
+                    b.classList.add(theme + "-mode");
+                    return true;
+                };
+
+                // Try immediately
+                if (addBodyClass()) return;
+
+                // Observe until body exists
+                const mo = new MutationObserver(() => {
+                    if (addBodyClass()) mo.disconnect();
+                });
+                mo.observe(document.documentElement, { childList: true, subtree: true });
+            })();
+        })();
+    </script>
+    
+    <!-- preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    
+    <!--- Seo Part-->
+    
+    <link rel="canonical" href="https://blog.zhihaojiang.com/2026/10/29/generative-ui-personal-interface-agent/"/>
+    <meta name="robots" content="index,follow">
+    <meta name="googlebot" content="index,follow">
+    <meta name="revisit-after" content="1 days">
+    
+    
+        
+        <meta name="description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="未来，每个人看到的界面都不一样">
+<meta property="og:url" content="https://blog.zhihaojiang.com/2026/10/29/generative-ui-personal-interface-agent/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Hexo Theme Redefine, Redefine Your Hexo Journey.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.zhihaojiang.com/images/redefine-og.webp">
+<meta property="article:published_time" content="2026-10-29T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-29T03:48:59.200Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="生成式界面">
+<meta property="article:tag" content="软件架构">
+<meta property="article:tag" content="人机交互">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.zhihaojiang.com/images/redefine-og.webp">
+    
+    
+    <!--- Icon Part-->
+    <link rel="icon" type="image/png" href="/images/redefine-favicon.svg" sizes="192x192">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/redefine-favicon.svg">
+    <meta name="theme-color" content="#A31F34">
+    <link rel="shortcut icon" href="/images/redefine-favicon.svg">
+    <!--- Page Info-->
+    
+    <title>
+        
+            未来，每个人看到的界面都不一样 | 智浩的Blog
+        
+    </title>
+
+    
+<link rel="stylesheet" href="/fonts/Chillax/chillax.css">
+
+
+    <!--- Inject Part-->
+    
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+        
+<link rel="stylesheet" href="/css/build/tailwind.css">
+
+    
+
+    
+<link rel="stylesheet" href="/fonts/GeistMono/geist-mono.css">
+
+    
+<link rel="stylesheet" href="/fonts/Geist/geist.css">
+
+    <!--- Font Part-->
+    
+    
+    
+    
+    
+    
+
+    <script id="hexo-configurations">
+    window.config = {"hostname":"blog.zhihaojiang.com","root":"/","language":"en","path":"search.json","search_format":"striptags"};
+    window.theme = {"articles":{"style":{"font_size":"16px","line_height":1.5,"image_border_radius":"14px","image_alignment":"center","image_caption":false,"link_icon":true,"delete_mask":false,"title_alignment":"left","headings_top_spacing":{"h1":"3.2rem","h2":"2.4rem","h3":"1.9rem","h4":"1.6rem","h5":"1.4rem","h6":"1.3rem"}},"word_count":{"enable":true,"count":true,"min2read":true},"author_label":{"enable":true,"auto":true,"list":["Lv3","Lv6","Lv9"]},"code_block":{"copy":true,"style":"mac","highlight_theme":{"light":"github","dark":"vs2015"},"font":{"enable":false,"family":null,"url":null}},"toc":{"enable":true,"max_depth":3,"number":false,"expand":true,"init_open":true},"copyright":{"enable":true,"default":"cc_by_nc_sa"},"lazyload":true,"pangu_js":false,"recommendation":{"enable":false,"title":"推荐阅读","limit":3,"mobile_limit":2,"placeholder":"/images/wallhaven-wqery6-light.webp","skip_dirs":[]}},"colors":{"primary":"#A31F34","secondary":null,"default_mode":"light"},"global":{"fonts":{"chinese":{"enable":false,"family":null,"url":null},"english":{"enable":false,"family":null,"url":null},"title":{"enable":false,"family":null,"url":null}},"content_max_width":"1000px","sidebar_width":"210px","hover":{"shadow":true,"scale":true},"scroll_progress":{"bar":false,"percentage":true},"website_counter":{"url":"https://cn.vercount.one/js","enable":true,"site_pv":true,"site_uv":true,"post_pv":true},"single_page":true,"preloader":{"enable":false,"custom_message":null},"side_tools":{"gear_rotation":true,"auto_expand":false},"open_graph":{"enable":true,"image":"/images/redefine-og.webp","description":"Hexo Theme Redefine, Redefine Your Hexo Journey."},"google_analytics":{"enable":false,"id":null},"live2d":{"enable":true,"src":"https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js","delay":3000}},"home_banner":{"enable":true,"style":"fixed","image":{"light":"/images/defaults/bear-desktop.webp","dark":"/images/defaults/bear-desktop.webp","light_mobile":"/images/defaults/bear-mobile.webp","dark_mobile":"/images/defaults/bear-mobile.webp"},"title":"Enjoy Every Moment","subtitle":{"text":["Have A nice Day"],"hitokoto":{"enable":false,"show_author":false,"api":"https://v1.hitokoto.cn"},"typing_speed":100,"backing_speed":80,"starting_delay":500,"backing_delay":1500,"loop":true,"smart_backspace":true},"text_color":{"light":"#fff","dark":"#d1d1b6"},"text_style":{"title_size":"2.8rem","subtitle_size":"1.5rem","line_height":1.2},"custom_font":{"enable":false,"family":null,"url":null},"social_links":{"enable":true,"style":"default","links":[{"icon":"github","url":"https://github.com/super-213"},{"icon":"email","url":"jiangzhihaojzh@126.com"}],"qrs":[]}},"plugins":{"feed":{"enable":false},"aplayer":{"enable":true,"type":"fixed","audios":[{"name":"Something Just Like This","artist":"Coldplay","url":"https://evan.beee.top/music/Something%20Just%20Like%20This%20-%20The%20Chainsmokers%E3%80%81Coldplay.mp3","cover":"https://evan.beee.top/music/covers/Something_Just_Like_This.png"},{"name":"Bird","artist":"Imagine Dragons","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/birds.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/original.png","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/birds.lrc"},{"name":"Natural","artist":"Imagine Dragons","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/Natural.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/original.png","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/Natural.lrc"},{"name":"爱丫爱丫","artist":"BY2","url":"https://super-213.github.io/zhihaojiang.github.io/music/mus_url/爱丫爱丫.mp3","cover":"https://super-213.github.io/zhihaojiang.github.io/music/cover/16未成年.jpeg","lrc":"https://super-213.github.io/zhihaojiang.github.io/music/lrc/爱丫爱丫.lrc"}]},"mermaid":{"enable":false,"version":"11.4.1","theme":{"light":"default","dark":"dark"}}},"version":"2.9.0","navbar":{"auto_hide":false,"color":{"left":"#f78736","right":"#367df7","transparency":35},"width":{"home":"1200px","pages":"1000px"},"links":{"Home":{"path":"/","icon":"fa-regular fa-house"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"About":{"icon":"fa-regular fa-user","submenus":{"Me":"/about","Portfolio":"/portfolio/","Github":"https://github.com/super-213"}}},"search":{"enable":true,"preload":false}},"page_templates":{"friends_column":2,"tags_style":"blur","masonry":{"batch_size":12,"initial_batch_size":24}},"home":{"sidebar":{"enable":true,"position":"left","first_item":"menu","announcement":null,"show_on_mobile":true,"links":{"Archives":{"path":"/archives","icon":"fa-regular fa-archive"},"Photo":{"icon":"fa-solid fa-image","path":"/masonry/"},"Bookmarks":{"icon":"fa-solid fa-bookmark","path":"/bookmarks/"},"shuoshuo":{"icon":"fa-solid fa-bookmark","path":"/essays/"},"Tags":{"icon":"fa-solid fa-tags","path":"/tags/"},"Categories":{"icon":"fa-solid fa-folder","path":"/categories/"}}},"article_date_format":"auto","excerpt_length":200,"categories":{"enable":true,"limit":3},"tags":{"enable":true,"limit":3}},"footer":{"runtime":true,"icon":"<i class=\"fa-solid fa-heart fa-beat\" style=\"--fa-animation-duration: 0.5s; color: #f54545\"></i>","start":"2022/8/17 11:45:14","statistics":true,"customize":null,"icp":{"enable":false,"number":null,"url":null}},"footerStart":"2022/8/17 11:45:14","mermaid":{"style":{"light":"default","dark":"dark"}}};
+    window.lang_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+    window.i18n = {"search":"Search...","toc":"On this page","prev":"Prev","next":"Next","prev_posts":"Prev posts","next_posts":"Next posts","page":"Page %d","recent_posts":"Recent Posts","share":"Share","powered_by":"POWERED BY %s","theme":"THEME","rss_feed":"RSS Feed","category":"Category","categories":"Categories","tag":"Tag","tags":"Tags","post":"Post","posts":"Posts","tagcloud":"Tag Cloud","comment":"Comment","comments":"Comments","home":"Home","archive":"Archive","archives":"Archives","top":"TOP","sticky":"Sticky","go-back-home":"Go Back Home","masonry_loading":"Loading photos...","image_viewer":"Image viewer","close":"Close","exif":{"title":"EXIF","cards":{"camera":"Camera","lens":"Lens","exposure":"Exposure","other":"Other"},"fields":{"make":"Brand","model":"Model","date_taken":"Date taken","lens_model":"Lens","focal_length":"Focal length","focus_mode":"Focus mode","shutter":"Shutter","aperture":"Aperture","iso":"ISO","exposure_program":"Exposure program","exposure_compensation":"Exposure compensation","metering_mode":"Metering mode","flash":"Flash","white_balance":"White balance","latitude":"Latitude","longitude":"Longitude","altitude":"Altitude"},"status":{"loading":"Loading...","no_exif":"No EXIF available","library_missing":"EXIF library not loaded","image_source_missing":"Image source unavailable","unavailable":"EXIF unavailable (blocked by CORS or missing metadata)","flag_unavailable":"EXIF unavailable"}},"about":"About","changelog":"Changelog","links":"Links","link":"Link","friends":"Friends","friend":"Friend","timeline":"Timeline","shuoshuo":"Shuoshuo","bookmarks":"Bookmarks","site_uv":"VISITOR COUNT","site_pv":"TOTAL PAGE VIEWS","read_more":"Read more","wordcount":"Words","min2read":"Mins","status":"Status","runtime":"Blog up for","days":"days","hours":"hrs","minutes":"Min","seconds":"Sec","optimized_by":"and Optimized by Evan","rights":"All Rights Reserved","site_posts":"%s posts in total","site_wordcount":"%s words in total","copyright":{"author":"Author","title":"Title","link":"Link","create_time":"Created at","update_time":"Updated at","license_title":"License","license_content":"This work is licensed under %s.","all_rights_reserved":"All Rights Reserved &#169; %s","public_domain":"This work is in the public domain."},"ago":{"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"},"create_time":"Created","update_time":"Updated","expired":"This post is written %s days ago, and the content may not be up to date.","gitalk_loading":"Loading comments…","gitalk_load_failed":"Comments could not be loaded. Please retry.","gitalk_retry":"Retry loading comments"};
+    window.data = {"masonry":true};
+  </script>
+    
+    <!--- Fontawesome Part-->
+    
+<link rel="stylesheet" href="/fontawesome/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/brands.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/solid.min.css">
+
+    
+<link rel="stylesheet" href="/fontawesome/regular.min.css">
+
+    
+<link rel="stylesheet" href="/assets/icon-subsets.css">
+
+    
+    
+    
+    
+<meta name="generator" content="Hexo 7.3.0"><style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+
+<body>
+	<div class="progress-bar-container">
+	
+
+	
+	<span class="pjax-progress-bar"></span>
+	<!--        <span class="swup-progress-icon">-->
+	<!--            <i class="fa-solid fa-circle-notch fa-spin"></i>-->
+	<!--        </span>-->
+	
+</div>
+
+<main class="page-container" id="swup">
+
+	
+
+	<div class="main-content-container flex flex-col justify-between min-h-dvh">
+		<div class="main-content-header">
+			<header class="navbar-container px-6 md:px-12">
+    <div class="navbar-content transition-navbar ">
+        <div class="left">
+            
+            <a class="logo-title" href="/">
+                
+                智浩的Blog
+                
+            </a>
+        </div>
+
+        <div class="right">
+            <!-- PC -->
+            <div class="desktop">
+                <ul class="navbar-list">
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/"
+                                        >
+                                    <i class="fa-regular fa-house fa-fw"></i>
+                                    HOME
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/masonry/"
+                                        >
+                                    <i class="fa-solid fa-image fa-fw"></i>
+                                    PHOTO
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class=""
+                                   href="/archives"
+                                        >
+                                    <i class="fa-regular fa-archive fa-fw"></i>
+                                    ARCHIVES
+                                    
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                            </li>
+                    
+                        
+                            
+
+                            <li class="navbar-item">
+                                <!-- Menu -->
+                                <a class="has-dropdown"
+                                   href="#"
+                                        onClick=&#34;return false;&#34;>
+                                    <i class="fa-regular fa-user fa-fw"></i>
+                                    ABOUT
+                                    <i class="fa-solid fa-chevron-down fa-fw"></i>
+                                </a>
+
+                                <!-- Submenu -->
+                                
+                                    <ul class="sub-menu">
+                                        
+                                            <li>
+                                                <a href="/about">
+                                                    ME
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a href="/portfolio/">
+                                                    PORTFOLIO
+                                                </a>
+                                            </li>
+                                        
+                                            <li>
+                                                <a target="_blank" rel="noopener" href="https://github.com/super-213">
+                                                    GITHUB
+                                                </a>
+                                            </li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                    
+                    
+                        <li class="navbar-item search search-popup-trigger">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <!-- Mobile -->
+            <div class="mobile">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                
+                <div class="icon-item navbar-bar">
+                    <div class="navbar-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile sheet -->
+    <div class="navbar-drawer h-dvh w-full absolute top-0 left-0 bg-background-color flex flex-col justify-between">
+        <ul class="drawer-navbar-list flex flex-col px-4 justify-center items-start">
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/"
+                        >
+                            <span>
+                                HOME
+                            </span>
+                            
+                                <i class="fa-regular fa-house fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/masonry/"
+                        >
+                            <span>
+                                PHOTO
+                            </span>
+                            
+                                <i class="fa-solid fa-image fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                           href="/archives"
+                        >
+                            <span>
+                                ARCHIVES
+                            </span>
+                            
+                                <i class="fa-regular fa-archive fa-sm fa-fw"></i>
+                            
+                        </a>
+                        
+
+                        
+                    </li>
+            
+                
+                    
+
+                    <li class="drawer-navbar-item-sub text-base my-1.5 flex flex-col w-full">
+                        
+                        <div class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary cursor-pointer text-2xl font-semibold group border-b border-border-color hover:border-primary w-full "
+                             navbar-data-toggle="submenu-About"
+                        >
+                            <span>
+                                ABOUT
+                            </span>
+                            
+                                <i class="fa-solid fa-chevron-right fa-sm fa-fw transition-all"></i>
+                            
+                        </div>
+                        
+
+                        
+                            <div class="flex-col items-start px-2 py-2 hidden" data-target="submenu-About">
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/about">ME</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           href="/portfolio/">PORTFOLIO</a>
+                                    </div>
+                                
+                                    <div class="drawer-navbar-item text-base flex flex-col justify-center items-start hover:underline active:underline hover:underline-offset-1 rounded-3xl">
+                                        <a class=" text-third-text-color text-xl"
+                                           target="_blank" rel="noopener" href="https://github.com/super-213">GITHUB</a>
+                                    </div>
+                                
+                            </div>
+                        
+                    </li>
+            
+
+            
+            
+                
+                    
+                    
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/bookmarks/"
+                        >
+                            <span>Bookmarks</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/essays/"
+                        >
+                            <span>Shuoshuo</span>
+                            <i class="fa-solid fa-bookmark fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/tags/"
+                        >
+                            <span>Tags</span>
+                            <i class="fa-solid fa-tags fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+                    
+                    <li class="drawer-navbar-item text-base my-1.5 flex flex-col w-full">
+                        <a class="py-1.5 px-2 flex flex-row items-center justify-between gap-1 hover:!text-primary active:!text-primary text-2xl font-semibold group border-b border-border-color hover:border-primary w-full active"
+                           href="/categories/"
+                        >
+                            <span>Categories</span>
+                            <i class="fa-solid fa-folder fa-sm fa-fw"></i>
+                        </a>
+                    </li>
+                
+            
+        </ul>
+
+        <div class="statistics flex justify-around my-2.5">
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/tags">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">41</div>
+        <div class="label text-third-text-color text-sm">Tags</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/categories">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">7</div>
+        <div class="label text-third-text-color text-sm">Categories</div>
+    </a>
+    <a class="item tag-count-item flex flex-col justify-center items-center w-20" href="/archives">
+        <div class="number text-2xl sm:text-xl text-second-text-color font-semibold">96</div>
+        <div class="label text-third-text-color text-sm">Posts</div>
+    </a>
+</div>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+		</div>
+
+		<div class="main-content-body transition-fade-up">
+			
+
+			<div class="main-content">
+				<div class="post-page-container flex relative justify-between box-border w-full h-full">
+	<div class="article-content-container">
+
+		<div class="article-title relative w-full">
+			
+			<div class="w-full flex items-center pt-6 justify-start">
+				<h1 class="article-title-regular text-second-text-color tracking-tight text-4xl md:text-6xl font-semibold px-2 sm:px-6 md:px-8 py-3">未来，每个人看到的界面都不一样</h1>
+			</div>
+			
+		</div>
+
+		
+		<div class="article-header flex flex-row gap-2 items-center px-2 sm:px-6 md:px-8">
+			<div class="avatar w-[46px] h-[46px] shrink-0 rounded-medium border border-border-color p-px">
+				<img src="/images/defaults/IMG_3744.JPG">
+			</div>
+			<div class="info flex flex-col justify-between">
+				<div class="author flex items-center">
+					<span class="name text-default-text-color text-lg font-semibold">姜智浩</span>
+					
+					<span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv5</span>
+					
+				</div>
+				<div class="meta-info">
+					<div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2026-10-29 10:00</span>
+        <span class="mobile">2026-10-29 10:00</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2026-10-29 11:48:59</span>
+            <span class="mobile">2026-10-29 11:48:59</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/%E6%80%9D%E8%80%83%E4%B8%8E%E6%8E%A2%E7%B4%A2/">思考与探索</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E7%94%9F%E6%88%90%E5%BC%8F%E7%95%8C%E9%9D%A2/">生成式界面</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84/">软件架构</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/">人机交互</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>5.7k Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>19 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+				</div>
+			</div>
+		</div>
+		
+
+		
+
+
+		<div class="article-content markdown-body px-2 sm:px-6 md:px-8 pb-8">
+			<p>最近，看着大模型从回答问题，一步步走向写代码、改页面和调用工具，我开始想：如果它继续变强，软件会变成什么样？</p>
+<p>现在使用一款软件，通常是开发者先设计好界面，再让所有人沿着预设的入口使用。即使可以切换主题、调整几个模块，大部分页面和操作路径仍然是事先决定的。</p>
+<p>但每个人的审美和习惯都不一样。有人喜欢简洁，有人希望一屏看见所有信息；有人喜欢图表，有人更愿意看清楚列出的文字。同一个页面，对一个人恰到好处，对另一个人却可能显得拥挤。</p>
+<p>这让我产生了一个念头：<strong>未来，每个人看到的界面，会不会都不一样？</strong></p>
+<p>开发者提供数据和软件能力，Agent 根据每个人的审美、习惯和正在做的事情，组织出适合他的界面。继续往前想，如果 Agent 连处理数据的程序也能编写，它或许还能根据一句需求，构造出开发者没有提前设计的功能。个人设备上的软件，就可以随着使用者的需要持续变化。</p>
+<p>这个念头可以从一款普通应用的工作方式说起。</p>
+<!-- more -->
+
+
+<style>
+.article-content:has(#personal-ui-article){font-size:16px;line-height:1.95}
+.article-content:has(#personal-ui-article)>p{max-width:48em;margin:1.2em 0}
+.article-content:has(#personal-ui-article)>h2{margin-top:2.6em;line-height:1.5}
+.article-content:has(#personal-ui-article) table{display:block;max-width:100%;overflow-x:auto}
+.personal-ui-frame{width:100%;height:960px;border:0;display:block;margin:28px 0;background:transparent}
+.personal-ui-contract{height:750px}.personal-ui-flow{height:700px}
+@media(max-width:560px){.personal-ui-frame{height:1450px}.personal-ui-contract{height:1000px}.personal-ui-flow{height:950px}}
+</style>
+
+<div id="personal-ui-article" hidden=""></div>
+
+<h2 id="一款软件里，前端和后端分别在做什么"><a href="#一款软件里，前端和后端分别在做什么" class="headerlink" title="一款软件里，前端和后端分别在做什么"></a>一款软件里，前端和后端分别在做什么</h2><p>假设手机里有一个家庭应用，可以查看相册、控制灯光、记录用电和管理日程。</p>
+<p>打开应用时，看到的照片排列、设备列表、按钮和图表，以及点击它们时发生的界面变化，都属于<strong>前端</strong>。它负责把信息呈现出来，让人能够操作软件。网页、手机 App 和电脑软件，都有这一层面向用户的交互。</p>
+<p>点击“关闭客厅灯”之后，还要确定控制的是哪盏灯、当前用户有没有权限、设备是否收到命令，再把结果反馈回来。这些处理属于软件背后的逻辑。在常见的联网应用中，其中许多工作由服务器上的<strong>后端</strong>完成。</p>
+<p>照片的拍摄时间、日程内容、设备信息等，则需要放在某个地方保存。<strong>数据库</strong>负责有组织地保存和查询这些数据。它可以位于服务器，也可以就在个人设备上。数据库是后端经常使用的基础设施，两者的范围并不相同。</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>在家庭应用中的工作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>前端</td>
+<td>显示相册、用电图表和灯光按钮，接收用户操作</td>
+</tr>
+<tr>
+<td>后端</td>
+<td>处理请求、检查权限、协调设备、返回结果</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>保存相册信息、用电记录和日程等数据</td>
+</tr>
+</tbody></table>
+<p>前端与后端通常通过 <strong>API，也就是程序接口</strong>交流。前端请求“读取这个月的用电记录”，后端按照约定返回数据，前端再把它画成图表。同一份记录，既可以显示成折线图，也可以显示成表格。</p>
+<p>这个分工给了我一个继续想下去的理由：<strong>既然能力和数据可以与呈现方式分开，为什么所有人一定要使用相同的呈现方式？</strong></p>
+<h2 id="当-Agent-开始接手前端"><a href="#当-Agent-开始接手前端" class="headerlink" title="当 Agent 开始接手前端"></a>当 Agent 开始接手前端</h2><p>这里的 Agent，可以理解为一个能够使用工具、执行步骤的软件代理。大模型帮助它理解“我想做什么”，程序运行环境让它能够读取数据、调用接口，或者修改代码。</p>
+<p>如果这样的 Agent 足够可靠，它就能根据用户的要求，把后端提供的能力重新组织起来。</p>
+<p>仍然是那个家庭应用。我喜欢安静的首页，只想保留设备状态和当天日程；家人更在意照片，希望打开应用先看到相册；有人在排查用电问题，首页就应该把用电记录和设备状态放在一起。</p>
+<p>这里可以分开观察两种变化。只把页面从冷色改成暖色，满足的是审美偏好；把常用入口重新排列，甚至根据任务组合操作步骤，改变的则是软件的使用方式。</p>
+<p>下面这个示例允许分别改变审美、首页组织和当前任务。可以先保留一个喜欢的版本，再只改一项，比较它究竟影响了外观，还是影响了能看到的信息和操作。</p>
+<iframe class="personal-ui-frame" src="/2026/10/29/generative-ui-personal-interface-agent/lab.html?mode=compose" title="实验一：用同一组家庭数据比较审美、布局和任务变化" loading="lazy"></iframe>
+
+<p>这是用虚构数据和固定规则搭建的概念演示，没有实时调用大模型。在“日常浏览”里，相册优先与设备优先会产生不同的排序；换成“准备出门”，页面则突出设备与日程，并提供关灯操作。</p>
+<p>我设想的变化就发生在这里：过去，用户学习开发者设计好的页面；未来，Agent 也可以根据用户的目标来组织页面。</p>
+<p>这种按上下文生成或组合界面的方向，通常称为 <strong>Generative UI，生成式用户界面</strong>。<a class="link" target="_blank" rel="noopener" href="https://a2ui.org/introduction/what-is-a2ui/">A2UI<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>已经提供了一条具体路线：Agent 发送结构化的界面描述，客户端使用自己的组件目录渲染。<a class="link" target="_blank" rel="noopener" href="https://docs.flutter.dev/ai/genui">Flutter GenUI SDK<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>也在探索把 Agent 与现有组件连接起来，官方目前仍将其标注为实验性。</p>
+<p>这些技术让“Agent 组装界面”有了实现基础。至于一个人长期使用的整套界面，怎样逐渐贴近他的习惯，仍然需要继续探索。</p>
+<p>在这样的分工下，前端开发也会发生变化。开发者需要把更多精力放在可靠的组件、交互规则和生成后的检查上；具体页面如何组合，则可以留出更大的空间，让 Agent 根据人和任务决定。</p>
+<h2 id="只知道接口，还不足以理解软件"><a href="#只知道接口，还不足以理解软件" class="headerlink" title="只知道接口，还不足以理解软件"></a>只知道接口，还不足以理解软件</h2><p>最初想这个问题时，我觉得：既然 Agent 会写前端，把后端接口给它，似乎就够了。</p>
+<p>但回到关灯这个例子，很快就会遇到一个问题。一个“设置设备电源”的接口，可能面对的是客厅灯，也可能面对冰箱。接口能够接收一个设备编号和开关状态，并不意味着所有设备都适合被关闭，也不意味着任何用户都有权这么做。</p>
+<p>Agent 除了知道“怎么调用”，还需要知道这项能力的含义、使用条件，以及怎样确认结果。<a class="link" target="_blank" rel="noopener" href="https://spec.openapis.org/oas/v3.2.1.html">OpenAPI<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>可以描述接口的操作、输入、响应和安全要求；具体业务规则还需要完整说明，并由执行系统落实。</p>
+<p>试着在下面选择“访客”，或者把目标换成“冰箱”。界面仍然能表达关闭设备的请求，但它会在哪一步被拒绝？再把目标改回客厅灯，选择离线，看看“有权操作”和“操作成功”之间还有什么差别。</p>
+<iframe class="personal-ui-frame personal-ui-contract" src="/2026/10/29/generative-ui-personal-interface-agent/lab.html?mode=contract" title="实验二：改变身份、目标设备和请求，观察能力校验与操作结果" loading="lazy"></iframe>
+
+<p>这个实验只在浏览器里模拟检查。真实系统中，权限和公共业务规则需要由可信的执行环境落实，不能依赖 Agent 自己承诺遵守。</p>
+<p>对使用者而言，界面怎么变化都可以讨论，但点下去之后发生了什么，必须说清楚。设备没有回应，就应该显示尚未完成；没有权限，就应该解释为什么被拒绝。生成一句流畅的“已经关灯”，不能代替设备的真实回执。</p>
+<h2 id="再往前想：会不会连后端也不需要了"><a href="#再往前想：会不会连后端也不需要了" class="headerlink" title="再往前想：会不会连后端也不需要了"></a>再往前想：会不会连后端也不需要了</h2><p>如果 Agent 可以根据接口生成前端，我还会继续想：有些后端做的事情，是不是也能交给它？</p>
+<p>以一个只供自己使用的记账工具为例。数据库保存日期、金额和分类，程序负责录入、查询、按月份汇总，再把结果画出来。如果 Agent 能可靠地编写和维护这些程序，这些处理就有机会放在我的电脑或手机上完成，而不必专门部署一套应用后端。</p>
+<p>我说“按旅行整理今年的支出”，它便为这些数据增加一种查看方式；过了一段时间，我想把记账与出行计划放在一起，它又可以修改本地程序，把相关数据组织到同一处。</p>
+<p><strong>在这种个人应用里，也许可以不再单独开发和部署传统的应用后端，只保留数据库，由终端上的 Agent 编写所需的处理逻辑和界面。</strong></p>
+<p>这种结构并非要求所有基础设施都凭空消失。<a class="link" target="_blank" rel="noopener" href="https://www.sqlite.org/serverless.html">SQLite<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>就是一个现成例子：程序可以在自身进程内使用数据库，直接读写本地数据库文件，无需另起一个数据库服务器进程。这说明“本地程序加数据库”本身已经是一种可行结构；由 Agent 长期生成和维护这个程序，则是这里进一步提出的设想。</p>
+<p>此时，汇总、校验和处理数据的逻辑仍然要存在，只是它们可以迁到个人设备，交给 Agent 生成的程序运行。稳定的结果也不必每次都让模型重新计算：Agent 可以先编写汇总程序，之后由程序重复执行，直到需求变化时再修改。</p>
+<p>个人笔记、相册整理、阅读记录，也可以沿着这个方向思考。数据长久保存，围绕数据的工具则根据使用者的需要不断调整。用户不必等待某个产品排期，才有机会增加一种只对自己有用的视图或处理步骤。</p>
+<h2 id="数据、规则与-Agent，各自负责什么"><a href="#数据、规则与-Agent，各自负责什么" class="headerlink" title="数据、规则与 Agent，各自负责什么"></a>数据、规则与 Agent，各自负责什么</h2><p>“只留下数据库”适合描述一部分个人工具。换成一家人共享的日程，或者多人同时使用的订票系统，就需要把后端的职责拆开看。</p>
+<p>查询记录、组合接口、生成报表、安排个人流程，这些工作可以给 Agent 留出较大的自由。谁有权修改数据、一张车票是否还有库存、一笔操作是否满足共同约定，则需要一个参与者不能自行改写的判断依据。为了说明这种区别，我把前一类称为<strong>业务执行与编排</strong>，把后一类称为<strong>业务裁决</strong>。实际系统里，这两类工作可能交织在同一次请求中。</p>
+<p>即使 Agent 能写出完全正确的程序，也不能因此由它决定自己拥有多少权限。用户能够修改自己终端上的代码，就意味着共享服务不能只依赖终端的判断。两台手机都显示“提交成功”，也不能把一张车票变成两张。</p>
+<p>一部分裁决可以放进数据库。例如，<a class="link" target="_blank" rel="noopener" href="https://www.postgresql.org/docs/18/ddl-rowsecurity.html">PostgreSQL 的行级安全策略<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>可以限制普通角色能够读取和修改哪些数据行。更完整的身份验证、业务约束和外部服务协调，也必须有明确的承担者。</p>
+<p>因此，更一般的架构可以概括为 <strong>Data + Rules + Agent：数据、规则与个人代理共同构成软件。</strong> 界面则是它们面向使用者的呈现。</p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>主要职责</th>
+<th>可以怎样变化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据层</td>
+<td>保存数据、关系与版本</td>
+<td>数据持续积累，访问范围受授权限制</td>
+</tr>
+<tr>
+<td>规则与能力层</td>
+<td>提供合法操作，执行权限、业务约束与事务规则</td>
+<td>平台维护公共规则，开放可组合的能力</td>
+</tr>
+<tr>
+<td>个人 Agent 运行环境</td>
+<td>理解需求，生成查询、程序与工作流</td>
+<td>根据个人目标组合能力，保存可复用的结果</td>
+</tr>
+<tr>
+<td>动态界面</td>
+<td>显示数据、接收操作、呈现真实结果</td>
+<td>按审美、习惯和任务组织交互</td>
+</tr>
+</tbody></table>
+<p>这套分工不要求平台提前写出每一种业务工作台。可以设想一个商品数据平台，开放商家有权读取的商品、订单和库存数据，并明确每个字段的含义。商家 A 想看销量趋势，商家 B 则提出：“找出近七天卖得不好、但是库存很多的商品。”</p>
+<p>对第二个需求，Agent 需要先把“卖得不好”和“库存很多”变成可检查的条件。例如，让商家指定销量阈值和库存阈值，再生成查询、列出符合条件的商品，并显示所用时间范围和筛选依据。同一份数据，也可以按库存金额或历史销售情况重新比较。</p>
+<p>“滞销分析”这个完整模块，未必需要平台提前开发。平台提供可靠的数据定义与访问能力，Agent 根据需求组织查询、计算和界面。它构造的新功能来自已有能力的组合；如果没有成本数据，就不能声称算出了真实利润，没有合适的预测方法和检验，也不能把一条延长的趋势线当作可靠预测。</p>
+<p>如果商家进一步要求自动打折或下架商品，Agent 就需要调用相应的可信操作，由平台重新检查权限与业务条件。读取数据做分析，与真正改变共享业务状态，在同一个工作台里仍然有不同的边界。</p>
+<p><strong>今天常见的路径是开发者先设计功能，用户再选择使用；这里设想的另一条路径，是用户先提出需求，Agent 再在已有数据、规则和能力内构造功能。</strong></p>
+<p>个人知识整理、数据分析和家庭设备编排，都提供了值得尝试的空间。随着任务从个人数据处理走向多人协作与交易，统一的共享状态与裁决也会变得更重要。</p>
+<h2 id="个人终端上的软件，由-Agent-自己改写"><a href="#个人终端上的软件，由-Agent-自己改写" class="headerlink" title="个人终端上的软件，由 Agent 自己改写"></a>个人终端上的软件，由 Agent 自己改写</h2><p>沿着这个设想，电脑、手机和平板上的软件，可能会出现一种新的生长方式。</p>
+<p>最初，我只需要一个能够保存笔记的小工具。后来，我想把读书摘录和日程关联起来；再后来，我希望写文章时能直接找到相关照片和旧笔记。今天，这些要求往往意味着寻找另一款软件、安装插件，或者等待更新。</p>
+<p>如果终端上有一个长期工作的个人 Agent，它可以读取我允许使用的数据，理解现有程序，再为这些新需求生成一个修改版本。界面、查询方式和本地处理流程，都可以跟着需求变化。</p>
+<p>到这一步，“每个人看到的界面不同”还只是最容易看见的部分。每个人的软件可能连功能组合和操作流程都不一样：两个人从相同的基础工具出发，用上一段时间后，各自留下了不同的模块、快捷操作和数据视图。</p>
+<p>这里的“终端上的 Agent”，指它能够在个人设备的授权环境中工作，并不要求大模型一定在本机运行。模型可以在本地，也可以通过远程服务调用；代码在哪里执行、哪些数据能够离开设备，需要分别决定。</p>
+<p>我也不希望这样的 Agent 每天把熟悉的软件改得面目全非。它应该保留现有可用版本，先生成候选修改，在独立环境中检查，再展示改动。采用新版本之后，原来的数据和工作进度能够继续使用，出现问题时也能恢复。</p>
+<p>下面的流程演示把这个过程缩小为一次界面更新。选择正常方案、虚构能力或设备离线，可以分别观察：候选方案什么时候应该被拒绝，界面什么时候才被采用，以及采用界面之后，为什么还要等待真实操作结果。</p>
+<iframe class="personal-ui-frame personal-ui-flow" src="/2026/10/29/generative-ui-personal-interface-agent/lab.html?mode=flow" title="实验三：比较正常、非法能力与设备离线时的界面更新过程" loading="lazy"></iframe>
+
+<p>它演示的是有限的界面更新流程，没有真的改写本机软件。若进一步允许 Agent 修改程序，检查还必须覆盖新旧版本对数据的读写是否兼容、原有功能是否仍可使用，以及恢复旧代码时如何处理已经改变的数据。一次涉及数据迁移的更新，不能只靠把代码切回去就当作完成恢复。</p>
+<h2 id="从打开一个-App，到直接提出需求"><a href="#从打开一个-App，到直接提出需求" class="headerlink" title="从打开一个 App，到直接提出需求"></a>从打开一个 App，到直接提出需求</h2><p>如果界面和功能都可以按需构造，使用软件的起点也可能变化。</p>
+<p>今天想查看家庭耗电情况，我可能先去找一款合适的 App，研究它支持什么设备，再学习怎么生成报表。在刚才设想的环境里，我可以直接说：“帮我看看这个月家里的电都用在哪里。”</p>
+<p>Agent 找到我已经授权的电表记录和设备数据，检查哪些时间段的数据完整，再编写查询与汇总程序，生成一个可以继续调整的用电看板。如果数据只有全屋总量，它就只能展示总量变化；要分析到每一台设备，还需要相应的分设备计量数据。按需构造功能，也要从实际拥有的数据和能力出发。</p>
+<p>这个看板可以只为一次排查服务。觉得有用，我再说：“把它保留下来，以后每周整理一次。”Agent 便把一次性的分析保存成长期工具，记录数据来源、计算口径、运行时间和结果位置。数据源失效或权限到期时，也需要显示中断原因。</p>
+<p>临时生成的功能，就这样变成了可以重复执行的工作流。</p>
+<p><strong>用户的需求可以先于一个具体的 App 出现，软件围绕需求临时组成，再由用户决定哪些部分值得长期留下。</strong></p>
+<p>这种使用方式，可以称为从“以应用为中心”走向“以意图为中心”。家庭旅行就是另一个例子：个人 Agent 可以把日程、路线、预算和待办组织成一个工作台，用户从安排旅行这个目标出发，不必先按软件边界拆开任务。</p>
+<p>已有 App 仍然可以提供专业交互和稳定流程。生成一次功能需要的时间、计算成本、权限衔接，以及熟悉界面的价值，都会影响用户是否愿意改用这种方式。按需生成可能先成为某些任务的入口，再逐渐扩展；它能否广泛替代 App，还不能仅凭这个设想确定。</p>
+<h2 id="支撑这种软件的，可能是一个个人-Agent-运行时"><a href="#支撑这种软件的，可能是一个个人-Agent-运行时" class="headerlink" title="支撑这种软件的，可能是一个个人 Agent 运行时"></a>支撑这种软件的，可能是一个个人 Agent 运行时</h2><p>走到这里，我开始觉得，值得做成产品的还有支撑这些变化的运行环境。</p>
+<p>“运行时”可以理解为让程序实际工作起来、管理它能做什么的软件环境。这里设想的个人 Agent 运行时，可以运行在现有电脑和手机系统之上：模型提出代码、查询和界面方案，运行时负责把它们放进明确的权限与执行边界中。</p>
+<p>它需要让 Agent 找到可用的数据和能力，也让用户看见自己授权了什么。生成的新程序先在受限环境里检查，只能访问获准的文件、网络和服务；采用后，程序的版本、依赖、运行状态和操作记录能够保存。重复执行的计算交给版本明确的程序完成，更新与重试也沿着可检查的规则进行。</p>
+<p>当操作涉及多个步骤时，运行时还要跟踪每一步的真实结果。一个数据库事务可以协调该数据库内的一组修改，但不能自动撤销所有外部操作。例如日程写入成功、预订却失败，就必须分别记录，并决定是否重试或采取补救措施。</p>
+<p>因此，做出一个会写代码的 Agent，和做出一个可以长期托管个人软件的环境，中间还有数据持久化、权限管理、版本兼容和失败恢复等工作。这些能力可能成为独立的产品机会；是否成立，要看它能否让用户持续保留和使用生成的工具，是否降低维护负担，以及能否与现有服务合作。</p>
+<p>开发者预先编写的某些查询、报表和接口组合代码，可能因此减少；用户提出更多新需求，也可能让生成的代码数量增加。在这套架构里，维护工作的重心会转向数据语义、能力约定和可信执行机制。</p>
+<p>我想象中的分工是：<strong>软件提供商负责数据的真实性和公共操作的合法执行，个人 Agent 根据我的目标，决定怎样组合这些数据和能力。</strong></p>
+<p>打开电脑时，数据还在，熟悉的工具也还在。当我提出新的需求，Agent 可以生成一份新的功能和界面，经过检查后留在我的环境里。另一个人连接同样的数据平台，却可以因为不同的目标，拥有另一套工具。</p>
+<p>未来，每个人看到的界面都不一样，也许只是这个变化最先显露出来的部分。再往后，每个人的软件功能、工作流程，以及软件随需求更新的方式，都可能逐渐不同。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>以下资料用于说明已有技术基础。Data + Rules + Agent 的分工、按需构造功能，以及个人 Agent 运行时，是本文据此推演的设计设想。</p>
+<ul>
+<li>A2UI：<a class="link" target="_blank" rel="noopener" href="https://a2ui.org/introduction/what-is-a2ui/">What is A2UI?<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，声明式界面描述与客户端组件渲染。</li>
+<li>Flutter：<a class="link" target="_blank" rel="noopener" href="https://docs.flutter.dev/ai/genui">GenUI SDK for Flutter<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，连接 Agent 与现有组件目录的实验性 SDK。</li>
+<li>OpenAPI Initiative：<a class="link" target="_blank" rel="noopener" href="https://spec.openapis.org/oas/v3.2.1.html">OpenAPI Specification v3.2.1<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，HTTP API 的描述规范。</li>
+<li>SQLite：<a class="link" target="_blank" rel="noopener" href="https://www.sqlite.org/serverless.html">SQLite Is Serverless<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，无需独立数据库服务器进程的运行方式。</li>
+<li>PostgreSQL：<a class="link" target="_blank" rel="noopener" href="https://www.postgresql.org/docs/18/ddl-rowsecurity.html">Row Security Policies<i class="fa-solid fa-arrow-up-right ml-[0.2em] font-light align-text-top text-[0.7em] link-icon"></i></a>，数据库中按角色限制数据行访问的机制。</li>
+</ul>
+
+		</div>
+
+		
+		<div class="post-copyright-info w-full my-8 px-2 sm:px-6 md:px-8">
+			<div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> 未来，每个人看到的界面都不一样</li>
+        <li><strong>Author:</strong> 姜智浩</li>
+        <li><strong>Created at
+                :</strong> 2026-10-29 10:00:00</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2026-10-29 11:48:59
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://super-213.github.io/zhihaojiang.github.io/2026/10/29/generative-ui-personal-interface-agent/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+
+            
+                This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0">CC BY-NC-SA 4.0</a>.
+            
+        </li>
+    </ul>
+</div>
+
+		</div>
+		
+
+		
+		<ul class="post-tags-box text-lg mt-1.5 flex-wrap justify-center flex md:hidden">
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">#人工智能</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E7%94%9F%E6%88%90%E5%BC%8F%E7%95%8C%E9%9D%A2/">#生成式界面</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84/">#软件架构</a>&nbsp;
+			</li>
+			
+			<li class="tag-item mx-0.5">
+				<a href="/tags/%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/">#人机交互</a>&nbsp;
+			</li>
+			
+		</ul>
+		
+
+		
+
+		
+		<div class="article-nav my-8 flex justify-between items-center px-2 sm:px-6 md:px-8">
+			
+			
+			<div class="article-next border-border-color shadow-redefine-flat shadow-shadow-color-2 rounded-medium px-4 py-2 hover:shadow-redefine-flat-hover hover:shadow-shadow-color-2">
+				<a class="next" rel="next" href="/2026/10/23/algorithm-complexity-memory-bandwidth-roofline/">
+					<span class="title flex justify-center items-center">
+						<span class="post-nav-title-item truncate max-w-48">算法复杂度、内存带宽与 Roofline 模型</span>
+						<span class="post-nav-item">Next posts</span>
+					</span>
+					<span class="right arrow-icon flex justify-center items-center">
+						<i class="fa-solid fa-chevron-right"></i>
+					</span>
+				</a>
+			</div>
+			
+		</div>
+		
+
+
+		
+		<div class="comment-container px-2 sm:px-6 md:px-8 pb-8">
+			<div class="comments-container mt-10 w-full ">
+    <div id="comment-anchor" class="w-full h-2.5"></div>
+    <div class="comment-area-title w-full my-1.5 md:my-2.5 text-xl md:text-3xl font-bold">
+        Comments
+    </div>
+    
+
+        
+            
+    <div id="gitalk-container"
+         data-library-src="/js/build/libs/gitalk.min.js"
+         data-error-message="Comments could not be loaded. Please retry.">
+        <p role="status" aria-live="polite">Loading comments…</p>
+        <button type="button" hidden data-gitalk-retry>Retry loading comments</button>
+    </div>
+    <script type="application/json" id="gitalk-settings">{"clientID":"Ov23linBgyFBXfnXEw2i","clientSecret":"3113c7378ac301cd0147ba7f2832161c75dee62f","repo":"gitalk","owner":"super-213","admin":["super-213"],"id":"post-d984d4918ca9378f2796b4bae85635c26dd2319c","title":"未来，每个人看到的界面都不一样","language":"en","proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token"}</script>
+
+
+
+        
+    
+</div>
+
+		</div>
+		
+	</div>
+
+	
+	<div class="toc-content-container">
+		<div class="post-toc-wrap">
+	<div class="post-toc">
+		<div class="toc-title">On this page</div>
+		<div class="page-title">未来，每个人看到的界面都不一样</div>
+		<ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E6%AC%BE%E8%BD%AF%E4%BB%B6%E9%87%8C%EF%BC%8C%E5%89%8D%E7%AB%AF%E5%92%8C%E5%90%8E%E7%AB%AF%E5%88%86%E5%88%AB%E5%9C%A8%E5%81%9A%E4%BB%80%E4%B9%88"><span class="nav-text">一款软件里，前端和后端分别在做什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%93-Agent-%E5%BC%80%E5%A7%8B%E6%8E%A5%E6%89%8B%E5%89%8D%E7%AB%AF"><span class="nav-text">当 Agent 开始接手前端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AA%E7%9F%A5%E9%81%93%E6%8E%A5%E5%8F%A3%EF%BC%8C%E8%BF%98%E4%B8%8D%E8%B6%B3%E4%BB%A5%E7%90%86%E8%A7%A3%E8%BD%AF%E4%BB%B6"><span class="nav-text">只知道接口，还不足以理解软件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%8D%E5%BE%80%E5%89%8D%E6%83%B3%EF%BC%9A%E4%BC%9A%E4%B8%8D%E4%BC%9A%E8%BF%9E%E5%90%8E%E7%AB%AF%E4%B9%9F%E4%B8%8D%E9%9C%80%E8%A6%81%E4%BA%86"><span class="nav-text">再往前想：会不会连后端也不需要了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E3%80%81%E8%A7%84%E5%88%99%E4%B8%8E-Agent%EF%BC%8C%E5%90%84%E8%87%AA%E8%B4%9F%E8%B4%A3%E4%BB%80%E4%B9%88"><span class="nav-text">数据、规则与 Agent，各自负责什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E7%BB%88%E7%AB%AF%E4%B8%8A%E7%9A%84%E8%BD%AF%E4%BB%B6%EF%BC%8C%E7%94%B1-Agent-%E8%87%AA%E5%B7%B1%E6%94%B9%E5%86%99"><span class="nav-text">个人终端上的软件，由 Agent 自己改写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E6%89%93%E5%BC%80%E4%B8%80%E4%B8%AA-App%EF%BC%8C%E5%88%B0%E7%9B%B4%E6%8E%A5%E6%8F%90%E5%87%BA%E9%9C%80%E6%B1%82"><span class="nav-text">从打开一个 App，到直接提出需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%AF%E6%92%91%E8%BF%99%E7%A7%8D%E8%BD%AF%E4%BB%B6%E7%9A%84%EF%BC%8C%E5%8F%AF%E8%83%BD%E6%98%AF%E4%B8%80%E4%B8%AA%E4%B8%AA%E4%BA%BA-Agent-%E8%BF%90%E8%A1%8C%E6%97%B6"><span class="nav-text">支撑这种软件的，可能是一个个人 Agent 运行时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol>
+
+	</div>
+</div>
+	</div>
+	
+</div>
+
+			</div>
+
+			
+		</div>
+
+		<div class="main-content-footer">
+			<footer class="footer mt-5 py-5 h-auto text-base text-third-text-color relative border-t-2 border-t-border-color">
+    <div class="info-container py-3 text-center">
+        
+        <div class="text-center">
+            &copy;
+            
+              <span>2022</span>
+              -
+            
+            2026&nbsp;&nbsp;<i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s; color: #f54545"></i>&nbsp;&nbsp;<a href="/">姜智浩</a>
+            
+                
+                <p class="post-count space-x-0.5">
+                    <span>
+                        96 posts in total
+                    </span>
+                    
+                        <span>
+                            262.5k words in total
+                        </span>
+                    
+                </p>
+            
+        </div>
+        
+            <script async data-swup-reload-script src="https://cn.vercount.one/js"></script>
+            <div class="relative text-center lg:absolute lg:right-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-right">
+                
+                    <span id="busuanzi_container_site_uv" class="lg:!block">
+                        <span class="text-sm">VISITOR COUNT</span>
+                        <span id="busuanzi_value_site_uv"></span>
+                    </span>
+                
+                
+                    <span id="busuanzi_container_site_pv" class="lg:!block">
+                        <span class="text-sm">TOTAL PAGE VIEWS</span>
+                        <span id="busuanzi_value_site_pv"></span>
+                    </span>
+                
+            </div>
+        
+        <div class="relative text-center lg:absolute lg:left-[20px] lg:top-1/2 lg:-translate-y-1/2 lg:text-left">
+            <span class="lg:block text-sm">POWERED BY <?xml version="1.0" encoding="utf-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg class="relative top-[2px] inline-block align-baseline" version="1.1" id="圖層_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="1rem" height="1rem" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve"><path fill="#0E83CD" d="M256.4,25.8l-200,115.5L56,371.5l199.6,114.7l200-115.5l0.4-230.2L256.4,25.8z M349,354.6l-18.4,10.7l-18.6-11V275H200v79.6l-18.4,10.7l-18.6-11v-197l18.5-10.6l18.5,10.8V237h112v-79.6l18.5-10.6l18.5,10.8V354.6z"/></svg><a target="_blank" class="text-base" href="https://hexo.io">Hexo</a></span>
+            <span class="text-sm lg:block">THEME&nbsp;<a class="text-base" target="_blank" href="https://github.com/EvanNotFound/hexo-theme-redefine">Redefine v2.9.0</a></span>
+        </div>
+        
+        
+            <div>
+                Blog up for <span class="odometer" id="runtime_days" ></span> days <span class="odometer" id="runtime_hours"></span> hrs <span class="odometer" id="runtime_minutes"></span> Min <span class="odometer" id="runtime_seconds"></span> Sec
+            </div>
+        
+        
+            <script data-swup-reload-script>
+                try {
+                    function odometer_init() {
+                    const elements = document.querySelectorAll('.odometer');
+                    elements.forEach(el => {
+                        new Odometer({
+                            el,
+                            format: '( ddd).dd',
+                            duration: 200
+                        });
+                    });
+                    }
+                    odometer_init();
+                } catch (error) {}
+            </script>
+        
+        
+        
+    </div>  
+</footer>
+
+		</div>
+	</div>
+
+	
+	<div class="post-tools">
+		<div class="post-tools-container">
+	<ul class="article-tools-list">
+		<!-- TOC aside toggle -->
+		
+		<li class="right-bottom-tools page-aside-toggle">
+			<i class="fa-regular fa-outdent"></i>
+		</li>
+		
+
+		<!-- go comment -->
+		
+		<li class="go-comment">
+			<i class="fa-regular fa-comments"></i>
+		</li>
+		
+	</ul>
+</div>
+	</div>
+	
+
+	<div class="right-side-tools-container">
+		<div class="side-tools-container">
+	<ul class="hidden-tools-list">
+		<li class="right-bottom-tools tool-font-adjust-plus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-plus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-font-adjust-minus flex justify-center items-center">
+			<i class="fa-regular fa-magnifying-glass-minus"></i>
+		</li>
+
+		<li class="right-bottom-tools tool-dark-light-toggle flex justify-center items-center">
+			<i class="fa-regular fa-moon"></i>
+		</li>
+
+		<!-- rss -->
+		
+
+		
+
+		<li class="right-bottom-tools tool-scroll-to-bottom flex justify-center items-center">
+			<i class="fa-regular fa-arrow-down"></i>
+		</li>
+	</ul>
+
+	<ul class="visible-tools-list">
+		<li class="right-bottom-tools toggle-tools-list flex justify-center items-center">
+			<i class="fa-regular fa-cog fa-spin"></i>
+		</li>
+		
+		<li class="right-bottom-tools tool-scroll-to-top flex justify-center items-center">
+			<i class="arrow-up fas fa-arrow-up"></i>
+			<span class="percent"></span>
+		</li>
+		
+		
+	</ul>
+</div>
+	</div>
+
+	<div class="image-viewer-container" role="dialog" aria-modal="true" aria-label="Image viewer">
+	<button class="image-viewer-close" type="button" aria-label="Close">
+		<i class="fa-solid fa-xmark"></i>
+	</button>
+	<button class="image-viewer-prev" type="button" aria-label="Prev">
+		<i class="fa-solid fa-chevron-left"></i>
+	</button>
+	<div class="image-viewer-frame">
+		<img src="" alt="">
+	</div>
+	<div class="image-viewer-exif-panel hidden absolute left-1/2 bottom-20 -translate-x-1/2 w-[min(92vw,420px)] max-h-[60vh] overflow-hidden rounded-2xl bg-background-color-transparent-80 p-4 text-left shadow-redefine-flat backdrop-blur-md" role="dialog" aria-label="EXIF" aria-hidden="true">
+		<div class="flex items-center justify-between mb-3">
+			<span class="text-sm font-semibold text-first-text-color">EXIF</span>
+			<button class="image-viewer-exif-close flex h-8 w-8 items-center justify-center rounded-full bg-background-color-transparent-80 text-first-text-color transition hover:bg-background-color-transparent-40" type="button" aria-label="Close">
+				<i class="fa-solid fa-xmark text-[0.65rem]"></i>
+			</button>
+		</div>
+		<div class="image-viewer-exif-cards grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto pr-1 scrollbar-hide"></div>
+		<template class="image-viewer-exif-card-template">
+			<div class="rounded-lg bg-background-color-transparent-40 px-3 py-2">
+				<div class="image-viewer-exif-card-header flex items-center gap-2 mb-1">
+					<i class="image-viewer-exif-card-icon fa-solid fa-circle-info text-xs text-third-text-color"></i>
+					<div class="image-viewer-exif-card-title text-xs font-semibold text-first-text-color"></div>
+				</div>
+				<div class="image-viewer-exif-card-items flex flex-col gap-1"></div>
+			</div>
+		</template>
+	</div>
+	<button class="image-viewer-exif-toggle flex items-center gap-2 hidden absolute left-1/2 bottom-6 -translate-x-1/2 rounded-full border border-border-color bg-background-color-transparent-80 px-4 py-2 text-first-text-color backdrop-blur-md transition hover:bg-background-color-transparent-40" type="button" aria-label="EXIF" aria-expanded="false">
+		<i class="fa-solid fa-circle-info text-xs"></i>
+		<span class="text-xs font-semibold uppercase tracking-wider">EXIF</span>
+	</button>
+	<button class="image-viewer-next" type="button" aria-label="Next">
+		<i class="fa-solid fa-chevron-right"></i>
+	</button>
+</div>
+
+
+	
+	<div class="search-pop-overlay">
+	<div class="popup search-popup">
+		<div class="search-header">
+			<span class="search-input-field-pre">
+				<i class="fa-solid fa-keyboard"></i>
+			</span>
+			<div class="search-input-container">
+				<input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="Search..." spellcheck="false" type="search" class="search-input">
+			</div>
+			<span class="popup-btn-close">
+				<i class="fa-solid fa-times"></i>
+			</span>
+		</div>
+		<div id="search-result">
+			<div id="no-result">
+				<i class="fa-solid fa-spinner fa-spin-pulse fa-5x fa-fw"></i>
+			</div>
+		</div>
+	</div>
+</div>
+	
+
+</main>
+
+
+
+<script src="/js/build/libs/Swup.min.js"></script>
+
+<script src="/js/build/libs/SwupSlideTheme.min.js"></script>
+
+<script src="/js/build/libs/SwupScriptsPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupProgressPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupScrollPlugin.min.js"></script>
+
+<script src="/js/build/libs/SwupPreloadPlugin.min.js"></script>
+
+<script>
+    window.swup = new Swup({
+        plugins: [
+            new SwupScriptsPlugin({
+                optin: true,
+            }),
+            new SwupProgressPlugin(),
+            new SwupScrollPlugin({
+                offset: 80,
+            }),
+            new SwupSlideTheme({
+                mainElement: ".main-content-body",
+            }),
+            new SwupPreloadPlugin(),
+        ],
+        containers: ["#swup"],
+    });
+
+    window.dispatchEvent(
+        new CustomEvent("redefine:swup:ready", {
+            detail: {
+                swup: window.swup,
+            },
+        }),
+    );
+</script>
+
+
+
+
+	
+<script src="/js/build/main.js" type="module"></script>
+
+
+
+    
+<script src="/js/build/libs/odometer.min.js"></script>
+
+    
+<link rel="stylesheet" href="/assets/odometer-theme-minimal.css">
+
+
+
+
+
+
+
+  
+<script src="/js/build/libs/Typed.min.js"></script>
+
+
+
+
+
+
+
+
+    
+<script src="/js/build/libs/minimasonry.min.js" data-swup-reload-script=""></script>
+
+
+
+
+
+	
+	<div id="aplayer"></div>
+
+<script src="/js/build/libs/APlayer.min.js" defer></script>
+
+
+<script src="/js/build/plugins/aplayer.js" defer></script>
+
+
+	
+<script>if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js?t=1793260909045')
+    .then(function () {console.log('ServiceWorker Register Successfully.')})
+    .catch(function (e) {console.error(e)});
+}
+</script></body>
+
+</html>
